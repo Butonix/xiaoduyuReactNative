@@ -7,17 +7,13 @@ import { StyleSheet, Text, Image, View, Button, ScrollView,
 } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
-// import { RkChoice, RkTheme } from 'react-native-ui-kitten';
 import RadioForm from 'react-native-simple-radio-button'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { signup } from '../../actions/sign'
-import { getCaptchaId } from '../../actions/captcha'
-import { cleanAllPosts } from '../../actions/posts'
-import { cleanUserInfo } from '../../actions/user'
+import { signup, signin } from '../../actions/sign'
 import gStyles from '../../styles'
-
+import CaptchaButton from '../../components/captcha-button'
 
 class SignUp extends Component {
 
@@ -35,79 +31,87 @@ class SignUp extends Component {
       error: {}
     }
     this.submit = this.submit.bind(this)
-    this.loadCaptcha = this.loadCaptcha.bind(this)
-  }
-
-  componentWillMount() {
-
-    if (global.signIn) {
-      const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'Main'})
-        ]
-      })
-      this.props.navigation.dispatch(resetAction)
-      return
-    }
-
-    // console.log('进入了登录界面');
-
-    // const routeName = this.props.navigation.state.params.backRouteName
-
-    // console.log(routeName);
-
-    this.loadCaptcha()
-  }
-
-  loadCaptcha() {
-
-    const self = this
-    const { getCaptchaId } = this.props
-
-    getCaptchaId({
-      callback: function (res) {
-        if (res && res.success && res.data) {
-          self.setState({ captchaId: res.data })
-        }
-      }
-    })
-
+    this.sendCaptcha = this.sendCaptcha.bind(this)
+    this.handleSignIn = this.handleSignIn.bind(this)
   }
 
   submit() {
     const self = this
-    const { nickname, email, password, captcha } = this.state
-    const { signup } = this.props
+    const { nickname, email, password, captcha, gender } = this.state
+    const { signup, signin, navigation } = this.props
 
-    const { navigation } = this.props
-    const { navigate } = this.props.navigation
-
-    if (!nickname || nickname.replace('', '') == '') return Alert.alert('', '请输入昵称')
-    if (nickname.length > 16) Alert.alert('', '昵称不能大于16个字符')
+    if (!nickname || nickname.replace(/(^\s+)|(\s+$)/g, '') == '') return Alert.alert('', '请输入昵称')
+    // if (nickname.length > 16) Alert.alert('', '昵称不能大于16个字符')
     if (!email) return Alert.alert('', '请输入邮箱')
     if (!captcha) return Alert.alert('', '请输入验证码')
     if (!password) return Alert.alert('', '请输入密码')
-    if (password.length < 6) return Alert.alert('', '密码不能小于6个字符')
+    // if (password.length < 6) return Alert.alert('', '密码不能小于6个字符')
+    if (!gender) return Alert.alert('', '请选择性别')
 
     signup({
       data: {
         nickname: nickname,
         email: email,
         password: password,
-        captcha: captcha
+        captcha: captcha,
+        gender: gender
       },
       callback: (res)=>{
 
         if (!res.success) {
           self.setState({ error: res.error })
-        }
+        } else {
+          Alert.alert('', '注册成功')
 
-        // console.log(res.error);
+          signin({
+            data: { email: email, password: password },
+            callback: (res)=>{
+
+              if (!res.success) {
+                navigation.goBack()
+              } else {
+                self.handleSignIn(res.data.access_token)
+              }
+
+            }
+          })
+
+        }
 
       }
     })
 
+  }
+
+  handleSignIn(access_token) {
+
+    const self = this
+
+    AsyncStorage.setItem('token', access_token, function(errs, result){
+
+      AsyncStorage.getItem('token', function(errs, result){
+
+        const resetAction = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'Main'})
+          ]
+        })
+
+        global.initReduxDate(()=>{
+          self.props.navigation.dispatch(resetAction)
+        })
+
+      })
+
+    })
+
+  }
+
+  sendCaptcha(callback) {
+    const { email } = this.state
+    if (!email) return Alert.alert('', '请输入Email')
+    callback({ email, type: 'signup' })
   }
 
   render() {
@@ -115,14 +119,12 @@ class SignUp extends Component {
     const { captchaId } = this.state
     const { nickname, email, password, captcha, gender } = this.state.error
 
-    let options = ['选项1','选项2','选项3']
-
     var radio_props = [
       {label: '男     ', value: 1 },
       {label: '女     ', value: 0 }
     ];
 
-    return (<View style={styles.container}>
+    return (<ScrollView style={styles.container}>
 
       {nickname ? <View style={gStyles.item}><Text>{nickname}</Text></View> : null}
       <View style={gStyles.item}>
@@ -153,9 +155,7 @@ class SignUp extends Component {
             />
         </View>
         <View>
-          <TouchableOpacity onPress={this.submit} style={styles.captchaButton}>
-            <Text style={styles.buttonText}>获取验证码</Text>
-          </TouchableOpacity>
+          <CaptchaButton sendCaptcha={this.sendCaptcha} />
         </View>
       </View>
 
@@ -169,52 +169,29 @@ class SignUp extends Component {
           />
       </View>
 
-      <RadioForm
-        radio_props={radio_props}
-        initial={3}
-        formHorizontal={true}
-        onPress={(value) => { console.log(value); }}
-      />
-
-      {/*
-      <Modal
-        transparent={true}
-        >
-        <View style={styles.genderPicker}>
-          <View>
-          <Picker
-            prompt="性别"
-            mode={Picker.MODE_DROPDWN}
-            >
-            {options.map(item=>{
-              return (<Picker.Item
-                label={item}
-                value={item}
-                key={item}
-                />)
-            })}
-          </Picker>
-          </View>
-        </View>
-      </Modal>
-      */}
-
+      {gender ? <View style={gStyles.item}><Text>{gender}</Text></View> : null}
       <View style={gStyles.item}>
-        <TouchableOpacity onPress={this.submit} style={gStyles.button}>
-          <Text style={styles.buttonText}>注册</Text>
-        </TouchableOpacity>
+        <RadioForm
+          radio_props={radio_props}
+          initial={3}
+          formHorizontal={true}
+          onPress={(gender) => this.setState({gender})}
+        />
       </View>
 
-    </View>)
+      <TouchableOpacity onPress={this.submit} style={gStyles.fullButton}>
+        <Text style={styles.buttonText}>注册</Text>
+      </TouchableOpacity>
+
+    </ScrollView>)
   }
 }
 
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    flex: 1,
-    padding: 20
+    backgroundColor: '#f8f8f9',
+    flex: 1
   },
   input: {
     height: 40,
@@ -273,8 +250,6 @@ export default connect(
   },
   (dispatch, props) => ({
     signup: bindActionCreators(signup, dispatch),
-    getCaptchaId: bindActionCreators(getCaptchaId, dispatch),
-    cleanAllPosts: bindActionCreators(cleanAllPosts, dispatch),
-    cleanUserInfo: bindActionCreators(cleanUserInfo, dispatch)
+    signin: bindActionCreators(signin, dispatch)
   })
 )(SignUp)

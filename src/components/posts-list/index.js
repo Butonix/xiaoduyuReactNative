@@ -66,8 +66,8 @@ class PostsList extends Component {
     // const { posts } = this.props.state
     const { list } = this.props
 
-    console.log(list);
-    console.log('进入了帖子列表组件');
+    // console.log(list);
+    // console.log('进入了帖子列表组件');
 
     if (!list.data) {
       this.loadPostsList()
@@ -77,14 +77,16 @@ class PostsList extends Component {
 
   loadPostsList(callback, restart) {
 
-    // let list = getPostListByName(this.props.state, 'test')
+    const { name, filters } = this.props
 
+    // let list = getPostListByName(this.props.state, 'test')
+    // filters: {
+    //   include_comments: 1,
+    //   comments_sort: 'create_at:-1'
+    // },
     this.props.loadPostsList({
-      name:'test',
-      filters: {
-        include_comments: 1,
-        comments_sort: 'create_at:-1'
-      },
+      name,
+      filters,
       callback,
       restart
     })
@@ -291,9 +293,9 @@ const styles = StyleSheet.create({
 });
 
 
-export default connect(state => ({
+export default connect((state, props) => ({
     // state: state，
-    list: getPostListByName(state, 'test')
+    list: getPostListByName(state, props.name)
   }),
   (dispatch) => ({
     loadPostsList: bindActionCreators(loadPostsList, dispatch)

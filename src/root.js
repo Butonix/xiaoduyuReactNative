@@ -1,16 +1,11 @@
 
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import { Text, View, AsyncStorage, NetInfo, StyleSheet, ActivityIndicator,
-  TouchableOpacity
-} from 'react-native'
-
+import { Text, View, AsyncStorage, NetInfo, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native'
+import SplashScreen from 'react-native-splash-screen'
 import reducers, { getInitialState } from './reducers'
 import getStore from './store/configure-store.js'
 import Navigators from './navigators/index'
-
-import SplashScreen from 'react-native-splash-screen'
-// import * as launchImage from 'react-native-launch-image'
 
 import { combineReducers, bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -37,25 +32,16 @@ global.initReduxDate = (callback) => {
     loadUserInfo({
       accessToken: result,
       callback: (res)=>{
-
-        if (res.success) {
+        if (res && res.success) {
           addAccessToken({ accessToken:  result })(store.dispatch, store.getState)
-
+          global.signIn = true
           callback(true)
-
-          // global.signIn = true
-
-          // self.setState({ ready: true })
-
-          SplashScreen.hide();
-          // launchImage.hide()
-        } else {
+        } else if (res && !res.success) {
           AsyncStorage.removeItem('token', function(res){
             callback(false)
-            // self.setState({ ready: true })
-            // launchImage.hide()
-            SplashScreen.hide();
           })(store.dispatch, store.getState)
+        } else {
+          callback(false)
         }
 
       }
@@ -88,10 +74,11 @@ class MainApp extends Component {
 
       if (!state) {
         self.setState({ loading: false })
+        SplashScreen.hide()
       } else {
         global.initReduxDate((result)=>{
-          global.signIn = result
           self.setState({ loading: false, network: true, ready: true })
+          SplashScreen.hide()
         })
       }
 
@@ -108,10 +95,19 @@ class MainApp extends Component {
 
   }
 
-  componentDidMount() {
+  componentWillMount() {
     global.signIn = false
-    SplashScreen.hide()
     this.start()
+  }
+
+  componentWillReceiveProps() {
+    console.log('组件发生更新了1111');
+    global.signIn = false
+    this.start()
+  }
+
+  componentDidUpdate() {
+    console.log('组件更新完成了');
   }
 
   render() {

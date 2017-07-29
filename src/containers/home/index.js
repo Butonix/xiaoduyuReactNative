@@ -16,11 +16,9 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    console.log('进入了首页');
-    // const { state } = this.props
     this.toWritePosts = this.toWritePosts.bind(this)
   }
-  
+
   toWritePosts(typeId) {
     const { navigate } = this.props.navigation
     navigate('WritePosts', { typeId: typeId })
@@ -51,10 +49,18 @@ class Home extends Component {
         headerHeight={ 40 }
         scrollEventThrottle={ 40 }
       >
-        <View style={[styles.container, styles.content]}>
-          <PostsList navigation={navigation} />
-        </View>
       </Headroom>
+        <View style={[styles.container, styles.content]}>
+          <PostsList
+            navigation={navigation}
+            name="home"
+            filters={{
+              include_comments: 1,
+              comments_sort: 'create_at:-1'
+            }}
+            />
+        </View>
+
     </View>)
   }
 }

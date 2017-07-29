@@ -1,35 +1,4 @@
 import Ajax from '../common/ajax'
-// import Keydown from '../common/keydown'
-// import cookie from 'react-cookie'
-// import { auth_cookie_name } from '../../config'
-
-/*
-export function showSign(e) {
-
-  if (e) e.stopPropagation()
-
-  return dispatch => {
-
-    Keydown.add('sign', (keyList)=>{
-      if (keyList.indexOf(27) != -1) {
-        dispatch(hideSign())
-      }
-    })
-
-    dispatch({ type: 'SET_GO_BACK', goBack: false })
-    dispatch({ type: 'SHOW_SIGN' })
-  }
-}
-
-export function hideSign() {
-  return dispatch => {
-    Keydown.remove('sign')
-    dispatch({ type: 'SET_GO_BACK', goBack: true })
-    dispatch({ type: 'HIDE_SIGN' })
-  }
-}
-*/
-
 
 export function signout() {
   return dispatch => {

@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { StyleSheet, Text, Image, View, Button, ScrollView, TextInput, Alert, TouchableOpacity, AsyncStorage } from 'react-native'
 
@@ -8,17 +6,16 @@ import { NavigationActions } from 'react-navigation'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { signin } from '../../actions/sign'
-import { getCaptchaId } from '../../actions/captcha'
-import { cleanAllPosts } from '../../actions/posts'
-import { cleanUserInfo } from '../../actions/user'
+import { sendEmailCaptcha, resetPasswordByCaptcha } from '../../actions/account'
 
-import { api_url, api_verstion } from '../../../config'
+import gStyles from '../../styles'
 
+import CaptchaButton from '../../components/captcha-button'
 
 class Forgot extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: '重置密码'
+    headerTitle: '通过邮箱重置密码'
   })
 
   constructor (props) {
@@ -30,150 +27,77 @@ class Forgot extends Component {
       captcha: ''
     }
     this.submit = this.submit.bind(this)
-    this.loadCaptcha = this.loadCaptcha.bind(this)
+    this.sendCaptcha = this.sendCaptcha.bind(this)
+    this.handleSignIn = this.handleSignIn.bind(this)
   }
 
-  componentWillMount() {
-
-    if (global.signIn) {
-      const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'Main'})
-        ]
-      })
-      this.props.navigation.dispatch(resetAction)
-      return
-    }
-
-    // console.log('进入了登录界面');
-
-    // const routeName = this.props.navigation.state.params.backRouteName
-
-    // console.log(routeName);
-
-    this.loadCaptcha()
+  sendCaptcha(callback) {
+    const { email } = this.state
+    if (!email) return Alert.alert('', '请输入邮箱')
+    callback({ email, type: 'forgot' })
   }
 
-  loadCaptcha() {
+  handleSignIn(access_token) {
 
     const self = this
-    const { getCaptchaId } = this.props
 
-    getCaptchaId({
-      callback: function (res) {
-        if (res && res.success && res.data) {
-          self.setState({ captchaId: res.data })
-        }
-      }
+    AsyncStorage.setItem('token', access_token, function(errs, result){
+
+      AsyncStorage.getItem('token', function(errs, result){
+
+        const resetAction = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'Main'})
+          ]
+        })
+
+        global.initReduxDate(()=>{
+          self.props.navigation.dispatch(resetAction)
+        })
+
+      })
+
     })
 
   }
 
   submit() {
-    const self = this
-    const { email, password, captcha, captchaId } = this.state
-    const { signin } = this.props
 
-    const { navigation } = this.props
-    const { navigate } = this.props.navigation
+    const { email, captcha, password, confirmPassword } = this.state
+    const { resetPasswordByCaptcha, signin, navigation } = this.props
 
-    let routeName = ''
+    if (!email) return Alert.alert('', '请输入邮箱')
+    if (!captcha) return Alert.alert('', '验证码')
+    if (!password) return Alert.alert('', '请输入新密码')
+    if (!confirmPassword) return Alert.alert('', '请再次输入新密码')
+    if (password != confirmPassword) return Alert.alert('', '两次密码输入不一致')
 
-    // if (this.props.navigation.state.params.backRouteName) {
-    //   routeName = this.props.navigation.state.params.backRouteName
-    // }
+    resetPasswordByCaptcha({
+      email: email,
+      captcha: captcha,
+      newPassword: password,
+      callback: function(result) {
 
-    // console.log(router);
+        if (result.success) {
+          alert('密码修改成功')
 
-    if (!email) {
-      Alert.alert('', '请输入邮箱')
-      return
-    } else if (!password) {
-      Alert.alert('', '请输入密码')
-      return
-    }
+          signin({
+            data: { email: email, password: password },
+            callback: (res)=>{
 
-    signin({
-      data: { email: email, password: password, captcha: captcha, captcha_id: captchaId },
-      callback: (res)=>{
+              if (!res.success) {
+                navigation.goBack()
+              } else {
+                self.handleSignIn(res.data.access_token)
+              }
 
-        if (!res.success) {
-          Alert.alert('', res.error)
-          self.loadCaptcha()
-          return
-        }
-
-        AsyncStorage.setItem('token', res.data.access_token, function(errs, result){
-
-          AsyncStorage.getItem('token', function(errs, result){
-
-            const resetAction = NavigationActions.reset({
-              index: 0,
-              actions: [
-                NavigationActions.navigate({ routeName: 'Main'})
-              ]
-            })
-
-
-            global.initReduxDate(()=>{
-
-              self.props.navigation.dispatch(resetAction)
-
-              // if (routeName) {
-              //   const resetAction = NavigationActions.reset({
-              //     index: 0,
-              //     actions: [
-              //       NavigationActions.navigate({ routeName: routeName })
-              //     ]
-              //   })
-              //
-              //   self.props.navigation.dispatch(resetAction)
-              // } else {
-
-              // }
-
-
-            })
-
-
-
-            /*
-            global.cleanRedux()
-            global.initReduxDate(()=>{
-
-              console.log('13123');
-              global.signIn = true
-              navigation.goBack()
-
-
-              // if (routeName) {
-              //   const resetAction = NavigationActions.reset({
-              //     index: 0,
-              //     actions: [
-              //       NavigationActions.navigate({ routeName: routeName })
-              //     ]
-              //   })
-              //
-              //   self.props.navigation.dispatch(resetAction)
-              // } else {
-
-              // }
-
-
-            })
-            */
-
-
-
-
-            // navigation.goBack()
-            // navigate('Home', {})
-            // console.log(result);
+            }
           })
 
-        })
-
+        } else {
+          Alert.alert('', result.error || '密码修改失败')
+        }
       }
     })
 
@@ -181,47 +105,53 @@ class Forgot extends Component {
 
   render() {
 
-    const { captchaId } = this.state
+    return (<ScrollView style={styles.container}>
 
-    return (<View style={styles.container}>
-
-      <TextInput
-          style={styles.input}
-          onChangeText={(email) => this.setState({email})}
-          placeholder='请输入你的注册邮箱'
-        />
-
-      <TextInput
-          style={styles.input}
-          onChangeText={(captcha) => this.setState({captcha})}
-          secureTextEntry={true}
-          placeholder='验证码'
-        />
-
-        <TouchableOpacity onPress={this.submit} style={styles.button}>
-          <Text style={styles.buttonText}>获取验证码</Text>
-        </TouchableOpacity>
-
+      <View style={gStyles.item}>
         <TextInput
-            style={styles.input}
+            style={gStyles.input}
+            autoCapitalize="none"
+            onChangeText={(email) => this.setState({email})}
+            placeholder='请输入你的注册邮箱'
+          />
+      </View>
+
+      <View style={gStyles.rowItem}>
+        <View style={styles.itemLeft}>
+          <TextInput
+              style={gStyles.input}
+              onChangeText={(captcha) => this.setState({captcha})}
+              placeholder='请输入验证码'
+            />
+        </View>
+        <View>
+          <CaptchaButton sendCaptcha={this.sendCaptcha} />
+        </View>
+      </View>
+
+      <View style={gStyles.item}>
+        <TextInput
+            style={gStyles.input}
             onChangeText={(password) => this.setState({password})}
             secureTextEntry={true}
-            placeholder='密码'
+            placeholder='请输入新密码'
           />
+      </View>
 
-          <TextInput
-              style={styles.input}
-              onChangeText={(confirmPassword) => this.setState({confirmPassword})}
-              secureTextEntry={true}
-              placeholder='再次输入密码'
-            />
+      <View style={gStyles.item}>
+        <TextInput
+            style={gStyles.input}
+            onChangeText={(confirmPassword) => this.setState({confirmPassword})}
+            secureTextEntry={true}
+            placeholder='请再次输入新密码'
+          />
+      </View>
 
       <TouchableOpacity onPress={this.submit} style={styles.button}>
         <Text style={styles.buttonText}>提交</Text>
       </TouchableOpacity>
 
-
-    </View>)
+    </ScrollView>)
   }
 }
 
@@ -262,6 +192,9 @@ const styles = StyleSheet.create({
     height:30,
     marginTop:5,
     marginLeft:10
+  },
+  itemLeft: {
+    flex: 1
   }
 })
 
@@ -271,8 +204,6 @@ export default connect(
   },
   (dispatch, props) => ({
     signin: bindActionCreators(signin, dispatch),
-    getCaptchaId: bindActionCreators(getCaptchaId, dispatch),
-    cleanAllPosts: bindActionCreators(cleanAllPosts, dispatch),
-    cleanUserInfo: bindActionCreators(cleanUserInfo, dispatch)
+    resetPasswordByCaptcha: bindActionCreators(resetPasswordByCaptcha, dispatch)
   })
 )(Forgot)

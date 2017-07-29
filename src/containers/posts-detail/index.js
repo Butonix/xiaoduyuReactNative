@@ -55,7 +55,7 @@ class PostsDetail extends Component {
     }
 
   }
-
+  
   goWriteComment() {
 
     const { navigate } = this.props.navigation

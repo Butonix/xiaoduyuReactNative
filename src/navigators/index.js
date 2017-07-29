@@ -1,23 +1,21 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { addNavigationHelpers, StackNavigator, TabNavigator, NavigationActions } from 'react-navigation'
+
+import { StackNavigator, TabNavigator } from 'react-navigation'
 
 import SignIn from '../containers/sign-in'
 import SignUp from '../containers/sign-up'
+import GithubSignIn from '../containers/github-sign-in'
 import Forgot from '../containers/forgot'
-
 import Home from '../containers/home'
 import PostsDetail from '../containers/posts-detail'
 import Topics from '../containers/topics'
 import Notifications from '../containers/notifications'
 import Me from '../containers/me'
 import CommentDetail from '../containers/comment-detail'
-
 import WriteComment from '../containers/write-comment'
 import WritePosts from '../containers/write-posts'
 import ChooseTopic from '../containers/choose-topic'
 import Settings from '../containers/settings'
+import TopicDetail from '../containers/topic-detail'
 
 const MainScreenNavigator = TabNavigator({
   Home: { screen: Home },
@@ -50,7 +48,9 @@ const App = StackNavigator({
   SignIn: { screen: SignIn },
   Settings: { screen: Settings },
   SignUp: { screen: SignUp },
-  Forgot: { screen: Forgot }
+  Forgot: { screen: Forgot },
+  GithubSignIn: { screen: GithubSignIn },
+  TopicDetail: { screen: TopicDetail }
 },{
   initialRouteName: 'SignIn'
 })

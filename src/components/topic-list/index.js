@@ -17,7 +17,8 @@ import {
   refreshControl,
   RefreshControl,
   Navigator,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  TouchableOpacity
 } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -39,6 +40,13 @@ class TopicList extends Component {
     this.test = this.test.bind(this)
     this.renderHeader = this.renderHeader.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
+    this.toTopic = this.toTopic.bind(this)
+  }
+
+  toTopic(topic) {
+    const { navigate } = this.props.navigation;
+
+    navigate('TopicDetail', { title: topic.name, id: topic._id })
   }
 
   test() {
@@ -104,9 +112,9 @@ class TopicList extends Component {
         <ListView
           enableEmptySections={true}
           dataSource={topics}
-          renderRow={(topic) => (<View style={styles.topicItem}>
-            <Text>{topic.name}</Text>
-          </View>)}
+          renderRow={(topic) => (<TouchableOpacity onPress={()=>{this.toTopic(topic)}}><View style={styles.topicItem}>
+            <Text>{topic.name}</Text><Text style={styles.brief}>{topic.brief}</Text>
+          </View></TouchableOpacity>)}
           scrollEventThrottle={50}
           removeClippedSubviews={false}
         />
@@ -177,9 +185,11 @@ const styles = StyleSheet.create({
   flexContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap'
+  },
+  brief: {
+    color: '#8a8a8a'
   }
-});
-
+})
 
 export default connect(state => ({
     state: state

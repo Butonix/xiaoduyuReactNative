@@ -6,7 +6,7 @@ import { StyleSheet, Text, Image, View, Button, ScrollView, TextInput, Alert, To
 import { NavigationActions } from 'react-navigation'
 
 import openShare from 'react-native-open-share'
-// import { Loading, EasyLoading } from 'react-native-easy-loading';
+// import KeyboardSpacer from 'react-native-keyboard-spacer'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -16,7 +16,9 @@ import { cleanAllPosts } from '../../actions/posts'
 import { cleanUserInfo } from '../../actions/user'
 import { weiboGetUserInfo, QQGetUserInfo } from '../../actions/oauth'
 
+import Fieldset from '../../components/ui/fieldset'
 
+import gStyles from '../../styles'
 
 import { api_url, api_verstion } from '../../../config'
 
@@ -24,7 +26,8 @@ import { api_url, api_verstion } from '../../../config'
 class SignIn extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: '登录'
+    // header: null
+    // headerTitle: '登录'
   })
 
   constructor (props) {
@@ -92,7 +95,7 @@ class SignIn extends Component {
 
     AsyncStorage.setItem('token', access_token, function(errs, result){
 
-      AsyncStorage.getItem('token', function(errs, result){
+      // AsyncStorage.getItem('token', function(errs, result){
 
         const resetAction = NavigationActions.reset({
           index: 0,
@@ -105,7 +108,7 @@ class SignIn extends Component {
           self.props.navigation.dispatch(resetAction)
         })
 
-      })
+      // })
 
     })
 
@@ -258,7 +261,25 @@ class SignIn extends Component {
 
     const { navigate } = this.props.navigation
 
-    return (<View style={styles.container}>
+    return (<ScrollView style={styles.container}>
+
+
+
+      <TouchableOpacity onPress={this._qqLogin} style={gStyles.fullButton}>
+        <Text style={styles.buttonText}>通过QQ登录</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={this._weiboLogin} style={gStyles.fullButton}>
+        <Text style={styles.buttonText}>通过微博登录</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={()=>{ navigate('GithubSignIn') }} style={gStyles.fullButton}>
+        <Text style={styles.buttonText}>通过Github登录</Text>
+      </TouchableOpacity>
+
+      <View style={gStyles.item}>
+        <Fieldset text="或者通过邮箱登录" />
+      </View>
 
       <TextInput
           style={styles.input}
@@ -290,36 +311,31 @@ class SignIn extends Component {
         </View>
         : null}
 
-      <TouchableOpacity onPress={this.submit} style={styles.button}>
+      <TouchableOpacity onPress={this.submit} style={gStyles.fullButton}>
         <Text style={styles.buttonText}>登录</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={this._qqLogin} style={styles.button}>
-        <Text style={styles.buttonText}>通过QQ登录</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={this._weiboLogin} style={styles.button}>
-        <Text style={styles.buttonText}>通过微博登录</Text>
-      </TouchableOpacity>
-
-      <View style={{flex:1,flexDirection:'row',alignItems: 'flex-end', justifyContent: 'space-between', bottom:10}}>
-        <TouchableOpacity onPress={()=>{ navigate('Forgot') }} style={styles.button}>
-          <Text style={styles.buttonText}>无法登录?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>{ navigate('SignUp') }} style={styles.button}>
-          <Text style={styles.buttonText}>新用户</Text>
-        </TouchableOpacity>
+      <View style={gStyles.item}>
+        <View style={styles.footer}>
+          <TouchableOpacity onPress={()=>{ navigate('Forgot') }} style={gStyles.whiteButton}>
+            <Text>无法登录?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>{ navigate('SignUp') }} style={gStyles.whiteButton}>
+            <Text>新用户</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-    </View>)
+      {/*<KeyboardSpacer />*/}
+    </ScrollView>)
   }
 }
 
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    flex: 1,
-    padding: 20
+    backgroundColor: '#f8f8f9',
+    flex: 1
   },
   input: {
     height: 40,
@@ -351,6 +367,26 @@ const styles = StyleSheet.create({
     height:30,
     marginTop:5,
     marginLeft:10
+  },
+  footer: {
+    flex:1,
+    marginTop:30,
+    flexDirection:'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between'
+  },
+  line:{
+    flex:1,
+    borderColor: '#333',
+    borderBottomWidth: 1,
+    marginBottom: 20,
+    marginTop: 20,
+    alignItems: 'center'
+  },
+  lineText: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginBottom:-7
   }
 })
 
