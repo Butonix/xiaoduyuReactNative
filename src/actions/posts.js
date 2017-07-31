@@ -69,8 +69,6 @@ export function loadPostsList({ name, filters = {}, callback=()=>{}, restart = f
     let postsList = getState().posts[name] || {}
     let accessToken = getState().user.accessToken
 
-    console.log(accessToken);
-
     if (restart) postsList = {}
     if (typeof(postsList.more) != 'undefined' && !postsList.more || postsList.loading) {
       callback()
@@ -119,7 +117,7 @@ export function loadPostsList({ name, filters = {}, callback=()=>{}, restart = f
         // setTimeout(()=>{
           dispatch({ type:'ADD_POSTS_LIST', name, list: postsList })
           callback(res)
-        // }, 500)
+        // }, 1000)
 
       }
     })

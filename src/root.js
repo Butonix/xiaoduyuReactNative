@@ -72,6 +72,8 @@ class MainApp extends Component {
 
     function handleFirstConnectivityChange(state) {
 
+      state = true
+
       if (!state) {
         self.setState({ loading: false })
         SplashScreen.hide()

@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
     paddingLeft:15,
     paddingRight:15,
     backgroundColor: '#fff'
+  },
+  // 标题栏样式
+  headerStyle: {
+    backgroundColor: '#fff'
   }
 })
 

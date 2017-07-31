@@ -17,7 +17,8 @@ import {
   refreshControl,
   RefreshControl,
   Navigator,
-  TouchableWithoutFeedback
+  TouchableOpacity,
+  ActivityIndicator
 } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -52,13 +53,15 @@ class PostsList extends Component {
     this.goTo = this.goTo.bind(this)
     this.goToComment = this.goToComment.bind(this)
     this.loadPostsList = this.loadPostsList.bind(this)
-    this.test = this.test.bind(this)
+    this.toPeople = this.toPeople.bind(this)
     this.renderHeader = this.renderHeader.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
   }
 
-  test() {
-    console.log('214')
+  toPeople(people) {
+    // console.log(people);
+    const { navigate } = this.props.navigation;
+    navigate('PeopleDetail', { id: people._id })
   }
 
   componentWillMount() {
@@ -93,30 +96,19 @@ class PostsList extends Component {
   }
 
   renderHeader() {
-    return (
-      <View>
-        <Text>我是列表头部</Text>
-      </View>
-    )
+    return (<View><Text></Text></View>)
   }
 
   renderFooter() {
-
-    // let list = getPostListByName(this.props.state, 'test')
     const { list } = this.props
 
     if (list.loading) {
       return (
-        <View>
-          <Text>加载中</Text>
+        <View style={styles.loading}>
+          <ActivityIndicator animating={true} color={'#484848'} size={'small'} />
         </View>
       )
     }
-    return (
-      <View>
-        <Text>没有更多了</Text>
-      </View>
-    )
   }
 
   render() {
@@ -142,16 +134,16 @@ class PostsList extends Component {
           dataSource={topics}
           renderRow={(topic) => (<View style={styles.item}>
             <View style={styles.topicItem}>
-              <TouchableWithoutFeedback onPress={()=>{this.goTo(topic)}}>
+              <TouchableOpacity onPress={()=>{this.goTo(topic)}}>
                 <View>
                   <View style={styles.itemHead}>
                     <View>
-                      <TouchableWithoutFeedback onPress={()=>{this.test(topic)}}>
+                      <TouchableOpacity onPress={()=>{this.toPeople(topic.user_id)}}>
                         <Image source={{uri:'https:'+topic.user_id.avatar_url}} style={styles.avatar}  />
-                      </TouchableWithoutFeedback>
+                      </TouchableOpacity>
                     </View>
                     <View>
-                      <Text onPress={()=>{this.test(topic)}}>{topic.user_id.nickname}</Text>
+                      <Text onPress={()=>{this.toPeople(topic)}}>{topic.user_id.nickname}</Text>
                       <Text>
                         {topic.topic_id.name} {topic.view_count ? topic.view_count+'次浏览' : null} {topic.like_count ? topic.like_count+'个赞' : null} {topic.follow_count ? topic.follow_count+'人关注' : null}
                       </Text>
@@ -167,15 +159,15 @@ class PostsList extends Component {
                     </View>
                   </View>
                 </View>
-              </TouchableWithoutFeedback>
+              </TouchableOpacity>
             </View>
             {topic.comment && topic.comment.map(item=>{
                 return (<View key={item._id}>
-                  <TouchableWithoutFeedback onPress={()=>{this.goToComment(item)}}>
+                  <TouchableOpacity onPress={()=>{this.goToComment(item)}}>
                     <View>
-                    <CommentItem comment={item} />
+                      <CommentItem {...this.props} comment={item} />
                     </View>
-                  </TouchableWithoutFeedback>
+                  </TouchableOpacity>
                 </View>)
               })}
           </View>)}
@@ -250,8 +242,7 @@ class PostsList extends Component {
 
 const styles = StyleSheet.create({
   item: {
-    borderBottomWidth: 10,
-    borderColor: '#efefef'
+    marginBottom: 10
   },
   container: {
     // justifyContent: 'center',
@@ -289,6 +280,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold'
+  },
+  loading: {
+    height: 60
   }
 });
 

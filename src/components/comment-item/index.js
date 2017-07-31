@@ -1,11 +1,17 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import HtmlView from '../html-view'
 
 class CommentItem extends React.Component {
 
   constructor(props) {
     super(props)
+    this.toPeople = this.toPeople.bind(this)
+  }
+
+  toPeople(people) {
+    const { navigate } = this.props.navigation;
+    navigate('PeopleDetail', { id: people._id })
   }
 
   render() {
@@ -13,13 +19,18 @@ class CommentItem extends React.Component {
     const { comment } = this.props
 
     return (<View style={styles.item}>
-        <View>
+        <TouchableOpacity onPress={()=>{ this.toPeople(comment.user_id) }}>
           <Image source={{uri:'https:'+comment.user_id.avatar_url}} style={styles.avatar} />
-        </View>
+        </TouchableOpacity>
         <View style={styles.main}>
-          <Text>
-            {comment.user_id.nickname} {comment.reply_count ? comment.reply_count + '个回复' : null} {comment.like_count ? comment.like_count+'个赞' : null}
-          </Text>
+          <View style={styles.head}>
+            <Text onPress={()=>{this.toPeople(comment.user_id)}}>
+              {comment.user_id.nickname}
+            </Text>
+            <Text>
+              {comment.reply_count ? comment.reply_count + '个回复' : null} {comment.like_count ? comment.like_count+'个赞' : null}
+            </Text>
+          </View>
 
           {comment.content_summary ?
             <Text>{comment.content_summary}</Text>
@@ -52,5 +63,8 @@ const styles = StyleSheet.create({
   },
   main: {
     flex: 1
+  },
+  head:{
+    flexDirection: 'row'
   }
 })

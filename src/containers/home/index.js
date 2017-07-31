@@ -1,18 +1,25 @@
 
-import PostsList from '../../components/posts-list'
+
 import React, { Component } from 'react'
 import { View, ScrollView, StyleSheet, Text, Image, AsyncStorage, TouchableOpacity } from 'react-native'
 import Headroom from 'react-native-headroom'
+import ScrollableTabView from 'react-native-scrollable-tab-view'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { loadUserInfo, addAccessToken } from '../../actions/user'
+import gStyles from '../../styles'
+
+import PostsList from '../../components/posts-list'
+import TabBar from '../../components/tab-bar'
 
 class Home extends Component {
 
   static navigationOptions = {
+    header: null,
     title: '首页',
-    tabBarIcon: ({ tintColor }) => (<Image source={require('./images/home.png')} style={[stylesIcon.icon, {tintColor: tintColor}]} />)
+    tabBarIcon: ({ tintColor }) => (<Image source={require('./images/home.png')} style={[stylesIcon.icon, {tintColor: tintColor}]} />),
+    headerStyle: gStyles.headerStyle
   }
 
   componentDidMount() {
@@ -26,6 +33,44 @@ class Home extends Component {
 
   render() {
     const { navigation } = this.props
+
+    return (<ScrollableTabView
+      style={{paddingTop: 20, backgroundColor:'#fff' }}
+      tabBarBackgroundColor = "#fff"
+      tabBarActiveTextColor = "#20adda"
+      tabBarInactiveTextColor = "#484848"
+      tabBarUnderlineStyle={{
+        borderColor: '#20adda'
+      }}
+      initialPage={0}
+      renderTabBar={(res)=><TabBar navigation={navigation} />}
+      >
+
+        <PostsList
+          tabLabel='关注'
+          navigation={navigation}
+          name="follow"
+          filters={{
+            weaken: 1,
+            method: 'user_custom',
+            include_comments: 1,
+            comments_sort: 'create_at:-1'
+          }}
+          />
+
+        <PostsList
+          tabLabel='发现'
+          navigation={navigation}
+          name="discover"
+          filters={{
+            weaken: 1,
+            // method: 'user_custom'
+            // include_comments: -1,
+            // comments_sort: 'create_at:1'
+          }}
+          />
+
+      </ScrollableTabView>)
 
     const header = (
       <View style={[styles.container, styles.header]}>
@@ -42,24 +87,34 @@ class Home extends Component {
     )
 
     return (<View style={[styles.container]}>
+
+      <View style={[styles.container, styles.content]}>
+        <PostsList
+          navigation={navigation}
+          name="home"
+          filters={{
+            include_comments: 1,
+            comments_sort: 'create_at:-1'
+          }}
+          />
+      </View>
+
+      {/*
       <Headroom
         style={[styles.container]}
         headerComponent={ header }
         ScrollableComponent={ScrollView}
         headerHeight={ 40 }
         scrollEventThrottle={ 40 }
+        upTolerance={()=>{
+          console.log(1);
+        }}
+        downTolerance={()=>{
+          console.log(2);
+        }}
       >
       </Headroom>
-        <View style={[styles.container, styles.content]}>
-          <PostsList
-            navigation={navigation}
-            name="home"
-            filters={{
-              include_comments: 1,
-              comments_sort: 'create_at:-1'
-            }}
-            />
-        </View>
+      */}
 
     </View>)
   }
@@ -71,7 +126,8 @@ const stylesIcon = StyleSheet.create({
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: '#f8f8f9',
+    flex: 1
   },
   header: {
     backgroundColor: '#fff',

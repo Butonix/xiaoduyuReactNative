@@ -16,6 +16,7 @@ import WritePosts from '../containers/write-posts'
 import ChooseTopic from '../containers/choose-topic'
 import Settings from '../containers/settings'
 import TopicDetail from '../containers/topic-detail'
+import PeopleDetail from '../containers/people-detail'
 
 const MainScreenNavigator = TabNavigator({
   Home: { screen: Home },
@@ -50,7 +51,8 @@ const App = StackNavigator({
   SignUp: { screen: SignUp },
   Forgot: { screen: Forgot },
   GithubSignIn: { screen: GithubSignIn },
-  TopicDetail: { screen: TopicDetail }
+  TopicDetail: { screen: TopicDetail },
+  PeopleDetail: { screen: PeopleDetail }
 },{
   initialRouteName: 'SignIn'
 })

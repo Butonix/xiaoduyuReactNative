@@ -27,7 +27,7 @@ class HtmlView extends Component {
 
 function renderNode(node, index, siblings, parent, defaultRenderer) {
   if (node.name == 'img') {
-    return (<Img image={node.attribs.src} />)
+    return (<Img key={index} image={node.attribs.src} />)
   }
 }
 

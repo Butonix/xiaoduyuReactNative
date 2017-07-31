@@ -14,6 +14,7 @@ import {
   Button
 } from 'react-native';
 
+import NotificationList from '../../components/notification-list'
 
 class Notifications extends React.Component {
 
@@ -28,7 +29,7 @@ class Notifications extends React.Component {
   }
 
   render() {
-    return <Text>通知</Text>
+    return (<NotificationList {...this.props} name="notification" />)
   }
 }
 

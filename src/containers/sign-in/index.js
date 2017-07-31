@@ -263,8 +263,6 @@ class SignIn extends Component {
 
     return (<ScrollView style={styles.container}>
 
-
-
       <TouchableOpacity onPress={this._qqLogin} style={gStyles.fullButton}>
         <Text style={styles.buttonText}>通过QQ登录</Text>
       </TouchableOpacity>

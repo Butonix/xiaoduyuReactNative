@@ -8,13 +8,17 @@ import topic from './topic'
 import comment from './comment'
 import user from './user'
 import writePosts from './write-posts'
+import notification from './notification'
+import people from './people'
 
 let states = {
   posts,
   topic,
   comment,
   user,
-  writePosts
+  writePosts,
+  notification,
+  people
 }
 
 let _states = {}
@@ -24,8 +28,6 @@ for (let i in states) {
 }
 
 _states = merge({}, _states, {})
-
-// console.log(_states);
 
 export const getInitialState = () => {
   return merge({}, _states, {})
