@@ -130,7 +130,7 @@ export function loadTopicById({ id, callback = ()=>{} }) {
 export function loadTopicList({ name, filters = {}, callback = ()=>{} }) {
   return (dispatch, getState) => {
 
-    const accessToken = null//getState().user.accessToken
+    const accessToken = getState().user.accessToken
     let nodeList = getState().topic[name] || {}
 
     if (typeof(nodeList.more) != 'undefined' && !nodeList.more || nodeList.loading) {

@@ -6,12 +6,14 @@ import {
   Image,
   ScrollView,
   Button,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getUserInfo } from '../../reducers/user'
+
+import { ListItem } from '../../components/ui'
 
 class Me extends React.Component {
 
@@ -27,6 +29,7 @@ class Me extends React.Component {
   render() {
 
     const { me } = this.props
+    const { navigate } = this.props.navigation
 
     if (!me) {
       return (<View></View>)
@@ -36,24 +39,50 @@ class Me extends React.Component {
 
           <View>
 
-            <View style={styles.avatarItem}>
-              <View><Image source={{uri:'https:'+me.avatar_url}} style={styles.avatar} /></View>
-              <View><Text>{me.nickname}</Text></View>
-            </View>
+
+            <TouchableOpacity onPress={()=>{ this.props.navigation.navigate('Settings') }}>
+
+              <View style={styles.avatarItem}>
+                <View><Image source={{uri:'https:'+me.avatar_url}} style={styles.avatar} /></View>
+                <View><Text>{me.nickname}</Text></View>
+              </View>
+
+            </TouchableOpacity>
 
             <View>
-              <View style={styles.itme}><Text>我创建的帖子</Text></View>
-              <View style={styles.itme}><Text>我编写的评论</Text></View>
-              <View style={styles.gap}></View>
-              <View style={styles.itme}><Text>我关注的帖子</Text></View>
-              <View style={styles.itme}><Text>我关注的话题</Text></View>
-              <View style={styles.itme}><Text>我关注的人</Text></View>
-              <View style={styles.itme}><Text>我的粉丝</Text></View>
+
+              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: me._id, filters: { user_id: me._id }, title: me.nickname + '的帖子' }) }}>
+                <ListItem name={"我创建的帖子"} rightText={me.posts_count} />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPosts', id: me._id + '-posts', filters: { user_id: me._id, posts_exsits: 1 }, title: me.nickname + '关注的帖子' }) }}>
+                <ListItem name={"我编写的评论"} rightText={me.follow_posts_count} />
+              </TouchableOpacity>
+
               <View style={styles.gap}></View>
 
-              <TouchableWithoutFeedback onPress={()=>{ this.props.navigation.navigate('Settings') }}>
-                <View style={styles.itme}><Text>设置</Text></View>
-              </TouchableWithoutFeedback>
+              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'CommentList', id: me._id, filters: { user_id: me._id }, title: me.nickname + '的评论' }) }}>
+                <ListItem name={"我关注的帖子"} rightText={me.comment_count} />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'TopicList', id: me._id, filters: { people_id: me._id }, title: me.nickname + '关注的话题' }) }}>
+                <ListItem name={"我关注的话题"} rightText={me.follow_topic_count} />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPeopleList', id: me._id + '-follow', filters: { user_id: me._id, people_exsits: 1 }, title: me.nickname + '关注的人' }) }}>
+                <ListItem name={"我关注的人"} rightText={me.follow_people_count} />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPeopleList', id: me._id + '-fans', filters: { people_id: me._id, people_exsits: 1 }, title: me.nickname + '的粉丝' }) }}>
+                <ListItem name={"我的粉丝"} rightText={me.fans_count} />
+              </TouchableOpacity>
+
+              <View style={styles.gap}></View>
+
+              <TouchableOpacity onPress={()=>{ this.props.navigation.navigate('Settings') }}>
+                <ListItem name={"设置"} />
+              </TouchableOpacity>
+
             </View>
           </View>
 

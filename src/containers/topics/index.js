@@ -28,8 +28,7 @@ class Topic extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props
-    return <TopicList navigation={navigation} />
+    return <TopicList id="topic" filters={{}} {...this.props} />
   }
 }
 

@@ -26,7 +26,6 @@ import { connect } from 'react-redux'
 import { loadTopicList } from '../../actions/topic'
 import { getTopicListByName } from '../../reducers/topic'
 
-
 class TopicList extends Component {
 
   constructor (props) {
@@ -37,7 +36,6 @@ class TopicList extends Component {
     }
     this.goTo = this.goTo.bind(this)
     this.loadPostsList = this.loadPostsList.bind(this)
-    this.test = this.test.bind(this)
     this.renderHeader = this.renderHeader.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
     this.toTopic = this.toTopic.bind(this)
@@ -49,26 +47,27 @@ class TopicList extends Component {
     navigate('TopicDetail', { title: topic.name, id: topic._id })
   }
 
-  test() {
-    console.log('214')
-  }
-
   componentDidMount() {
 
-    console.log('话题列表加载了');
-
     const self = this
-    this.loadPostsList(()=>{
-      self.setState({})
-    })
+
+    const { topicList } = this.props
+
+    if (!topicList.data) {
+      this.loadPostsList(()=>{
+        // self.setState({})
+      })
+    }
+
   }
 
   loadPostsList(callback, restart) {
 
-    // let list = getPostListByName(this.props.state, 'test')
+    const { id, filters } = this.props
 
     this.props.loadTopicList({
-      name:'test',
+      name:id,
+      filters,
       callback,
       restart
     })
@@ -84,9 +83,10 @@ class TopicList extends Component {
 
   renderFooter() {
 
-    let list = getTopicListByName(this.props.state, 'test')
+    // let list = getTopicListByName(this.props.state, 'test')
+    const { topicList } = this.props
 
-    if (list.loading) {
+    if (topicList.loading) {
       return (
         <View>
           <Text>加载中</Text>
@@ -102,19 +102,24 @@ class TopicList extends Component {
 
   render() {
 
-    let list = getTopicListByName(this.props.state, 'test')
+    const { topicList } = this.props
+
+    console.log(topicList);
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    let topics = ds.cloneWithRows(list.data || [])
+    let topics = ds.cloneWithRows(topicList.data || [])
 
     return (
       <View style={styles.container}>
         <ListView
           enableEmptySections={true}
           dataSource={topics}
-          renderRow={(topic) => (<TouchableOpacity onPress={()=>{this.toTopic(topic)}}><View style={styles.topicItem}>
-            <Text>{topic.name}</Text><Text style={styles.brief}>{topic.brief}</Text>
-          </View></TouchableOpacity>)}
+          renderRow={(topic) => (<TouchableOpacity onPress={()=>{this.toTopic(topic)}}>
+            <View style={styles.item}>
+              <View><Image source={{uri:'https:'+topic.avatar}} style={styles.avatar} /></View>
+              <View><Text>{topic.name}</Text><Text style={styles.brief}>{topic.brief}</Text></View>
+            </View>
+          </TouchableOpacity>)}
           scrollEventThrottle={50}
           removeClippedSubviews={false}
         />
@@ -157,13 +162,11 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // backgroundColor: '#F5FCFF',
   },
-  topicItem: {
+  item: {
     backgroundColor: '#fff',
     padding:20,
     borderBottomWidth: 1,
-    borderColor: '#efefef'
-  },
-  itemHead: {
+    borderColor: '#efefef',
     flexDirection: 'row'
   },
   avatar: {
@@ -191,8 +194,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(state => ({
-    state: state
+export default connect((state, props) => ({
+    topicList: getTopicListByName(state, props.id)
   }),
   (dispatch) => ({
     loadTopicList: bindActionCreators(loadTopicList, dispatch)

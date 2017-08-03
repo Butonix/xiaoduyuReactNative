@@ -11,12 +11,21 @@ class ListItem extends Component {
 
   render() {
 
-    const { name } = this.props
+    const { type, name, rightText } = this.props
 
-    return (<View style={styles.item}>
+    if (type == 'center') {
+      return (<View style={[styles.item, styles.center]}>
+        <Text>{name}</Text>
+      </View>)
+    }
+
+    return (<View style={[styles.item, (type == 'center' ? styles.center : null)]}>
       <View style={styles.minItem}><Text>{name}</Text></View>
       <View style={styles.minItem}></View>
-      <View style={styles.itemRight}><Image source={require('./images/arrow-right.png')} style={styles.arrowRight} /></View>
+      <View style={styles.itemRight}>
+        {rightText ? <Text style={styles.rightText}>{rightText}</Text> : null}
+        <Image source={require('./images/arrow-right.png')} style={styles.arrowRight} />
+      </View>
     </View>)
   }
 }
@@ -24,14 +33,13 @@ class ListItem extends Component {
 
 const styles = StyleSheet.create({
   item:{
-
     paddingLeft: 15,
     paddingRight: 15,
     backgroundColor: '#fff',
-    borderColor: '#dce0e0',
+    borderColor: '#efefef',
     borderBottomWidth: 1,
-
-    flexDirection: 'row'
+    flexDirection: 'row',
+    minHeight: 45
   },
   minItem: {
     flex: 1,
@@ -40,11 +48,20 @@ const styles = StyleSheet.create({
   },
   itemRight: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   arrowRight: {
     width:20,
     height:20
+  },
+  rightText: {
+    marginRight: 10,
+    color: '#rgb(176, 176, 176)'
+  },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 

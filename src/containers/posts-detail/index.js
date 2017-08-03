@@ -43,7 +43,7 @@ class PostsDetail extends Component {
 
     const self = this
     const id = this.props.navigation.state.params.id
-    const { loadPostsById } = this.props.posts
+    const { loadPostsById } = this.props
     const [ posts ] = this.props.posts
 
     if (!posts) {
@@ -55,7 +55,7 @@ class PostsDetail extends Component {
     }
 
   }
-  
+
   goWriteComment() {
 
     const { navigate } = this.props.navigation
@@ -125,7 +125,8 @@ class PostsDetail extends Component {
           <TouchableWithoutFeedback onPress={()=>{this.goWriteComment()}}>
             <View><Text style={styles.comment}>评论</Text></View>
           </TouchableWithoutFeedback>
-          <LikeButton type={"posts"} target_id={posts._id} {...this.props} />
+
+          {posts && posts._id ? <LikeButton type={"posts"} target_id={posts._id} {...this.props} /> : null}
           <Text style={styles.follow}>关注</Text>
         </View>
       </View>)

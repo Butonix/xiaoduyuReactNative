@@ -122,7 +122,7 @@ class PostsList extends Component {
       return (<View></View>)
     }
 
-    // console.log(list);
+    console.log(list);
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let topics = ds.cloneWithRows(list.data || [])
@@ -193,22 +193,8 @@ class PostsList extends Component {
   }
 
   goTo(posts){
-
     const { navigate } = this.props.navigation;
-
     navigate('PostsDetail', { title: posts.title, id: posts._id })
-
-    /*
-    this.props.navigator.push({
-      component: PostsDetail,
-      title: '详情',
-      id: id
-      // rightButtonTitle: '收藏',
-      // onRightButtonPress: function(){
-      //   alert('点击了收藏按钮。');
-      // }
-    });
-    */
   }
 
   goToComment(comment) {

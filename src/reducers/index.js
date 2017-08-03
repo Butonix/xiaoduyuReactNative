@@ -10,6 +10,7 @@ import user from './user'
 import writePosts from './write-posts'
 import notification from './notification'
 import people from './people'
+import followPeople from './follow-people'
 
 let states = {
   posts,
@@ -18,7 +19,8 @@ let states = {
   user,
   writePosts,
   notification,
-  people
+  people,
+  followPeople
 }
 
 let _states = {}

@@ -17,6 +17,7 @@ import ChooseTopic from '../containers/choose-topic'
 import Settings from '../containers/settings'
 import TopicDetail from '../containers/topic-detail'
 import PeopleDetail from '../containers/people-detail'
+import List from '../containers/list'
 
 const MainScreenNavigator = TabNavigator({
   Home: { screen: Home },
@@ -29,6 +30,7 @@ const MainScreenNavigator = TabNavigator({
   tabBarPosition: 'bottom',
   swipeEnabled:false,
   animationEnabled:false,
+  lazy: true,
   tabBarOptions: {
     style: { height:45 },
     activeBackgroundColor:'#fff',
@@ -52,7 +54,8 @@ const App = StackNavigator({
   Forgot: { screen: Forgot },
   GithubSignIn: { screen: GithubSignIn },
   TopicDetail: { screen: TopicDetail },
-  PeopleDetail: { screen: PeopleDetail }
+  PeopleDetail: { screen: PeopleDetail },
+  List: { screen: List }
 },{
   initialRouteName: 'SignIn'
 })

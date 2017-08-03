@@ -7,7 +7,7 @@ import {
   Button,
   Alert,
   Image,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
   AsyncStorage
 } from 'react-native'
 
@@ -17,6 +17,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getUserInfo } from '../../reducers/user'
 import { signout } from '../../actions/sign'
+import { ListItem } from '../../components/ui'
 
 class Settings extends React.Component {
 
@@ -74,61 +75,38 @@ class Settings extends React.Component {
     return (<ScrollView>
           <View>
 
-            <View style={styles.itme}>
-              <View><Text>头像</Text></View>
-              <View style={styles.itemIcon}><Image source={require('./images/arrow-right.png')} style={styles.arrowRight} /></View>
-            </View>
-            <View style={styles.itme}>
-              <View><Text>修改名字</Text></View>
-              <View style={styles.itemIcon}><Image source={require('./images/arrow-right.png')} style={styles.arrowRight} /></View>
-            </View>
-            <View style={styles.itme}>
-              <View><Text>性别</Text></View>
-              <View style={styles.itemIcon}><Image source={require('./images/arrow-right.png')} style={styles.arrowRight} /></View>
-            </View>
-            <View style={styles.itme}>
-              <View><Text>个性签名</Text></View>
-              <View style={styles.itemIcon}><Image source={require('./images/arrow-right.png')} style={styles.arrowRight} /></View>
-            </View>
+            <ListItem name={"头像"} />
+            <ListItem name={"修改名字"} rightText={me.nickname} />
+            <ListItem name={"性别"} rightText={me.gender == 1 ? '男' : '女'} />
+            <ListItem name={"个性签名"} rightText={me.brief} />
 
             <View style={styles.gap}></View>
 
-            <View style={styles.itme}>
-              <View><Text>修改邮箱</Text></View>
-              <View style={styles.itemIcon}><Image source={require('./images/arrow-right.png')} style={styles.arrowRight} /></View>
-            </View>
-            <View style={styles.itme}>
-              <View><Text>修改密码</Text></View>
-              <View style={styles.itemIcon}><Image source={require('./images/arrow-right.png')} style={styles.arrowRight} /></View>
-            </View>
+            {me.email ?
+              <ListItem name={"修改邮箱"} rightText={me.email} />
+              : <ListItem name={"邮箱"} rightText={'未绑定'} />}
+
+            {me.email ?
+              <ListItem name={"修改密码"} />
+              :null}
 
             <View style={styles.gap}></View>
 
-            <View style={styles.itme}>
-              <View><Text>QQ</Text></View>
-              <View style={styles.itemIcon}><Image source={require('./images/arrow-right.png')} style={styles.arrowRight} /></View>
-            </View>
-            <View style={styles.itme}>
-              <View><Text>微博</Text></View>
-              <View style={styles.itemIcon}><Image source={require('./images/arrow-right.png')} style={styles.arrowRight} /></View>
-            </View>
-            <View style={styles.itme}>
-              <View><Text>Github</Text></View>
-              <View style={styles.itemIcon}><Image source={require('./images/arrow-right.png')} style={styles.arrowRight} /></View>
-            </View>
+            <ListItem name={"QQ"} rightText={me.qq ? '已绑定' : '未绑定'} />
+            <ListItem name={"weibo"} rightText={me.weibo ? '已绑定' : '未绑定'} />
+            <ListItem name={"GitHub"} rightText={me.github ? '已绑定' : '未绑定'} />
 
             <View style={styles.gap}></View>
 
-            <View style={styles.itmeCenter}>
-              <TouchableWithoutFeedback onPress={()=>{this.signOut()}}>
-                <View style={styles.itme}><Text>退出</Text></View>
-              </TouchableWithoutFeedback>
-            </View>
+            <TouchableOpacity onPress={()=>{this.signOut()}}>
+              <ListItem type="center" name={"退出"} />
+              {/*<View style={styles.itme}><Text>退出</Text></View>*/}
+            </TouchableOpacity>
+
           </View>
       </ScrollView>)
   }
 }
-
 
 const styles = StyleSheet.create({
   avatarItem: {

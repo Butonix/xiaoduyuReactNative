@@ -1,27 +1,11 @@
 import React, { Component } from 'react'
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  ListView,
-  Image,
-  NavigatorIOS,
-  ScrollView,
-  refreshControl,
-  RefreshControl,
-  Navigator,
-  Button,
-  TouchableWithoutFeedback,
-  TextInput,
-  TouchableOpacity
-} from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Button, TouchableOpacity } from 'react-native'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getUserInfo } from '../../reducers/user'
-import { addComment } from '../../actions/comment'
 import { setTopic } from '../../actions/write-posts'
+import { loadTopicList } from '../../actions/topic'
+import { getTopicListByName } from '../../reducers/topic'
 
 class ChooseTopic extends React.Component {
 
@@ -43,6 +27,14 @@ class ChooseTopic extends React.Component {
     this.choose = this.choose.bind(this)
   }
 
+  componentWillMount() {
+    const { topicList, loadTopicList } = this.props
+    if (topicList && topicList.data) {
+    } else {
+      loadTopicList({ name: 'all-topic', filters: { per_page: 500 } })
+    }
+  }
+
   componentDidMount() {
     this.props.navigation.setParams({
       cancel: this.cancel
@@ -54,51 +46,81 @@ class ChooseTopic extends React.Component {
     navigation.goBack()
   }
 
-  choose() {
-    this.props.setTopic({ topic: { id: '123', name: '测试'} })
+  choose(topic) {
+    this.props.setTopic({ topic: topic })
     this.cancel()
   }
 
   render() {
-    
-    const { me } = this.props
 
-    return (<View>
-      <View style={styles.title}><Text>请选择一个话题</Text></View>
-      <TouchableOpacity onPress={()=>{ this.choose('123467') }} style={styles.title}>
-        <View><Text>测试话题</Text></View>
-      </TouchableOpacity>
-    </View>)
+    const { topicList } = this.props
+
+    if (!topicList.data) {
+      return (<View></View>)
+    }
+
+    let parentTopicList = []
+    let childTopicList = {}
+
+    if (topicList.data) {
+
+      for (let i = 0, max = topicList.data.length; i < max; i++) {
+
+        let topic = topicList.data[i]
+
+        if (!topic.parent_id) {
+          parentTopicList.push(topic)
+        } else {
+          if (!childTopicList[topic.parent_id]) {
+            childTopicList[topic.parent_id] = []
+          }
+          childTopicList[topic.parent_id].push(topic)
+        }
+      }
+    }
+
+    return (<ScrollView>
+      {parentTopicList.map(item=>{
+        return (<View key={item._id} style={styles.container}>
+                  <View><Text style={styles.title}>{item.name}</Text></View>
+                  <View style={styles.itemContainer}>
+                    {childTopicList[item._id] && childTopicList[item._id].map(item=>{
+                      return (<TouchableOpacity
+                        style={styles.item}
+                        key={item._id}
+                        onPress={()=>{this.choose(item)}}>
+                          <Text>{item.name}</Text>
+                        </TouchableOpacity>)
+                    })}
+                  </View>
+                </View>)
+      })}
+    </ScrollView>)
   }
 }
 
 const styles = StyleSheet.create({
-  icon: {
-    width: 24,
-    height: 24,
+  container: {
+    padding:20
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  item: {
+    paddingTop: 10,
+    paddingRight: 10
   },
   title: {
-    height: 40,
-    justifyContent: 'center',
-    borderColor: '#efefef',
-    borderWidth: 1,
-    paddingLeft: 10,
-    backgroundColor: '#fff'
-  },
-  content: {
-    height: 300,
-    borderColor: '#efefef',
-    borderWidth: 1,
-    paddingLeft: 10,
-    backgroundColor: '#fff'
+    color:'#rgb(120, 120, 120)'
   }
 });
 
 export default connect(state => ({
-    me: getUserInfo(state)
+    topicList: getTopicListByName(state, 'all-topic')
   }),
   (dispatch) => ({
-    addComment: bindActionCreators(addComment, dispatch),
-    setTopic: bindActionCreators(setTopic, dispatch)
+    setTopic: bindActionCreators(setTopic, dispatch),
+    loadTopicList: bindActionCreators(loadTopicList, dispatch)
   })
 )(ChooseTopic);

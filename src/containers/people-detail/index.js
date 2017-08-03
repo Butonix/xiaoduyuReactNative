@@ -12,7 +12,7 @@ import {
   RefreshControl,
   Navigator,
   Button,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
   TextInput
 } from 'react-native'
 
@@ -58,6 +58,9 @@ class PeopleDetail extends React.Component {
 
     const [ people ] = this.props.people
 
+      const { navigate } = this.props.navigation
+
+
     if (!people) {
       return (<View>
         <Text>Loading...</Text>
@@ -70,12 +73,31 @@ class PeopleDetail extends React.Component {
         {people.nickname ? <Text>{people.nickname}</Text> : null}
         {people.brief ? <Text>{people.brief}</Text> : null}
       </View>
-      <ListItem name={`他发布的帖子 ${people.posts_count || ''}`} />
-      <ListItem name={`他关注的帖子 ${people.follow_posts_count || ''}`} />
-      <ListItem name={`他的评论 ${people.comment_count || ''}`} />
-      <ListItem name={`他的关注的话题 ${people.follow_topic_count || ''}`} />
-      <ListItem name={`他关注的人 ${people.follow_people_count || ''}`} />
-      <ListItem name={`他的粉丝 ${people.fans_count || ''}`} />
+
+      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: people._id, filters: { user_id: people._id }, title: people.nickname + '的帖子' }) }}>
+        <ListItem name={"他发布的帖子"} rightText={people.posts_count} />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPosts', id: people._id + '-posts', filters: { user_id: people._id, posts_exsits: 1 }, title: people.nickname + '关注的帖子' }) }}>
+        <ListItem name={"他关注的帖子"} rightText={people.follow_posts_count} />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'CommentList', id: people._id, filters: { user_id: people._id }, title: people.nickname + '的评论' }) }}>
+        <ListItem name={"他的评论"} rightText={people.comment_count} />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'TopicList', id: people._id, filters: { people_id: people._id }, title: people.nickname + '关注的话题' }) }}>
+        <ListItem name={"他的关注的话题"} rightText={people.follow_topic_count} />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPeopleList', id: people._id + '-follow', filters: { user_id: people._id, people_exsits: 1 }, title: people.nickname + '关注的人' }) }}>
+        <ListItem name={"他关注的人"} rightText={people.follow_people_count} />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPeopleList', id: people._id + '-fans', filters: { people_id: people._id, people_exsits: 1 }, title: people.nickname + '的粉丝' }) }}>
+        <ListItem name={"他的粉丝"} rightText={people.fans_count} />
+      </TouchableOpacity>
+
     </View>)
   }
 }

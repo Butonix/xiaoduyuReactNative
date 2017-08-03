@@ -24,6 +24,7 @@ import { addComment } from '../../actions/comment'
 import { getWritePosts } from '../../reducers/write-posts'
 import { setTopic } from '../../actions/write-posts'
 
+
 class WritePosts extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
