@@ -19,6 +19,23 @@ class ListItem extends Component {
       </View>)
     }
 
+    if (type == 'hook') {
+      return (<View style={styles.item}>
+        <View style={styles.minItem}><Text>{name}</Text></View>
+        <View style={styles.minItem}></View>
+        <View style={styles.itemRight}>
+          <Image source={require('./images/green-hook.png')} style={styles.arrowRight} />
+        </View>
+      </View>)
+    }
+
+    if (type == 'none') {
+      return (<View style={styles.item}>
+        <View style={styles.minItem}><Text>{name}</Text></View>
+        <View style={styles.minItem}></View>
+      </View>)
+    }
+
     return (<View style={[styles.item, (type == 'center' ? styles.center : null)]}>
       <View style={styles.minItem}><Text>{name}</Text></View>
       <View style={styles.minItem}></View>

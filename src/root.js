@@ -5,12 +5,14 @@ import { Text, View, AsyncStorage, NetInfo, StyleSheet, ActivityIndicator, Touch
 import SplashScreen from 'react-native-splash-screen'
 import reducers, { getInitialState } from './reducers'
 import getStore from './store/configure-store.js'
-import Navigators from './navigators/index'
+import Navigators from './navigators'
 
 import { combineReducers, bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { loadUserInfo, addAccessToken, cleanUserInfo } from './actions/user'
 import { cleanAllPosts } from './actions/posts'
+
+import { api_url } from '../config'
 
 const store = getStore()
 
@@ -39,7 +41,7 @@ global.initReduxDate = (callback) => {
         } else if (res && !res.success) {
           AsyncStorage.removeItem('token', function(res){
             callback(false)
-          })(store.dispatch, store.getState)
+          })
         } else {
           callback(false)
         }
@@ -50,6 +52,28 @@ global.initReduxDate = (callback) => {
   })
 
 }
+
+const ws = new WebSocket(api_url+'/socket.io/?EIO=4&transport=websocket');
+
+ws.onopen = () => {
+  // console.log('连接成功');
+}
+
+ws.onmessage = (e) => {
+  // 接收到了一个消息
+  console.log(e.data);
+}
+
+ws.onerror = (e) => {
+  // 发生了一个错误
+  // console.log(e.message);
+}
+
+ws.onclose = (e) => {
+  // 连接被关闭了
+  // console.log(e.code, e.reason);
+}
+
 
 class MainApp extends Component {
 
@@ -97,19 +121,23 @@ class MainApp extends Component {
 
   }
 
+  componentDidMount() {
+
+
+
+  }
+
   componentWillMount() {
     global.signIn = false
     this.start()
   }
 
   componentWillReceiveProps() {
-    console.log('组件发生更新了1111');
-    global.signIn = false
-    this.start()
+    // global.signIn = false
+    // this.start()
   }
 
   componentDidUpdate() {
-    console.log('组件更新完成了');
   }
 
   render() {

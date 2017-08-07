@@ -10,7 +10,7 @@ import { getCommentById } from '../../reducers/comment'
 
 import HTMLView from '../../components/html-view'
 import CommentList from '../../components/comment-list'
-
+import BottomBar from '../../components/bottom-bar'
 
 class CommentDetail extends Component {
 
@@ -46,7 +46,8 @@ class CommentDetail extends Component {
       return (<Text>加载中...</Text>)
     }
 
-    return (<ScrollView style={styles.container}>
+    return (<View style={styles.container}>
+      <ScrollView style={styles.main}>
         <View style={styles.comment}>
           <HTMLView html={comment.content_html} />
         </View>
@@ -56,7 +57,9 @@ class CommentDetail extends Component {
             filters={{ parent_id: comment._id, parent_exists: 1, per_page: 100 }}
             />
         </View>
-      </ScrollView>)
+      </ScrollView>
+      <BottomBar {...this.props} comment={comment} />
+      </View>)
   }
 }
 
@@ -64,6 +67,9 @@ class CommentDetail extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
+    flex: 1
+  },
+  main: {
     flex: 1
   },
   comment: {

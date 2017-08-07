@@ -26,7 +26,7 @@ import { api_url, api_verstion } from '../../../config'
 class SignIn extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    // header: null
+    header: null
     // headerTitle: '登录'
   })
 
@@ -278,9 +278,10 @@ class SignIn extends Component {
       <View style={gStyles.item}>
         <Fieldset text="或者通过邮箱登录" />
       </View>
-
+      
       <TextInput
           style={styles.input}
+          autoCapitalize={'none'}
           onChangeText={(email) => this.setState({email})}
           placeholder='请输入邮箱'
         />

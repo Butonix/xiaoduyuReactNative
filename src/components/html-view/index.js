@@ -13,12 +13,14 @@ class HtmlView extends Component {
   }
 
   render () {
+
     return (
       <HTMLView
         stylesheet={htmlStyles}
         value={this.props.html}
         onLinkPress={(url) => console.log('clicked link: ', url)}
         renderNode={renderNode}
+        addLineBreaks={false}
       />
     )
   }

@@ -21,7 +21,7 @@ class Home extends Component {
     tabBarIcon: ({ tintColor }) => (<Image source={require('./images/home.png')} style={[stylesIcon.icon, {tintColor: tintColor}]} />),
     headerStyle: gStyles.headerStyle
   }
-
+  
   componentDidMount() {
     this.toWritePosts = this.toWritePosts.bind(this)
   }

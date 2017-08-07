@@ -1,16 +1,7 @@
 
 
 import React, { Component } from 'react'
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-  WebView,
-  TouchableWithoutFeedback
-} from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Image, ScrollView, WebView, TouchableOpacity } from 'react-native'
 
 import { StackNavigator, TabNavigator } from 'react-navigation'
 
@@ -24,7 +15,9 @@ import { getUserInfo } from '../../reducers/user'
 import HTMLView from '../../components/html-view'
 import Img from '../../components/image'
 import CommentList from '../../components/comment-list'
-import LikeButton from '../../components/like-button'
+// import LikeButton from '../../components/like-button'
+// import FollowButton from '../../components/follow-button'
+import BottomBar from '../../components/bottom-bar'
 
 class PostsDetail extends Component {
 
@@ -121,14 +114,7 @@ class PostsDetail extends Component {
 
     return (<View style={styles.container}>
         <ScrollView style={styles.main}>{dom}</ScrollView>
-        <View style={styles.bottomBar}>
-          <TouchableWithoutFeedback onPress={()=>{this.goWriteComment()}}>
-            <View><Text style={styles.comment}>评论</Text></View>
-          </TouchableWithoutFeedback>
-
-          {posts && posts._id ? <LikeButton type={"posts"} target_id={posts._id} {...this.props} /> : null}
-          <Text style={styles.follow}>关注</Text>
-        </View>
+        <BottomBar {...this.props} posts={posts} />
       </View>)
   }
 }
@@ -143,10 +129,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
-    // marginTop:100
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // backgroundColor: '#F5FCFF',
   },
   main: {
     flex: 2
@@ -170,14 +152,11 @@ const styles = StyleSheet.create({
     marginTop:10
   },
   bottomBar: {
-    // position:'absolute',
     height: 50,
     backgroundColor: '#fff',
     borderTopWidth: 1,
     borderColor: '#efefef',
     flexDirection: 'row'
-    // bottom:90,
-    // right:20
   },
   comment: {
     width: 50,

@@ -17,13 +17,14 @@ export function addAccessToken({ accessToken }) {
 export function loadUserInfo({ accessToken = null, callback = ()=>{} }) {
   return (dispatch, getState) => {
 
-    // accessToken = accessToken || getState().user.accessToken
+    accessToken = accessToken || getState().user.accessToken
 
     return Ajax({
       url: '/user',
       type: 'post',
       headers: { AccessToken: accessToken },
       callback: (res) => {
+
         if (res && res.success) {
           dispatch(setUser(res.data))
         }

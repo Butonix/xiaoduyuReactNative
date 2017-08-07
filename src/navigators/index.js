@@ -19,6 +19,16 @@ import TopicDetail from '../containers/topic-detail'
 import PeopleDetail from '../containers/people-detail'
 import List from '../containers/list'
 
+// setting
+import ResetNickname from '../containers/reset-nickname'
+import ResetBiref from '../containers/reset-brief'
+import ResetGender from '../containers/reset-gender'
+import ResetPassword from '../containers/reset-password'
+import ResetEmail from '../containers/reset-email'
+
+// test
+import Test from '../containers/test'
+
 const MainScreenNavigator = TabNavigator({
   Home: { screen: Home },
   Topics: { screen: Topics },
@@ -28,7 +38,7 @@ const MainScreenNavigator = TabNavigator({
 {
   initialRouteName: 'Home',
   tabBarPosition: 'bottom',
-  swipeEnabled:false,
+  swipeEnabled:true,
   animationEnabled:false,
   lazy: true,
   tabBarOptions: {
@@ -55,7 +65,13 @@ const App = StackNavigator({
   GithubSignIn: { screen: GithubSignIn },
   TopicDetail: { screen: TopicDetail },
   PeopleDetail: { screen: PeopleDetail },
-  List: { screen: List }
+  List: { screen: List },
+  ResetNickname: { screen: ResetNickname },
+  ResetBiref: { screen: ResetBiref },
+  ResetGender: { screen: ResetGender },
+  ResetPassword: { screen: ResetPassword },
+  ResetEmail: { screen: ResetEmail },
+  Test: { screen: Test }
 },{
   initialRouteName: 'SignIn'
 })

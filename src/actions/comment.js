@@ -8,8 +8,6 @@ export function addComment({ data, callback }) {
     let accessToken = getState().user.accessToken
     let commentState = getState().comment
 
-    console.log(data);
-
     return Ajax({
       url: '/write-comment',
       type: 'post',
@@ -50,7 +48,7 @@ export function addComment({ data, callback }) {
 export function loadCommentList({ name, filters = {}, callback = ()=>{} }) {
   return (dispatch, getState) => {
 
-    const accessToken = null//getState().user.accessToken
+    const accessToken = getState().user.accessToken
     let commentList = getState().comment[name] || {}
 
     if (typeof(commentList.more) != 'undefined' && !commentList.more ||
@@ -59,7 +57,7 @@ export function loadCommentList({ name, filters = {}, callback = ()=>{} }) {
       callback()
       return
     }
-
+    
     if (!commentList.data) commentList.data = []
 
     if (!commentList.filters) {

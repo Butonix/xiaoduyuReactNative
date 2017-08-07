@@ -13,14 +13,12 @@ export default function user(state = initialState, action = {}) {
 
     case 'ADD_ACCESS_TOKEN':
       state.accessToken = action.accessToken
-      console.log(state);
       return merge({}, state, {})
 
     case 'REMOVE_ACCESS_TOKEN':
       state.accessToken = ''
       state.unreadNotice = 0
       state.profile = {}
-      console.log(state);
       return merge({}, state, {})
 
     case 'SET_USER':

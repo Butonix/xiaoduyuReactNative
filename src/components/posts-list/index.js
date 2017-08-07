@@ -122,8 +122,6 @@ class PostsList extends Component {
       return (<View></View>)
     }
 
-    console.log(list);
-
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let topics = ds.cloneWithRows(list.data || [])
 

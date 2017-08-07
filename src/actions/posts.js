@@ -101,8 +101,6 @@ export function loadPostsList({ name, filters = {}, callback=()=>{}, restart = f
       headers,
       callback: (res) => {
 
-        console.log(res);
-
         if (!res || !res.success) {
           callback(res)
           return

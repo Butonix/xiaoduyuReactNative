@@ -21,6 +21,7 @@ import { bindActionCreators } from 'redux'
 import { loadPeopleById } from '../../actions/people'
 import { getPeopleById } from '../../reducers/people'
 import { ListItem } from '../../components/ui'
+import FollowButton from '../../components/follow-button'
 
 class PeopleDetail extends React.Component {
 
@@ -73,6 +74,8 @@ class PeopleDetail extends React.Component {
         {people.nickname ? <Text>{people.nickname}</Text> : null}
         {people.brief ? <Text>{people.brief}</Text> : null}
       </View>
+      
+      <View><FollowButton people_id={people._id} {...people} /></View>
 
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: people._id, filters: { user_id: people._id }, title: people.nickname + '的帖子' }) }}>
         <ListItem name={"他发布的帖子"} rightText={people.posts_count} />

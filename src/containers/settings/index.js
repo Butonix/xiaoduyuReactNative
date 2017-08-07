@@ -71,36 +71,53 @@ class Settings extends React.Component {
   render() {
 
     const { me } = this.props
+    const { navigate } = this.props.navigation
+
+    if (!me || !me._id) {
+      return (<View></View>)
+    }
 
     return (<ScrollView>
           <View>
 
             <ListItem name={"头像"} />
-            <ListItem name={"修改名字"} rightText={me.nickname} />
-            <ListItem name={"性别"} rightText={me.gender == 1 ? '男' : '女'} />
-            <ListItem name={"个性签名"} rightText={me.brief} />
+
+            <TouchableOpacity onPress={()=>{ navigate('ResetNickname', {}) }}>
+              <ListItem name={"修改名字"} rightText={me.nickname} />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=>{ navigate('ResetGender', {}) }}>
+              <ListItem name={"性别"} rightText={me.gender == 1 ? '男' : '女'} />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=>{ navigate('ResetBiref', {}) }}>
+              <ListItem name={"个性签名"} rightText={me.brief} />
+            </TouchableOpacity>
 
             <View style={styles.gap}></View>
 
             {me.email ?
-              <ListItem name={"修改邮箱"} rightText={me.email} />
+              <TouchableOpacity onPress={()=>{ navigate('ResetEmail', {}) }}>
+                <ListItem name={"修改邮箱"} rightText={me.email} />
+              </TouchableOpacity>
               : <ListItem name={"邮箱"} rightText={'未绑定'} />}
 
             {me.email ?
-              <ListItem name={"修改密码"} />
+              <TouchableOpacity onPress={()=>{ navigate('ResetPassword', {}) }}>
+                <ListItem name={"修改密码"} />
+              </TouchableOpacity>
               :null}
 
             <View style={styles.gap}></View>
 
             <ListItem name={"QQ"} rightText={me.qq ? '已绑定' : '未绑定'} />
-            <ListItem name={"weibo"} rightText={me.weibo ? '已绑定' : '未绑定'} />
+            <ListItem name={"微博"} rightText={me.weibo ? '已绑定' : '未绑定'} />
             <ListItem name={"GitHub"} rightText={me.github ? '已绑定' : '未绑定'} />
 
             <View style={styles.gap}></View>
 
             <TouchableOpacity onPress={()=>{this.signOut()}}>
               <ListItem type="center" name={"退出"} />
-              {/*<View style={styles.itme}><Text>退出</Text></View>*/}
             </TouchableOpacity>
 
           </View>

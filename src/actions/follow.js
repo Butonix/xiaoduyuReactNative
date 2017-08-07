@@ -1,6 +1,6 @@
 import Ajax from '../common/ajax'
 
-export function follow({ peopleId, callback }) {
+export function follow({ data = {}, callback }) {
   return (dispatch, getState) => {
     let accessToken = getState().user.accessToken
     let selfId = getState().user.profile._id
@@ -8,20 +8,25 @@ export function follow({ peopleId, callback }) {
     return Ajax({
       url: '/add-follow',
       type: 'post',
-      data: { access_token: accessToken, people_id: peopleId },
-      callback: (res)=>{
-        if (res && res.success) {
-          dispatch({ type: 'UPLOAD_FOLLOW_PEOPLE_FOLLOW_STATUS', peopleId: peopleId, selfId: selfId, followStatus: true })
-          dispatch({ type: 'UPLOAD_PEOPLE_FOLLOW', peopleId: peopleId, selfId: selfId, followStatus: true })
+      data: data,
+      headers: { AccessToken: accessToken },
+      callback: (result)=>{
+        if (result && result.success) {
+          if (data.posts_id) {
+            dispatch({ type: 'UPDATE_POSTS_FOLLOW', id: data.posts_id, followStatus: true  })
+          } else if (data.people_id) {
+            dispatch({ type: 'UPLOAD_FOLLOW_PEOPLE_FOLLOW_STATUS', peopleId: data.people_id, selfId: selfId, followStatus: true })
+            dispatch({ type: 'UPLOAD_PEOPLE_FOLLOW', peopleId: data.people_id, selfId: selfId, followStatus: true })
+          }
         }
-        callback(res)
+        callback(result)
       }
     })
 
   }
 }
 
-export function unfollow({ peopleId, callback }) {
+export function unfollow({ data = {}, callback }) {
   return (dispatch, getState) => {
     let accessToken = getState().user.accessToken
     let selfId = getState().user.profile._id
@@ -29,13 +34,18 @@ export function unfollow({ peopleId, callback }) {
     return Ajax({
       url: '/remove-follow',
       type: 'post',
-      data: { access_token: accessToken, people_id: peopleId },
-      callback: (res)=>{
-        if (res && res.success) {
-          dispatch({ type: 'UPLOAD_FOLLOW_PEOPLE_FOLLOW_STATUS', peopleId: peopleId, selfId: selfId, followStatus: false })
-          dispatch({ type: 'UPLOAD_PEOPLE_FOLLOW', peopleId: peopleId, selfId: selfId, followStatus: false })
+      data: data,
+      headers: { AccessToken: accessToken },
+      callback: (result)=>{
+        if (result && result.success) {
+          if (data.posts_id) {
+            dispatch({ type: 'UPDATE_POSTS_FOLLOW', id: data.posts_id, followStatus: false  })
+          } else if (data.people_id) {
+            dispatch({ type: 'UPLOAD_FOLLOW_PEOPLE_FOLLOW_STATUS', peopleId: data.people_id, selfId: selfId, followStatus: false })
+            dispatch({ type: 'UPLOAD_PEOPLE_FOLLOW', peopleId: data.people_id, selfId: selfId, followStatus: false })
+          }
         }
-        callback(res)
+        callback(result)
       }
     })
 

@@ -4,25 +4,29 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-na
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { like, unlike } from '../../actions/like'
+import { follow, unfollow } from '../../actions/follow'
 import { getUserInfo } from '../../reducers/user'
 
-class LikeButton extends Component {
+class FollowButton extends Component {
 
   constructor (props) {
     super(props)
   }
 
-  like() {
-    const { me, likeType, target_id, like, handleLike, handleUnlike } = this.props
-    let fn = like ? handleUnlike : handleLike
+  follow() {
+    const { me, followType, posts_id, people_id, follow, handleFollow, handleUnfollow } = this.props
+    let fn = follow ? handleUnfollow : handleFollow
+
+    let data = {}
+
+    if (posts_id) {
+      data.posts_id = posts_id
+    } else if (people_id) {
+      data.people_id = people_id
+    }
 
     fn({
-      data: {
-        type: likeType,
-        target_id: target_id,
-        mood: 1
-      },
+      data,
       callback: (res)=> {
         if (res && !res.success) {
           Alert.alert('', res.error : '提交失败')
@@ -32,20 +36,17 @@ class LikeButton extends Component {
   }
 
   render() {
-
-    const { like = false, me, user_id } = this.props
+    const { follow = false, me, user_id } = this.props
 
     if (user_id && user_id._id && me._id == user_id._id) {
       return (<View></View>)
     }
 
-    return (
-          <TouchableOpacity onPress={this.like.bind(this)}>
+    return (<TouchableOpacity onPress={this.follow.bind(this)}>
             <View>
-              <Text>{like ? '已赞' : '赞'}</Text>
+              <Text>{follow ? '已关注' : '关注'}</Text>
             </View>
-          </TouchableOpacity>
-        )
+          </TouchableOpacity>)
   }
 }
 
@@ -59,7 +60,7 @@ export default connect((state, props) => {
     }
   },
   (dispatch) => ({
-    handleLike: bindActionCreators(like, dispatch),
-    handleUnlike: bindActionCreators(unlike, dispatch)
+    handleFollow: bindActionCreators(follow, dispatch),
+    handleUnfollow: bindActionCreators(unfollow, dispatch)
   })
-)(LikeButton)
+)(FollowButton)
