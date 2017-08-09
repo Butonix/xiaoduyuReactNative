@@ -34,6 +34,7 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* xiaoduyuReactNativeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* xiaoduyuReactNativeTests.m */; };
+		43650DD71F3970A40042E68B /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43650DBA1F396ECE0042E68B /* libRCTCameraRoll.a */; };
 		43D2F2B31F234F850044A93D /* OpenShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D2F2A51F234F850044A93D /* OpenShare.m */; };
 		43D2F2B41F234F850044A93D /* OpenShare+Alipay.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D2F2A71F234F850044A93D /* OpenShare+Alipay.m */; };
 		43D2F2B51F234F850044A93D /* OpenShare+QQ.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D2F2A91F234F850044A93D /* OpenShare+QQ.m */; };
@@ -209,6 +210,13 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		43650DB91F396ECE0042E68B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43650DB21F396ECE0042E68B /* RCTCameraRoll.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RCTCameraRoll;
+		};
 		436D8D491F239A8500E39AD6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EEE68569B1894EA5AFD66284 /* SplashScreen.xcodeproj */;
@@ -311,6 +319,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* xiaoduyuReactNative-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "xiaoduyuReactNative-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* xiaoduyuReactNative-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xiaoduyuReactNative-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		43650DB21F396ECE0042E68B /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		436D8D4B1F239C0100E39AD6 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		43D2F2A41F234F850044A93D /* OpenShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenShare.h; path = "../node_modules/react-native-open-share/src/OpenShare.h"; sourceTree = "<group>"; };
 		43D2F2A51F234F850044A93D /* OpenShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenShare.m; path = "../node_modules/react-native-open-share/src/OpenShare.m"; sourceTree = "<group>"; };
@@ -348,6 +357,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43650DD71F3970A40042E68B /* libRCTCameraRoll.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -500,6 +510,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		43650DB31F396ECE0042E68B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43650DBA1F396ECE0042E68B /* libRCTCameraRoll.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		436D8D281F239A8500E39AD6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -567,6 +585,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				43650DB21F396ECE0042E68B /* RCTCameraRoll.xcodeproj */,
 				436D8D4B1F239C0100E39AD6 /* SplashScreen.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -740,6 +759,10 @@
 				{
 					ProductGroup = 5E91572E1DD0AC6500FF2AA8 /* Products */;
 					ProjectRef = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
+				},
+				{
+					ProductGroup = 43650DB31F396ECE0042E68B /* Products */;
+					ProjectRef = 43650DB21F396ECE0042E68B /* RCTCameraRoll.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -946,6 +969,13 @@
 			fileType = archive.ar;
 			path = libjschelpers.a;
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43650DBA1F396ECE0042E68B /* libRCTCameraRoll.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCameraRoll.a;
+			remoteRef = 43650DB91F396ECE0042E68B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		436D8D4A1F239A8500E39AD6 /* libSplashScreen.a */ = {

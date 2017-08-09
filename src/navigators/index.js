@@ -28,6 +28,7 @@ import ResetEmail from '../containers/reset-email'
 
 // test
 import Test from '../containers/test'
+import Editor from '../containers/editor'
 
 const MainScreenNavigator = TabNavigator({
   Home: { screen: Home },
@@ -55,12 +56,12 @@ const App = StackNavigator({
   Main: { screen: MainScreenNavigator },
   PostsDetail: { screen: PostsDetail },
   WriteComment: { screen: WriteComment },
-  WritePosts: { screen: WritePosts },
+  WritePosts: { screen: Editor },
   ChooseTopic: { screen: ChooseTopic },
   CommentDetail: { screen: CommentDetail },
   SignIn: { screen: SignIn },
   Settings: { screen: Settings },
-  SignUp: { screen: SignUp },
+  SignUp: { screen: Editor },
   Forgot: { screen: Forgot },
   GithubSignIn: { screen: GithubSignIn },
   TopicDetail: { screen: TopicDetail },
