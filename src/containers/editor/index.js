@@ -36,7 +36,8 @@ class Forgot extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      qiniu: null
+      qiniu: null,
+      image: ''
     }
     this.picker = this.picker.bind(this)
   }
@@ -64,18 +65,32 @@ class Forgot extends Component {
 
   picker() {
 
+    const self = this
     const { qiniu } = this.state
 
     ImagePickerIOS.openSelectDialog({}, function(res){
 
-      let id = res.split('?')[1].split('&')[0].split('=')[1]
+      Image.getSize(res, (width, height) => {
 
-      Rpc.uploadFile(res, qiniu.token, { key : id }, (err, res)=>{
-        if (err.total == err.loaded) {
-          console.log('https://'+qiniu.url+'/'+id);
-        } else {
-          console.log('上传中:'+ err.total +' - '+ err.loaded);
-        }
+        let id = res.split('?')[1].split('&')[0].split('=')[1]
+
+        Rpc.uploadFile(res, qiniu.token, { key : id }, (err, res)=>{
+          if (err.total == err.loaded) {
+
+            let imageUrl = 'https:'+qiniu.url+'/'+id
+            
+            if (width > 600) {
+              imageUrl += '?imageMogr2/thumbnail/!600/quality/85'
+            }
+
+            self.setState({ image: imageUrl })
+
+            console.log(imageUrl);
+          } else {
+            console.log('上传中:'+ err.total +' - '+ err.loaded);
+          }
+        })
+
       })
 
     }, function(){
@@ -85,9 +100,11 @@ class Forgot extends Component {
 
   render() {
 
-    const { qiniu } = this.state
+    const { qiniu, image } = this.state
 
     return (<View style={styles.container}>
+      {image ?
+        <Image source={{uri:image}} style={styles.image}  /> : null}
       {qiniu ?
         <TouchableOpacity onPress={this.picker}>
           <Text>upload images</Text>
@@ -138,6 +155,10 @@ const styles = StyleSheet.create({
   },
   itemLeft: {
     flex: 1
+  },
+  image: {
+    width: 150,
+    height: 150
   }
 })
 
