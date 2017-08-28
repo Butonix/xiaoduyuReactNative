@@ -12,6 +12,8 @@ export function getQiNiuToken({ callback }) {
       headers: { AccessToken: accessToken },
       callback: (res) => {
 
+        console.log(res);
+        
         if (res && res.success) {
           callback(res.data)
         } else {

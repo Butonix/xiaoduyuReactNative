@@ -26,8 +26,8 @@ import { api_url, api_verstion } from '../../../config'
 class SignIn extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    header: null
-    // headerTitle: '登录'
+    // header: null
+    headerTitle: '登录'
   })
 
   constructor (props) {
@@ -262,7 +262,8 @@ class SignIn extends Component {
     const { navigate } = this.props.navigation
 
     return (<ScrollView style={styles.container}>
-
+      
+      {/*
       <TouchableOpacity onPress={this._qqLogin} style={gStyles.fullButton}>
         <Text style={styles.buttonText}>通过QQ登录</Text>
       </TouchableOpacity>
@@ -278,7 +279,8 @@ class SignIn extends Component {
       <View style={gStyles.item}>
         <Fieldset text="或者通过邮箱登录" />
       </View>
-      
+      */}
+
       <TextInput
           style={styles.input}
           autoCapitalize={'none'}

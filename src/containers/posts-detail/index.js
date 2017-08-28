@@ -30,6 +30,7 @@ class PostsDetail extends Component {
     this.state = {}
     this.goWriteComment = this.goWriteComment.bind(this)
     this.like = this.like.bind(this)
+    this.toPeople = this.toPeople.bind(this)
   }
 
   componentDidMount() {
@@ -47,6 +48,11 @@ class PostsDetail extends Component {
       })
     }
 
+  }
+
+  toPeople(user) {
+    const { navigate } = this.props.navigation;
+    navigate('PeopleDetail', { title: user.nickname, id: user._id })
   }
 
   goWriteComment() {
@@ -89,10 +95,14 @@ class PostsDetail extends Component {
         <View style={styles.posts}>
           <View style={styles.itemHead}>
             <View>
-              <Image source={{uri:'https:'+posts.user_id.avatar_url}} style={styles.avatar}  />
+              <TouchableOpacity onPress={()=>{this.toPeople(posts.user_id)}}>
+                <Image source={{uri:'https:'+posts.user_id.avatar_url}} style={styles.avatar}  />
+              </TouchableOpacity>
             </View>
             <View>
-              <Text onPress={()=>{this.test(posts)}}>{posts.user_id.nickname}</Text>
+              <TouchableOpacity onPress={()=>{this.toPeople(posts.user_id)}}>
+                <Text>{posts.user_id.nickname}</Text>
+              </TouchableOpacity>
               <Text>
                 {posts.topic_id.name} {posts.view_count ? posts.view_count+'次浏览' : null} {posts.like_count ? posts.like_count+'个赞' : null} {posts.follow_count ? posts.follow_count+'人关注' : null}
               </Text>
@@ -104,9 +114,8 @@ class PostsDetail extends Component {
           </View>
         </View>
         <View>
-          <CommentList name={posts._id} filters={{ posts_id: posts._id, parent_exists: 0, per_page: 100 }} />
+          <CommentList {...this.props} name={posts._id} filters={{ posts_id: posts._id, parent_exists: 0, per_page: 100 }} />
         </View>
-
 
       </View>)
 

@@ -6,36 +6,24 @@ import axios from 'axios'
 const converterErrorInfo = (res) => {
 
   if (res.error) {
-    // 单个错误
     if (typeof(res.error) == 'number') {
       res.error = errors[res.error] || '未知错误: '+res.error
     } else {
-      // 多个错误提示
       for (let i in res.error) {
         res.error[i] = errors[res.error[i]] || '未知错误: '+res.error[i]
       }
     }
   }
 
-
   // 参数替换
   if (res.error_data) {
 
-    if (typeof(res.error) == 'number' || typeof(res.error) == 'string') {
-      for (let i in res.error_data) {
-        res.error = res.error.replace(new RegExp('{'+i+'}',"g"), res.error_data[i])
-      }
-      // react native 不支持 format
-      // res.error = res.error.format(res.error_data);
+    if (typeof(res.error) == 'number') {
+      res.error = res.error.format(res.error_data);
     } else {
       for (let i in res.error) {
         res.error[i] = errors[res.error[i]] || '未知错误: '+res.error[i]
-
-        for (let i in res.error_data) {
-          res.error[i] = res.error[i].replace(new RegExp('{'+i+'}',"g"), res.error_data[i])
-        }
-        // react native 不支持 format
-        // res.error[i] = res.error[i].format(res.error_data);
+        res.error[i] = res.error[i].format(res.error_data);
       }
     }
 
@@ -69,9 +57,9 @@ const AJAX = ({ url = '', type = 'get', params = {}, data = {}, headers = {}, ca
   }
 
   if (config.debug && console.log) console.log('请求: ', option)
-
+  
   return axios(option).then(resp => {
-    if (config.debug && console.log) console.log('返回: ', resp)
+    // if (config.debug && console.debug) console.debug('返回: ', resp)
 
     if (resp && resp.data) {
       let res = resp.data
@@ -83,7 +71,8 @@ const AJAX = ({ url = '', type = 'get', params = {}, data = {}, headers = {}, ca
 
   })
   .catch(function (error, res) {
-    if (config.debug) console.log('返回: ', error.response.data)
+    // console.log(error.response);
+    // if (config.debug && console.debug) console.error('返回: ', error)
     if (error && error.response && error.response.data) {
       let res = error.response.data
       res = converterErrorInfo(res)

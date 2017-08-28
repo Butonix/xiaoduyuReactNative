@@ -27,13 +27,12 @@
 			<string>RNShare</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxd930ea5d5a258f4f</string>
-				<string>tencent111111111</string>
-				<string>tencent111111111.content</string>
-				<string>QQ11111111</string>
-				<string>wb1111111111</string>
-				<string>renrenshare111111</string>
-				<string>fb776442542471056</string>
+				<string>wechat：wx*</string>
+				<string>qq：tencent*</string>
+				<string>qq：tencent*.content</string>
+				<string>qq: QQ*</string>
+				<string>weibo: *</string>
+				<string>facebook: *</string>
 			</array>
 		</dict>
 	</array>
@@ -54,6 +53,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>小度鱼需要使用你的相册</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

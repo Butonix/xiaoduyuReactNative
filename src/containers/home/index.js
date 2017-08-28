@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { View, ScrollView, StyleSheet, Text, Image, AsyncStorage, TouchableOpacity } from 'react-native'
-import Headroom from 'react-native-headroom'
+// import Headroom from 'react-native-headroom'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
 import { bindActionCreators } from 'redux'
@@ -21,7 +21,7 @@ class Home extends Component {
     tabBarIcon: ({ tintColor }) => (<Image source={require('./images/home.png')} style={[stylesIcon.icon, {tintColor: tintColor}]} />),
     headerStyle: gStyles.headerStyle
   }
-  
+
   componentDidMount() {
     this.toWritePosts = this.toWritePosts.bind(this)
   }

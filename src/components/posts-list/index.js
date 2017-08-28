@@ -27,6 +27,7 @@ import { loadPostsList } from '../../actions/posts';
 import { getPostListByName } from '../../reducers/posts'
 
 import CommentItem from '../../components/comment-item'
+// import FLAnimatedImage from 'react-native-flanimatedimage'
 
 class PostsList extends Component {
 
@@ -63,6 +64,15 @@ class PostsList extends Component {
     const { navigate } = this.props.navigation;
     navigate('PeopleDetail', { id: people._id })
   }
+
+  // onLoadEnd(e) {
+  //   if (!e.nativeEvent.size) return;
+  //   const { width, height } = e.nativeEvent.size;
+  //   this.setState({
+  //     width,
+  //     height,
+  //   });
+  // }
 
   componentWillMount() {
 
@@ -118,6 +128,8 @@ class PostsList extends Component {
 
     const { list } = this.props
 
+    // console.log(list);
+
     if (!list.data) {
       return (<View></View>)
     }
@@ -152,7 +164,10 @@ class PostsList extends Component {
                     <Text>{topic.content_summary}</Text>
                     <View style={styles.flexContainer}>
                       {topic.images.map(img=>{
-                        return (<Image key={img} source={{uri:'https:'+img}} style={styles.images} />)
+                        let _img = 'https:' + img.split('?')[0] + '?imageMogr2/auto-orient/thumbnail/!200/format/jpg'
+                        // console.log('https:'+img+'/format/jpg');
+                        // return (<FLAnimatedImage key={img} source={{uri:img}} style={styles.images} onLoadEnd={this.onLoadEnd} />)
+                        return (<Image key={img} source={{uri:_img}} style={styles.images} />)
                       })}
                     </View>
                   </View>

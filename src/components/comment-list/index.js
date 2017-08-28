@@ -87,9 +87,9 @@ class CommentList extends Component {
           enableEmptySections={true}
           dataSource={array}
           renderRow={(item) => (<View>
-              <CommentItem comment={item} />
+              <CommentItem {...this.props} comment={item} />
               {item.reply && item.reply.map(item=>{
-                return(<View key={item._id} style={styles.reply}><CommentItem comment={item} /></View>)
+                return(<View key={item._id} {...this.props} style={styles.reply}><CommentItem comment={item} /></View>)
               })}
           </View>)}
           renderFooter={this.renderFooter}

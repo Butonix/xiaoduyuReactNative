@@ -14,24 +14,28 @@ import {
   Button,
   TouchableWithoutFeedback,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getUserInfo } from '../../reducers/user'
-import { addComment } from '../../actions/comment'
+import { addPosts } from '../../actions/posts'
 import { getWritePosts } from '../../reducers/write-posts'
 import { setTopic } from '../../actions/write-posts'
 
+
+import Dimensions from 'Dimensions'
+const screenWidth = Dimensions.get('window').width
+
+import Editor from '../../components/editor'
 
 class WritePosts extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
 
     const { params = {} } = navigation.state
-
-    console.log(params);
 
     let title = '说说'
     if (params.typeId == 2) {
@@ -51,7 +55,9 @@ class WritePosts extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      content: ''
+      content: '',
+      contentJSON: '',
+      contentHTML: ''
     }
 
     this.submit = this.submit.bind(this)
@@ -71,47 +77,49 @@ class WritePosts extends React.Component {
   }
 
   cancel() {
-
     const { navigation } = this.props
-
     navigation.goBack()
   }
 
   submit() {
 
     // const { postsId, parentId, replyId } = this.props.navigation.state.params
-    // const { addComment } = this.props
-    // const { content } = this.state
-    //
-    // let data = {
-    //   posts_id: postsId,
-    //   device_id : 1,
-    //   content : content,
-    //   content_html: content,
-    // }
-    // if (parentId) data.parent_id = parentId
-    // if (replyId) data.reply_id = replyId
-    //
-    // addComment({
-    //   data,
-    //   callback: (res) => {
-    //     console.log(res);
-    //   }
-    // })
+    const { addPosts, posts } = this.props
+    const { title, contentJSON, contentHTML } = this.state
+    const { navigate } = this.props.navigation
 
-    // console.log('提交');
+    addPosts({
+      title: title,
+      detail: contentJSON,
+      detailHTML: contentHTML,
+      topicId: posts.topic._id,
+      device: 1,
+      type: 1,
+      callback: (res)=>{
+        if (res && res.success) {
+          let posts = res.data
+          navigate('PostsDetail', { title: posts.title, id: posts._id })
+        } else {
+          Alert.alert('', res && res.error ? res.error : '发布失败')
+        }
+      }
+    })
+
   }
 
   render() {
 
+    const self = this
     const { me } = this.props
     const { navigate } = this.props.navigation
     const { posts } = this.props
 
-    return (<View>
-      <TouchableOpacity onPress={()=>{ navigate('ChooseTopic') }} style={styles.title}>
-        <View><Text>{posts.topic ? posts.topic.name : '请选择一个话题'}</Text></View>
-      </TouchableOpacity>
+    return (<View style={styles.container}>
+      <View>
+        <TouchableOpacity onPress={()=>{ navigate('ChooseTopic') }} style={styles.title}>
+          <View><Text>{posts.topic ? posts.topic.name : '请选择一个话题'}</Text></View>
+        </TouchableOpacity>
+      </View>
       <View>
         <TextInput
           style={styles.title}
@@ -119,33 +127,25 @@ class WritePosts extends React.Component {
           placeholder='请输入标题'
           />
       </View>
-      <View>
-        <TextInput
-          style={styles.content}
-          multiline={true}
-          onChangeText={(content) => this.setState({content})}
-          placeholder='请输入评论内容'
-          />
+      <View style={{ flex:1 }}>
+        <Editor
+          transportContent={(data)=>{
+            self.state.contentJSON = data.json
+            self.state.contentHTML = data.html
+          }}
+        />
       </View>
     </View>)
   }
 }
 
 const styles = StyleSheet.create({
-  icon: {
-    width: 24,
-    height: 24,
+  container: {
+    flex:1
   },
   title: {
     height: 40,
     justifyContent: 'center',
-    borderColor: '#efefef',
-    borderWidth: 1,
-    paddingLeft: 10,
-    backgroundColor: '#fff'
-  },
-  content: {
-    height: 300,
     borderColor: '#efefef',
     borderWidth: 1,
     paddingLeft: 10,
@@ -158,7 +158,7 @@ export default connect(state => ({
     posts: getWritePosts(state)
   }),
   (dispatch) => ({
-    addComment: bindActionCreators(addComment, dispatch),
+    addPosts: bindActionCreators(addPosts, dispatch),
     setTopic: bindActionCreators(setTopic, dispatch)
   })
 )(WritePosts);

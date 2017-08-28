@@ -1,6 +1,7 @@
 
 import { StackNavigator, TabNavigator } from 'react-navigation'
 
+import Welcome from '../containers/welcome'
 import SignIn from '../containers/sign-in'
 import SignUp from '../containers/sign-up'
 import GithubSignIn from '../containers/github-sign-in'
@@ -26,9 +27,10 @@ import ResetGender from '../containers/reset-gender'
 import ResetPassword from '../containers/reset-password'
 import ResetEmail from '../containers/reset-email'
 
+
 // test
-import Test from '../containers/test'
-import Editor from '../containers/editor'
+// import Test from '../containers/test'
+// import Editor from '../containers/editor'
 
 const MainScreenNavigator = TabNavigator({
   Home: { screen: Home },
@@ -39,7 +41,7 @@ const MainScreenNavigator = TabNavigator({
 {
   initialRouteName: 'Home',
   tabBarPosition: 'bottom',
-  swipeEnabled:true,
+  swipeEnabled:false,
   animationEnabled:false,
   lazy: true,
   tabBarOptions: {
@@ -56,12 +58,13 @@ const App = StackNavigator({
   Main: { screen: MainScreenNavigator },
   PostsDetail: { screen: PostsDetail },
   WriteComment: { screen: WriteComment },
-  WritePosts: { screen: Editor },
+  WritePosts: { screen: WritePosts },
   ChooseTopic: { screen: ChooseTopic },
   CommentDetail: { screen: CommentDetail },
+  Welcome: { screen: Welcome },
   SignIn: { screen: SignIn },
   Settings: { screen: Settings },
-  SignUp: { screen: Editor },
+  SignUp: { screen: SignUp },
   Forgot: { screen: Forgot },
   GithubSignIn: { screen: GithubSignIn },
   TopicDetail: { screen: TopicDetail },
@@ -72,9 +75,9 @@ const App = StackNavigator({
   ResetGender: { screen: ResetGender },
   ResetPassword: { screen: ResetPassword },
   ResetEmail: { screen: ResetEmail },
-  Test: { screen: Test }
+  // Test: { screen: Test }
 },{
-  initialRouteName: 'SignIn'
+  initialRouteName: 'Welcome'
 })
 
 /*

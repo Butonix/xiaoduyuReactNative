@@ -6,7 +6,8 @@ import {
   Image,
   ScrollView,
   Button,
-  TouchableOpacity
+  TouchableOpacity,
+  WebView
 } from 'react-native'
 import {
   createNavigator,

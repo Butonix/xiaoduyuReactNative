@@ -34,18 +34,17 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* xiaoduyuReactNativeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* xiaoduyuReactNativeTests.m */; };
-		43650DD71F3970A40042E68B /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43650DBA1F396ECE0042E68B /* libRCTCameraRoll.a */; };
-		43D2F2B31F234F850044A93D /* OpenShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D2F2A51F234F850044A93D /* OpenShare.m */; };
-		43D2F2B41F234F850044A93D /* OpenShare+Alipay.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D2F2A71F234F850044A93D /* OpenShare+Alipay.m */; };
-		43D2F2B51F234F850044A93D /* OpenShare+QQ.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D2F2A91F234F850044A93D /* OpenShare+QQ.m */; };
-		43D2F2B61F234F850044A93D /* OpenShare+Renren.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D2F2AB1F234F850044A93D /* OpenShare+Renren.m */; };
-		43D2F2B71F234F850044A93D /* OpenShare+Weibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D2F2AD1F234F850044A93D /* OpenShare+Weibo.m */; };
-		43D2F2B81F234F850044A93D /* OpenShare+Weixin.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D2F2AF1F234F850044A93D /* OpenShare+Weixin.m */; };
-		43D2F2B91F234F850044A93D /* SocietyLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 43D2F2B21F234F850044A93D /* SocietyLoginManager.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
-		65F2FBE164174A62A73538DE /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7617A22C9760449DA8566AA5 /* libSplashScreen.a */; };
-		69B9D0CBA04A46908BB759C3 /* libRNLaunchImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F0CDC577C243A3B057789C /* libRNLaunchImage.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		C27EC26F1F542CF5005324E3 /* OpenShare.m in Sources */ = {isa = PBXBuildFile; fileRef = C27EC2611F542CF5005324E3 /* OpenShare.m */; };
+		C27EC2701F542CF5005324E3 /* OpenShare+Alipay.m in Sources */ = {isa = PBXBuildFile; fileRef = C27EC2631F542CF5005324E3 /* OpenShare+Alipay.m */; };
+		C27EC2711F542CF5005324E3 /* OpenShare+QQ.m in Sources */ = {isa = PBXBuildFile; fileRef = C27EC2651F542CF5005324E3 /* OpenShare+QQ.m */; };
+		C27EC2721F542CF5005324E3 /* OpenShare+Renren.m in Sources */ = {isa = PBXBuildFile; fileRef = C27EC2671F542CF5005324E3 /* OpenShare+Renren.m */; };
+		C27EC2731F542CF5005324E3 /* OpenShare+Weibo.m in Sources */ = {isa = PBXBuildFile; fileRef = C27EC2691F542CF5005324E3 /* OpenShare+Weibo.m */; };
+		C27EC2741F542CF5005324E3 /* OpenShare+Weixin.m in Sources */ = {isa = PBXBuildFile; fileRef = C27EC26B1F542CF5005324E3 /* OpenShare+Weixin.m */; };
+		C27EC2751F542CF5005324E3 /* SocietyLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C27EC26E1F542CF5005324E3 /* SocietyLoginManager.m */; };
+		C27EC2AB1F542F79005324E3 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C27EC2AA1F542F54005324E3 /* libRCTCameraRoll.a */; };
+		F3F73B7F2AED44FA891C023A /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF39D6628C7F43848CBC949F /* libSplashScreen.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,62 +209,6 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
-		43650DB91F396ECE0042E68B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 43650DB21F396ECE0042E68B /* RCTCameraRoll.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
-			remoteInfo = RCTCameraRoll;
-		};
-		436D8D491F239A8500E39AD6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EEE68569B1894EA5AFD66284 /* SplashScreen.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D7682761D8E76B80014119E;
-			remoteInfo = SplashScreen;
-		};
-		436D8D4F1F239C0200E39AD6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 436D8D4B1F239C0100E39AD6 /* SplashScreen.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D7682761D8E76B80014119E;
-			remoteInfo = SplashScreen;
-		};
-		43DDE78E1F23234000515A33 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FCCACD60A172450799656D32 /* RNLaunchImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNLaunchImage;
-		};
-		43ED7A9B1F22FE3D0009CD96 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
-			remoteInfo = "third-party";
-		};
-		43ED7A9D1F22FE3D0009CD96 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D383D3C1EBD27B6005632C8;
-			remoteInfo = "third-party-tvOS";
-		};
-		43ED7A9F1F22FE3D0009CD96 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 139D7E881E25C6D100323FB7;
-			remoteInfo = "double-conversion";
-		};
-		43ED7AA11F22FE3D0009CD96 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
-			remoteInfo = "double-conversion-tvOS";
-		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
@@ -294,6 +237,48 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		C27EC2581F542CE6005324E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
+			remoteInfo = "third-party";
+		};
+		C27EC25A1F542CE6005324E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D383D3C1EBD27B6005632C8;
+			remoteInfo = "third-party-tvOS";
+		};
+		C27EC25C1F542CE6005324E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7E881E25C6D100323FB7;
+			remoteInfo = "double-conversion";
+		};
+		C27EC25E1F542CE6005324E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
+			remoteInfo = "double-conversion-tvOS";
+		};
+		C27EC2A11F542D3A005324E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6BF5A98E5C7E4D48BB08CF6F /* SplashScreen.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D7682761D8E76B80014119E;
+			remoteInfo = SplashScreen;
+		};
+		C27EC2A91F542F54005324E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C27EC2A51F542F53005324E3 /* RCTCameraRoll.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RCTCameraRoll;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -306,7 +291,6 @@
 		00E356EE1AD99517003FC87E /* xiaoduyuReactNativeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = xiaoduyuReactNativeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* xiaoduyuReactNativeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = xiaoduyuReactNativeTests.m; sourceTree = "<group>"; };
-		10F0CDC577C243A3B057789C /* libRNLaunchImage.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNLaunchImage.a; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* xiaoduyuReactNative.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xiaoduyuReactNative.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -319,29 +303,27 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* xiaoduyuReactNative-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "xiaoduyuReactNative-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* xiaoduyuReactNative-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xiaoduyuReactNative-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		43650DB21F396ECE0042E68B /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
-		436D8D4B1F239C0100E39AD6 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
-		43D2F2A41F234F850044A93D /* OpenShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenShare.h; path = "../node_modules/react-native-open-share/src/OpenShare.h"; sourceTree = "<group>"; };
-		43D2F2A51F234F850044A93D /* OpenShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenShare.m; path = "../node_modules/react-native-open-share/src/OpenShare.m"; sourceTree = "<group>"; };
-		43D2F2A61F234F850044A93D /* OpenShare+Alipay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenShare+Alipay.h"; path = "../node_modules/react-native-open-share/src/OpenShare+Alipay.h"; sourceTree = "<group>"; };
-		43D2F2A71F234F850044A93D /* OpenShare+Alipay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OpenShare+Alipay.m"; path = "../node_modules/react-native-open-share/src/OpenShare+Alipay.m"; sourceTree = "<group>"; };
-		43D2F2A81F234F850044A93D /* OpenShare+QQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenShare+QQ.h"; path = "../node_modules/react-native-open-share/src/OpenShare+QQ.h"; sourceTree = "<group>"; };
-		43D2F2A91F234F850044A93D /* OpenShare+QQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OpenShare+QQ.m"; path = "../node_modules/react-native-open-share/src/OpenShare+QQ.m"; sourceTree = "<group>"; };
-		43D2F2AA1F234F850044A93D /* OpenShare+Renren.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenShare+Renren.h"; path = "../node_modules/react-native-open-share/src/OpenShare+Renren.h"; sourceTree = "<group>"; };
-		43D2F2AB1F234F850044A93D /* OpenShare+Renren.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OpenShare+Renren.m"; path = "../node_modules/react-native-open-share/src/OpenShare+Renren.m"; sourceTree = "<group>"; };
-		43D2F2AC1F234F850044A93D /* OpenShare+Weibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenShare+Weibo.h"; path = "../node_modules/react-native-open-share/src/OpenShare+Weibo.h"; sourceTree = "<group>"; };
-		43D2F2AD1F234F850044A93D /* OpenShare+Weibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OpenShare+Weibo.m"; path = "../node_modules/react-native-open-share/src/OpenShare+Weibo.m"; sourceTree = "<group>"; };
-		43D2F2AE1F234F850044A93D /* OpenShare+Weixin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenShare+Weixin.h"; path = "../node_modules/react-native-open-share/src/OpenShare+Weixin.h"; sourceTree = "<group>"; };
-		43D2F2AF1F234F850044A93D /* OpenShare+Weixin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OpenShare+Weixin.m"; path = "../node_modules/react-native-open-share/src/OpenShare+Weixin.m"; sourceTree = "<group>"; };
-		43D2F2B01F234F850044A93D /* OpenShareHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenShareHeader.h; path = "../node_modules/react-native-open-share/src/OpenShareHeader.h"; sourceTree = "<group>"; };
-		43D2F2B11F234F850044A93D /* SocietyLoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocietyLoginManager.h; path = "../node_modules/react-native-open-share/src/SocietyLoginManager.h"; sourceTree = "<group>"; };
-		43D2F2B21F234F850044A93D /* SocietyLoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocietyLoginManager.m; path = "../node_modules/react-native-open-share/src/SocietyLoginManager.m"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
-		7617A22C9760449DA8566AA5 /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
+		6BF5A98E5C7E4D48BB08CF6F /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		EEE68569B1894EA5AFD66284 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
-		FCCACD60A172450799656D32 /* RNLaunchImage.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNLaunchImage.xcodeproj; path = "../node_modules/react-native-launch-image/ios/RNLaunchImage.xcodeproj"; sourceTree = "<group>"; };
+		AF39D6628C7F43848CBC949F /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
+		C27EC2601F542CF5005324E3 /* OpenShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenShare.h; path = "../node_modules/react-native-open-share/src/OpenShare.h"; sourceTree = "<group>"; };
+		C27EC2611F542CF5005324E3 /* OpenShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenShare.m; path = "../node_modules/react-native-open-share/src/OpenShare.m"; sourceTree = "<group>"; };
+		C27EC2621F542CF5005324E3 /* OpenShare+Alipay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenShare+Alipay.h"; path = "../node_modules/react-native-open-share/src/OpenShare+Alipay.h"; sourceTree = "<group>"; };
+		C27EC2631F542CF5005324E3 /* OpenShare+Alipay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OpenShare+Alipay.m"; path = "../node_modules/react-native-open-share/src/OpenShare+Alipay.m"; sourceTree = "<group>"; };
+		C27EC2641F542CF5005324E3 /* OpenShare+QQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenShare+QQ.h"; path = "../node_modules/react-native-open-share/src/OpenShare+QQ.h"; sourceTree = "<group>"; };
+		C27EC2651F542CF5005324E3 /* OpenShare+QQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OpenShare+QQ.m"; path = "../node_modules/react-native-open-share/src/OpenShare+QQ.m"; sourceTree = "<group>"; };
+		C27EC2661F542CF5005324E3 /* OpenShare+Renren.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenShare+Renren.h"; path = "../node_modules/react-native-open-share/src/OpenShare+Renren.h"; sourceTree = "<group>"; };
+		C27EC2671F542CF5005324E3 /* OpenShare+Renren.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OpenShare+Renren.m"; path = "../node_modules/react-native-open-share/src/OpenShare+Renren.m"; sourceTree = "<group>"; };
+		C27EC2681F542CF5005324E3 /* OpenShare+Weibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenShare+Weibo.h"; path = "../node_modules/react-native-open-share/src/OpenShare+Weibo.h"; sourceTree = "<group>"; };
+		C27EC2691F542CF5005324E3 /* OpenShare+Weibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OpenShare+Weibo.m"; path = "../node_modules/react-native-open-share/src/OpenShare+Weibo.m"; sourceTree = "<group>"; };
+		C27EC26A1F542CF5005324E3 /* OpenShare+Weixin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenShare+Weixin.h"; path = "../node_modules/react-native-open-share/src/OpenShare+Weixin.h"; sourceTree = "<group>"; };
+		C27EC26B1F542CF5005324E3 /* OpenShare+Weixin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OpenShare+Weixin.m"; path = "../node_modules/react-native-open-share/src/OpenShare+Weixin.m"; sourceTree = "<group>"; };
+		C27EC26C1F542CF5005324E3 /* OpenShareHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenShareHeader.h; path = "../node_modules/react-native-open-share/src/OpenShareHeader.h"; sourceTree = "<group>"; };
+		C27EC26D1F542CF5005324E3 /* SocietyLoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocietyLoginManager.h; path = "../node_modules/react-native-open-share/src/SocietyLoginManager.h"; sourceTree = "<group>"; };
+		C27EC26E1F542CF5005324E3 /* SocietyLoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocietyLoginManager.m; path = "../node_modules/react-native-open-share/src/SocietyLoginManager.m"; sourceTree = "<group>"; };
+		C27EC2A51F542F53005324E3 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,7 +339,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43650DD71F3970A40042E68B /* libRCTCameraRoll.a in Frameworks */,
+				C27EC2AB1F542F79005324E3 /* libRCTCameraRoll.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -369,8 +351,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				69B9D0CBA04A46908BB759C3 /* libRNLaunchImage.a in Frameworks */,
-				65F2FBE164174A62A73538DE /* libSplashScreen.a in Frameworks */,
+				F3F73B7F2AED44FA891C023A /* libSplashScreen.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,7 +460,7 @@
 		13B07FAE1A68108700A75B9A /* xiaoduyuReactNative */ = {
 			isa = PBXGroup;
 			children = (
-				43D2F2851F234F420044A93D /* OpenShare */,
+				C27EC23A1F542CE6005324E3 /* OpenShare */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -502,64 +483,10 @@
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
-				43ED7A9C1F22FE3D0009CD96 /* libthird-party.a */,
-				43ED7A9E1F22FE3D0009CD96 /* libthird-party.a */,
-				43ED7AA01F22FE3D0009CD96 /* libdouble-conversion.a */,
-				43ED7AA21F22FE3D0009CD96 /* libdouble-conversion.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		43650DB31F396ECE0042E68B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				43650DBA1F396ECE0042E68B /* libRCTCameraRoll.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		436D8D281F239A8500E39AD6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				436D8D4A1F239A8500E39AD6 /* libSplashScreen.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		436D8D4C1F239C0100E39AD6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				436D8D501F239C0200E39AD6 /* libSplashScreen.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		43D2F2851F234F420044A93D /* OpenShare */ = {
-			isa = PBXGroup;
-			children = (
-				43D2F2A41F234F850044A93D /* OpenShare.h */,
-				43D2F2A51F234F850044A93D /* OpenShare.m */,
-				43D2F2A61F234F850044A93D /* OpenShare+Alipay.h */,
-				43D2F2A71F234F850044A93D /* OpenShare+Alipay.m */,
-				43D2F2A81F234F850044A93D /* OpenShare+QQ.h */,
-				43D2F2A91F234F850044A93D /* OpenShare+QQ.m */,
-				43D2F2AA1F234F850044A93D /* OpenShare+Renren.h */,
-				43D2F2AB1F234F850044A93D /* OpenShare+Renren.m */,
-				43D2F2AC1F234F850044A93D /* OpenShare+Weibo.h */,
-				43D2F2AD1F234F850044A93D /* OpenShare+Weibo.m */,
-				43D2F2AE1F234F850044A93D /* OpenShare+Weixin.h */,
-				43D2F2AF1F234F850044A93D /* OpenShare+Weixin.m */,
-				43D2F2B01F234F850044A93D /* OpenShareHeader.h */,
-				43D2F2B11F234F850044A93D /* SocietyLoginManager.h */,
-				43D2F2B21F234F850044A93D /* SocietyLoginManager.m */,
-			);
-			name = OpenShare;
-			sourceTree = "<group>";
-		};
-		43DDE76E1F23234000515A33 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				43DDE78F1F23234000515A33 /* libRNLaunchImage.a */,
+				C27EC2591F542CE6005324E3 /* libthird-party.a */,
+				C27EC25B1F542CE6005324E3 /* libthird-party.a */,
+				C27EC25D1F542CE6005324E3 /* libdouble-conversion.a */,
+				C27EC25F1F542CE6005324E3 /* libdouble-conversion.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -585,8 +512,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				43650DB21F396ECE0042E68B /* RCTCameraRoll.xcodeproj */,
-				436D8D4B1F239C0100E39AD6 /* SplashScreen.xcodeproj */,
+				C27EC2A51F542F53005324E3 /* RCTCameraRoll.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -598,8 +524,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				FCCACD60A172450799656D32 /* RNLaunchImage.xcodeproj */,
-				EEE68569B1894EA5AFD66284 /* SplashScreen.xcodeproj */,
+				6BF5A98E5C7E4D48BB08CF6F /* SplashScreen.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -632,6 +557,44 @@
 				00E356EE1AD99517003FC87E /* xiaoduyuReactNativeTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* xiaoduyuReactNative-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* xiaoduyuReactNative-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C27EC23A1F542CE6005324E3 /* OpenShare */ = {
+			isa = PBXGroup;
+			children = (
+				C27EC2601F542CF5005324E3 /* OpenShare.h */,
+				C27EC2611F542CF5005324E3 /* OpenShare.m */,
+				C27EC2621F542CF5005324E3 /* OpenShare+Alipay.h */,
+				C27EC2631F542CF5005324E3 /* OpenShare+Alipay.m */,
+				C27EC2641F542CF5005324E3 /* OpenShare+QQ.h */,
+				C27EC2651F542CF5005324E3 /* OpenShare+QQ.m */,
+				C27EC2661F542CF5005324E3 /* OpenShare+Renren.h */,
+				C27EC2671F542CF5005324E3 /* OpenShare+Renren.m */,
+				C27EC2681F542CF5005324E3 /* OpenShare+Weibo.h */,
+				C27EC2691F542CF5005324E3 /* OpenShare+Weibo.m */,
+				C27EC26A1F542CF5005324E3 /* OpenShare+Weixin.h */,
+				C27EC26B1F542CF5005324E3 /* OpenShare+Weixin.m */,
+				C27EC26C1F542CF5005324E3 /* OpenShareHeader.h */,
+				C27EC26D1F542CF5005324E3 /* SocietyLoginManager.h */,
+				C27EC26E1F542CF5005324E3 /* SocietyLoginManager.m */,
+			);
+			name = OpenShare;
+			sourceTree = "<group>";
+		};
+		C27EC2811F542D3A005324E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C27EC2A21F542D3A005324E3 /* libSplashScreen.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C27EC2A61F542F53005324E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C27EC2AA1F542F54005324E3 /* libRCTCameraRoll.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -717,12 +680,11 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 610;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = G2NVNBKXXW;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
@@ -761,8 +723,8 @@
 					ProjectRef = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
 				},
 				{
-					ProductGroup = 43650DB31F396ECE0042E68B /* Products */;
-					ProjectRef = 43650DB21F396ECE0042E68B /* RCTCameraRoll.xcodeproj */;
+					ProductGroup = C27EC2A61F542F53005324E3 /* Products */;
+					ProjectRef = C27EC2A51F542F53005324E3 /* RCTCameraRoll.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -801,16 +763,8 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 43DDE76E1F23234000515A33 /* Products */;
-					ProjectRef = FCCACD60A172450799656D32 /* RNLaunchImage.xcodeproj */;
-				},
-				{
-					ProductGroup = 436D8D281F239A8500E39AD6 /* Products */;
-					ProjectRef = EEE68569B1894EA5AFD66284 /* SplashScreen.xcodeproj */;
-				},
-				{
-					ProductGroup = 436D8D4C1F239C0100E39AD6 /* Products */;
-					ProjectRef = 436D8D4B1F239C0100E39AD6 /* SplashScreen.xcodeproj */;
+					ProductGroup = C27EC2811F542D3A005324E3 /* Products */;
+					ProjectRef = 6BF5A98E5C7E4D48BB08CF6F /* SplashScreen.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -971,62 +925,6 @@
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		43650DBA1F396ECE0042E68B /* libRCTCameraRoll.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTCameraRoll.a;
-			remoteRef = 43650DB91F396ECE0042E68B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		436D8D4A1F239A8500E39AD6 /* libSplashScreen.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSplashScreen.a;
-			remoteRef = 436D8D491F239A8500E39AD6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		436D8D501F239C0200E39AD6 /* libSplashScreen.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSplashScreen.a;
-			remoteRef = 436D8D4F1F239C0200E39AD6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		43DDE78F1F23234000515A33 /* libRNLaunchImage.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNLaunchImage.a;
-			remoteRef = 43DDE78E1F23234000515A33 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		43ED7A9C1F22FE3D0009CD96 /* libthird-party.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libthird-party.a";
-			remoteRef = 43ED7A9B1F22FE3D0009CD96 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		43ED7A9E1F22FE3D0009CD96 /* libthird-party.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libthird-party.a";
-			remoteRef = 43ED7A9D1F22FE3D0009CD96 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		43ED7AA01F22FE3D0009CD96 /* libdouble-conversion.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libdouble-conversion.a";
-			remoteRef = 43ED7A9F1F22FE3D0009CD96 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		43ED7AA21F22FE3D0009CD96 /* libdouble-conversion.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libdouble-conversion.a";
-			remoteRef = 43ED7AA11F22FE3D0009CD96 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1053,6 +951,48 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C27EC2591F542CE6005324E3 /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = C27EC2581F542CE6005324E3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C27EC25B1F542CE6005324E3 /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = C27EC25A1F542CE6005324E3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C27EC25D1F542CE6005324E3 /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = C27EC25C1F542CE6005324E3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C27EC25F1F542CE6005324E3 /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = C27EC25E1F542CE6005324E3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C27EC2A21F542D3A005324E3 /* libSplashScreen.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSplashScreen.a;
+			remoteRef = C27EC2A11F542D3A005324E3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C27EC2AA1F542F54005324E3 /* libRCTCameraRoll.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCameraRoll.a;
+			remoteRef = C27EC2A91F542F54005324E3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1136,14 +1076,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				43D2F2B81F234F850044A93D /* OpenShare+Weixin.m in Sources */,
-				43D2F2B71F234F850044A93D /* OpenShare+Weibo.m in Sources */,
-				43D2F2B51F234F850044A93D /* OpenShare+QQ.m in Sources */,
-				43D2F2B41F234F850044A93D /* OpenShare+Alipay.m in Sources */,
-				43D2F2B31F234F850044A93D /* OpenShare.m in Sources */,
+				C27EC2741F542CF5005324E3 /* OpenShare+Weixin.m in Sources */,
+				C27EC2731F542CF5005324E3 /* OpenShare+Weibo.m in Sources */,
+				C27EC2711F542CF5005324E3 /* OpenShare+QQ.m in Sources */,
+				C27EC2701F542CF5005324E3 /* OpenShare+Alipay.m in Sources */,
+				C27EC26F1F542CF5005324E3 /* OpenShare.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				43D2F2B61F234F850044A93D /* OpenShare+Renren.m in Sources */,
-				43D2F2B91F234F850044A93D /* SocietyLoginManager.m in Sources */,
+				C27EC2721F542CF5005324E3 /* OpenShare+Renren.m in Sources */,
+				C27EC2751F542CF5005324E3 /* SocietyLoginManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1196,7 +1136,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = G2NVNBKXXW;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1211,12 +1150,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/xiaoduyuReactNative.app/xiaoduyuReactNative";
 			};
@@ -1227,7 +1166,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = G2NVNBKXXW;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
@@ -1238,12 +1176,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/xiaoduyuReactNative.app/xiaoduyuReactNative";
 			};
@@ -1325,7 +1263,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1360,7 +1297,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1390,7 +1326,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.xiaoduyuReactNative-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1416,7 +1351,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.xiaoduyuReactNative-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1439,15 +1373,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1460,7 +1398,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1480,8 +1418,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1489,13 +1429,14 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

@@ -145,3 +145,23 @@ export function cleanAllPosts() {
     dispatch({ type: 'CLEAN_ALL_POSTS' })
   }
 }
+
+// 添加问题
+export function addPosts({ title, detail, detailHTML, topicId, device, type, callback = ()=>{} }) {
+  return (dispatch, getState) => {
+
+    let accessToken = getState().user.accessToken
+
+    return Ajax({
+      url: '/add-posts',
+      type:'post',
+      data: {
+        title: title, detail: detail, detail_html: detailHTML,
+        topic_id: topicId, device_id: device, type: type
+      },
+      headers: { AccessToken: accessToken },
+      callback
+    })
+
+  }
+}

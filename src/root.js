@@ -1,18 +1,20 @@
 
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import { Text, View, AsyncStorage, NetInfo, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native'
-import SplashScreen from 'react-native-splash-screen'
+import { Text, View, AsyncStorage, NetInfo, StyleSheet, ActivityIndicator,
+  TouchableOpacity
+} from 'react-native'
+
 import reducers, { getInitialState } from './reducers'
 import getStore from './store/configure-store.js'
-import Navigators from './navigators'
+import Navigators from './navigators/index'
+
+import SplashScreen from 'react-native-splash-screen'
 
 import { combineReducers, bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { loadUserInfo, addAccessToken, cleanUserInfo } from './actions/user'
 import { cleanAllPosts } from './actions/posts'
-
-import { api_url } from '../config'
 
 const store = getStore()
 
@@ -34,16 +36,14 @@ global.initReduxDate = (callback) => {
     loadUserInfo({
       accessToken: result,
       callback: (res)=>{
-        if (res && res.success) {
+
+        if (res.success) {
           addAccessToken({ accessToken:  result })(store.dispatch, store.getState)
-          global.signIn = true
           callback(true)
-        } else if (res && !res.success) {
+        } else {
           AsyncStorage.removeItem('token', function(res){
             callback(false)
-          })
-        } else {
-          callback(false)
+          })(store.dispatch, store.getState)
         }
 
       }
@@ -52,28 +52,6 @@ global.initReduxDate = (callback) => {
   })
 
 }
-
-const ws = new WebSocket(api_url+'/socket.io/?EIO=4&transport=websocket');
-
-ws.onopen = () => {
-  // console.log('连接成功');
-}
-
-ws.onmessage = (e) => {
-  // 接收到了一个消息
-  console.log(e.data);
-}
-
-ws.onerror = (e) => {
-  // 发生了一个错误
-  // console.log(e.message);
-}
-
-ws.onclose = (e) => {
-  // 连接被关闭了
-  // console.log(e.code, e.reason);
-}
-
 
 class MainApp extends Component {
 
@@ -92,52 +70,31 @@ class MainApp extends Component {
 
     const self = this
 
+    global.signIn = false
+
     self.setState({ loading: true })
 
     function handleFirstConnectivityChange(state) {
-
-      state = true
-
+      
       if (!state) {
         self.setState({ loading: false })
-        SplashScreen.hide()
       } else {
         global.initReduxDate((result)=>{
+          global.signIn = result
           self.setState({ loading: false, network: true, ready: true })
-          SplashScreen.hide()
         })
       }
 
-      NetInfo.isConnected.removeEventListener(
-        'change',
-        handleFirstConnectivityChange
-      )
+      NetInfo.isConnected.removeEventListener('change', handleFirstConnectivityChange)
     }
 
-    NetInfo.isConnected.addEventListener(
-      'change',
-      handleFirstConnectivityChange
-    )
+    NetInfo.isConnected.addEventListener('change', handleFirstConnectivityChange)
 
   }
 
   componentDidMount() {
-
-
-
-  }
-
-  componentWillMount() {
-    global.signIn = false
     this.start()
-  }
-
-  componentWillReceiveProps() {
-    // global.signIn = false
-    // this.start()
-  }
-
-  componentDidUpdate() {
+    SplashScreen.hide()
   }
 
   render() {
