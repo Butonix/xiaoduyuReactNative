@@ -193,7 +193,7 @@ const Media = (props) => {
   if (type === 'link') {
     media = <a href={src} target="_blank" rel="nofollow">{src}</a>
   } else if (type === 'image') {
-    media = <img src={src} />
+    media = <img src={`https:${src}`} />
   } else if (type === 'youtube') {
     let url = 'https://www.youtube.com/embed/' + src
     media = <iframe src={url}></iframe>

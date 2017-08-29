@@ -15,12 +15,14 @@ export function addComment({ data, callback }) {
       headers: { AccessToken: accessToken },
       callback: (res) => {
 
+        const { parent_id, posts_id } = data
+
         if (res.success && res.data) {
-          /*
+
           for (let i in commentState) {
+
             // 评论 和 回复
-            if (!parent_id && i == posts_id ||
-              parent_id && i == parent_id) {
+            if (!parent_id && i == posts_id || parent_id && i == parent_id) {
               commentState[i].data.push(res.data)
             }
 
@@ -32,7 +34,6 @@ export function addComment({ data, callback }) {
             })
 
           }
-          */
 
           dispatch({ type: 'SET_COMMENT', state: commentState })
         }
@@ -57,7 +58,7 @@ export function loadCommentList({ name, filters = {}, callback = ()=>{} }) {
       callback()
       return
     }
-    
+
     if (!commentList.data) commentList.data = []
 
     if (!commentList.filters) {

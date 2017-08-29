@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "bundle-ios": "react-native bundle --entry-file index.ios.js --platform ios --dev false --bundle-output release_ios/main.jsbundle --assets-dest release_ios/",
+    "dev-ios": "react-native run-ios"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -24,7 +26,8 @@
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "teaset": "^0.3.2"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",

@@ -1,36 +1,13 @@
 import React, { Component } from 'react'
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  ListView,
-  Image,
-  NavigatorIOS,
-  ScrollView,
-  refreshControl,
-  RefreshControl,
-  Navigator,
-  Button,
-  TouchableWithoutFeedback,
-  TextInput,
-  Alert
-} from 'react-native'
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native'
+
+import { Toast, ModalIndicator } from 'teaset'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-// import { getUserInfo } from '../../reducers/user'
 import { addComment } from '../../actions/comment'
 
 import Editor from '../../components/editor'
-
-
-
-// import KeyboardSpacer from 'react-native-keyboard-spacer'
-
-// import Dimensions from 'Dimensions'
-// const screenWidth = Dimensions.get('window').width
-// const screenHeight = Dimensions.get('window').height
 
 class WriteComment extends React.Component {
 
@@ -39,7 +16,7 @@ class WriteComment extends React.Component {
     return {
       headerLeft: (<View><Button onPress={()=>params.cancel()} title={"取消"} /></View>),
       title: '写评论',
-      headerRight: (<View><Button onPress={()=>params.submit()} title={"发布"} /></View>),
+      headerRight: (<View><Button onPress={()=>params.submit()} title={"提交"} /></View>),
     }
   }
 
@@ -67,12 +44,20 @@ class WriteComment extends React.Component {
 
   submit() {
 
+    const self = this
     const { postsId, parentId, replyId } = this.props.navigation.state.params
-    const { addComment } = this.props
+    const { addComment, navigation } = this.props
     const { contentJSON, contentHTML } = this.state
 
     if (contentJSON == '' || contentHTML == '') {
-      Alert.alert('', '请输入内容')
+
+      Toast.show({
+        text: '请输入内容',
+        icon: 'info',
+        position: 'center',
+        duration: 1000
+      })
+
       return
     }
 
@@ -82,23 +67,45 @@ class WriteComment extends React.Component {
       content : contentJSON,
       content_html: contentHTML
     }
+
     if (parentId) data.parent_id = parentId
     if (replyId) data.reply_id = replyId
+
+    let s = ModalIndicator.show(`提交中...`);
 
     addComment({
       data,
       callback: (res) => {
-        console.log(res);
+
+        ModalIndicator.hide(s)
+
+        if (res.success) {
+          Toast.show({
+            text: '提交成功',
+            icon: 'success',
+            position: 'center',
+            duration: 1000
+          })
+          navigation.goBack()
+        } else {
+
+          Toast.show({
+            text: res.error || '提交失败',
+            icon: 'fail',
+            position: 'center',
+            duration: 1000
+          })
+
+        }
+
       }
     })
   }
 
   render() {
-
     const self = this
-    // const { me } = this.props
 
-    return (<View style={styles.container}>
+    return (<View style={{flex:1}}>
       <Editor
         transportContent={(data)=>{
           self.state.contentJSON = data.json
@@ -110,16 +117,9 @@ class WriteComment extends React.Component {
 }
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
-
 export default connect(state => ({
-    // me: getUserInfo(state)
   }),
   (dispatch) => ({
     addComment: bindActionCreators(addComment, dispatch)
   })
-)(WriteComment);
+)(WriteComment)
