@@ -10,7 +10,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: '[name].bundle.js',
   },
-  
+
   //enable dev source map
   devtool: 'eval-source-map',
   // //enable dev server
@@ -19,7 +19,7 @@ module.exports = {
     hot: true,
     inline: true,
     // progress: true,
-    host: '192.168.1.107',
+    host: 'localhost',
     port: 9000
   },
 
@@ -61,7 +61,7 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin("styles.css"),
     new HtmlWebpackPlugin({
-      template: './src/index.tpl.html',
+      template: './src/index.html',
       inlineSource: '.js$',
       cache: false,
     }),

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Qiniu,{ Auth, ImgOps, Conf, Rs, Rpc } from 'react-native-qiniu'
 
-// import KeyboardSpacer from 'react-native-keyboard-spacer'
+import KeyboardSpacer from 'react-native-keyboard-spacer'
 
 import { WebView } from 'react-native-webview-messaging/WebView'
 import { Loading, EasyLoading } from 'react-native-easy-loading'
@@ -33,6 +33,11 @@ class Editor extends Component {
         if (res) self.setState({ qiniu: res })
       }
     })
+
+  }
+
+  componentDidMount() {
+    // KeyboardManager.setEnable(true);
   }
 
   render() {
@@ -45,20 +50,22 @@ class Editor extends Component {
     return (<View style={styles.container}>
             <Loading />
 
-            <View style={{flex:1000}}>
-            <WebView
-              source={require('../../../editor/dist/index.html')}
-              style={styles.editor}
-              ref={ webview => { this.webview = webview; }}
-              onLoad={()=>{ self.init() }}
-              />
-            </View>
 
-              {qiniu ? <View style={styles.control}>
-                <TouchableOpacity onPress={this.addPhoto} style={styles.addPhoto}>
-                  <Text>上传图片</Text>
-                </TouchableOpacity>
-                </View>: null}
+              <WebView
+                source={require('../../../editor/dist/index.html')}
+                style={styles.editor}
+                ref={ webview => { this.webview = webview; }}
+                onLoad={()=>{ self.init() }}
+                />
+
+            {qiniu ? <View style={styles.control}>
+              <TouchableOpacity onPress={this.addPhoto} style={styles.addPhoto}>
+                <Image source={require('./images/photo.png')} style={styles.photoIcon} />
+              </TouchableOpacity>
+              <View style={{flex:1}}></View>
+            </View>: null}
+
+            <KeyboardSpacer />
           </View>)
   }
 
@@ -106,7 +113,7 @@ class Editor extends Component {
 
             EasyLoading.dismis();
 
-            console.log(imageUrl);
+            // console.log(imageUrl);
           } else {
             console.log('上传中:'+ err.total +' - '+ err.loaded);
           }
@@ -131,20 +138,23 @@ Editor.defaultProps = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding:10,
+    paddingTop:10,
+    paddingLeft:10,
+    paddingRight:10,
     backgroundColor:'#fff'
   },
   editor: {
     flex: 1
   },
   control: {
-    top:-50,
-    alignSelf: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:'rgb(191, 160, 65)'
   },
   addPhoto: {
+    height:40,
+    justifyContent: 'center'
+  },
+  photoIcon: {
+    height:25,
+    width:25
   }
 })
 

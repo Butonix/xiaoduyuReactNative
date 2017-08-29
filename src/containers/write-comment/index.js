@@ -24,6 +24,8 @@ import { addComment } from '../../actions/comment'
 
 import Editor from '../../components/editor'
 
+
+
 // import KeyboardSpacer from 'react-native-keyboard-spacer'
 
 // import Dimensions from 'Dimensions'

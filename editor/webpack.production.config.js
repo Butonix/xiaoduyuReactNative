@@ -45,11 +45,11 @@ module.exports = {
       }
     ]
   },
-  
+
   plugins: [
     new ExtractTextPlugin("styles.css"),
     new HtmlWebpackPlugin({
-      template: './src/index.tpl.html',
+      template: './src/index.html',
       inlineSource: '.js$',
       cache: false
     }),
