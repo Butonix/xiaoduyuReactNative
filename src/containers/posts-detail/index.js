@@ -114,7 +114,13 @@ class PostsDetail extends Component {
           </View>
         </View>
         <View>
-          <CommentList {...this.props} name={posts._id} filters={{ posts_id: posts._id, parent_exists: 0, per_page: 100 }} />
+          <CommentList
+            {...this.props}
+            name={posts._id}
+            filters={{ posts_id: posts._id, parent_exists: 0, per_page: 100 }}
+            displayLike={true}
+            displayReply={true}
+            />
         </View>
 
       </View>)

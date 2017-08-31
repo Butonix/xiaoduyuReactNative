@@ -26,7 +26,7 @@ class BottomBar extends Component {
     if (posts) {
       data.postsId = posts._id
     }
-
+    
     if (comment) {
       data.postsId = comment.posts_id._id
       data.parentId = comment.parent_id ? comment.parent_id : comment._id
@@ -43,14 +43,26 @@ class BottomBar extends Component {
     if (!posts && !comment) {
       return (<View></View>)
     }
-    
+
+    let target = posts || comment
+
     return (
         <View style={styles.bottomBar}>
-          <TouchableOpacity onPress={this.goWriteComment.bind(this)}>
-            <View><Text style={styles.comment}>评论</Text></View>
-          </TouchableOpacity>
-          <LikeButton likeType={posts ? 'posts' : 'comment'} target_id={posts ? posts._id : comment._id} {...posts} {...comment} />
-          {posts ? <FollowButton posts_id={posts._id} {...posts} /> : null}
+
+          {target.reply ?
+            <TouchableOpacity onPress={this.goWriteComment.bind(this)} style={styles.item}>
+              <Text style={styles.comment}>回复{target.reply_count}</Text>
+            </TouchableOpacity>
+            : null}
+
+          {target.comment ?
+            <TouchableOpacity onPress={this.goWriteComment.bind(this)} style={styles.item}>
+              <Text style={styles.comment}>评论{target.comment_count}</Text>
+            </TouchableOpacity>
+            : null}
+
+          <LikeButton likeType={posts ? 'posts' : 'comment'} target_id={target._id} {...target} />
+          {posts ? <View style={styles.item}><FollowButton posts_id={posts._id} {...target} /></View> : null}
         </View>
       )
   }
@@ -69,6 +81,11 @@ const styles = StyleSheet.create({
     height: 50,
     lineHeight: 50,
     textAlign: 'center'
+  },
+  item: {
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 

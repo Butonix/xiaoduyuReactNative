@@ -33,17 +33,15 @@ class LikeButton extends Component {
 
   render() {
 
-    const { like = false, me, user_id } = this.props
+    const { like = false, me, user_id, like_count } = this.props
 
-    if (user_id && user_id._id && me._id == user_id._id) {
-      return (<View></View>)
-    }
+    // if (user_id && user_id._id && me._id == user_id._id) {
+    //   return null
+    // }
 
     return (
-          <TouchableOpacity onPress={this.like.bind(this)}>
-            <View>
-              <Text>{like ? '已赞' : '赞'}</Text>
-            </View>
+          <TouchableOpacity onPress={this.like.bind(this)} style={styles.item}>
+            <Text>{like ? '已赞' : '赞'} {like_count}</Text>
           </TouchableOpacity>
         )
   }
@@ -51,6 +49,11 @@ class LikeButton extends Component {
 
 
 const styles = StyleSheet.create({
+  item: {
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })
 
 export default connect((state, props) => {

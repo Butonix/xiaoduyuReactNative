@@ -18,6 +18,10 @@ import { cleanAllPosts } from './actions/posts'
 
 const store = getStore()
 
+// 解决该组建，启动黑底的问题
+import { Theme } from 'teaset'
+Theme.set({ screenColor: '#fff', })
+
 global.cleanRedux = () => {
   cleanUserInfo()(store.dispatch, store.getState)
   cleanAllPosts()(store.dispatch, store.getState)
@@ -26,7 +30,7 @@ global.cleanRedux = () => {
 global.initReduxDate = (callback) => {
   global.cleanRedux()
 
-  AsyncStorage.getItem('token', function(errs, result){
+  AsyncStorage.getItem('token', (errs, result)=>{
 
     if (!result) {
       callback(false)
@@ -36,14 +40,14 @@ global.initReduxDate = (callback) => {
     loadUserInfo({
       accessToken: result,
       callback: (res)=>{
-
+        
         if (res.success) {
           addAccessToken({ accessToken:  result })(store.dispatch, store.getState)
           callback(true)
         } else {
-          AsyncStorage.removeItem('token', function(res){
+          AsyncStorage.removeItem('token',(res)=>{
             callback(false)
-          })(store.dispatch, store.getState)
+          })
         }
 
       }
@@ -75,7 +79,7 @@ class MainApp extends Component {
     self.setState({ loading: true })
 
     function handleFirstConnectivityChange(state) {
-      
+
       if (!state) {
         self.setState({ loading: false })
       } else {

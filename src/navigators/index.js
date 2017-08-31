@@ -74,7 +74,7 @@ const App = StackNavigator({
   ResetBiref: { screen: ResetBiref },
   ResetGender: { screen: ResetGender },
   ResetPassword: { screen: ResetPassword },
-  ResetEmail: { screen: ResetEmail },
+  ResetEmail: { screen: ResetEmail }
   // Test: { screen: Test }
 },{
   initialRouteName: 'Welcome'

@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 
 import React, { Component } from 'react';
 import {
@@ -26,8 +21,8 @@ import { connect } from 'react-redux'
 import { loadPostsList } from '../../actions/posts';
 import { getPostListByName } from '../../reducers/posts'
 
+import styles from './style'
 import CommentItem from '../../components/comment-item'
-// import FLAnimatedImage from 'react-native-flanimatedimage'
 
 class PostsList extends Component {
 
@@ -106,7 +101,7 @@ class PostsList extends Component {
   }
 
   renderHeader() {
-    return (<View><Text></Text></View>)
+    return (<View></View>)
   }
 
   renderFooter() {
@@ -138,7 +133,6 @@ class PostsList extends Component {
     let topics = ds.cloneWithRows(list.data || [])
 
     return (
-      <View style={styles.container}>
         <ListView
           enableEmptySections={true}
           dataSource={topics}
@@ -165,8 +159,6 @@ class PostsList extends Component {
                     <View style={styles.flexContainer}>
                       {topic.images.map(img=>{
                         let _img = 'https:' + img.split('?')[0] + '?imageMogr2/auto-orient/thumbnail/!200/format/jpg'
-                        // console.log('https:'+img+'/format/jpg');
-                        // return (<FLAnimatedImage key={img} source={{uri:img}} style={styles.images} onLoadEnd={this.onLoadEnd} />)
                         return (<Image key={img} source={{uri:_img}} style={styles.images} />)
                       })}
                     </View>
@@ -191,9 +183,9 @@ class PostsList extends Component {
             <RefreshControl
               refreshing={this.state.isRefreshing}
               onRefresh={this._onRefresh.bind(this)}
-              tintColor="#ff0000"
+              tintColor="#484848"
               title="加载中..."
-              titleColor="#00ff00"
+              titleColor="#484848"
               colors={['#ff0000', '#00ff00', '#0000ff']}
               progressBackgroundColor="#ffffff"
             />
@@ -201,8 +193,7 @@ class PostsList extends Component {
           onScroll={this._onScroll.bind(this)}
           scrollEventThrottle={50}
         />
-      </View>
-    );
+    )
   }
 
   goTo(posts){
@@ -239,53 +230,6 @@ class PostsList extends Component {
 
 }
 
-const styles = StyleSheet.create({
-  item: {
-    marginBottom: 10
-  },
-  container: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // backgroundColor: '#F5FCFF',
-  },
-  topicItem: {
-    backgroundColor: '#fff',
-    padding:20,
-    borderBottomWidth: 1,
-    borderColor: '#efefef'
-  },
-  itemHead: {
-    flexDirection: 'row'
-  },
-  avatar: {
-    width:40,
-    height:40,
-    borderRadius: 20,
-    marginRight:10
-  },
-  itemMain: {
-    marginTop:10
-  },
-  images:{
-    // flex: 1,
-    width: 100,
-    height: 100,
-    marginTop:10,
-    marginRight:10
-  },
-  flexContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap'
-  },
-  title: {
-    fontWeight: 'bold'
-  },
-  loading: {
-    height: 60
-  }
-});
-
-
 export default connect((state, props) => ({
     // state: state，
     list: getPostListByName(state, props.name)
@@ -293,6 +237,4 @@ export default connect((state, props) => ({
   (dispatch) => ({
     loadPostsList: bindActionCreators(loadPostsList, dispatch)
   })
-)(PostsList);
-
-// export default PostsList
+)(PostsList)

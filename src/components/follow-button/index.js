@@ -36,15 +36,15 @@ class FollowButton extends Component {
   }
 
   render() {
-    const { follow = false, me, user_id } = this.props
+    const { follow = false, me, user_id, follow_count } = this.props
 
-    if (user_id && user_id._id && me._id == user_id._id) {
-      return (<View></View>)
-    }
+    // if (user_id && user_id._id && me._id == user_id._id) {
+    //   return (<View></View>)
+    // }
 
     return (<TouchableOpacity onPress={this.follow.bind(this)}>
             <View>
-              <Text>{follow ? '已关注' : '关注'}</Text>
+              <Text>{follow ? '已关注' : '关注'} {follow_count}</Text>
             </View>
           </TouchableOpacity>)
   }

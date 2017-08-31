@@ -32,7 +32,8 @@ class Tabbar extends Component {
 var styles = StyleSheet.create({
   tabbar: {
     backgroundColor: '#fff',
-    height:50,
+    paddingTop:20,
+    height:70,
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: '#dce0e0'

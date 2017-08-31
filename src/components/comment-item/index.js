@@ -7,6 +7,7 @@ class CommentItem extends React.Component {
   constructor(props) {
     super(props)
     this.toPeople = this.toPeople.bind(this)
+    this.reply = this.reply.bind(this)
   }
 
   toPeople(people) {
@@ -14,33 +15,52 @@ class CommentItem extends React.Component {
     navigate('PeopleDetail', { id: people._id })
   }
 
+  reply(comment) {
+    const { navigate } = this.props.navigation;
+    navigate('WriteComment', {
+      postsId: comment.posts_id._id,
+      parentId: comment.parent_id || comment._id,
+      replyId: comment._id
+    })
+  }
+
   render() {
-    
-    const { comment } = this.props
+
+    const {
+      comment,
+      displayLike = false,
+      displayReply = false
+    } = this.props
 
     return (<View style={styles.item}>
+
         <TouchableOpacity onPress={()=>{ this.toPeople(comment.user_id) }}>
           <Image source={{uri:'https:'+comment.user_id.avatar_url}} style={styles.avatar} />
         </TouchableOpacity>
+
         <View style={styles.main}>
+
           <View style={styles.head}>
-            <Text onPress={()=>{this.toPeople(comment.user_id)}}>
-              {comment.user_id.nickname}
-            </Text>
-            <Text>
-              {comment.reply_count ? comment.reply_count + '个回复' : null} {comment.like_count ? comment.like_count+'个赞' : null}
-            </Text>
+            <View style={styles.headLeft}>
+              <Text onPress={()=>{this.toPeople(comment.user_id)}}>
+                {comment.user_id.nickname}
+              </Text>
+              <Text>
+                {comment.reply_count ? comment.reply_count + '个回复' : null} {comment.like_count ? comment.like_count+'个赞' : null}
+              </Text>
+            </View>
+            <View style={styles.headRight}>
+              {displayLike ? <Text style={styles.like}>赞</Text> : null}
+              {displayReply ? <TouchableOpacity onPress={()=>{this.reply(comment)}}><Text>回复</Text></TouchableOpacity> : null}
+            </View>
           </View>
 
           {comment.content_summary ?
-            <Text>{comment.content_summary}</Text>
-            : null}
-
-          {!comment.content_summary && comment.content_html ?
-            <HtmlView html={comment.content_html} />
-            : null}
+            <Text>{comment.content_summary}</Text> :
+            <HtmlView html={comment.content_html} />}
 
         </View>
+
       </View>)
   }
 }
@@ -65,6 +85,17 @@ const styles = StyleSheet.create({
     flex: 1
   },
   head:{
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  headLeft: {
     flexDirection: 'row'
+  },
+  headRight: {
+    flexDirection: 'row'
+  },
+  like: {
+    marginRight:15
   }
 })
