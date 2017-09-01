@@ -1,7 +1,7 @@
 import Ajax from '../common/ajax'
 import merge from 'lodash/merge'
 
-export function loadNotifications({ name, filters = {}, callback = ()=>{} }) {
+export function loadNotifications({ name, filters = {}, callback = ()=>{}, restart = false }) {
   return (dispatch, getState) => {
 
     let accessToken = getState().user.accessToken
@@ -12,6 +12,8 @@ export function loadNotifications({ name, filters = {}, callback = ()=>{} }) {
     let me = getState().user.profile
 
     let list = getState().notification[name] || {}
+
+    if (restart)  list = { data: list.data || [] }
 
     if (typeof(list.more) != 'undefined' && !list.more || list.loading) return
 
@@ -35,6 +37,8 @@ export function loadNotifications({ name, filters = {}, callback = ()=>{} }) {
       type: 'post',
       data: merge({}, filters, { access_token: accessToken }),
       callback: (res)=>{
+
+        if (restart) list.data = []
 
         list.loading = false
         list.more = res.data.length < list.filters.per_page ? false : true
@@ -207,7 +211,7 @@ export function loadUnreadCount() {
     if (loading && accessToken) return
 
     loading = true
-    
+
     return Ajax({
       url: '/unread-notifications',
       type: 'get',

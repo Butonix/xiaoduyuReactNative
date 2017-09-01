@@ -23,6 +23,7 @@ import { getPostListByName } from '../../reducers/posts'
 
 import styles from './style'
 import CommentItem from '../../components/comment-item'
+import Loading from '../../components/ui/loading'
 
 class PostsList extends Component {
 
@@ -32,19 +33,8 @@ class PostsList extends Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
-      topics: ds.cloneWithRows([]),
-      sourcePostsList: [],
       loadMore: false,
-      more: true,
-      isRefreshing: false,
-      filters: {
-        lt_date: new Date().getTime(),
-        per_page: 20
-      },
-      list: {
-        loading: false,
-        more: true
-      }
+      isRefreshing: false
     }
     this.goTo = this.goTo.bind(this)
     this.goToComment = this.goToComment.bind(this)
@@ -119,14 +109,10 @@ class PostsList extends Component {
   render() {
 
     const self = this
-    // let list = getPostListByName(this.props.state, 'test')
-
     const { list } = this.props
 
-    // console.log(list);
-
-    if (!list.data) {
-      return (<View></View>)
+    if (list.loading && list.data.length == 0 || !list.data) {
+      return (<Loading />)
     }
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});

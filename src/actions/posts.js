@@ -69,12 +69,12 @@ export function loadPostsList({ name, filters = {}, callback=()=>{}, restart = f
     let postsList = getState().posts[name] || {}
     let accessToken = getState().user.accessToken
 
-    if (restart) postsList = {}
+    if (restart) postsList = { data: postsList.data || [] }
     if (typeof(postsList.more) != 'undefined' && !postsList.more || postsList.loading) {
       callback()
       return
     }
-
+    
     if (!postsList.data) postsList.data = []
 
     if (!postsList.filters) {
@@ -101,21 +101,17 @@ export function loadPostsList({ name, filters = {}, callback=()=>{}, restart = f
       headers,
       callback: (res) => {
 
-        if (!res || !res.success) {
-          callback(res)
-          return
-        }
+        if (!res || !res.success) return callback(res)
 
+        if (restart) postsList.data = []
         postsList.more = res.data.length < postsList.filters.per_page ? false : true
         postsList.data = postsList.data.concat(processPostsList(res.data))
         postsList.filters = filters
         postsList.count = 0
         postsList.loading = false
 
-        // setTimeout(()=>{
-          dispatch({ type:'ADD_POSTS_LIST', name, list: postsList })
-          callback(res)
-        // }, 1000)
+        dispatch({ type:'ADD_POSTS_LIST', name, list: postsList })
+        callback(res)
 
       }
     })

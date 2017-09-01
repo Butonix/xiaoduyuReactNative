@@ -79,7 +79,7 @@ class NotificationList extends Component {
     }
 
   }
-  
+
   toPeople(user) {
     const { navigate } = this.props.navigation;
     navigate('PeopleDetail', { id: user._id })
@@ -321,7 +321,7 @@ class NotificationList extends Component {
     }
 
     // console.log(list);
-
+    
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let itemlist = ds.cloneWithRows(list.data || [])
 
@@ -340,9 +340,9 @@ class NotificationList extends Component {
             <RefreshControl
               refreshing={this.state.isRefreshing}
               onRefresh={this._onRefresh.bind(this)}
-              tintColor="#ff0000"
+              tintColor="#484848"
               title="加载中..."
-              titleColor="#00ff00"
+              titleColor="#484848"
               colors={['#ff0000', '#00ff00', '#0000ff']}
               progressBackgroundColor="#ffffff"
             />
