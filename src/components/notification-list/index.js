@@ -321,7 +321,7 @@ class NotificationList extends Component {
     }
 
     // console.log(list);
-    
+
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let itemlist = ds.cloneWithRows(list.data || [])
 

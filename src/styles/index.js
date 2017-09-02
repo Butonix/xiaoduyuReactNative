@@ -44,6 +44,11 @@ const styles = StyleSheet.create({
   // 标题栏样式
   headerStyle: {
     backgroundColor: '#fff'
+  },
+  loading: {
+    height:50,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 

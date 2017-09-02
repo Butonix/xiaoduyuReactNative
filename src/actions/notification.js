@@ -37,7 +37,7 @@ export function loadNotifications({ name, filters = {}, callback = ()=>{}, resta
       type: 'post',
       data: merge({}, filters, { access_token: accessToken }),
       callback: (res)=>{
-
+        
         if (restart) list.data = []
 
         list.loading = false

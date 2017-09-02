@@ -30,7 +30,7 @@ class PeopleDetail extends React.Component {
     const { params = {} } = navigation.state
 
     return {
-      title: '写评论'
+      title: params.title
       // headerRight: (<View><Button onPress={()=>params.submit()} title={"关注"} /></View>),
     }
 

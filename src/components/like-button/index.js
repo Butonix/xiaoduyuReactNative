@@ -41,7 +41,7 @@ class LikeButton extends Component {
 
     return (
           <TouchableOpacity onPress={this.like.bind(this)} style={styles.item}>
-            <Text>{like ? '已赞' : '赞'} {like_count}</Text>
+            <Text>{like ? '已赞' : '赞'} {like_count || ''}</Text>
           </TouchableOpacity>
         )
   }

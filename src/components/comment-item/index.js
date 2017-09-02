@@ -12,7 +12,7 @@ class CommentItem extends React.Component {
 
   toPeople(people) {
     const { navigate } = this.props.navigation;
-    navigate('PeopleDetail', { id: people._id })
+    navigate('PeopleDetail', { title: people.nickname, id: people._id })
   }
 
   reply(comment) {

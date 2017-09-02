@@ -66,27 +66,26 @@ export function updateTopicById({ id, name, brief, avatar, description, parentId
   }
 }
 
-export function followTopic({ id, callback }) {
+export function followTopic({ id, callback =()=>{} }) {
   return (dispatch, getState) => {
     const accessToken = getState().user.accessToken
-
     Ajax({
       url: '/add-follow',
-      // url: '/follow-node/'+id,
       type: 'post',
       data: { topic_id: id },
       headers: { AccessToken: accessToken },
       callback: (res)=>{
         if (res && res.success) {
-          dispatch({ type: 'FOLLOW_NODE', nodeId: id, status: true })
+          dispatch({ type: 'FOLLOW_TOPIC', id: id, status: true })
         }
+        callback(res)
       }
     })
 
   }
 }
 
-export function unfollowTopic({ id, callback }) {
+export function unfollowTopic({ id, callback =()=>{} }) {
   return (dispatch, getState) => {
     const accessToken = getState().user.accessToken
 
@@ -97,8 +96,9 @@ export function unfollowTopic({ id, callback }) {
       headers: { AccessToken: accessToken },
       callback: (res)=>{
         if (res && res.success) {
-          dispatch({ type: 'FOLLOW_NODE', nodeId: id, status: false })
+          dispatch({ type: 'FOLLOW_TOPIC', id: id, status: false })
         }
+        callback(res)
       }
     })
 

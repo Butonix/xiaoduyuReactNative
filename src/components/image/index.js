@@ -14,7 +14,7 @@ class Img extends React.Component {
   }
 
   componentDidMount() {
-
+    
     const self = this
 
     Image.getSize(this.props.image, (width, height) => {

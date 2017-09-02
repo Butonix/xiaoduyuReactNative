@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 
 import React, { Component } from 'react';
 import {
@@ -18,12 +13,15 @@ import {
   RefreshControl,
   Navigator,
   TouchableWithoutFeedback,
-  TouchableOpacity
-} from 'react-native';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+  TouchableOpacity,
+  Button
+} from 'react-native'
 
-import { loadTopicList } from '../../actions/topic'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+// import { Toast } from 'teaset'
+
+import { loadTopicList, followTopic, unfollowTopic } from '../../actions/topic'
 import { getTopicListByName } from '../../reducers/topic'
 
 class TopicList extends Component {
@@ -39,6 +37,7 @@ class TopicList extends Component {
     this.renderHeader = this.renderHeader.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
     this.toTopic = this.toTopic.bind(this)
+    this.handleFollow = this.handleFollow.bind(this)
   }
 
   toTopic(topic) {
@@ -50,7 +49,6 @@ class TopicList extends Component {
   componentDidMount() {
 
     const self = this
-
     const { topicList } = this.props
 
     if (!topicList.data) {
@@ -83,7 +81,6 @@ class TopicList extends Component {
 
   renderFooter() {
 
-    // let list = getTopicListByName(this.props.state, 'test')
     const { topicList } = this.props
 
     if (topicList.loading) {
@@ -100,11 +97,30 @@ class TopicList extends Component {
     )
   }
 
+  handleFollow(topic) {
+    const { followTopic, unfollowTopic } = this.props
+
+    let fn = topic.follow ? unfollowTopic : followTopic
+
+    fn({
+      id: topic._id,
+      callback: (res)=>{
+        if (res && res.success) {
+          // Toast.show({
+          //   text: topic.follow ? '关注成功' : '已取消关注',
+          //   icon: 'success',
+          //   position: 'center',
+          //   duration: 2000
+          // })
+        }
+      }
+    })
+
+  }
+
   render() {
 
     const { topicList } = this.props
-
-    console.log(topicList);
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let topics = ds.cloneWithRows(topicList.data || [])
@@ -116,15 +132,20 @@ class TopicList extends Component {
           dataSource={topics}
           renderRow={(topic) => (<TouchableOpacity onPress={()=>{this.toTopic(topic)}}>
             <View style={styles.item}>
-              <View><Image source={{uri:'https:'+topic.avatar}} style={styles.avatar} /></View>
-              <View><Text>{topic.name}</Text><Text style={styles.brief}>{topic.brief}</Text></View>
+              <View style={styles.itemLeft}><Image source={{uri:'https:'+topic.avatar}} style={styles.avatar} /></View>
+              <View style={styles.itemCenter}><Text>{topic.name}</Text><Text style={styles.brief}>{topic.brief}</Text></View>
+              <View style={styles.itemRight}>
+                <TouchableOpacity style={[styles.followButton, (!topic.follow ? null : styles.gary) ]} onPress={()=>this.handleFollow(topic)}>
+                  <Text style={[styles.followButtonText, (!topic.follow ? null : styles.garyText) ]}>{topic.follow ? '已关注' : '关注'}</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </TouchableOpacity>)}
           scrollEventThrottle={50}
           removeClippedSubviews={false}
         />
       </View>
-    );
+    )
   }
 
   goTo(posts){
@@ -164,10 +185,16 @@ const styles = StyleSheet.create({
   },
   item: {
     backgroundColor: '#fff',
-    padding:20,
+    padding:15,
     borderBottomWidth: 1,
     borderColor: '#efefef',
     flexDirection: 'row'
+  },
+  itemLeft: {
+    width:50
+  },
+  itemCenter: {
+    flex:1
   },
   avatar: {
     width:40,
@@ -191,6 +218,24 @@ const styles = StyleSheet.create({
   },
   brief: {
     color: '#8a8a8a'
+  },
+  button: {
+    backgroundColor: '#333'
+  },
+  followButton: {
+    padding: 7,
+    borderColor: 'rgb(6, 181, 228)',
+    borderWidth: 1,
+    borderRadius: 5
+  },
+  gary: {
+    borderColor: 'rgb(194, 194, 194)'
+  },
+  garyText: {
+    color: 'rgb(194, 194, 194)'
+  },
+  followButtonText: {
+    color: 'rgb(6, 181, 228)'
   }
 })
 
@@ -198,8 +243,8 @@ export default connect((state, props) => ({
     topicList: getTopicListByName(state, props.id)
   }),
   (dispatch) => ({
-    loadTopicList: bindActionCreators(loadTopicList, dispatch)
+    loadTopicList: bindActionCreators(loadTopicList, dispatch),
+    followTopic: bindActionCreators(followTopic, dispatch),
+    unfollowTopic: bindActionCreators(unfollowTopic, dispatch)
   })
-)(TopicList);
-
-// export default PostsList
+)(TopicList)

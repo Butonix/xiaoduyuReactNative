@@ -7,6 +7,9 @@ import { connect } from 'react-redux'
 import { loadFollowPosts } from '../../actions/follow'
 import { getPeopleListByName } from '../../reducers/follow-people'
 
+import Loading from '../../components/ui/loading'
+import Nothing from '../../components/nothing'
+
 class FollowPeopleList extends Component {
 
   constructor (props) {
@@ -39,7 +42,7 @@ class FollowPeopleList extends Component {
 
     const { list } = this.props
 
-    console.log(list);
+    // console.log(list);
 
     if (!list.data) {
       this.loadList()
@@ -47,9 +50,9 @@ class FollowPeopleList extends Component {
 
   }
 
-  toPeople(posts){
+  toPeople(people){
     const { navigate } = this.props.navigation;
-    navigate('PostsDetail', { title: posts.title, id: posts._id })
+    navigate('PeopleDetail', { title: people.nickname, id: people._id })
   }
 
   loadList(callback, restart) {
@@ -98,11 +101,14 @@ class FollowPeopleList extends Component {
   render() {
 
     const self = this
-
     const { list } = this.props
 
-    if (!list.data) {
-      return (<View></View>)
+    if (list.loading && list.data.length == 0 || !list.data) {
+      return (<Loading />)
+    }
+
+    if (!list.loading && !list.more && list.data.length == 0) {
+      return (<Nothing />)
     }
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -117,15 +123,25 @@ class FollowPeopleList extends Component {
 
             let people = list.filters.user_id ? item.people_id : item.user_id
 
-            return (<View >
+            return (<View>
                 <TouchableOpacity onPress={()=>{this.toPeople(people)}} style={styles.item}>
-                  <View><Image source={{uri:'https:'+people.avatar_url}} style={styles.avatar}  /></View>
-                  <View><Text>{people.nickname}</Text></View>
+                  <View style={styles.itemLeft}><Image source={{uri:'https:'+people.avatar_url}} style={styles.avatar}  /></View>
+                  <View style={styles.itemCenter}>
+                    <View><Text>{people.nickname}</Text></View>
+                    <View style={styles.other}>
+                      {people.posts_count ? <Text>帖子{people.posts_count}</Text> : null}
+                      {people.fans_count ? <Text>粉丝{people.fans_count}</Text> : null}
+                      {people.comment_count ? <Text>评论{people.comment_count}</Text> : null}
+                    </View>
+                  </View>
+                  <View style={styles.itemRight}>
+                    <Text>关注</Text>
+                  </View>
                 </TouchableOpacity>
               </View>)
 
           }}
-          renderHeader={this.renderHeader}
+          // renderHeader={this.renderHeader}
           renderFooter={this.renderFooter}
           removeClippedSubviews={false}
           refreshControl={
@@ -150,10 +166,11 @@ class FollowPeopleList extends Component {
 
 const styles = StyleSheet.create({
   item: {
-    marginBottom: 10,
-    flexDirection: 'row',
+    padding:10,
+    backgroundColor:'#fff',
     borderBottomWidth: 1,
-    borderColor: '#efefef'
+    borderColor: '#efefef',
+    flexDirection: 'row'
   },
   avatar: {
     width:40,
@@ -163,6 +180,12 @@ const styles = StyleSheet.create({
   },
   loading: {
     height: 60
+  },
+  other: {
+    flexDirection: 'row'
+  },
+  itemCenter:{
+    flex: 1
   }
 });
 

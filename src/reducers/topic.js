@@ -36,31 +36,31 @@ export default function topic(state = initialState, action = {}) {
     case 'SET_NODE':
       return merge({}, action.state, {})
 
-    case 'FOLLOW_NODE':
+    case 'FOLLOW_TOPIC':
 
-      const { nodeId, status } = action
+      const { id, status } = action
 
       for (let i in state) {
 
-        let nodes = state[i]
-        nodes = nodes.data
+        if (!state[i].data) continue
 
-        for (let n = 0, length = nodes.length; n < length; n++) {
-          if (nodes[n]._id == nodeId) {
-            state[i].data[n].follow_count += status ? 1 : -1
-            state[i].data[n].follow = status
+        state[i].data.map(item=>{
+
+          if (item._id == id) {
+            item.follow_count += status ? 1 : -1
+            item.follow = status
           }
 
-          if (nodes[n].children && nodes[n].children.length > 0) {
-            nodes[n].children.map(function(node, key){
-              if (node._id == nodeId) {
-                state[i].data[n].children[key].follow_count += status ? 1 : -1
-                state[i].data[n].children[key].follow = status
-              }
-            })
-          }
+          if (!item.children) return
 
-        }
+          item.children.map(item=>{
+            if (item._id == id) {
+              item.follow_count += status ? 1 : -1
+              item.follow = status
+            }
+          })
+
+        })
 
       }
 
