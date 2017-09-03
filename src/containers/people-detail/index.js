@@ -70,12 +70,22 @@ class PeopleDetail extends React.Component {
 
     return (<View>
       <View style={styles.head}>
-        {people.avatar_url ? <Image source={{uri:'https:'+people.avatar_url}} style={styles.avatar}  /> : null}
-        {people.nickname ? <Text>{people.nickname}</Text> : null}
-        {people.brief ? <Text>{people.brief}</Text> : null}
+        <View>
+          {people.avatar_url ? <Image source={{uri:'https:'+people.avatar_url}} style={styles.avatar}  /> : null}
+        </View>
+        <View>
+          {people.nickname ? <Text style={styles.nickname}>{people.nickname}</Text> : null}
+          <View style={styles.other}>
+            {people.fans_count ? <Text style={styles.fans}>{people.fans_count} 粉丝</Text> : null}
+            {people.follow_people_count ? <Text>{people.follow_people_count} 关注</Text> : null}
+          </View>
+          <FollowButton people_id={people._id} follow={people.follow} />
+        </View>
       </View>
 
-      <View><FollowButton people_id={people._id} follow={people.follow} /></View>
+      <View>
+        {people.brief ? <Text>{people.brief}</Text> : null}
+      </View>
 
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: people._id, filters: { user_id: people._id }, title: people.nickname + '的帖子' }) }}>
         <ListItem name={"他发布的帖子"} rightText={people.posts_count} />
@@ -108,17 +118,29 @@ class PeopleDetail extends React.Component {
 
 const styles = StyleSheet.create({
   head: {
-    paddingTop:10,
-    paddingBottom:10,
+    padding:20,
     marginBottom:10,
     backgroundColor: '#fff',
+    flexDirection: 'row'
     // justifyContent: 'center',
-    alignItems: 'center'
+    // alignItems: 'center'
   },
   avatar: {
     width: 80,
     height: 80,
-    borderRadius: 40
+    borderRadius: 40,
+    marginRight: 20
+  },
+  other: {
+    flexDirection: 'row',
+    marginBottom: 10
+  },
+  nickname: {
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  fans: {
+    marginRight: 10
   }
 })
 

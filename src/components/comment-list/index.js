@@ -81,7 +81,7 @@ class CommentList extends Component {
       displayLike = false,
       displayReply = false
     } = this.props
-    
+
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let array = ds.cloneWithRows(list.data || [])
 
@@ -94,7 +94,7 @@ class CommentList extends Component {
               <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} comment={item} />
               {item.reply && item.reply.map(item=>{
                 return(<View key={item._id} style={styles.reply}>
-                  <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} comment={item} />
+                  <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} comment={item} subitem={true} />
                 </View>)
               })}
           </View>)}

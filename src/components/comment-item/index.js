@@ -23,16 +23,17 @@ class CommentItem extends React.Component {
       replyId: comment._id
     })
   }
-
+  
   render() {
 
     const {
       comment,
       displayLike = false,
-      displayReply = false
+      displayReply = false,
+      subitem = false
     } = this.props
 
-    return (<View style={styles.item}>
+    return (<View style={[styles.item, subitem ? styles.subitem : null]}>
 
         <TouchableOpacity onPress={()=>{ this.toPeople(comment.user_id) }}>
           <Image source={{uri:'https:'+comment.user_id.avatar_url}} style={styles.avatar} />
@@ -42,10 +43,10 @@ class CommentItem extends React.Component {
 
           <View style={styles.head}>
             <View style={styles.headLeft}>
-              <Text onPress={()=>{this.toPeople(comment.user_id)}}>
+              <Text style={styles.nickname} onPress={()=>{this.toPeople(comment.user_id)}}>
                 {comment.user_id.nickname}
               </Text>
-              <Text>
+              <Text style={styles.other}>
                 {comment.reply_count ? comment.reply_count + '个回复' : null} {comment.like_count ? comment.like_count+'个赞' : null}
               </Text>
             </View>
@@ -92,10 +93,21 @@ const styles = StyleSheet.create({
   headLeft: {
     flexDirection: 'row'
   },
+  nickname: {
+    fontWeight: 'bold',
+    marginRight: 10
+  },
+  other: {
+    color: 'rgb(138, 138, 138)',
+    fontSize: 12
+  },
   headRight: {
     flexDirection: 'row'
   },
   like: {
     marginRight:15
+  },
+  subitem: {
+    paddingLeft: 0
   }
 })

@@ -15,8 +15,6 @@ import { getUserInfo } from '../../reducers/user'
 import HTMLView from '../../components/html-view'
 import Img from '../../components/image'
 import CommentList from '../../components/comment-list'
-// import LikeButton from '../../components/like-button'
-// import FollowButton from '../../components/follow-button'
 import BottomBar from '../../components/bottom-bar'
 
 class PostsDetail extends Component {
