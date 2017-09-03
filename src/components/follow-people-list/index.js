@@ -1,20 +1,25 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ListView, Image, refreshControl, RefreshControl, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, ListView, Image, refreshControl, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { loadFollowPosts } from '../../actions/follow'
+import { follow, unfollow } from '../../actions/follow'
 import { getPeopleListByName } from '../../reducers/follow-people'
 
-import Loading from '../../components/ui/loading'
-import Nothing from '../../components/nothing'
+import Loading from '../ui/loading'
+import Nothing from '../nothing'
+import ListFooter from '../ui/list-footer'
+import RefreshControl from '../ui/refresh-control'
+import ListViewOnScroll from '../../common/list-view-onscroll'
+import PeopleItem from '../people-item'
 
 class FollowPeopleList extends Component {
 
   constructor (props) {
     super(props)
-
+    
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
@@ -34,8 +39,9 @@ class FollowPeopleList extends Component {
     }
     this.toPeople = this.toPeople.bind(this)
     this.loadList = this.loadList.bind(this)
-    this.renderHeader = this.renderHeader.bind(this)
-    this.renderFooter = this.renderFooter.bind(this)
+    // this.renderHeader = this.renderHeader.bind(this)
+    // this.renderFooter = this.renderFooter.bind(this)
+    this.handleFollow = this.handleFollow.bind(this)
   }
 
   componentWillMount() {
@@ -57,45 +63,14 @@ class FollowPeopleList extends Component {
 
   loadList(callback, restart) {
     const { name, filters } = this.props
-    this.props.loadList({ name: name, filters, callback, restart })
+    this.props.loadList({ name, filters, callback, restart })
   }
 
-  renderHeader() {
-    return (<View><Text></Text></View>)
-  }
-
-  renderFooter() {
-    const { list } = this.props
-
-    if (list.loading) {
-      return (
-        <View style={styles.loading}>
-          <ActivityIndicator animating={true} color={'#484848'} size={'small'} />
-        </View>
-      )
-    }
-  }
-
-  _onScroll(event) {
-    const self = this
-    if (this.state.loadMore) return
-    let y = event.nativeEvent.contentOffset.y;
-    let height = event.nativeEvent.layoutMeasurement.height;
-    let contentHeight = event.nativeEvent.contentSize.height;
-    // console.log('offsetY-->' + y);
-    // console.log('height-->' + height);
-    // console.log('contentHeight-->' + contentHeight);
-    if (y+height>=contentHeight-20) {
-      self.loadList()
-    }
-  }
-
-  _onRefresh() {
-    const self = this
-    this.setState({ isRefreshing: true })
-    self.loadList(()=>{
-      self.setState({ isRefreshing: false })
-    }, true)
+  handleFollow(people) {
+    const { follow, unfollow } = this.props
+    people.follow ?
+      unfollow({ data: { people_id: people._id } }) :
+      follow({ data: { people_id: people._id } })
   }
 
   render() {
@@ -119,43 +94,14 @@ class FollowPeopleList extends Component {
         <ListView
           enableEmptySections={true}
           dataSource={data}
-          renderRow={(item) => {
-
-            let people = list.filters.user_id ? item.people_id : item.user_id
-
-            return (<View>
-                <TouchableOpacity onPress={()=>{this.toPeople(people)}} style={styles.item}>
-                  <View style={styles.itemLeft}><Image source={{uri:'https:'+people.avatar_url}} style={styles.avatar}  /></View>
-                  <View style={styles.itemCenter}>
-                    <View><Text>{people.nickname}</Text></View>
-                    <View style={styles.other}>
-                      {people.posts_count ? <Text>帖子{people.posts_count}</Text> : null}
-                      {people.fans_count ? <Text>粉丝{people.fans_count}</Text> : null}
-                      {people.comment_count ? <Text>评论{people.comment_count}</Text> : null}
-                    </View>
-                  </View>
-                  <View style={styles.itemRight}>
-                    <Text>关注</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>)
-
-          }}
+          renderRow={(item) => (<PeopleItem {...self.props} people={list.filters.user_id ? item.people_id : item.user_id} />)}
           // renderHeader={this.renderHeader}
-          renderFooter={this.renderFooter}
+          // renderFooter={this.renderFooter}
+          renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
           removeClippedSubviews={false}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.isRefreshing}
-              onRefresh={this._onRefresh.bind(this)}
-              tintColor="#ff0000"
-              title="加载中..."
-              titleColor="#00ff00"
-              colors={['#ff0000', '#00ff00', '#0000ff']}
-              progressBackgroundColor="#ffffff"
-            />
-          }
-          onScroll={this._onScroll.bind(this)}
+          refreshControl={<RefreshControl onRefresh={callback=>self.loadList(callback, true)} />}
+          // onScroll={this._onScroll.bind(this)}
+          onScroll={ListViewOnScroll(self.loadList)}
           scrollEventThrottle={50}
         />
       </View>
@@ -187,13 +133,15 @@ const styles = StyleSheet.create({
   itemCenter:{
     flex: 1
   }
-});
+})
 
 
 export default connect((state, props) => ({
     list: getPeopleListByName(state, props.name)
   }),
   (dispatch) => ({
-    loadList: bindActionCreators(loadFollowPosts, dispatch)
+    loadList: bindActionCreators(loadFollowPosts, dispatch),
+    follow: bindActionCreators(follow, dispatch),
+    unfollow: bindActionCreators(unfollow, dispatch)
   })
-)(FollowPeopleList);
+)(FollowPeopleList)

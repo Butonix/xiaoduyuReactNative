@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-na
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { follow, unfollow } from '../../actions/follow'
-import { getUserInfo } from '../../reducers/user'
+// import { getUserInfo } from '../../reducers/user'
 
 class FollowButton extends Component {
 
@@ -14,7 +14,7 @@ class FollowButton extends Component {
   }
 
   follow() {
-    const { me, followType, posts_id, people_id, follow, handleFollow, handleUnfollow } = this.props
+    const { topic_id, posts_id, people_id, follow, handleFollow, handleUnfollow } = this.props
     let fn = follow ? handleUnfollow : handleFollow
 
     let data = {}
@@ -23,6 +23,8 @@ class FollowButton extends Component {
       data.posts_id = posts_id
     } else if (people_id) {
       data.people_id = people_id
+    } else if (topic_id) {
+      data.topic_id = topic_id
     }
 
     fn({
@@ -34,9 +36,9 @@ class FollowButton extends Component {
       }
     })
   }
-  
+
   render() {
-    const { follow = false, me, user_id, follow_count } = this.props
+    const { follow = false, follow_count } = this.props
 
     return (<TouchableOpacity onPress={this.follow.bind(this)}>
             <View>
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
 
 export default connect((state, props) => {
     return {
-      me: getUserInfo(state)
+      // me: getUserInfo(state)
     }
   },
   (dispatch) => ({

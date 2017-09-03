@@ -22,6 +22,8 @@ export default function peoples(state = initialState, action = {}) {
       return merge({}, state, {})
 
     case 'UPLOAD_PEOPLE_FOLLOW':
+    
+      console.log('123123');
 
       var { peopleId, followStatus, selfId } = action
 

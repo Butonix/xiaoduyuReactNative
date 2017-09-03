@@ -1,6 +1,6 @@
 import Ajax from '../common/ajax'
 
-export function follow({ data = {}, callback }) {
+export function follow({ data = {}, callback = ()=>{} }) {
   return (dispatch, getState) => {
     let accessToken = getState().user.accessToken
     let selfId = getState().user.profile._id
@@ -17,6 +17,8 @@ export function follow({ data = {}, callback }) {
           } else if (data.people_id) {
             dispatch({ type: 'UPLOAD_FOLLOW_PEOPLE_FOLLOW_STATUS', peopleId: data.people_id, selfId: selfId, followStatus: true })
             dispatch({ type: 'UPLOAD_PEOPLE_FOLLOW', peopleId: data.people_id, selfId: selfId, followStatus: true })
+          } else if (data.topic_id) {
+            dispatch({ type: 'FOLLOW_TOPIC', id: data.topic_id, status: true })
           }
         }
         callback(result)
@@ -26,7 +28,7 @@ export function follow({ data = {}, callback }) {
   }
 }
 
-export function unfollow({ data = {}, callback }) {
+export function unfollow({ data = {}, callback = ()=>{} }) {
   return (dispatch, getState) => {
     let accessToken = getState().user.accessToken
     let selfId = getState().user.profile._id
@@ -43,6 +45,8 @@ export function unfollow({ data = {}, callback }) {
           } else if (data.people_id) {
             dispatch({ type: 'UPLOAD_FOLLOW_PEOPLE_FOLLOW_STATUS', peopleId: data.people_id, selfId: selfId, followStatus: false })
             dispatch({ type: 'UPLOAD_PEOPLE_FOLLOW', peopleId: data.people_id, selfId: selfId, followStatus: false })
+          } else if (data.topic_id) {
+            dispatch({ type: 'FOLLOW_TOPIC', id: data.topic_id, status: false })
           }
         }
         callback(result)
@@ -52,6 +56,7 @@ export function unfollow({ data = {}, callback }) {
   }
 }
 
+/*
 export function loadFollowPeoples({ name, filters = {}, callback = ()=>{} }) {
   return (dispatch, getState) => {
 
@@ -155,14 +160,16 @@ export function loadFans({ name, filters = {}, callback = ()=>{} }) {
   }
 }
 
+*/
 
-export function loadFollowPosts({ name, filters = {}, callback = ()=>{} }) {
+export function loadFollowPosts({ name, filters = {}, callback = ()=>{}, restart = false }) {
   return (dispatch, getState) => {
 
     let accessToken = getState().user.accessToken
 
     let list = getState().followPeople[name] || {}
 
+    if (restart) list = { data: list.data || [] }
     if (typeof(list.more) != 'undefined' && !list.more || list.loading) return
 
     if (!list.filters) {
@@ -182,16 +189,14 @@ export function loadFollowPosts({ name, filters = {}, callback = ()=>{} }) {
 
     return Ajax({
       url: '/follow',
-      // url: '/fetch-fans',
       type: 'get',
       params: filters,
       headers: { AccessToken: accessToken },
       callback: (res)=>{
 
-        if (res && !res.success) {
-          callback(res)
-          return
-        }
+        if (res && !res.success) return callback(res)
+
+        if (restart) list.data = []
 
         list.loading = false
         list.more = res.data.length < list.filters.per_page ? false : true

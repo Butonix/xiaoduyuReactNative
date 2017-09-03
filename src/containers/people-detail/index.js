@@ -75,7 +75,7 @@ class PeopleDetail extends React.Component {
         {people.brief ? <Text>{people.brief}</Text> : null}
       </View>
 
-      <View><FollowButton people_id={people._id} {...people} /></View>
+      <View><FollowButton people_id={people._id} follow={people.follow} /></View>
 
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: people._id, filters: { user_id: people._id }, title: people.nickname + '的帖子' }) }}>
         <ListItem name={"他发布的帖子"} rightText={people.posts_count} />

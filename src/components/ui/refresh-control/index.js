@@ -9,12 +9,12 @@ class _RefreshControl extends Component {
     this.state = { display: false }
     this.onRefresh = this.onRefresh.bind(this)
   }
-  
+
   onRefresh () {
     const self = this
     const { onRefresh } = this.props
     self.setState({ display: true })
-    onRefresh(()=>{ self.setState({ display: false }) })
+    onRefresh(()=>self.setState({ display: false }))
   }
 
   render() {

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderColor: '#efefef',
-    padding: 20
+    padding: 15
   },
   avatar:{
     width: 40,

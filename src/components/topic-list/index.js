@@ -23,6 +23,7 @@ import { bindActionCreators } from 'redux'
 
 import { loadTopicList, followTopic, unfollowTopic } from '../../actions/topic'
 import { getTopicListByName } from '../../reducers/topic'
+import FollowButton from '../../components/follow-button'
 
 class TopicList extends Component {
 
@@ -37,7 +38,6 @@ class TopicList extends Component {
     this.renderHeader = this.renderHeader.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
     this.toTopic = this.toTopic.bind(this)
-    this.handleFollow = this.handleFollow.bind(this)
   }
 
   toTopic(topic) {
@@ -97,27 +97,6 @@ class TopicList extends Component {
     )
   }
 
-  handleFollow(topic) {
-    const { followTopic, unfollowTopic } = this.props
-
-    let fn = topic.follow ? unfollowTopic : followTopic
-
-    fn({
-      id: topic._id,
-      callback: (res)=>{
-        if (res && res.success) {
-          // Toast.show({
-          //   text: topic.follow ? '关注成功' : '已取消关注',
-          //   icon: 'success',
-          //   position: 'center',
-          //   duration: 2000
-          // })
-        }
-      }
-    })
-
-  }
-
   render() {
 
     const { topicList } = this.props
@@ -135,9 +114,7 @@ class TopicList extends Component {
               <View style={styles.itemLeft}><Image source={{uri:'https:'+topic.avatar}} style={styles.avatar} /></View>
               <View style={styles.itemCenter}><Text>{topic.name}</Text><Text style={styles.brief}>{topic.brief}</Text></View>
               <View style={styles.itemRight}>
-                <TouchableOpacity style={[styles.followButton, (!topic.follow ? null : styles.gary) ]} onPress={()=>this.handleFollow(topic)}>
-                  <Text style={[styles.followButtonText, (!topic.follow ? null : styles.garyText) ]}>{topic.follow ? '已关注' : '关注'}</Text>
-                </TouchableOpacity>
+                <FollowButton topic_id={topic._id} follow={topic.follow} />
               </View>
             </View>
           </TouchableOpacity>)}
@@ -243,8 +220,6 @@ export default connect((state, props) => ({
     topicList: getTopicListByName(state, props.id)
   }),
   (dispatch) => ({
-    loadTopicList: bindActionCreators(loadTopicList, dispatch),
-    followTopic: bindActionCreators(followTopic, dispatch),
-    unfollowTopic: bindActionCreators(unfollowTopic, dispatch)
+    loadTopicList: bindActionCreators(loadTopicList, dispatch)
   })
 )(TopicList)

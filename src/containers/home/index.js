@@ -19,7 +19,7 @@ class Home extends PureComponent {
 
   render() {
     const { navigation } = this.props
-    
+
     return (<ScrollableTabView
       style={{ backgroundColor:'#ededee', padding:0, margin:0 }}
       tabBarBackgroundColor = "#fff"
@@ -33,6 +33,7 @@ class Home extends PureComponent {
       >
 
         <PostsList
+          {...this.props}
           tabLabel='关注'
           navigation={navigation}
           name="follow"
@@ -45,6 +46,7 @@ class Home extends PureComponent {
           />
 
         <PostsList
+          {...this.props}
           tabLabel='发现'
           navigation={navigation}
           name="discover"

@@ -43,7 +43,7 @@ export default function topic(state = initialState, action = {}) {
       for (let i in state) {
 
         if (!state[i].data) continue
-
+        
         state[i].data.map(item=>{
 
           if (item._id == id) {

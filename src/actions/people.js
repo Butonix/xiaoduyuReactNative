@@ -46,7 +46,7 @@ export function loadFollowPeoples({ callback = ()=>{} }) {
 }
 */
 
-export function follow({ peopleId, callback }) {
+export function follow({ peopleId, callback = ()=>{} }) {
   return (dispatch, getState) => {
     let accessToken = getState().user.accessToken
     let selfId = getState().user.profile._id
@@ -66,7 +66,7 @@ export function follow({ peopleId, callback }) {
   }
 }
 
-export function unfollow({ peopleId, callback }) {
+export function unfollow({ peopleId, callback = ()=>{} }) {
   return (dispatch, getState) => {
     let accessToken = getState().user.accessToken
     let selfId = getState().user.profile._id

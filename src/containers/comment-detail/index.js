@@ -53,8 +53,11 @@ class CommentDetail extends Component {
         </View>
         <View>
           <CommentList
+            {...this.props}
             name={comment._id + '-reply'}
             filters={{ parent_id: comment._id, parent_exists: 1, per_page: 100 }}
+            displayReply={true}
+            displayLike={true}
             />
         </View>
       </ScrollView>
