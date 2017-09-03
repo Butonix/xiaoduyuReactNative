@@ -5,16 +5,21 @@ const initialState = {}
 
 export default function posts(state = initialState, action = {}) {
   switch (action.type) {
+
+    case 'SET_POSTS':
+      return merge({}, action.state, {})
+
     case 'ADD_POSTS_LIST':
       state[action.name] = action.list
       return merge({}, state, {})
+
     case 'CLEAN_ALL_POSTS':
       return merge({}, {}, {})
 
     // 更新所有列表中 questionid 的 follow 状态
     case 'UPDATE_POSTS_FOLLOW':
       var { id, followStatus } = action
-      
+
       for (let i in state) {
         let data = state[i].data
         if (data.length > 0) {

@@ -68,7 +68,7 @@ class PeopleDetail extends React.Component {
       </View>)
     }
 
-    return (<View>
+    return (<ScrollView>
       <View style={styles.head}>
         <View>
           {people.avatar_url ? <Image source={{uri:'https:'+people.avatar_url}} style={styles.avatar}  /> : null}
@@ -83,16 +83,12 @@ class PeopleDetail extends React.Component {
         </View>
       </View>
 
-      <View>
+      <View style={styles.brief}>
         {people.brief ? <Text>{people.brief}</Text> : null}
       </View>
-
+      
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: people._id, filters: { user_id: people._id }, title: people.nickname + '的帖子' }) }}>
         <ListItem name={"他发布的帖子"} rightText={people.posts_count} />
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPosts', id: people._id + '-posts', filters: { user_id: people._id, posts_exsits: 1 }, title: people.nickname + '关注的帖子' }) }}>
-        <ListItem name={"他关注的帖子"} rightText={people.follow_posts_count} />
       </TouchableOpacity>
 
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'CommentList', id: people._id, filters: { user_id: people._id }, title: people.nickname + '的评论' }) }}>
@@ -103,6 +99,10 @@ class PeopleDetail extends React.Component {
         <ListItem name={"他的关注的话题"} rightText={people.follow_topic_count} />
       </TouchableOpacity>
 
+      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPosts', id: people._id + '-posts', filters: { user_id: people._id, posts_exsits: 1 }, title: people.nickname + '关注的帖子' }) }}>
+        <ListItem name={"他关注的帖子"} rightText={people.follow_posts_count} />
+      </TouchableOpacity>
+
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPeopleList', id: people._id + '-follow', filters: { user_id: people._id, people_exsits: 1 }, title: people.nickname + '关注的人' }) }}>
         <ListItem name={"他关注的人"} rightText={people.follow_people_count} />
       </TouchableOpacity>
@@ -111,7 +111,7 @@ class PeopleDetail extends React.Component {
         <ListItem name={"他的粉丝"} rightText={people.fans_count} />
       </TouchableOpacity>
 
-    </View>)
+    </ScrollView>)
   }
 }
 
@@ -119,7 +119,7 @@ class PeopleDetail extends React.Component {
 const styles = StyleSheet.create({
   head: {
     padding:20,
-    marginBottom:10,
+    // marginBottom:10,
     backgroundColor: '#fff',
     flexDirection: 'row'
     // justifyContent: 'center',
@@ -130,6 +130,13 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 40,
     marginRight: 20
+  },
+  brief: {
+    paddingLeft:15,
+    paddingRight:15,
+    paddingBottom:15,
+    marginBottom: 10,
+    backgroundColor: '#fff'
   },
   other: {
     flexDirection: 'row',

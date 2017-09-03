@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -21,6 +21,7 @@ class CommentDetail extends Component {
   constructor (props) {
     super(props)
     this.state = {}
+    this.toPeople = this.toPeople.bind(this)
   }
 
   componentDidMount() {
@@ -36,6 +37,11 @@ class CommentDetail extends Component {
 
   }
 
+  toPeople(user) {
+    const { navigate } = this.props.navigation;
+    navigate('PeopleDetail', { title: user.nickname, id: user._id })
+  }
+
   render() {
 
     let { data, loading } = this.props.comment
@@ -48,9 +54,27 @@ class CommentDetail extends Component {
 
     return (<View style={styles.container}>
       <ScrollView style={styles.main}>
+
+        <View style={styles.itemHead}>
+          <View>
+            <TouchableOpacity onPress={()=>{this.toPeople(comment.user_id)}}>
+              <Image source={{uri:'https:'+comment.user_id.avatar_url}} style={styles.avatar}  />
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity onPress={()=>{this.toPeople(comment.user_id)}}>
+              <Text>{comment.user_id.nickname}</Text>
+            </TouchableOpacity>
+            <View>
+              <Text>{comment._create_at}</Text>
+            </View>
+          </View>
+        </View>
+        
         <View style={styles.comment}>
           <HTMLView html={comment.content_html} />
         </View>
+
         <View>
           <CommentList
             {...this.props}
@@ -58,6 +82,7 @@ class CommentDetail extends Component {
             filters={{ parent_id: comment._id, parent_exists: 1, per_page: 100 }}
             displayReply={true}
             displayLike={true}
+            displayCreateAt={true}
             />
         </View>
       </ScrollView>
@@ -76,9 +101,23 @@ const styles = StyleSheet.create({
     flex: 1
   },
   comment: {
-    padding:20,
+    padding:15,
     borderBottomWidth: 1,
     borderColor: '#efefef'
+  },
+  itemHead: {
+    padding:15,
+    paddingBottom:0,
+    flexDirection: 'row'
+  },
+  head: {
+    flexDirection: 'row'
+  },
+  avatar: {
+    width:40,
+    height:40,
+    borderRadius: 20,
+    marginRight:10
   }
 })
 

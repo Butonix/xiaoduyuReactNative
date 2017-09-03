@@ -7,6 +7,7 @@ export function addComment({ data, callback }) {
 
     let accessToken = getState().user.accessToken
     let commentState = getState().comment
+    let postsState = getState().posts
 
     return Ajax({
       url: '/write-comment',
@@ -15,28 +16,42 @@ export function addComment({ data, callback }) {
       headers: { AccessToken: accessToken },
       callback: (res) => {
 
+        if (!res || !res.success) {
+          return callback(res)
+        }
+
         const { parent_id, posts_id } = data
 
-        if (res.success && res.data) {
+        for (let i in commentState) {
 
-          for (let i in commentState) {
-
-            // 评论 和 回复
-            if (!parent_id && i == posts_id || parent_id && i == parent_id) {
-              commentState[i].data.push(res.data)
-            }
-
-            commentState[i].data.map(item=>{
-              if (item._id == parent_id) {
-                item.reply.push(res.data)
-                item.reply_count += 1
-              }
-            })
-
+          // 评论 和 回复
+          if (!parent_id && i == posts_id || parent_id && i == parent_id || parent_id && i == parent_id + '-reply') {
+            commentState[i].data.push(res.data)
           }
 
-          dispatch({ type: 'SET_COMMENT', state: commentState })
+          commentState[i].data.map(item=>{
+            if (item._id == parent_id) {
+              item.reply.push(res.data)
+              item.reply_count += 1
+            }
+          })
+
         }
+        
+        dispatch({ type: 'SET_COMMENT', state: commentState })
+
+        /*
+        if (!parent_id) {
+          for (let i in postsState) {
+            postsState[i].data.map(item=>{
+              if (item._id == posts_id) {
+                item.comment.push(res.data)
+              }
+            })
+          }
+          dispatch({ type: 'SET_POSTS', state: postsState })
+        }
+        */
 
         callback(res)
 

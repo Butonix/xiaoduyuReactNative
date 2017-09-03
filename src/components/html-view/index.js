@@ -2,7 +2,8 @@
 
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
-import HTMLView from 'react-native-htmlview'
+// import HTMLView from 'react-native-htmlview'
+import HTML from 'react-native-render-html'
 
 import Img from '../image'
 
@@ -10,28 +11,57 @@ class HtmlView extends Component {
 
   constructor (props) {
     super(props)
+    this.renderNode = this.renderNode.bind(this)
   }
 
+  renderNode(node, index, siblings, parent, defaultRenderer) {
+
+    const { imgOffset = 0 } = this.props
+
+    if (node.name == 'img') {
+      return (<Img key={index} image={node.attribs.src} offset={imgOffset} />)
+    }
+  }
+  
   render () {
 
+    const { imgOffset = 0 } = this.props
+
+    const stylesHtml = {
+    		h1: { backgroundColor: '#FF0000' },
+    		h2: { fontFamily: 'Arial' },
+        img: { resizeMode: 'cover' },
+        p: { paddingLeft: 15, paddingRight:15, lineHeight: 20 }
+    	}
+
+    const renderers = {
+    	 	img: (htmlAttribs, children, passProps) => {
+          return (<Img key={htmlAttribs.src} image={htmlAttribs.src} offset={imgOffset} />)
+    	 	}
+    	}
+
+    return (<HTML
+      			html={this.props.html}
+      			htmlStyles={stylesHtml}
+      			onLinkPress={(evt, href) => console.log(href)}
+      			renderers={renderers}
+      		/>)
+
+    /*
     return (
       <HTMLView
         stylesheet={htmlStyles}
         value={this.props.html}
         onLinkPress={(url) => console.log('clicked link: ', url)}
-        renderNode={renderNode}
+        renderNode={this.renderNode}
         addLineBreaks={false}
       />
     )
+    */
   }
 
 }
 
-function renderNode(node, index, siblings, parent, defaultRenderer) {
-  if (node.name == 'img') {
-    return (<Img key={index} image={node.attribs.src} />)
-  }
-}
 
 const htmlStyles = StyleSheet.create({
   a: {

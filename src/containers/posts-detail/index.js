@@ -102,13 +102,13 @@ class PostsDetail extends Component {
                 <Text>{posts.user_id.nickname}</Text>
               </TouchableOpacity>
               <Text>
-                {posts.topic_id.name} {posts.view_count ? posts.view_count+'次浏览' : null} {posts.like_count ? posts.like_count+'个赞' : null} {posts.follow_count ? posts.follow_count+'人关注' : null}
+                {posts.topic_id.name} {posts.view_count ? posts.view_count+'次浏览' : null} {posts.like_count ? posts.like_count+'个赞' : null} {posts.follow_count ? posts.follow_count+'人关注' : null} {posts._create_at}
               </Text>
             </View>
           </View>
           <View style={styles.itemMain}>
             <Text>{posts.title}</Text>
-            <HTMLView html={posts.content_html} />
+            <HTMLView html={posts.content_html} imgOffset={30} />
           </View>
         </View>
         <View>
@@ -118,6 +118,7 @@ class PostsDetail extends Component {
             filters={{ posts_id: posts._id, parent_exists: 0, per_page: 100 }}
             displayLike={true}
             displayReply={true}
+            displayCreateAt={true}
             />
         </View>
 
@@ -135,7 +136,7 @@ class PostsDetail extends Component {
 
 const styles = StyleSheet.create({
   posts: {
-    padding:20,
+    padding:15,
     borderBottomWidth: 1,
     borderColor: '#efefef'
   },

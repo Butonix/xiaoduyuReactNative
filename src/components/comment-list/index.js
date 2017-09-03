@@ -79,7 +79,8 @@ class CommentList extends Component {
     const {
       list,
       displayLike = false,
-      displayReply = false
+      displayReply = false,
+      displayCreateAt = false
     } = this.props
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -91,10 +92,10 @@ class CommentList extends Component {
           enableEmptySections={true}
           dataSource={array}
           renderRow={(item) => (<View>
-              <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} comment={item} />
+              <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} displayCreateAt={displayCreateAt} comment={item} />
               {item.reply && item.reply.map(item=>{
                 return(<View key={item._id} style={styles.reply}>
-                  <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} comment={item} subitem={true} />
+                  <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} displayCreateAt={displayCreateAt} comment={item} subitem={true} />
                 </View>)
               })}
           </View>)}

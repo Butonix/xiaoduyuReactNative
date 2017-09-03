@@ -23,14 +23,15 @@ class CommentItem extends React.Component {
       replyId: comment._id
     })
   }
-  
+
   render() {
 
     const {
       comment,
       displayLike = false,
       displayReply = false,
-      subitem = false
+      subitem = false,
+      displayCreateAt = false
     } = this.props
 
     return (<View style={[styles.item, subitem ? styles.subitem : null]}>
@@ -47,7 +48,7 @@ class CommentItem extends React.Component {
                 {comment.user_id.nickname}
               </Text>
               <Text style={styles.other}>
-                {comment.reply_count ? comment.reply_count + '个回复' : null} {comment.like_count ? comment.like_count+'个赞' : null}
+                {comment.reply_count ? comment.reply_count + '个回复' : null} {comment.like_count ? comment.like_count+'个赞' : null} {displayCreateAt ? comment._create_at : null}
               </Text>
             </View>
             <View style={styles.headRight}>
@@ -56,9 +57,11 @@ class CommentItem extends React.Component {
             </View>
           </View>
 
+          <View style={styles.content}>
           {comment.content_summary ?
             <Text>{comment.content_summary}</Text> :
-            <HtmlView html={comment.content_html} />}
+            <HtmlView html={comment.content_html} imgOffset={80} />}
+          </View>
 
         </View>
 
@@ -109,5 +112,9 @@ const styles = StyleSheet.create({
   },
   subitem: {
     paddingLeft: 0
+  },
+  content: {
+    flex:1,
+    paddingRight: 15
   }
 })

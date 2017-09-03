@@ -13,7 +13,7 @@ class FollowPosts extends Component {
     super(props)
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
+    
     this.state = {
       topics: ds.cloneWithRows([]),
       sourcePostsList: [],
@@ -44,7 +44,7 @@ class FollowPosts extends Component {
     const { navigate } = this.props.navigation;
     navigate('PostsDetail', { title: posts.title, id: posts._id })
   }
-  
+
   loadList(callback, restart) {
     const { name, filters } = this.props
     this.props.loadList({ name: name, filters, callback, restart })
@@ -98,7 +98,7 @@ class FollowPosts extends Component {
       return (<View></View>)
     }
 
-    console.log(list);
+    // console.log(list);
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     let data = ds.cloneWithRows(list.data || [])
@@ -135,16 +135,14 @@ class FollowPosts extends Component {
           scrollEventThrottle={50}
         />
       </View>
-    );
+    )
   }
-
-
 
 }
 
 const styles = StyleSheet.create({
   item: {
-    marginBottom: 10,
+    padding:15,
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: '#efefef'

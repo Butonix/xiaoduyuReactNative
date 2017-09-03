@@ -30,7 +30,7 @@ export default function comment(state = initialState, action = {}) {
             item.like_count += status ? 1 : -1
             item.like = status
           }
-
+          
           item.reply.map(item=>{
             if (item._id == id) {
               item.like_count += status ? 1 : -1
