@@ -20,12 +20,13 @@ class Editor extends Component {
     this.state = {
       qiniu: null,
       json: '',
-      html: ''
+      html: '',
+      loading: false
     }
     this.addPhoto = this.addPhoto.bind(this)
     this.init = this.init.bind(this)
   }
-
+  
   componentWillMount() {
     const self = this
     // 获取七牛的token
@@ -43,26 +44,28 @@ class Editor extends Component {
 
   render() {
     const self = this
-    const { qiniu } = this.state
+    const { qiniu, loading } = this.state
     const { style } = this.props
 
     // source={{uri:'http://192.168.1.107:9000'}}
     // source={require('../../../editor/dist/index.html')}
     return (<View style={styles.container}>
 
-              <WebView
-                source={require('../../../editor/dist/index.html')}
-                style={styles.editor}
-                ref={ webview => { this.webview = webview; }}
-                onLoad={()=>{ self.init() }}
-                />
+            <WebView
+              source={require('../../../editor/dist/index.html')}
+              style={styles.editor}
+              ref={ webview => { this.webview = webview; }}
+              onLoad={()=>{ self.init() }}
+              />
 
             {qiniu ? <View style={styles.control}>
-              <TouchableOpacity onPress={this.addPhoto} style={styles.addPhoto}>
-                <Image source={require('./images/photo.png')} style={styles.photoIcon} />
-              </TouchableOpacity>
-              <View style={{flex:1}}></View>
-            </View>: null}
+                      {!loading ?
+                        <TouchableOpacity onPress={this.addPhoto} style={styles.addPhoto}>
+                          <Image source={require('./images/photo.png')} style={styles.photoIcon} />
+                        </TouchableOpacity>
+                        : <View style={styles.addPhoto}><Text>{loading}图片上传中...</Text></View>}
+                      <View style={{flex:1}}></View>
+                    </View>: null}
 
             <KeyboardSpacer />
           </View>)
@@ -92,11 +95,18 @@ class Editor extends Component {
 
     ImagePickerIOS.openSelectDialog({}, function(res){
 
+      /*
       let s = Toast.show({
         text: '图片上传中...',
         icon: <ActivityIndicator size='large' />,
-        position: 'bottom'
+        position: 'bottom',
+        duration: 1000 * 60
       })
+      */
+
+      self.setState({ loading: '0/100' })
+
+      // assets-library://asset/asset.JPG?id=25D0F2BC-97B9-4068-BB57-53AF34F79D20&ext=JPG
 
       Image.getSize(res, (width, height) => {
 
@@ -114,9 +124,11 @@ class Editor extends Component {
 
             self.webview.emit('add-photo', imageUrl);
 
-            Toast.hide(s)
+            self.setState({ loading: '' })
+            // Toast.hide(s)
           } else {
-            console.log('上传中:'+ err.total +' - '+ err.loaded);
+            self.setState({ loading: ((err.loaded/err.total).toFixed(2)*100)+'/100' })
+            // console.log('上传中:'+ err.total +' - '+ err.loaded);
           }
         })
 

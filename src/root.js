@@ -40,7 +40,7 @@ global.initReduxDate = (callback) => {
     loadUserInfo({
       accessToken: result,
       callback: (res)=>{
-        
+
         if (res.success) {
           addAccessToken({ accessToken:  result })(store.dispatch, store.getState)
           callback(true)
@@ -135,5 +135,30 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   }
 })
+
+
+
+/*
+const ws = new WebSocket('https://www.xiaoduyu.com/socket.io/?EIO=4&transport=websocket');
+
+ws.onopen = () => {
+  console.log('连接成功');
+}
+
+ws.onmessage = (e) => {
+  // 接收到了一个消息
+  console.log(e.data);
+}
+
+ws.onerror = (e) => {
+  // 发生了一个错误
+  console.log(e.message);
+}
+
+ws.onclose = (e) => {
+  // 连接被关闭了
+  console.log(e.code, e.reason);
+}
+*/
 
 export default MainApp
