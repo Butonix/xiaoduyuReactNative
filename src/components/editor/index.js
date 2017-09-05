@@ -11,6 +11,9 @@ import { WebView } from 'react-native-webview-messaging/WebView'
 // import { Loading, EasyLoading } from 'react-native-easy-loading'
 import { Toast } from 'teaset'
 
+import ImagePicker from 'react-native-image-crop-picker'
+
+
 import { getQiNiuToken } from '../../actions/qiniu'
 
 class Editor extends Component {
@@ -26,7 +29,7 @@ class Editor extends Component {
     this.addPhoto = this.addPhoto.bind(this)
     this.init = this.init.bind(this)
   }
-  
+
   componentWillMount() {
     const self = this
     // 获取七牛的token
@@ -92,6 +95,51 @@ class Editor extends Component {
 
     const self = this
     const { qiniu } = this.state
+
+    ImagePicker.openPicker({
+      compressImageMaxWidth: 600,
+      compressImageMaxHeight: 800
+      // height: 400,
+      // cropping: true
+    }).then(image => {
+      // console.log(image);
+
+      // return
+
+      self.setState({ loading: '0/100' })
+
+        let id = image.localIdentifier//res.split('?')[1].split('&')[0].split('=')[1]
+
+        Rpc.uploadFile(image.path, qiniu.token, { key : id }, (res, err)=>{
+
+            // console.log(res);
+            // console.log(err._response);
+
+          if (res.total == res.loaded) {
+
+            let imageUrl = qiniu.url+'/'+id
+
+            // if (image.width > 900) {
+            //   imageUrl += '?imageMogr2/auto-orient/thumbnail/!900/quality/85'
+            // }
+
+            // console.log(imageUrl);
+
+            setTimeout(()=>{
+              self.webview.emit('add-photo', imageUrl)
+            }, 1000)
+
+            self.setState({ loading: '' })
+
+          } else {
+            self.setState({ loading: parseInt((res.loaded/res.total)*100)+'/100' })
+          }
+
+        })
+
+    });
+
+    return
 
     ImagePickerIOS.openSelectDialog({}, function(res){
 

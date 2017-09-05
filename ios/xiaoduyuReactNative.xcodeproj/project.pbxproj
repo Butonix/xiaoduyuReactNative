@@ -43,7 +43,9 @@
 		43BF5F951F5C0397002E0271 /* SocietyLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BF5F8E1F5C0397002E0271 /* SocietyLoginManager.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		AC57AD1B43A30BAB9DF42985 /* libPods-xiaoduyuReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9354F8FE4A695886965FBCF9 /* libPods-xiaoduyuReactNative.a */; };
 		C27EC2AB1F542F79005324E3 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C27EC2AA1F542F54005324E3 /* libRCTCameraRoll.a */; };
+		E9E963EDC228445D8CB0D08C /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B41F55BD90440168B59AC06 /* libimageCropPicker.a */; };
 		F3F73B7F2AED44FA891C023A /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF39D6628C7F43848CBC949F /* libSplashScreen.a */; };
 /* End PBXBuildFile section */
 
@@ -237,6 +239,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		C213B33E1F5D96FC0043DB68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1682942E7EA548B1B465FB61 /* imageCropPicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3400A8081CEB54A6008A0BC7;
+			remoteInfo = imageCropPicker;
+		};
 		C27EC2581F542CE6005324E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -301,6 +310,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = xiaoduyuReactNative/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = xiaoduyuReactNative/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		1682942E7EA548B1B465FB61 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* xiaoduyuReactNative-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "xiaoduyuReactNative-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* xiaoduyuReactNative-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xiaoduyuReactNative-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		43BF5F801F5C0397002E0271 /* OpenShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenShare.h; path = "../node_modules/react-native-open-share/src/OpenShare.h"; sourceTree = "<group>"; };
@@ -322,8 +332,12 @@
 		6BF5A98E5C7E4D48BB08CF6F /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		9354F8FE4A695886965FBCF9 /* libPods-xiaoduyuReactNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-xiaoduyuReactNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B41F55BD90440168B59AC06 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
+		9D88D94CC1A79C9ED349C49B /* Pods-xiaoduyuReactNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xiaoduyuReactNative.debug.xcconfig"; path = "Pods/Target Support Files/Pods-xiaoduyuReactNative/Pods-xiaoduyuReactNative.debug.xcconfig"; sourceTree = "<group>"; };
 		AF39D6628C7F43848CBC949F /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		C27EC2A51F542F53005324E3 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
+		FAA71945CC59B06ABB59A5C4 /* Pods-xiaoduyuReactNative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xiaoduyuReactNative.release.xcconfig"; path = "Pods/Target Support Files/Pods-xiaoduyuReactNative/Pods-xiaoduyuReactNative.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +366,8 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				F3F73B7F2AED44FA891C023A /* libSplashScreen.a in Frameworks */,
+				E9E963EDC228445D8CB0D08C /* libimageCropPicker.a in Frameworks */,
+				AC57AD1B43A30BAB9DF42985 /* libPods-xiaoduyuReactNative.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +563,7 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				6BF5A98E5C7E4D48BB08CF6F /* SplashScreen.xcodeproj */,
+				1682942E7EA548B1B465FB61 /* imageCropPicker.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -567,6 +584,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* xiaoduyuReactNativeTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				CCE97071FD024EF22E1ED48F /* Pods */,
+				EC78502C6AF87551A910F7D3 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -579,6 +598,14 @@
 				00E356EE1AD99517003FC87E /* xiaoduyuReactNativeTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* xiaoduyuReactNative-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* xiaoduyuReactNative-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C213B33B1F5D96FC0043DB68 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C213B33F1F5D96FC0043DB68 /* libimageCropPicker.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -597,6 +624,23 @@
 				C27EC2AA1F542F54005324E3 /* libRCTCameraRoll.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CCE97071FD024EF22E1ED48F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9D88D94CC1A79C9ED349C49B /* Pods-xiaoduyuReactNative.debug.xcconfig */,
+				FAA71945CC59B06ABB59A5C4 /* Pods-xiaoduyuReactNative.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		EC78502C6AF87551A910F7D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9354F8FE4A695886965FBCF9 /* libPods-xiaoduyuReactNative.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -624,10 +668,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "xiaoduyuReactNative" */;
 			buildPhases = (
+				8CF3AB3BEBAA686DE6999C2A /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				7DF17DBB6A2B5350ABD29CDF /* [CP] Embed Pods Frameworks */,
+				342ED0130079D8F80651AB6B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -714,6 +761,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = C213B33B1F5D96FC0043DB68 /* Products */;
+					ProjectRef = 1682942E7EA548B1B465FB61 /* imageCropPicker.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -953,6 +1004,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		C213B33F1F5D96FC0043DB68 /* libimageCropPicker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libimageCropPicker.a;
+			remoteRef = C213B33E1F5D96FC0043DB68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C27EC2591F542CE6005324E3 /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1060,6 +1118,58 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		342ED0130079D8F80651AB6B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-xiaoduyuReactNative/Pods-xiaoduyuReactNative-resources.sh",
+				$PODS_CONFIGURATION_BUILD_DIR/QBImagePickerController/QBImagePicker.bundle,
+				"${PODS_ROOT}/RSKImageCropper/RSKImageCropper/RSKImageCropperStrings.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-xiaoduyuReactNative/Pods-xiaoduyuReactNative-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7DF17DBB6A2B5350ABD29CDF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-xiaoduyuReactNative/Pods-xiaoduyuReactNative-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8CF3AB3BEBAA686DE6999C2A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-xiaoduyuReactNative-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1144,12 +1254,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1172,12 +1284,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1193,6 +1307,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D88D94CC1A79C9ED349C49B /* Pods-xiaoduyuReactNative.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1204,6 +1319,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1222,6 +1338,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FAA71945CC59B06ABB59A5C4 /* Pods-xiaoduyuReactNative.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1232,6 +1349,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1264,11 +1382,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 				);
 				INFOPLIST_FILE = "xiaoduyuReactNative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1300,11 +1420,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 				);
 				INFOPLIST_FILE = "xiaoduyuReactNative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1337,6 +1459,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.xiaoduyuReactNative-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1361,6 +1484,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);

@@ -182,7 +182,7 @@ const Media = (props) => {
   if (!props.block.getEntityAt(0)) {
     return null
   }
-
+  
   // console.log(props.block.getEntityAt(0));
   const entity = Entity.get(props.block.getEntityAt(0))
   const { src } = entity.getData()

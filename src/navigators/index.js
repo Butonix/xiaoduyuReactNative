@@ -26,6 +26,7 @@ import ResetBiref from '../containers/reset-brief'
 import ResetGender from '../containers/reset-gender'
 import ResetPassword from '../containers/reset-password'
 import ResetEmail from '../containers/reset-email'
+import ResetAvatar from '../containers/reset-avatar'
 
 
 // test
@@ -74,7 +75,8 @@ const App = StackNavigator({
   ResetBiref: { screen: ResetBiref },
   ResetGender: { screen: ResetGender },
   ResetPassword: { screen: ResetPassword },
-  ResetEmail: { screen: ResetEmail }
+  ResetEmail: { screen: ResetEmail },
+  ResetAvatar: { screen: ResetAvatar }
   // Test: { screen: Test }
 },{
   initialRouteName: 'Welcome'

@@ -80,7 +80,9 @@ class Settings extends React.Component {
     return (<ScrollView>
           <View>
 
-            <ListItem name={"头像"} />
+            <TouchableOpacity onPress={()=>{ navigate('ResetAvatar', {}) }}>
+              <ListItem name={"头像"} />
+            </TouchableOpacity>
 
             <TouchableOpacity onPress={()=>{ navigate('ResetNickname', {}) }}>
               <ListItem name={"修改名字"} rightText={me.nickname} />
