@@ -1,59 +1,52 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Alert, Image, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Alert, Button, Image, TextInput, TouchableOpacity } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getUserInfo } from '../../reducers/user'
-import { resetBrief, loadUserInfo } from '../../actions/user'
-import { ListItem } from '../../components/ui'
-
-import gStyles from '../../styles'
+import { resetBrief } from '../../actions/user'
 
 class ResetBrief extends React.Component {
 
-  static navigationOptions = {
-    title: '个性签名'
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state
+    return {
+      title: '个性签名',
+      headerRight: (<View><Button onPress={()=>params.submit()} title={"提交"} /></View>),
+    }
   }
 
   constructor (props) {
     super(props)
-    this.state = {
-      submitting: false
-    }
+    this.state = {}
     this.submit = this.submit.bind(this)
+  }
+
+  componentWillMount() {
+    const { me } = this.props
+    this.state.brief = me.brief
+    this.props.navigation.setParams({
+      submit: this.submit
+    })
   }
 
   submit() {
 
     const self = this
-    const { resetBrief, loadUserInfo } = this.props
-    const { brief, submitting } = this.state
-    const { navigation } = this.props
+    const { me, resetBrief, navigation } = this.props
+    const { brief } = this.state
 
-    if (submitting) return
-    // if (!brief) return Alert.alert('', '请输入你的个人签名')
-
-    self.setState({ submitting: true })
+    if (me.brief == brief) return navigation.goBack()
 
     resetBrief({
-      brief: brief,
+      brief,
       callback: (res) => {
-
         if (!res.success) {
-          self.setState({ submitting: true })
           Alert.alert('', res.error)
         } else {
-
-          loadUserInfo({
-            callback: ()=>{
-              self.setState({ submitting: true })
-              // Alert.alert('', '提交成功')
-              navigation.goBack()
-            }
-          })
-
+          navigation.goBack()
         }
       }
     })
@@ -63,32 +56,34 @@ class ResetBrief extends React.Component {
   render() {
 
     const { me } = this.props
-    const { submitting } = this.state
 
     return (<View>
               <TextInput
-                  style={gStyles.input}
+                  style={styles.input}
                   autoCapitalize="none"
                   onChangeText={(brief) => this.setState({brief})}
                   placeholder='请输入你的个人签名'
                   defaultValue={me.brief}
+                  autoFocus={true}
                 />
-
-              <TouchableOpacity onPress={this.submit}>
-                <ListItem type="center" name={submitting ? "提交中..." : "提交"} />
-              </TouchableOpacity>
           </View>)
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop:10,
+  },
+  input: {
+    padding:10,
+    backgroundColor:'#fff'
+  }
 })
 
 export default connect(state => ({
     me: getUserInfo(state)
   }),
   (dispatch) => ({
-    resetBrief: bindActionCreators(resetBrief, dispatch),
-    loadUserInfo: bindActionCreators(loadUserInfo, dispatch)
+    resetBrief: bindActionCreators(resetBrief, dispatch)
   })
 )(ResetBrief);

@@ -1,67 +1,56 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Alert, Image, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Alert, Image, TextInput, Button, TouchableOpacity } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getUserInfo } from '../../reducers/user'
-import { resetNickname, loadUserInfo } from '../../actions/user'
+import { resetNickname } from '../../actions/user'
 import { ListItem } from '../../components/ui'
 
 import gStyles from '../../styles'
 
 class ResetNickname extends React.Component {
 
-  static navigationOptions = {
-    title: '设置'
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state
+    return {
+      title: '设置',
+      headerRight: (<View><Button onPress={()=>params.submit()} title={"提交"} /></View>),
+    }
   }
 
   constructor (props) {
     super(props)
-    this.state = {
-      submitting: false
-    }
+    this.state = {}
     this.submit = this.submit.bind(this)
+  }
+  
+  componentWillMount() {
+    const { me } = this.props
+    this.state.nickname = me.nickname
+    this.props.navigation.setParams({
+      submit: this.submit
+    })
   }
 
   submit() {
 
     const self = this
-    const { resetNickname, loadUserInfo } = this.props
-    const { nickname, submitting } = this.state
-    const { navigation } = this.props
+    const { me, resetNickname, navigation } = this.props
+    const { nickname } = this.state
 
-    if (!nickname) {
-      Alert.alert('', '请输入您的名字')
-      return
-    }
-
-    if (submitting) {
-      return
-    }
-
-    self.setState({ submitting: true })
+    if (me.nickname == nickname) return navigation.goBack()
+    if (!nickname) return Alert.alert('', '请输入您的名字')
 
     resetNickname({
-      nickname: nickname,
+      nickname,
       callback: (res) => {
-
         if (!res.success) {
-          self.setState({ submitting: true })
           Alert.alert('', res.error)
         } else {
-
-          loadUserInfo({
-            callback: ()=>{
-
-              self.setState({ submitting: true })
-
-              Alert.alert('', '提交成功')
-              navigation.goBack()
-            }
-          })
-
+          navigation.goBack()
         }
       }
     })
@@ -71,32 +60,34 @@ class ResetNickname extends React.Component {
   render() {
 
     const { me } = this.props
-    const { submitting } = this.state
 
-    return (<View>
+    return (<View style={styles.container}>
               <TextInput
-                  style={gStyles.input}
+                  style={styles.input}
                   autoCapitalize="none"
                   onChangeText={(nickname) => this.setState({nickname})}
                   placeholder='你的名字'
                   defaultValue={me.nickname}
+                  autoFocus={true}
                 />
-
-              <TouchableOpacity onPress={this.submit}>
-                <ListItem type="center" name={submitting ? "提交中..." : "提交"} />
-              </TouchableOpacity>
           </View>)
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop:10,
+  },
+  input: {
+    padding:10,
+    backgroundColor:'#fff'
+  }
 })
 
 export default connect(state => ({
     me: getUserInfo(state)
   }),
   (dispatch) => ({
-    resetNickname: bindActionCreators(resetNickname, dispatch),
-    loadUserInfo: bindActionCreators(loadUserInfo, dispatch)
+    resetNickname: bindActionCreators(resetNickname, dispatch)
   })
 )(ResetNickname);

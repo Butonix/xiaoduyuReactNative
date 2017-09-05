@@ -3,46 +3,63 @@ import config from '../../config'
 import errors from '../../config/errors'
 import axios from 'axios'
 
+// 将错误代码转换成错误信息
 const converterErrorInfo = (res) => {
 
+  // 合成
+  let synthesis = (string, key, value) => {
+    return string.replace(new RegExp("({"+key+"})","g"), value)
+  }
+
+  // 获取错误提示
   if (res.error) {
-    if (typeof(res.error) == 'number') {
-      res.error = errors[res.error] || '未知错误: '+res.error
-    } else {
+    if (typeof res.error == 'string' || typeof res.error == 'number') {
+      res.error = errors[res.error] || '错误代码: '+res.error
+    } else if (typeof res.error == 'array') {
       for (let i in res.error) {
-        res.error[i] = errors[res.error[i]] || '未知错误: '+res.error[i]
+        res.error[i] = errors[res.error[i]] || '错误代码: '+res.error[i]
       }
     }
   }
 
-  // 参数替换
+  // 替换字符串中的参数
   if (res.error_data) {
-
-    if (typeof(res.error) == 'number') {
-      res.error = res.error.format(res.error_data);
-    } else {
+    if (typeof res.error == 'array') {
       for (let i in res.error) {
-        res.error[i] = errors[res.error[i]] || '未知错误: '+res.error[i]
-        res.error[i] = res.error[i].format(res.error_data);
+        for (let n in res.error_data) {
+          res.error[0] = synthesis(res.error[0], n, res.error_data[n])
+        }
+      }
+    } else if (typeof res.error == 'string') {
+      for (let i in res.error_data) {
+        res.error = synthesis(res.error, i, res.error_data[i])
       }
     }
-
   }
 
   return res
 
 }
 
-const AJAX = ({ url = '', type = 'get', params = {}, data = {}, headers = {}, callback = ()=>{} }) => {
+// 等待请求结束
+let wait = {}
+
+const AJAX = ({ url = '', type = 'get', data = {}, headers = {}, callback = ()=>{} }) => {
 
   let option = {
     url: config.api_url + '/' + config.api_verstion + url,
     method: type
   }
 
+  // 如果已经有请求正在进行,那么拦截相同的请求
+  if (wait[option.url]) {
+    if (config.debug && console.log) console.log(url+' 正在请求中，请等候...')
+    return
+  }
+
   if (type == 'get') {
-    params._t = new Date().getTime()
-    option.params = params
+    data._t = new Date().getTime()
+    option.params = data
   } else if (type == 'post') {
     option.data = data
   }
@@ -57,31 +74,27 @@ const AJAX = ({ url = '', type = 'get', params = {}, data = {}, headers = {}, ca
   }
 
   if (config.debug && console.log) console.log('请求: ', option)
-  
-  return axios(option).then(resp => {
-    // if (config.debug && console.debug) console.debug('返回: ', resp)
 
+  return axios(option).then(resp => {
+    // 请求成功
+    delete wait[option.url]
+    if (config.debug && console.log) console.log('成功返回: ', resp)
     if (resp && resp.data) {
-      let res = resp.data
-      res = converterErrorInfo(res)
-      callback(res)
+      callback(converterErrorInfo(resp.data))
     } else {
       callback(null)
     }
-
   })
   .catch(function (error, res) {
-    // console.log(error.response);
-    // if (config.debug && console.debug) console.error('返回: ', error)
+    // 请求失败
+    delete wait[option.url]
+    if (config.debug && console.log) console.log('失败返回: ', error.response.data)
     if (error && error.response && error.response.data) {
-      let res = error.response.data
-      res = converterErrorInfo(res)
-      callback(res)
+      callback(converterErrorInfo(error.response.data))
     } else {
       callback(null)
     }
-
-  });
+  })
 }
 
 export default AJAX

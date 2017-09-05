@@ -35,7 +35,7 @@ export function loadUserInfo({ accessToken = null, callback = ()=>{} }) {
   }
 }
 
-export function resetAvatar({ avatar, callback }) {
+export function resetAvatar({ avatar, callback =()=>{} }) {
   return (dispatch, getState) => {
     let accessToken = getState().user.accessToken
 
@@ -44,28 +44,33 @@ export function resetAvatar({ avatar, callback }) {
       type: 'post',
       data: { avatar: avatar },
       headers: { AccessToken: accessToken },
-      callback
+      callback: (res)=>{
+        if (res && res.success) loadUserInfo({})(dispatch, getState)
+        callback(res)
+      }
     })
 
   }
 }
 
-export function resetNickname({ nickname, callback }) {
+export function resetNickname({ nickname, callback =()=>{} }) {
   return (dispatch, getState) => {
     let accessToken = getState().user.accessToken
-
     return Ajax({
       url: '/reset-nickname',
       type: 'post',
       data: { nickname: nickname },
       headers: { AccessToken: accessToken },
-      callback
+      callback: (res)=>{
+        if (res && res.success) loadUserInfo({})(dispatch, getState)
+        callback(res)
+      }
     })
 
   }
 }
 
-export function resetGender({ gender, callback }) {
+export function resetGender({ gender, callback =()=>{} }) {
   return (dispatch, getState) => {
     let accessToken = getState().user.accessToken
 
@@ -74,7 +79,10 @@ export function resetGender({ gender, callback }) {
       type: 'post',
       data: { gender: gender },
       headers: { AccessToken: accessToken },
-      callback
+      callback: (res)=>{
+        if (res && res.success) loadUserInfo({})(dispatch, getState)
+        callback(res)
+      }
     })
 
   }
@@ -89,7 +97,10 @@ export function resetBrief({ brief, callback }) {
       type: 'post',
       data: { brief: brief },
       headers: { AccessToken: accessToken },
-      callback
+      callback: (res)=>{
+        if (res && res.success) loadUserInfo({})(dispatch, getState)
+        callback(res)
+      }
     })
 
   }
