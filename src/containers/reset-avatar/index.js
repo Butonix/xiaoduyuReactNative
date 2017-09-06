@@ -14,7 +14,11 @@ import { getQiNiuToken } from '../../actions/qiniu'
 import Qiniu,{ Auth, ImgOps, Conf, Rs, Rpc } from 'react-native-qiniu'
 import ImagePicker from 'react-native-image-crop-picker'
 
-// import gStyles from '../../styles'
+import Loading from 'react-native-loading-w'
+
+import { uploadFile } from '../../common/upload-qiniu'
+
+// console.log(uploadFile);
 
 const CANCEL_INDEX = 0
 const DESTRUCTIVE_INDEX = 0
@@ -47,12 +51,6 @@ class ResetAvatar extends React.Component {
     this.updateAvatar = this.updateAvatar.bind(this)
   }
 
-  componentDidMount() {
-    this.props.navigation.setParams({
-      showActionSheet: this.showActionSheet
-    })
-  }
-
   componentWillMount() {
     const self = this
     // 获取七牛的token
@@ -64,7 +62,17 @@ class ResetAvatar extends React.Component {
 
   }
 
-  updateAvatar(imageUrl) {
+  componentDidMount() {
+    this.props.navigation.setParams({
+      showActionSheet: this.showActionSheet
+    })
+  }
+
+  getLoading() {
+  	return this.refs['loading'];
+  }
+
+  updateAvatar(imageUrl, callback) {
 
     const { resetAvatar, loadUserInfo } = this.props
 
@@ -72,16 +80,13 @@ class ResetAvatar extends React.Component {
       avatar: imageUrl,
       callback: (res) => {
 
-        if (!res.success) {
-          Alert.alert('', res.error)
+        if (res && res.success) {
+          callback(true)
         } else {
-
-          loadUserInfo({
-            callback: ()=>{
-            }
-          })
-
+          Alert.alert('', res && res.error ? res.error : '上传失败')
+          callback(false)
         }
+
       }
     })
 
@@ -91,26 +96,23 @@ class ResetAvatar extends React.Component {
     this.ActionSheet.show()
   }
 
-
   uploadQiniu(image, callback) {
 
     const { qiniu } = this.state
-
     let id = image.localIdentifier
 
-    Rpc.uploadFile(image.path, qiniu.token, { key : id }, (res, err)=>{
+    Rpc.uploadFile(image.path, qiniu.token, { key : id }).then((response) => {
 
-      if (res.total == res.loaded) {
-
-        let imageUrl = qiniu.url+'/'+id
-
-        setTimeout(()=>{
-          callback(100, imageUrl)
-        }, 1000)
-      } else {
-        callback(parseInt((res.loaded/res.total)*100))
+      if (response.responseText) {
+        let res = JSON.parse(response.responseText)
+        let imageUrl = qiniu.url+'/'+res.key
+        callback(100, imageUrl)
       }
 
+    }).then((responseText) => {
+      // console.log(responseText);
+    }).catch((error) => {
+      // console.warn(error);
     })
 
   }
@@ -119,6 +121,7 @@ class ResetAvatar extends React.Component {
 
     const self = this
     const { me } = this.props
+    const { qiniu } = this.state
 
     if (!i) {
     } else if (i == 1) {
@@ -130,10 +133,35 @@ class ResetAvatar extends React.Component {
       }).then(image => {
 
         image.localIdentifier = new Date().getTime() + '-' + me._id
+        self.getLoading().show('头像上传中...');
+
+        uploadFile({
+          name: new Date().getTime() + '-' + me._id,
+          imagePath: image.path,
+          qiniu,
+          callback: (progress, imageUrl)=>{
+            if (imageUrl) {
+              self.updateAvatar(imageUrl,()=>{
+                self.getLoading().dismiss()
+              })
+            }
+          }
+        })
+
+        /*
+        image.localIdentifier = new Date().getTime() + '-' + me._id
+
+        self.getLoading().show('头像上传中...');
 
         self.uploadQiniu(image, (progress, imageUrl)=>{
-          if (imageUrl) self.updateAvatar(imageUrl)
+          if (imageUrl) {
+            self.updateAvatar(imageUrl,()=>{
+              self.getLoading().dismiss()
+            })
+          }
         })
+        */
+
       })
 
     } else if (i == 2) {
@@ -143,9 +171,37 @@ class ResetAvatar extends React.Component {
         height: 512,
         cropping: true
       }).then(image => {
-        self.uploadQiniu(image, (progress, imageUrl)=>{
-          if (imageUrl) self.updateAvatar(imageUrl)
+
+        image.localIdentifier = new Date().getTime() + '-' + me._id
+        self.getLoading().show('头像上传中...');
+
+        uploadFile({
+          name: new Date().getTime() + '-' + me._id,
+          imagePath: image.path,
+          qiniu,
+          callback: (progress, imageUrl)=>{
+            if (imageUrl) {
+              self.updateAvatar(imageUrl,()=>{
+                self.getLoading().dismiss()
+              })
+            }
+          }
         })
+
+        /*
+        self.uploadQiniu(image, (progress, imageUrl)=>{
+
+          console.log(progress);
+          console.log(imageUrl);
+
+          if (imageUrl) {
+            self.updateAvatar(imageUrl,()=>{
+              self.getLoading().dismiss()
+            })
+          }
+        })
+        */
+
       })
 
     }
@@ -169,6 +225,8 @@ class ResetAvatar extends React.Component {
                 destructiveButtonIndex={DESTRUCTIVE_INDEX}
                 onPress={this.handlePress}
               />
+
+              <Loading ref={'loading'} text={'Loading...'} />
 
           </View>)
   }

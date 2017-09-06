@@ -1309,6 +1309,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9D88D94CC1A79C9ED349C49B /* Pods-xiaoduyuReactNative.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1340,6 +1341,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FAA71945CC59B06ABB59A5C4 /* Pods-xiaoduyuReactNative.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

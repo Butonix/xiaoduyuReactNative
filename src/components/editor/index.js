@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image, ImagePickerIOS, TouchableOpacity, TouchableHighlight, ActivityIndicator } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { getUserInfo } from '../../reducers/user'
+
 import Qiniu,{ Auth, ImgOps, Conf, Rs, Rpc } from 'react-native-qiniu'
 
 import KeyboardSpacer from 'react-native-keyboard-spacer'
@@ -15,6 +17,7 @@ import ImagePicker from 'react-native-image-crop-picker'
 
 
 import { getQiNiuToken } from '../../actions/qiniu'
+import { uploadFile } from '../../common/upload-qiniu'
 
 class Editor extends Component {
 
@@ -66,7 +69,7 @@ class Editor extends Component {
                         <TouchableOpacity onPress={this.addPhoto} style={styles.addPhoto}>
                           <Image source={require('./images/photo.png')} style={styles.photoIcon} />
                         </TouchableOpacity>
-                        : <View style={styles.addPhoto}><Text>{loading}图片上传中...</Text></View>}
+                        : <View style={styles.addPhoto}><Text>图片上传中...</Text></View>}
                       <View style={{flex:1}}></View>
                     </View>: null}
 
@@ -91,39 +94,70 @@ class Editor extends Component {
 
   }
 
+  uploadQiniu(image, callback) {
+
+    const { qiniu } = this.state
+    let id = image.localIdentifier
+
+    Rpc.uploadFile(image.path, qiniu.token, { key : id }).then((response) => {
+
+      if (response.responseText) {
+        let res = JSON.parse(response.responseText)
+        let imageUrl = qiniu.url+'/'+res.key
+        callback(100, imageUrl)
+      }
+
+    }).then((responseText) => {
+      // console.log(responseText);
+    }).catch((error) => {
+      // console.warn(error);
+    })
+
+  }
+
   addPhoto = () => {
 
     const self = this
+    const { me } = this.props
     const { qiniu } = this.state
 
     ImagePicker.openPicker({
-      compressImageMaxWidth: 600,
-      compressImageMaxHeight: 800
-      // height: 400,
-      // cropping: true
+      compressImageMaxWidth: 900,
+      compressImageMaxHeight: 900
     }).then(image => {
-      // console.log(image);
 
-      // return
+      self.setState({ loading: true })
 
-      self.setState({ loading: '0/100' })
+      uploadFile({
+        name: new Date().getTime() + '-' + me._id,
+        imagePath: image.path,
+        qiniu,
+        callback: (progress, imageUrl)=>{
 
-        let id = image.localIdentifier//res.split('?')[1].split('&')[0].split('=')[1]
+          // console.log(imageUrl);
+          // console.log(progress);
+
+          if (imageUrl) {
+            // self.updateAvatar(imageUrl,()=>{
+              self.setState({ loading: false })
+              // self.getLoading().dismiss()
+              self.webview.emit('add-photo', imageUrl)
+            // })
+          }
+
+        }
+      })
+
+      /*
+      self.setState({ loading: true })
+
+        let id = image.localIdentifier
 
         Rpc.uploadFile(image.path, qiniu.token, { key : id }, (res, err)=>{
-
-            // console.log(res);
-            // console.log(err._response);
 
           if (res.total == res.loaded) {
 
             let imageUrl = qiniu.url+'/'+id
-
-            // if (image.width > 900) {
-            //   imageUrl += '?imageMogr2/auto-orient/thumbnail/!900/quality/85'
-            // }
-
-            // console.log(imageUrl);
 
             setTimeout(()=>{
               self.webview.emit('add-photo', imageUrl)
@@ -136,56 +170,10 @@ class Editor extends Component {
           }
 
         })
-
-    });
-
-    return
-
-    ImagePickerIOS.openSelectDialog({}, function(res){
-
-      /*
-      let s = Toast.show({
-        text: '图片上传中...',
-        icon: <ActivityIndicator size='large' />,
-        position: 'bottom',
-        duration: 1000 * 60
-      })
       */
-
-      self.setState({ loading: '0/100' })
-
-      // assets-library://asset/asset.JPG?id=25D0F2BC-97B9-4068-BB57-53AF34F79D20&ext=JPG
-
-      Image.getSize(res, (width, height) => {
-
-        let id = res.split('?')[1].split('&')[0].split('=')[1]
-
-        Rpc.uploadFile(res, qiniu.token, { key : id }, (err, res)=>{
-
-          if (err.total == err.loaded) {
-
-            let imageUrl = qiniu.url+'/'+id
-
-            if (width > 600) {
-              imageUrl += '?imageMogr2/auto-orient/thumbnail/!600/quality/85'
-            }
-
-            self.webview.emit('add-photo', imageUrl);
-
-            self.setState({ loading: '' })
-            // Toast.hide(s)
-          } else {
-            self.setState({ loading: ((err.loaded/err.total).toFixed(2)*100)+'/100' })
-            // console.log('上传中:'+ err.total +' - '+ err.loaded);
-          }
-        })
-
-      })
-
-    }, function(){
-      // 取消
-      // console.log(err);
     })
+
+
   }
 
 }
@@ -221,7 +209,9 @@ const styles = StyleSheet.create({
 
 export default connect(
   (state, props) => {
-    return {}
+    return {
+      me: getUserInfo(state)
+    }
   },
   (dispatch, props) => ({
     getQiNiuToken: bindActionCreators(getQiNiuToken, dispatch)
