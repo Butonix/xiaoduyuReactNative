@@ -51,8 +51,11 @@ const AJAX = ({ url = '', type = 'get', data = {}, headers = {}, callback = ()=>
     method: type
   }
 
+  // ajax 请求唯一 id
+  let id = option.url + JSON.stringify(data)
+  
   // 如果已经有请求正在进行,那么拦截相同的请求
-  if (wait[option.url]) {
+  if (wait[id]) {
     if (config.debug && console.log) console.log(url+' 正在请求中，请等候...')
     return
   }
@@ -77,7 +80,7 @@ const AJAX = ({ url = '', type = 'get', data = {}, headers = {}, callback = ()=>
 
   return axios(option).then(resp => {
     // 请求成功
-    delete wait[option.url]
+    delete wait[id]
     if (config.debug && console.log) console.log('成功返回: ', resp)
     if (resp && resp.data) {
       callback(converterErrorInfo(resp.data))
@@ -87,7 +90,7 @@ const AJAX = ({ url = '', type = 'get', data = {}, headers = {}, callback = ()=>
   })
   .catch(function (error, res) {
     // 请求失败
-    delete wait[option.url]
+    delete wait[id]
     if (config.debug && console.log) console.log('失败返回: ', error.response.data)
     if (error && error.response && error.response.data) {
       callback(converterErrorInfo(error.response.data))

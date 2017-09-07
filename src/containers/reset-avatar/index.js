@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:'#000'
+    backgroundColor:'#fff'
   },
   avatar: {
     width: 300,

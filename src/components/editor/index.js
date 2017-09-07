@@ -134,43 +134,14 @@ class Editor extends Component {
         qiniu,
         callback: (progress, imageUrl)=>{
 
-          // console.log(imageUrl);
-          // console.log(progress);
-
           if (imageUrl) {
-            // self.updateAvatar(imageUrl,()=>{
-              self.setState({ loading: false })
-              // self.getLoading().dismiss()
-              self.webview.emit('add-photo', imageUrl)
-            // })
+            self.setState({ loading: false })
+            self.webview.emit('add-photo', imageUrl)
           }
 
         }
       })
 
-      /*
-      self.setState({ loading: true })
-
-        let id = image.localIdentifier
-
-        Rpc.uploadFile(image.path, qiniu.token, { key : id }, (res, err)=>{
-
-          if (res.total == res.loaded) {
-
-            let imageUrl = qiniu.url+'/'+id
-
-            setTimeout(()=>{
-              self.webview.emit('add-photo', imageUrl)
-            }, 1000)
-
-            self.setState({ loading: '' })
-
-          } else {
-            self.setState({ loading: parseInt((res.loaded/res.total)*100)+'/100' })
-          }
-
-        })
-      */
     })
 
 

@@ -44,7 +44,7 @@ export function loadFollowPeoples({ callback = ()=>{} }) {
     })
   }
 }
-*/
+
 
 export function follow({ peopleId, callback = ()=>{} }) {
   return (dispatch, getState) => {
@@ -242,3 +242,4 @@ export function loadPeopleByName({ name, filters = {}, callback = ()=>{} }) {
 
   }
 }
+*/

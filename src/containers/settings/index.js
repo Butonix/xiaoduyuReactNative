@@ -79,9 +79,12 @@ class Settings extends React.Component {
 
     return (<ScrollView>
           <View>
-
+            
             <TouchableOpacity onPress={()=>{ navigate('ResetAvatar', {}) }}>
-              <ListItem name={"头像"} />
+              <ListItem
+                name={"头像"}
+                rightElement={<Image source={{uri:'https:'+me.avatar_url}} style={{width:50,height:50,margin:10,borderRadius:25}} />}
+                />
             </TouchableOpacity>
 
             <TouchableOpacity onPress={()=>{ navigate('ResetNickname', {}) }}>

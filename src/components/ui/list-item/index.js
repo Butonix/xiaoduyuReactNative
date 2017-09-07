@@ -11,7 +11,7 @@ class ListItem extends Component {
 
   render() {
 
-    const { type, name, rightText } = this.props
+    const { type, name, rightText, rightElement } = this.props
 
     if (type == 'center') {
       return (<View style={[styles.item, styles.center]}>
@@ -40,6 +40,7 @@ class ListItem extends Component {
       <View style={styles.minItem}><Text>{name}</Text></View>
       <View style={styles.minItem}></View>
       <View style={styles.itemRight}>
+        {rightElement}
         {rightText ? <Text style={styles.rightText}>{rightText}</Text> : null}
         <Image source={require('./images/arrow-right.png')} style={styles.arrowRight} />
       </View>
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
   },
   minItem: {
     flex: 1,
-    height:45,
+    minHeight:45,
     justifyContent: 'center',
   },
   itemRight: {

@@ -190,7 +190,7 @@ export function loadFollowPosts({ name, filters = {}, callback = ()=>{}, restart
     return Ajax({
       url: '/follow',
       type: 'get',
-      params: filters,
+      data: filters,
       headers: { AccessToken: accessToken },
       callback: (res)=>{
 

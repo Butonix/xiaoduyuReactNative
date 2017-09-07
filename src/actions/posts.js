@@ -74,11 +74,11 @@ export function loadPostsList({ name, filters = {}, callback=()=>{}, restart = f
       callback()
       return
     }
-    
+
     if (!postsList.data) postsList.data = []
 
     if (!postsList.filters) {
-      if (!filters.per_page) filters.per_page = 30
+      if (!filters.per_page) filters.per_page = 20
       postsList.filters = filters
     } else {
       filters = postsList.filters
@@ -97,13 +97,14 @@ export function loadPostsList({ name, filters = {}, callback=()=>{}, restart = f
 
     return Ajax({
       url: '/posts',
-      params: filters,
+      data: filters,
       headers,
       callback: (res) => {
 
         if (!res || !res.success) return callback(res)
 
         if (restart) postsList.data = []
+
         postsList.more = res.data.length < postsList.filters.per_page ? false : true
         postsList.data = postsList.data.concat(processPostsList(res.data))
         postsList.filters = filters
@@ -147,7 +148,7 @@ export function addPosts({ title, detail, detailHTML, topicId, device, type, cal
   return (dispatch, getState) => {
 
     let accessToken = getState().user.accessToken
-
+    
     return Ajax({
       url: '/add-posts',
       type:'post',

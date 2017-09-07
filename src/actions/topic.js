@@ -71,7 +71,7 @@ export function loadTopicById({ id, callback = ()=>{} }) {
 
     Ajax({
       url: '/topic',
-      params: { topic_id: id },
+      data: { topic_id: id },
       callback: (res)=>{
         if (res && res.success && res.data && res.data.length > 0) {
           dispatch({ type: 'ADD_NODE', node: res.data[0] })
@@ -137,12 +137,12 @@ export function loadTopicList({ name, filters = {}, callback = ()=>{} }) {
 
     return Ajax({
       url: '/topic',
-      params: filters,
+      data: filters,
       headers,
       callback: (res)=>{
 
         nodeList.loading = false
-
+        
         if (res.success) {
           nodeList.more = res.data.length < nodeList.filters.per_page ? false : true
           nodeList.data = nodeList.data.concat(res.data)

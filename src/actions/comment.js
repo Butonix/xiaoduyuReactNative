@@ -37,7 +37,7 @@ export function addComment({ data, callback }) {
           })
 
         }
-        
+
         dispatch({ type: 'SET_COMMENT', state: commentState })
 
         /*
@@ -94,10 +94,10 @@ export function loadCommentList({ name, filters = {}, callback = ()=>{} }) {
     dispatch({ type: 'SET_COMMENT_LIST_BY_NAME', name, data: commentList })
 
     let headers = accessToken ? { 'AccessToken': accessToken } : null
-
+    
     return Ajax({
       url: '/comments',
-      params: filters,
+      data: filters,
       headers,
       callback: (res) => {
 

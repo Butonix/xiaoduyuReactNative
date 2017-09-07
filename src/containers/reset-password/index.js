@@ -105,6 +105,7 @@ class ResetPassword extends React.Component {
                 onChangeText={(currentPassword) => this.setState({currentPassword})}
                 secureTextEntry={true}
                 placeholder='请输入当前密码'
+                autoFocus={true}
                 />
               <TextInput
                 style={gStyles.input}

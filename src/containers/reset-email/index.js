@@ -77,12 +77,13 @@ class ResetEmail extends React.Component {
 
     return (<View>
               <TextInput
-                  style={gStyles.input}
-                  autoCapitalize="none"
-                  onChangeText={(email) => this.setState({email})}
-                  placeholder='请输入你的新邮箱'
+                style={gStyles.input}
+                autoCapitalize="none"
+                onChangeText={(email) => this.setState({email})}
+                placeholder='请输入你的新邮箱'
+                autoFocus={true}
                 />
-
+                
                 <View style={gStyles.rowItem}>
                   <View style={styles.itemLeft}>
                     <TextInput

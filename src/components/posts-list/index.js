@@ -76,7 +76,7 @@ class PostsList extends Component {
 
     const self = this
     const { list } = this.props
-
+    
     if (list.loading && list.data.length == 0 || !list.data) {
       return (<Loading />)
     }
