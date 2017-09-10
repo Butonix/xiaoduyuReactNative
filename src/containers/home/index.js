@@ -4,8 +4,6 @@ import React, { PureComponent } from 'react'
 import { View, ScrollView, Image, StyleSheet } from 'react-native'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
-import gStyles from '../../styles'
-
 import PostsList from '../../components/posts-list'
 import TabBar from '../../components/tab-bar'
 
@@ -18,6 +16,7 @@ class Home extends PureComponent {
   }
 
   render() {
+
     const { navigation } = this.props
 
     return (<ScrollableTabView

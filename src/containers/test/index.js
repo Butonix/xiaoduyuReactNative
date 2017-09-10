@@ -16,27 +16,9 @@ import {
   addNavigationHelpers,
 } from 'react-navigation';
 
-import Home from '../home'
-import Topics from '../topics'
+// import Home from '../home'
+// import Topics from '../topics'
 
-const HistoryTabRouter = TabRouter(
- {
-   RecentSearches: {
-     screen: Home,
-     path: '',
-   },
-   RecentStories: {
-     screen: Topics,
-     path: 'RecentStories',
-   }
- },
- {
-   initialRouteName: 'RecentSearches',
-   swipeEnabled:true,
-   animationEnabled:false,
-   lazy: true
- }
-)
 
 class HistoryTabBar extends Component {
   constructor(props) {
@@ -46,39 +28,10 @@ class HistoryTabBar extends Component {
   }
   render () {
       return (
-          <View>
-            {this.props.navigation.state.routes.map(route => (
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate(route.routeName)}
-                key={route.routeName}
-              >
-                <Text>{route.routeName}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          <WebView source={{uri:'https://www.baidu.com'}} style={{width:3000, height:300}} />
       );
   }
 }
 
-const HistoryTabView = ({ router, navigation }) => {
-const { routes, index } = navigation.state;
-const ActiveScreen = router.getComponentForState(navigation.state);
-return (
-  <View >
-    <HistoryTabBar navigation={navigation} />
-    <ActiveScreen
-      navigation={addNavigationHelpers({
-        ...navigation,
-        state: routes[index],
-      })}
-    />
-  </View>
-);
-};
 
-
-const CustomTabs = createNavigationContainer(
- createNavigator(HistoryTabRouter)(HistoryTabView)
-);
-
-export default CustomTabs
+export default HistoryTabBar

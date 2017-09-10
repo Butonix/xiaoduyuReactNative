@@ -182,7 +182,7 @@ const Media = (props) => {
   if (!props.block.getEntityAt(0)) {
     return null
   }
-  
+
   // console.log(props.block.getEntityAt(0));
   const entity = Entity.get(props.block.getEntityAt(0))
   const { src } = entity.getData()
@@ -407,7 +407,13 @@ export class MyEditor extends React.Component {
       self.addImage(text)
     })
 
+    // setTimeout(()=>{
+      // self.refs.editor.focus()
+    // })
+    
+    // RNMessageChannel.on('focus', text => {
 
+    // })
 
     // setTimeout(()=>{
     //   self.addImage('https://img.xiaoduyu.com/0de18801-9ed5-4ffe-bb11-512fab8b2231.PNG?imageMogr2/auto-orient/thumbnail/!200')

@@ -1,12 +1,12 @@
 
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, Image, View, Button, ScrollView, TextInput, Alert, TouchableOpacity, AsyncStorage, DeviceEventEmitter } from 'react-native'
+import { StyleSheet, Text, Image, View, Button, ScrollView, WebView, TextInput, Alert, TouchableOpacity, AsyncStorage, DeviceEventEmitter } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
 
 import openShare from 'react-native-open-share'
-// import KeyboardSpacer from 'react-native-keyboard-spacer'
+import KeyboardSpacer from 'react-native-keyboard-spacer'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -257,13 +257,13 @@ class SignIn extends Component {
 
   render() {
 
+    const self = this
     const { captchaId } = this.state
 
     const { navigate } = this.props.navigation
 
-    return (<ScrollView style={styles.container}>
-      
-      {/*
+    return (<ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
+
       <TouchableOpacity onPress={this._qqLogin} style={gStyles.fullButton}>
         <Text style={styles.buttonText}>通过QQ登录</Text>
       </TouchableOpacity>
@@ -279,16 +279,19 @@ class SignIn extends Component {
       <View style={gStyles.item}>
         <Fieldset text="或者通过邮箱登录" />
       </View>
-      */}
+
 
       <TextInput
+          ref="email"
           style={styles.input}
           autoCapitalize={'none'}
           onChangeText={(email) => this.setState({email})}
           placeholder='请输入邮箱'
         />
 
+
       <TextInput
+          ref="password"
           style={styles.input}
           onChangeText={(password) => this.setState({password})}
           secureTextEntry={true}
@@ -327,7 +330,7 @@ class SignIn extends Component {
         </View>
       </View>
 
-      {/*<KeyboardSpacer />*/}
+      <KeyboardSpacer />
     </ScrollView>)
   }
 }

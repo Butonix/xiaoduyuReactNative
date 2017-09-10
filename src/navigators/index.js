@@ -87,9 +87,27 @@ const defaultGetStateForAction = App.router.getStateForAction;
 
 App.router.getStateForAction = (action, state) => {
 
+
   console.log('进入了-------------------');
-  console.log(action);
-  console.log(state);
+  console.log(action.routeName);
+
+  if (action && action.routeName) {
+
+    console.log(action);
+
+
+    if (global.visitedRouter.indexOf(action.routeName) == -1) {
+      global.visitedRouter.push(action.routeName)
+    }
+
+    console.log(global.visitedRouter);
+
+  }
+
+
+
+
+  // console.log(state);
 
   if (!global.signIn) {
 
@@ -118,13 +136,10 @@ App.router.getStateForAction = (action, state) => {
 
   }
 
-  if (global.signIn) {
-    if (action.key) {
 
-    }
-  }
 
   return defaultGetStateForAction(action, state);
 };
 */
+
 export default App

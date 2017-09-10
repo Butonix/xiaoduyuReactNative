@@ -37,7 +37,7 @@ export function loadNotifications({ name, filters = {}, callback = ()=>{}, resta
       type: 'post',
       data: merge({}, filters, { access_token: accessToken }),
       callback: (res)=>{
-        
+
         if (restart) list.data = []
 
         list.loading = false
@@ -203,7 +203,7 @@ export function loadNewNotifications({ name, callback = ()=>{} }) {
 let loading = false
 
 // 加载未读通知数量
-export function loadUnreadCount() {
+export function loadUnreadCount({ callback=()=>{} }) {
   return (dispatch, getState) => {
 
     let accessToken = getState().user.accessToken
@@ -218,7 +218,18 @@ export function loadUnreadCount() {
       headers: { AccessToken: accessToken },
       callback: (result) => {
         loading = false
-        dispatch({ type: 'SET_UNREAD_NOTICE', unreadNotice: result.data })
+
+        if (result && result.success) {
+
+          // console.log(result);
+          // callback(result.data)
+
+          dispatch({ type: 'SET_UNREAD_NOTICE', unreadNotice: result.data })
+
+        }
+
+        callback(result.data)
+
       }
     })
 

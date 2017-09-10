@@ -15,7 +15,6 @@ import { Toast } from 'teaset'
 
 import ImagePicker from 'react-native-image-crop-picker'
 
-
 import { getQiNiuToken } from '../../actions/qiniu'
 import { uploadFile } from '../../common/upload-qiniu'
 
@@ -53,7 +52,7 @@ class Editor extends Component {
     const { qiniu, loading } = this.state
     const { style } = this.props
 
-    // source={{uri:'http://192.168.1.107:9000'}}
+    // source={{uri:'http://192.168.1.106:9000'}}
     // source={require('../../../editor/dist/index.html')}
     return (<View style={styles.container}>
 
@@ -62,8 +61,11 @@ class Editor extends Component {
               style={styles.editor}
               ref={ webview => { this.webview = webview; }}
               onLoad={()=>{ self.init() }}
+              mediaPlaybackRequiresUserAction
+              hideKeyboardAccessoryView
+              keyboardDisplayRequiresUserAction={false}
               />
-
+              
             {qiniu ? <View style={styles.control}>
                       {!loading ?
                         <TouchableOpacity onPress={this.addPhoto} style={styles.addPhoto}>
@@ -83,14 +85,23 @@ class Editor extends Component {
 
   init() {
     const self = this
-    const { initialContentJSON, transportContent } = this.props
+    const { initialContentJSON, transportContent, focus } = this.props
     const { messagesChannel } = this.webview
 
     messagesChannel.on('transport-content', transportContent)
 
     if (initialContentJSON) {
-      self.webview.emit('initial-content', initialContentJSON);
+      self.webview.emit('initial-content', initialContentJSON)
     }
+
+    console.log(this.webview);
+
+    // if (focus) {
+      // setTimeout(()=>{
+        // console.log('123');
+        // self.webview.emit('focus')
+      // }, 1000)
+    // }
 
   }
 
@@ -152,6 +163,7 @@ class Editor extends Component {
 Editor.defaultProps = {
   initialContentJSON: '',
   transportContent: (data)=>{},
+  focus: true,
   placeholder: '请输入...'
 }
 

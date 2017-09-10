@@ -11,16 +11,21 @@ import Navigators from './navigators/index'
 
 import SplashScreen from 'react-native-splash-screen'
 
-import { combineReducers, bindActionCreators } from 'redux'
+
 import { connect } from 'react-redux'
+import { combineReducers, bindActionCreators } from 'redux'
 import { loadUserInfo, addAccessToken, cleanUserInfo } from './actions/user'
+import { loadUnreadCount } from './actions/notification'
 import { cleanAllPosts } from './actions/posts'
+
+import { api_url } from '../config'
 
 const store = getStore()
 
 // 解决该组建，启动黑底的问题
 import { Theme } from 'teaset'
 Theme.set({ screenColor: '#fff', })
+
 
 global.cleanRedux = () => {
   cleanUserInfo()(store.dispatch, store.getState)
@@ -41,9 +46,11 @@ global.initReduxDate = (callback) => {
       accessToken: result,
       callback: (res)=>{
 
+        // console.log(res);
+
         if (res.success) {
           addAccessToken({ accessToken:  result })(store.dispatch, store.getState)
-          callback(true)
+          callback(res.data)
         } else {
           AsyncStorage.removeItem('token',(res)=>{
             callback(false)
@@ -56,6 +63,9 @@ global.initReduxDate = (callback) => {
   })
 
 }
+
+
+
 
 class MainApp extends Component {
 
@@ -70,7 +80,7 @@ class MainApp extends Component {
     this.start = this.start.bind(this)
   }
 
-  start() {
+  start(callback) {
 
     const self = this
 
@@ -82,10 +92,12 @@ class MainApp extends Component {
 
       if (!state) {
         self.setState({ loading: false })
+        callback(null)
       } else {
         global.initReduxDate((result)=>{
-          global.signIn = result
+          global.signIn = result ? true : false
           self.setState({ loading: false, network: true, ready: true })
+          callback(result)
         })
       }
 
@@ -97,7 +109,17 @@ class MainApp extends Component {
   }
 
   componentDidMount() {
-    this.start()
+
+    // console.log(this);
+
+    const self = this
+    this.start((userinfo)=>{
+
+      // if (userinfo) {
+      //   runWebSokcet(userinfo)
+      // }
+
+    })
     SplashScreen.hide()
   }
 
@@ -137,28 +159,9 @@ var styles = StyleSheet.create({
 })
 
 
-
-/*
-const ws = new WebSocket('https://www.xiaoduyu.com/socket.io/?EIO=4&transport=websocket');
-
-ws.onopen = () => {
-  console.log('连接成功');
+if (!window.location) {
+    // App is running in simulator
+    window.navigator.userAgent = 'ReactNative';
 }
-
-ws.onmessage = (e) => {
-  // 接收到了一个消息
-  console.log(e.data);
-}
-
-ws.onerror = (e) => {
-  // 发生了一个错误
-  console.log(e.message);
-}
-
-ws.onclose = (e) => {
-  // 连接被关闭了
-  console.log(e.code, e.reason);
-}
-*/
 
 export default MainApp
