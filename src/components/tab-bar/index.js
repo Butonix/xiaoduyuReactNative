@@ -20,7 +20,7 @@ class Tabbar extends Component {
           <View></View>
           <TouchableOpacity
             style={styles.createButton}
-            onPress={()=>{ navigation.navigate('WritePosts', { typeId: 1 }) }}
+            onPress={()=>{ navigation.navigate('ChooseTopic', { typeId: 1 }) }}
             >
             <Text>创建</Text>
           </TouchableOpacity>

@@ -55,17 +55,15 @@ class Editor extends Component {
     // source={{uri:'http://192.168.1.106:9000'}}
     // source={require('../../../editor/dist/index.html')}
     return (<View style={styles.container}>
-
+      
             <WebView
+              // source={{uri:'http://192.168.1.106:9000'}}
               source={require('../../../editor/dist/index.html')}
               style={styles.editor}
               ref={ webview => { this.webview = webview; }}
               onLoad={()=>{ self.init() }}
-              mediaPlaybackRequiresUserAction
-              hideKeyboardAccessoryView
-              keyboardDisplayRequiresUserAction={false}
               />
-              
+
             {qiniu ? <View style={styles.control}>
                       {!loading ?
                         <TouchableOpacity onPress={this.addPhoto} style={styles.addPhoto}>
@@ -94,7 +92,7 @@ class Editor extends Component {
       self.webview.emit('initial-content', initialContentJSON)
     }
 
-    console.log(this.webview);
+    // console.log(this.webview);
 
     // if (focus) {
       // setTimeout(()=>{

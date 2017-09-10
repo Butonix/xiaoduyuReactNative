@@ -14,8 +14,8 @@ class ChooseTopic extends React.Component {
     const { params = {} } = navigation.state
 
     return {
-      headerLeft: (<View><Button onPress={()=>params.cancel()} title={"取消"} /></View>),
-      title: '请选择一个话题'
+      // headerLeft: (<View><Button onPress={()=>params.cancel()} title={"取消"} /></View>),
+      title: '请选择话题'
       // headerRight: (<View><Button onPress={()=>params.submit()} title={"发布"} /></View>),
     }
 
@@ -47,8 +47,12 @@ class ChooseTopic extends React.Component {
   }
 
   choose(topic) {
-    this.props.setTopic({ topic: topic })
-    this.cancel()
+    
+    const { navigate } = this.props.navigation
+    navigate('WritePosts', { topic })
+
+    // this.props.setTopic({ topic: topic })
+    // this.cancel()
   }
 
   render() {

@@ -61,6 +61,65 @@ export function addComment({ data, callback }) {
   }
 }
 
+export function updateComment({ id, contentJSON, contentHTML, callback }) {
+  return (dispatch, getState) => {
+
+    let accessToken = getState().user.accessToken
+    let comment = getState().comment
+    let posts = getState().posts
+
+    return Ajax({
+      url: '/update-comment',
+      type: 'post',
+      data: {
+        id : id,
+        content : contentJSON,
+        content_html: contentHTML
+      },
+      headers: { AccessToken: accessToken },
+      callback: (res) => {
+
+        if (!res || !res.success) return callback(res)
+
+        for (let i in comment) {
+          comment[i].data.map(item=>{
+            if (item._id == id) {
+              item.content = contentJSON
+              item.content_html = contentHTML
+            }
+          })
+        }
+
+        for (let i in posts) {
+
+          posts[i].data.map(item=>{
+
+            item.comment.map((comment, index)=>{
+              if (comment._id == id) {
+                item.comment[index].content_html = contentHTML
+
+                let text = contentHTML.replace(/<[^>]+>/g,"")
+                if (text.length > 200) text = text.slice(0, 200)+'...'
+
+                item.comment[index].content_summary = text
+              }
+            })
+
+          })
+
+        }
+
+        dispatch({ type: 'SET_POSTS', state:posts })
+        dispatch({ type: 'SET_COMMENT', state:comment })
+
+        callback(res)
+
+      }
+    })
+
+  }
+}
+
 export function loadCommentList({ name, filters = {}, callback = ()=>{} }) {
   return (dispatch, getState) => {
 
@@ -94,7 +153,7 @@ export function loadCommentList({ name, filters = {}, callback = ()=>{} }) {
     dispatch({ type: 'SET_COMMENT_LIST_BY_NAME', name, data: commentList })
 
     let headers = accessToken ? { 'AccessToken': accessToken } : null
-    
+
     return Ajax({
       url: '/comments',
       data: filters,

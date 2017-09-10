@@ -1,14 +1,11 @@
 
 
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Image, ScrollView, WebView, TouchableOpacity } from 'react-native'
-
-import { StackNavigator, TabNavigator } from 'react-navigation'
+import { AppRegistry, StyleSheet, Text, View, Image, Button, ScrollView, WebView, TouchableOpacity } from 'react-native'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { loadPostsById } from '../../actions/posts'
-import { like, unlike } from '../../actions/like'
 import { getPostsById } from '../../reducers/posts'
 import { getUserInfo } from '../../reducers/user'
 
@@ -17,34 +14,76 @@ import Img from '../../components/image'
 import CommentList from '../../components/comment-list'
 import BottomBar from '../../components/bottom-bar'
 
+import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
+const CANCEL_INDEX = 0
+const DESTRUCTIVE_INDEX = 0
+const options = [ '取消', '编辑']
+
 class PostsDetail extends Component {
 
-  static navigationOptions = ({navigation}) => ({
-    headerTitle: navigation.state.params.title
-  })
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state
+
+    let option = {
+      headerTitle: params.title
+    }
+
+    if (params.menu) {
+      option.headerRight = (<View><Button onPress={()=>params.menu()} title={"菜单"} /></View>)
+    }
+
+    return option
+  }
 
   constructor (props) {
     super(props)
     this.state = {}
     this.goWriteComment = this.goWriteComment.bind(this)
-    this.like = this.like.bind(this)
     this.toPeople = this.toPeople.bind(this)
+    this.menu = this.menu.bind(this)
+    this.showSheet = this.showSheet.bind(this)
   }
 
   componentDidMount() {
 
     const self = this
     const id = this.props.navigation.state.params.id
-    const { loadPostsById } = this.props
+    const { loadPostsById, me } = this.props
     const [ posts ] = this.props.posts
 
-    if (!posts) {
-      loadPostsById({
-        id,
-        callback: (res)=>{
+    if (!posts || !posts.content) {
+      loadPostsById({ id, callback: (res)=>{
+
+        if (me._id == posts.user_id._id) {
+          this.props.navigation.setParams({
+            menu: this.menu
+          })
         }
+
+      }})
+      return
+    }
+
+    if (me._id == posts.user_id._id) {
+      this.props.navigation.setParams({
+        menu: this.menu
       })
     }
+
+  }
+
+  menu(key) {
+    this.ActionSheet.show()
+  }
+
+  showSheet(key) {
+
+    if (!key) return
+
+    const [ posts ] = this.props.posts
+
+    const { navigate } = this.props.navigation;
+    navigate('WritePosts', { topic: posts.topic_id, posts })
 
   }
 
@@ -64,20 +103,6 @@ class PostsDetail extends Component {
     } else {
       navigate('SignIn')
     }
-
-  }
-
-  like() {
-
-    const { navigate } = this.props.navigation
-    const [ posts ] = this.props.posts
-    const { me } = this.props
-
-    // if (me) {
-      navigate('WriteComment', { postsId: posts._id })
-    // } else {
-      // navigate('SignIn')
-    // }
 
   }
 
@@ -129,6 +154,13 @@ class PostsDetail extends Component {
     return (<View style={styles.container}>
         <ScrollView style={styles.main}>{dom}</ScrollView>
         <BottomBar {...this.props} posts={posts} />
+        <ActionSheet
+          ref={o => this.ActionSheet = o}
+          options={options}
+          cancelButtonIndex={CANCEL_INDEX}
+          destructiveButtonIndex={DESTRUCTIVE_INDEX}
+          onPress={this.showSheet}
+        />
       </View>)
   }
 }

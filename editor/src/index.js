@@ -196,19 +196,24 @@ const Media = (props) => {
     media = <img src={`https:${src}`} />
   } else if (type === 'youtube') {
     let url = 'https://www.youtube.com/embed/' + src
-    media = <iframe src={url}></iframe>
+    media = <div></div>
+    // media = <iframe src={url}></iframe>
   } else if (type === 'youku') {
     let url = 'https://player.youku.com/embed/' + src
-    media = <iframe src={url}></iframe>
+    media = <div></div>
+    // media = <iframe src={url}></iframe>
   } else if (type === 'qq') {
     let url = "https://v.qq.com/iframe/player.html?vid="+src+"&tiny=0&auto=0"
-    media = <Iframe src={url} width="auto" height="auto" position=""></Iframe>
+    media = <div></div>
+    // media = <Iframe src={url} width="auto" height="auto" position=""></Iframe>
   } else if (type === '163-music-song') {
     let url = "//music.163.com/outchain/player?type=2&id="+src+"&auto=1&height=66"
-    media = <Iframe src={url} width="auto" height="86" position=""></Iframe>
+    media = <div></div>
+    // media = <Iframe src={url} width="auto" height="86" position=""></Iframe>
   } else if (type === '163-music-playlist') {
     let url = "//music.163.com/outchain/player?type=0&id="+src+"&auto=1&height=430"
-    media = <Iframe src={url} width="auto" height="450" position=""></Iframe>
+    media = <div></div>
+    // media = <Iframe src={url} width="auto" height="450" position=""></Iframe>
   }
 
   return media;
@@ -410,7 +415,7 @@ export class MyEditor extends React.Component {
     // setTimeout(()=>{
       // self.refs.editor.focus()
     // })
-    
+
     // RNMessageChannel.on('focus', text => {
 
     // })

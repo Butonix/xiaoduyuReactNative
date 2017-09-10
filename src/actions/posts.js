@@ -148,7 +148,7 @@ export function addPosts({ title, detail, detailHTML, topicId, device, type, cal
   return (dispatch, getState) => {
 
     let accessToken = getState().user.accessToken
-    
+
     return Ajax({
       url: '/add-posts',
       type:'post',
@@ -158,6 +158,59 @@ export function addPosts({ title, detail, detailHTML, topicId, device, type, cal
       },
       headers: { AccessToken: accessToken },
       callback
+    })
+
+  }
+}
+
+
+export function updatePostsById({ id, type, topicId, title, content, contentHTML, callback = ()=>{} }) {
+  return (dispatch, getState) => {
+
+    let accessToken = getState().user.accessToken
+    let state = getState().posts
+
+    return Ajax({
+      url: '/update-posts',
+      type:'post',
+      data: {
+        id: id, type: type, title: title,
+        topic_id: topicId, content: content, content_html: contentHTML
+      },
+      headers: { AccessToken: accessToken },
+      callback: (res)=>{
+
+        if (!res || !res.success) return callback(res)
+
+        loadPostsById({
+          id,
+          callback: (posts)=> {
+
+            if (!posts) return callback(res)
+
+            for (let i in state) {
+
+              if (i == id) {
+                state[i].data[0] = posts
+              } else {
+                state[i].data.map((item, index)=>{
+                  if (item._id == id) {
+                    posts.comment = item.comment
+                    posts.comment_count = item.comment_count
+                    state[i].data[index] =  posts
+                  }
+                })
+              }
+            }
+
+            dispatch({ type: 'SET_POSTS', state })
+            res.data = posts
+            callback(res)
+
+          }
+        })(dispatch, getState)
+
+      }
     })
 
   }
