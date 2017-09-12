@@ -2,7 +2,7 @@
 import PostsList from '../../components/posts-list'
 import React, { Component } from 'react'
 import { View, ScrollView, StyleSheet, Text, Image, Button, AsyncStorage, TouchableOpacity } from 'react-native'
-
+import WriteIcon from '../../components/ui/icon/write'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -13,8 +13,8 @@ class TopicDetail extends Component {
     const { params = {} } = navigation.state
 
     return {
-      title: params.name,
-      headerRight: (<View><Button onPress={()=>params.createPosts()} title={"创建帖子"} /></View>),
+      title: params.title,
+      headerRight: (<TouchableOpacity onPress={()=>params.createPosts()}><WriteIcon /></TouchableOpacity>)
     }
 
   }
@@ -27,7 +27,7 @@ class TopicDetail extends Component {
 
     this.createPosts = this.createPosts.bind(this)
   }
-  
+
   componentDidMount() {
     this.props.navigation.setParams({
       createPosts: this.createPosts
@@ -36,13 +36,13 @@ class TopicDetail extends Component {
 
   createPosts() {
     const { navigate } = this.props.navigation
-    const { id } = this.props.navigation.state.params
-    navigate('WritePosts', { typeId: 1, topicId: id })
+    const { topic } = this.props.navigation.state.params
+    navigate('WritePosts', { topic })
   }
 
   render() {
-
-    const { id } = this.props.navigation.state.params
+    
+    const { topic } = this.props.navigation.state.params
 
     const { navigation } = this.props
 
@@ -50,9 +50,9 @@ class TopicDetail extends Component {
           <PostsList
             navigation={navigation}
             filters={{
-              topic_id: id
+              topic_id: topic._id
             }}
-            name={id}
+            name={topic._id}
             />
           </View>)
   }

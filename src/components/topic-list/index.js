@@ -41,9 +41,9 @@ class TopicList extends Component {
   }
 
   toTopic(topic) {
-    const { navigate } = this.props.navigation;
+    const { navigate } = this.props.navigation
 
-    navigate('TopicDetail', { title: topic.name, id: topic._id })
+    navigate('TopicDetail', { title: topic.name, topic })
   }
 
   componentDidMount() {

@@ -13,6 +13,7 @@ import HTMLView from '../../components/html-view'
 import Img from '../../components/image'
 import CommentList from '../../components/comment-list'
 import BottomBar from '../../components/bottom-bar'
+import MenuIcon from '../../components/ui/icon/menu'
 
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
 const CANCEL_INDEX = 0
@@ -23,13 +24,13 @@ class PostsDetail extends Component {
 
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
-
+    // <Button onPress={()=>params.menu()} title={"菜单"} />
     let option = {
       headerTitle: params.title
     }
 
     if (params.menu) {
-      option.headerRight = (<View><Button onPress={()=>params.menu()} title={"菜单"} /></View>)
+      option.headerRight = (<TouchableOpacity onPress={()=>params.menu()}><MenuIcon /></TouchableOpacity>)
     }
 
     return option

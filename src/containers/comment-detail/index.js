@@ -12,6 +12,7 @@ import { getUserInfo } from '../../reducers/user'
 import HTMLView from '../../components/html-view'
 import CommentList from '../../components/comment-list'
 import BottomBar from '../../components/bottom-bar'
+import MenuIcon from '../../components/ui/icon/menu'
 
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
 const CANCEL_INDEX = 0
@@ -28,7 +29,7 @@ class CommentDetail extends Component {
     }
 
     if (params.menu) {
-      option.headerRight = (<View><Button onPress={()=>params.menu()} title={"菜单"} /></View>)
+      option.headerRight = (<TouchableOpacity onPress={()=>params.menu()}><MenuIcon /></TouchableOpacity>)
     }
 
     return option

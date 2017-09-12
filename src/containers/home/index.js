@@ -1,18 +1,19 @@
 
 
 import React, { PureComponent } from 'react'
-import { View, ScrollView, Image, StyleSheet } from 'react-native'
+import { View, ScrollView, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
 import PostsList from '../../components/posts-list'
 import TabBar from '../../components/tab-bar'
+import MenuIcon from '../../components/ui/icon/menu'
 
 class Home extends PureComponent {
 
   static navigationOptions = {
     header: null,
     title: '首页',
-    tabBarIcon: ({ tintColor }) => (<Image source={require('./images/home.png')} style={[stylesIcon.icon, {tintColor: tintColor}]} />),
+    tabBarIcon: ({ tintColor }) => (<Image source={require('./images/home.png')} style={[stylesIcon.icon, {tintColor: tintColor}]} />)
   }
 
   render() {

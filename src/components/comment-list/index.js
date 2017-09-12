@@ -21,6 +21,7 @@ import {
 } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { getUserInfo } from '../../reducers/user'
 
 import { loadCommentList } from '../../actions/comment'
 import { getCommentListByName } from '../../reducers/comment'
@@ -80,7 +81,8 @@ class CommentList extends Component {
       list,
       displayLike = false,
       displayReply = false,
-      displayCreateAt = false
+      displayCreateAt = false,
+      me
     } = this.props
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -171,6 +173,7 @@ const styles = StyleSheet.create({
 
 export default connect((state, props) => {
     return {
+      me: getUserInfo(state),
       list: getCommentListByName(state, props.name)
     }
   },

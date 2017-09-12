@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react'
 import { View, ScrollView, StyleSheet, Text, Image, AsyncStorage, TouchableOpacity, Animated, Easing } from 'react-native'
+import WriteIcon from '../ui/icon/write'
 
 class Tabbar extends Component {
   render() {
@@ -12,17 +13,14 @@ class Tabbar extends Component {
         <View style={styles.item}>
           {tabs.map((item, index)=>{
             return (<TouchableOpacity key={index} onPress={()=>{ goToPage(index) }} style={activeTab == index ? styles.tabActive : styles.tab}>
-                  <Text style={{ color: activeTab == index ? 'red' : '#333' }}>{item}</Text>
+                  <Text style={{ color: activeTab == index ? 'red' : '#333', fontSize:15 }}>{item}</Text>
               </TouchableOpacity>)
           })}
         </View>
         <View style={styles.itemFixed}>
           <View></View>
-          <TouchableOpacity
-            style={styles.createButton}
-            onPress={()=>{ navigation.navigate('ChooseTopic', { typeId: 1 }) }}
-            >
-            <Text>创建</Text>
+          <TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic', { typeId: 1 }) }}>
+            <WriteIcon />
           </TouchableOpacity>
         </View>
       </View>)
@@ -44,24 +42,22 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
   tab: {
-    paddingTop:20,
-    paddingTop:20,
     borderBottomWidth: 3,
     borderColor: '#fff',
     marginLeft: 10,
     marginRight: 10,
     width:60,
+    justifyContent: 'center',
     alignItems: 'center'
   },
   tabActive: {
-    paddingTop:20,
-    paddingTop:20,
     borderBottomWidth: 3,
     borderColor: 'red',
     marginLeft: 10,
     marginRight: 10,
     width:60,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   itemFixed: {
     height: 50,

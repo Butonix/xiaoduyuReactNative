@@ -10,17 +10,12 @@ import { getTopicListByName } from '../../reducers/topic'
 class ChooseTopic extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
-
     const { params = {} } = navigation.state
-
     return {
-      // headerLeft: (<View><Button onPress={()=>params.cancel()} title={"取消"} /></View>),
-      title: '请选择话题'
-      // headerRight: (<View><Button onPress={()=>params.submit()} title={"发布"} /></View>),
+      title: '请选择一个话题'
     }
-
   }
-
+  
   constructor (props) {
     super(props)
     this.cancel = this.cancel.bind(this)
@@ -47,7 +42,7 @@ class ChooseTopic extends React.Component {
   }
 
   choose(topic) {
-    
+
     const { navigate } = this.props.navigation
     navigate('WritePosts', { topic })
 
@@ -83,9 +78,9 @@ class ChooseTopic extends React.Component {
       }
     }
 
-    return (<ScrollView>
+    return (<ScrollView style={styles.container}>
       {parentTopicList.map(item=>{
-        return (<View key={item._id} style={styles.container}>
+        return (<View key={item._id} style={styles.group}>
                   <View><Text style={styles.title}>{item.name}</Text></View>
                   <View style={styles.itemContainer}>
                     {childTopicList[item._id] && childTopicList[item._id].map(item=>{
@@ -105,7 +100,11 @@ class ChooseTopic extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding:20
+    padding:20,
+    backgroundColor:'#fff'
+  },
+  group: {
+    marginBottom:30
   },
   itemContainer: {
     flexDirection: 'row',

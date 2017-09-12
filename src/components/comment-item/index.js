@@ -1,6 +1,9 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import HtmlView from '../html-view'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { loadCommentById } from '../../actions/comment'
 
 class CommentItem extends React.Component {
 
@@ -8,6 +11,7 @@ class CommentItem extends React.Component {
     super(props)
     this.toPeople = this.toPeople.bind(this)
     this.reply = this.reply.bind(this)
+    this.editComment = this.editComment.bind(this)
   }
 
   toPeople(people) {
@@ -24,6 +28,21 @@ class CommentItem extends React.Component {
     })
   }
 
+  editComment(comment) {
+
+    const { navigate } = this.props.navigation;
+    const { loadCommentById } = this.props
+
+    loadCommentById({
+      id: comment._id,
+      callback: (res)=>{
+        if (res) {
+          navigate('WriteComment', { comment: res })
+        }
+      }
+    })
+  }
+
   render() {
 
     const {
@@ -31,7 +50,8 @@ class CommentItem extends React.Component {
       displayLike = false,
       displayReply = false,
       subitem = false,
-      displayCreateAt = false
+      displayCreateAt = false,
+      me
     } = this.props
 
     return (<View style={[styles.item, subitem ? styles.subitem : null]}>
@@ -53,10 +73,11 @@ class CommentItem extends React.Component {
             </View>
             <View style={styles.headRight}>
               {displayLike ? <Text style={styles.like}>赞</Text> : null}
-              {displayReply ? <TouchableOpacity onPress={()=>{this.reply(comment)}}><Text>回复</Text></TouchableOpacity> : null}
+              {displayReply ? <TouchableOpacity onPress={()=>{this.reply(comment)}} style={styles.like}><Text>回复</Text></TouchableOpacity> : null}
+              {me && me._id == comment.user_id._id ? <TouchableOpacity onPress={()=>{this.editComment(comment)}}><Text>编辑</Text></TouchableOpacity> : null}
             </View>
           </View>
-
+          
           <View style={styles.content}>
           {comment.content_summary ?
             <Text>{comment.content_summary}</Text> :
@@ -69,7 +90,7 @@ class CommentItem extends React.Component {
   }
 }
 
-export default CommentItem
+// export default CommentItem
 
 const styles = StyleSheet.create({
   item: {
@@ -118,3 +139,12 @@ const styles = StyleSheet.create({
     paddingRight: 15
   }
 })
+
+export default connect((state, props) => {
+    return {
+    }
+  },
+  (dispatch, props) => ({
+    loadCommentById: bindActionCreators(loadCommentById, dispatch)
+  })
+)(CommentItem)
