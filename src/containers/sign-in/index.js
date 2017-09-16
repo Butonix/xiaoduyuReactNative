@@ -24,7 +24,7 @@ import { api_url, api_verstion } from '../../../config'
 
 
 class SignIn extends Component {
-
+  
   static navigationOptions = ({navigation}) => ({
     // header: null
     headerTitle: '登录'
@@ -159,6 +159,8 @@ class SignIn extends Component {
       var _this = this;
       openShare.weiboLogin();
 
+      // console.log('微博登陆');
+
       if (!_this.weiboLogin) {
           _this.weiboLogin = DeviceEventEmitter.addListener(
               'managerCallback', (response) => {
@@ -172,7 +174,6 @@ class SignIn extends Component {
                   //   user_id: response.userID,
                   //   expiration_date: response.expirationDate
                   // }
-
 
                       weiboGetUserInfo({
                         data: {

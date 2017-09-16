@@ -19,6 +19,7 @@ import Settings from '../containers/settings'
 import TopicDetail from '../containers/topic-detail'
 import PeopleDetail from '../containers/people-detail'
 import List from '../containers/list'
+import SocialAccount from '../containers/social-account'
 
 // setting
 import ResetNickname from '../containers/reset-nickname'
@@ -76,7 +77,8 @@ const App = StackNavigator({
   ResetGender: { screen: ResetGender },
   ResetPassword: { screen: ResetPassword },
   ResetEmail: { screen: ResetEmail },
-  ResetAvatar: { screen: ResetAvatar }
+  ResetAvatar: { screen: ResetAvatar },
+  SocialAccount: { screen: SocialAccount }
   // Test: { screen: Test }
 },{
   initialRouteName: 'Welcome'

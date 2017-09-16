@@ -18,3 +18,59 @@ export function QQGetUserInfo({ data, callback = ()=>{} }) {
     callback
   })
 }
+
+export function unbindingSocialAccount({ socialName, callback }) {
+  return (dispatch, getState) => {
+    let accessToken = getState().user.accessToken
+    Ajax({
+      url: '/unbinding-'+socialName,
+      type:'post',
+      headers: { AccessToken: accessToken },
+      callback
+    })
+  }
+}
+
+/*
+export function unbindingQQ({ callback }) {
+  return (dispatch, getState) => {
+    let accessToken = getState().user.accessToken
+
+    Ajax({
+      url: '/unbinding-qq',
+      type:'post',
+      headers: { AccessToken: accessToken },
+      callback
+    })
+
+  }
+}
+
+export function unbindingWeibo({ callback }) {
+  return (dispatch, getState) => {
+    let accessToken = getState().user.accessToken
+
+    Ajax({
+      url: '/unbinding-weibo',
+      type:'post',
+      headers: { AccessToken: accessToken },
+      callback
+    })
+
+  }
+}
+
+export function unbindingGithub({ callback }) {
+  return (dispatch, getState) => {
+    let accessToken = getState().user.accessToken
+
+    Ajax({
+      url: '/unbinding-github',
+      type:'post',
+      headers: { AccessToken: accessToken },
+      callback
+    })
+
+  }
+}
+*/

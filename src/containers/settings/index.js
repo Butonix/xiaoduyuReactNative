@@ -79,7 +79,7 @@ class Settings extends React.Component {
 
     return (<ScrollView>
           <View>
-            
+
             <TouchableOpacity onPress={()=>{ navigate('ResetAvatar', {}) }}>
               <ListItem
                 name={"头像"}
@@ -115,10 +115,18 @@ class Settings extends React.Component {
 
             <View style={styles.gap}></View>
 
-            <ListItem name={"QQ"} rightText={me.qq ? '已绑定' : '未绑定'} />
-            <ListItem name={"微博"} rightText={me.weibo ? '已绑定' : '未绑定'} />
-            <ListItem name={"GitHub"} rightText={me.github ? '已绑定' : '未绑定'} />
+            <TouchableOpacity onPress={()=>{ navigate('SocialAccount', { socialName: 'qq' }) }}>
+              <ListItem name={"QQ"} rightText={me.qq ? '已绑定' : '未绑定'} />
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={()=>{ navigate('SocialAccount', { socialName: 'weibo' }) }}>
+              <ListItem name={"微博"} rightText={me.weibo ? '已绑定' : '未绑定'} />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=>{ navigate('SocialAccount', { socialName: 'github' }) }}>
+              <ListItem name={"GitHub"} rightText={me.github ? '已绑定' : '未绑定'} />
+            </TouchableOpacity>
+            
             <View style={styles.gap}></View>
 
             <TouchableOpacity onPress={()=>{this.signOut()}}>

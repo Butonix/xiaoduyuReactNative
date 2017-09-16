@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 class Test extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: 'webview测试'
+    headerTitle: 'GitHub 登陆'
   })
 
   constructor (props) {
@@ -32,7 +32,7 @@ class Test extends Component {
           NavigationActions.navigate({ routeName: 'Main'})
         ]
       })
-      
+
       global.initReduxDate(()=>{
         self.props.navigation.dispatch(resetAction)
       })
