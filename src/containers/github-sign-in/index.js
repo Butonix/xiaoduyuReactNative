@@ -1,15 +1,16 @@
 
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, Image, View, Button, ScrollView, TextInput, Alert, TouchableOpacity, AsyncStorage, WebView } from 'react-native'
+import { StyleSheet, View, WebView } from 'react-native'
+import { official_website, api_url } from '../../../config'
 
-import { NavigationActions } from 'react-navigation'
+function GetQueryString(url, name) {
+   var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+   var r = url.substr(1).match(reg);
+   if(r!=null)return  unescape(r[2]); return null;
+}
 
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-
-
-class Test extends Component {
+class GithubSignIn extends Component {
 
   static navigationOptions = ({navigation}) => ({
     headerTitle: 'GitHub 登陆'
@@ -17,46 +18,44 @@ class Test extends Component {
 
   constructor (props) {
     super(props)
-    this.handleSignIn = this.handleSignIn.bind(this)
-  }
-
-  handleSignIn(access_token) {
-
-    const self = this
-
-    AsyncStorage.setItem('token', access_token, function(errs, result){
-
-      const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'Main'})
-        ]
-      })
-
-      global.initReduxDate(()=>{
-        self.props.navigation.dispatch(resetAction)
-      })
-
-    })
-
+    this.onNavigationStateChange = this.onNavigationStateChange.bind(this)
   }
 
   onNavigationStateChange(navState) {
-    if (navState.url && navState.url.indexOf('https://www.xiaoduyu.com/oauth?access_token=') != -1) {
-      const token = navState.url.replace('https://www.xiaoduyu.com/oauth?access_token=', '').split('&')[0]
-      this.handleSignIn(token)
+
+    let { successCallback =()=>{}, failCallback =()=>{} } = this.props.navigation.state.params
+    const { navigation } = this.props
+
+    if (navState.url && navState.url.indexOf(official_website+'/oauth?access_token=') != -1) {
+      const token = navState.url.replace(official_website+'/oauth?access_token=', '').split('&')[0]
+      successCallback(token)
+      navigation.goBack()
+    } else if (navState.url && navState.url.indexOf(official_website+'/notice?') != -1) {
+
+      let result = GetQueryString(navState.url, 'notice')
+
+      if (result == 'binding_finished') {
+        successCallback(result)
+      } else {
+        failCallback(result)
+      }
+
+
+      navigation.goBack()
     }
   }
 
   render() {
+
+    const { accessToken } = this.props.navigation.state.params
+
     return (<View style={styles.container}>
       <WebView
         ref={'webview'}
         automaticallyAdjustContentInsets={false}
-        style={styles.webView}
-        source={{uri: 'https://api.xiaoduyu.com/oauth/github'}}
+        source={{uri: 'https://api.xiaoduyu.com/oauth/github'+(accessToken ? '?access_token='+accessToken : '')}}
         javaScriptEnabled={true}
-        onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+        onNavigationStateChange={this.onNavigationStateChange}
         startInLoadingState={true}
         scalesPageToFit={true}
       />
@@ -64,52 +63,11 @@ class Test extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     flex: 1
-  },
-  input: {
-    height: 40,
-    borderColor: '#efefef',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10
-  },
-  button:{
-    backgroundColor:'#63B8FF',
-    height:40,
-    borderRadius:20,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
-  buttonText: {
-    color:'#fff'
-  },
-
-  captchaContainer: {
-    flexDirection: 'row'
-  },
-  captchaInput: {
-    flex: 1
-  },
-  caption: {
-    width:80,
-    height:30,
-    marginTop:5,
-    marginLeft:10
-  },
-  webView: {
-
   }
 })
 
-export default connect(
-  (state, props) => {
-    return {}
-  },
-  (dispatch, props) => ({
-  })
-)(Test)
+export default GithubSignIn

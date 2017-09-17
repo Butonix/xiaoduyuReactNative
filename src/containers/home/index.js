@@ -28,7 +28,7 @@ class Home extends PureComponent {
       tabBarUnderlineStyle={{
         borderColor: '#20adda'
       }}
-      initialPage={0}
+      initialPage={1}
       renderTabBar={(res)=><TabBar navigation={navigation} />}
       >
 
@@ -53,8 +53,8 @@ class Home extends PureComponent {
           filters={{
             weaken: 1,
             // method: 'user_custom'
-            // include_comments: -1,
-            // comments_sort: 'create_at:1'
+            include_comments: 1,
+            comments_sort: 'create_at:-1'
           }}
           />
 

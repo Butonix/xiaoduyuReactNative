@@ -24,7 +24,7 @@ import { api_url, api_verstion } from '../../../config'
 
 
 class SignIn extends Component {
-  
+
   static navigationOptions = ({navigation}) => ({
     // header: null
     headerTitle: '登录'
@@ -159,39 +159,25 @@ class SignIn extends Component {
       var _this = this;
       openShare.weiboLogin();
 
-      // console.log('微博登陆');
+      const { weiboGetUserInfo } = this.props
 
       if (!_this.weiboLogin) {
           _this.weiboLogin = DeviceEventEmitter.addListener(
               'managerCallback', (response) => {
 
-                // console.log(response);
-                // console.log(JSON.stringify(response).accessToken);
-
-                  // let res = {
-                  //   access_token: response.accessToken,
-                  //   refresh_token: response.refreshToken,
-                  //   user_id: response.userID,
-                  //   expiration_date: response.expirationDate
-                  // }
-
-                      weiboGetUserInfo({
-                        data: {
-                          access_token: response.res.accessToken,
-                          refresh_token: response.res.refreshToken,
-                          user_id: response.res.userID,
-                          expiration_date: response.res.expirationDate
-                        },
-                        callback: (res)=>{
-
-                          if (res.success) {
-                            _this.handleSignIn(res.data.access_token)
-                          }
-                          // console.log(res);
-                        }
-                      })
-
-                  // console.log(JSON.stringify(response));
+                  weiboGetUserInfo({
+                    data: {
+                      weibo_access_token: response.res.accessToken,
+                      refresh_token: response.res.refreshToken,
+                      user_id: response.res.userID,
+                      expiration_date: response.res.expirationDate
+                    },
+                    callback: (res)=>{
+                      if (res.success) {
+                        _this.handleSignIn(res.data.access_token)
+                      }
+                    }
+                  })
 
                   _this.weiboLogin.remove();
                   delete _this.weiboLogin;
@@ -202,37 +188,30 @@ class SignIn extends Component {
 
   _qqLogin () {
       var _this = this;
-      openShare.qqLogin();
+      openShare.qqLogin()
+
+      const { QQGetUserInfo } = this.props
 
       if (!_this.qqLogin) {
           _this.qqLogin = DeviceEventEmitter.addListener(
               'managerCallback', (response) => {
-                  // AlertIOS.alert(
-                  //     'response',
-                  //      JSON.stringify(response)
-                  // );
-
 
                   QQGetUserInfo({
                     data: {
-                      access_token: response.res.access_token,
+                      qq_access_token: response.res.access_token,
                       refresh_token: '',
                       openid: response.res.openid,
                       expires_in: response.res.expires_in
                     },
                     callback: (res)=>{
-
                       if (res.success) {
                         _this.handleSignIn(res.data.access_token)
                       }
-                      // console.log(res);
                     }
                   })
 
-                  // console.log(JSON.stringify(response));
-
                   _this.qqLogin.remove();
-                  delete _this.weiboLogin;
+                  delete _this.qqLogin;
               }
           );
       }
@@ -273,14 +252,13 @@ class SignIn extends Component {
         <Text style={styles.buttonText}>通过微博登录</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={()=>{ navigate('GithubSignIn') }} style={gStyles.fullButton}>
+      <TouchableOpacity onPress={()=>{ navigate('GithubSignIn', { successCallback: token => self.handleSignIn(token) }) }} style={gStyles.fullButton}>
         <Text style={styles.buttonText}>通过Github登录</Text>
       </TouchableOpacity>
 
       <View style={gStyles.item}>
         <Fieldset text="或者通过邮箱登录" />
       </View>
-
 
       <TextInput
           ref="email"
@@ -289,7 +267,6 @@ class SignIn extends Component {
           onChangeText={(email) => this.setState({email})}
           placeholder='请输入邮箱'
         />
-
 
       <TextInput
           ref="password"
@@ -403,6 +380,8 @@ export default connect(
     signin: bindActionCreators(signin, dispatch),
     getCaptchaId: bindActionCreators(getCaptchaId, dispatch),
     cleanAllPosts: bindActionCreators(cleanAllPosts, dispatch),
-    cleanUserInfo: bindActionCreators(cleanUserInfo, dispatch)
+    cleanUserInfo: bindActionCreators(cleanUserInfo, dispatch),
+    weiboGetUserInfo: bindActionCreators(weiboGetUserInfo, dispatch),
+    QQGetUserInfo: bindActionCreators(QQGetUserInfo, dispatch)
   })
 )(SignIn)

@@ -18,7 +18,6 @@ class Welcome extends Component {
 
   static navigationOptions = ({navigation}) => ({
     header: null
-    // headerTitle: '登录'
   })
 
   constructor (props) {
@@ -53,7 +52,7 @@ class Welcome extends Component {
         }
         break
       case 'online-user-count':
-        console.log(data);
+        // console.log(data);
         break
     }
   }
@@ -62,8 +61,8 @@ class Welcome extends Component {
   runWebSokcet () {
 
     const self = this
-      /*
 
+    /*
     // 强制指定使用 websocket 作为传输通道
     let socket = io.connect(api_url, {
         transports: ['websocket']
@@ -84,10 +83,11 @@ class Welcome extends Component {
       // }, 1000 * 60)
 
     });
+
+    socket.on('disconnect', this.runWebSokcet);
     */
 
-
-    let ws = new WebSocket(api_url+'/socket.io/?transport=websocket');
+    let ws = new WebSocket(api_url+'/socket.io/?transport=websocket')
 
     ws.onopen = () => {
       // console.log('连接成功');
@@ -103,12 +103,11 @@ class Welcome extends Component {
         data = JSON.parse(data[0])
         self.handleMessage(data[0], data[1])
       }
-
     }
 
     ws.onerror = (e) => {
       // 发生了一个错误
-      console.log(e.message);
+      // console.log(e.message);
     }
 
     ws.onclose = self.runWebSokcet
@@ -155,15 +154,12 @@ class Welcome extends Component {
   }
 
   componentWillUnmount() {
-    console.log('页面卸载了');
+    console.log('页面卸载了')
   }
 
   render() {
-
     const { navigate } = this.props.navigation
-
-    return (<View style={styles.container}>
-    </View>)
+    return (<View style={styles.container}></View>)
   }
 }
 

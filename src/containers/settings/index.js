@@ -126,7 +126,7 @@ class Settings extends React.Component {
             <TouchableOpacity onPress={()=>{ navigate('SocialAccount', { socialName: 'github' }) }}>
               <ListItem name={"GitHub"} rightText={me.github ? '已绑定' : '未绑定'} />
             </TouchableOpacity>
-            
+
             <View style={styles.gap}></View>
 
             <TouchableOpacity onPress={()=>{this.signOut()}}>
