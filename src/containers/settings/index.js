@@ -52,7 +52,7 @@ class Settings extends React.Component {
             const resetAction = NavigationActions.reset({
               index: 0,
               actions: [
-                NavigationActions.navigate({ routeName: 'SignIn'})
+                NavigationActions.navigate({ routeName: 'Welcome'})
               ]
             })
 

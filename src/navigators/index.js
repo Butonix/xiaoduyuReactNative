@@ -2,6 +2,7 @@
 import { StackNavigator, TabNavigator } from 'react-navigation'
 
 import Welcome from '../containers/welcome'
+import FastSignIn from '../containers/fast-sign-in'
 import SignIn from '../containers/sign-in'
 import SignUp from '../containers/sign-up'
 import GithubSignIn from '../containers/github-sign-in'
@@ -78,7 +79,8 @@ const App = StackNavigator({
   ResetPassword: { screen: ResetPassword },
   ResetEmail: { screen: ResetEmail },
   ResetAvatar: { screen: ResetAvatar },
-  SocialAccount: { screen: SocialAccount }
+  SocialAccount: { screen: SocialAccount },
+  FastSignIn: { screen: FastSignIn }
   // Test: { screen: Test }
 },{
   initialRouteName: 'Welcome'

@@ -11,6 +11,8 @@ import { getUserInfo } from '../../reducers/user'
 import { loadUnreadCount } from '../../actions/notification'
 import { api_url } from '../../../config'
 
+import Loading from '../../components/ui/loading'
+
 // import io from 'socket.io-client'
 // let ws = null
 
@@ -25,7 +27,6 @@ class Welcome extends Component {
     this.state = {}
     this.runWebSokcet = this.runWebSokcet.bind(this)
     this.handleMessage = this.handleMessage.bind(this)
-    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   handleMessage(name, data) {
@@ -113,28 +114,11 @@ class Welcome extends Component {
     ws.onclose = self.runWebSokcet
   }
 
-  // _handleAppStateChange = (appState) => {
-  //     if (Platform.OS === 'ios' && appState === 'inactive' ) {
-  //         ws.close();
-  //     }
-  //
-  //     if (Platform.OS === 'android' && appState === 'background') {
-  //         ws.close();
-  //     }
-  //
-  //     if (appState === 'active') {
-  //         ws.open();
-  //     }
-  // }
-
   componentDidMount() {
-
     const self = this
     const { me, loadUnreadCount, navigation } = this.props
 
-    // AppState.addEventListener('change', this._handleAppStateChange);
-
-    let routeName = 'SignIn'
+    let routeName = 'FastSignIn'
 
     if (global.signIn) {
       routeName = 'Main'
@@ -150,16 +134,11 @@ class Welcome extends Component {
     })
 
     this.props.navigation.dispatch(resetAction)
-
-  }
-
-  componentWillUnmount() {
-    console.log('页面卸载了')
   }
 
   render() {
     const { navigate } = this.props.navigation
-    return (<View style={styles.container}></View>)
+    return (<View style={styles.container}><Loading /></View>)
   }
 }
 

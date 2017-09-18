@@ -19,7 +19,11 @@ class Me extends React.Component {
 
   static navigationOptions = {
     title: '我的',
-    tabBarIcon: ({ tintColor }) => (<Image source={require('./images/me.png')} style={[styles.icon, {tintColor: tintColor}]} />)
+    tabBarIcon: ({ tintColor }) => (<Image source={require('./images/me.png')} style={[styles.icon, {tintColor: tintColor}]} />),
+    headerStyle: {
+      backgroundColor: '#ffffff',
+    },
+    headerTintColor: '#191919'
   }
 
   constructor (props) {

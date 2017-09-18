@@ -16,7 +16,7 @@ import {
 import TopicList from '../../components/topic-list'
 
 class Topic extends React.Component {
-
+  
   static navigationOptions = {
     title: '话题',
     tabBarIcon: ({ tintColor }) => (
@@ -24,7 +24,11 @@ class Topic extends React.Component {
         source={require('./images/topic.png')}
         style={[stylesIcon.icon, {tintColor: tintColor}]}
       />
-    )
+    ),
+    headerStyle: {
+      backgroundColor: '#ffffff',
+    },
+    headerTintColor: '#191919'
   }
 
   render() {

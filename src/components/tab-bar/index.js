@@ -34,7 +34,7 @@ var styles = StyleSheet.create({
     height:70,
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderColor: '#dce0e0'
+    borderColor: '#eaeaeb'
   },
   item: {
     flex: 1,

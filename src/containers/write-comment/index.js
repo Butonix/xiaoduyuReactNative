@@ -74,7 +74,7 @@ class WriteComment extends React.Component {
     if (replyId) data.reply_id = replyId
 
     let s = ModalIndicator.show(`提交中...`);
-    
+
     if (comment) {
       // 更新
       updateComment({

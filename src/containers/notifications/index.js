@@ -27,7 +27,11 @@ class Notifications extends React.Component {
             style={[styles.icon, {tintColor: tintColor}]}
             />
         </View>
-      )
+      ),
+      headerStyle: {
+        backgroundColor: '#ffffff',
+      },
+      headerTintColor: '#191919'
     }
 
   }
@@ -73,6 +77,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex:1,
+    backgroundColor:'#eaeaeb'
   },
   subscript: {
     position:'absolute',
