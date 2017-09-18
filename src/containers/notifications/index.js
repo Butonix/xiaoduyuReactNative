@@ -60,7 +60,7 @@ class Notifications extends React.Component {
   }
 
   render() {
-    return (<View>
+    return (<View style={styles.container}>
       <NotificationList {...this.props} name="notification" />
     </View>)
   }
@@ -70,6 +70,9 @@ const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
+  },
+  container: {
+    flex:1,
   },
   subscript: {
     position:'absolute',

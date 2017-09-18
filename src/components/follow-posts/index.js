@@ -7,13 +7,16 @@ import { connect } from 'react-redux'
 import { loadFollowPosts } from '../../actions/follow'
 import { getPeopleListByName } from '../../reducers/follow-people'
 
+import Loading from '../ui/loading'
+import Nothing from '../nothing'
+
 class FollowPosts extends Component {
 
   constructor (props) {
     super(props)
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    
+
     this.state = {
       topics: ds.cloneWithRows([]),
       sourcePostsList: [],
@@ -94,11 +97,13 @@ class FollowPosts extends Component {
 
     const { list } = this.props
 
-    if (!list.data) {
-      return (<View></View>)
+    if (list.loading && list.data.length == 0 || !list.data) {
+      return (<Loading />)
     }
 
-    // console.log(list);
+    if (!list.loading && !list.more && list.data.length == 0) {
+      return (<Nothing content="没有关注的帖子" />)
+    }
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     let data = ds.cloneWithRows(list.data || [])

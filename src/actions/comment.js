@@ -153,12 +153,14 @@ export function loadCommentList({ name, filters = {}, callback = ()=>{} }) {
     dispatch({ type: 'SET_COMMENT_LIST_BY_NAME', name, data: commentList })
 
     let headers = accessToken ? { 'AccessToken': accessToken } : null
-
+    
     return Ajax({
       url: '/comments',
       data: filters,
       headers,
       callback: (res) => {
+
+        console.log(res);
 
         if (!res || !res.success) {
           callback(res)

@@ -73,16 +73,16 @@ class PostsList extends Component {
   }
 
   render() {
-
+    
     const self = this
     const { list } = this.props
-    
+
     if (list.loading && list.data.length == 0 || !list.data) {
       return (<Loading />)
     }
 
     if (!list.loading && !list.more && list.data.length == 0) {
-      return (<Nothing />)
+      return (<Nothing content="没有帖子" />)
     }
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});

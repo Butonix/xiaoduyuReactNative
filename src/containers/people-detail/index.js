@@ -91,7 +91,7 @@ class PeopleDetail extends React.Component {
         <ListItem name={"他发布的帖子"} rightText={people.posts_count} />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'CommentList', id: people._id, filters: { user_id: people._id }, title: people.nickname + '的评论' }) }}>
+      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'CommentList', id: people._id, filters: { user_id: people._id, sort: -1, include_reply: -1 }, title: people.nickname + '的评论' }) }}>
         <ListItem name={"他的评论"} rightText={people.comment_count} />
       </TouchableOpacity>
 

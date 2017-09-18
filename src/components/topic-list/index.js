@@ -19,11 +19,13 @@ import {
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-// import { Toast } from 'teaset'
 
 import { loadTopicList, followTopic, unfollowTopic } from '../../actions/topic'
 import { getTopicListByName } from '../../reducers/topic'
 import FollowButton from '../../components/follow-button'
+
+import Loading from '../ui/loading'
+import Nothing from '../nothing'
 
 class TopicList extends Component {
 
@@ -49,9 +51,9 @@ class TopicList extends Component {
   componentDidMount() {
 
     const self = this
-    const { topicList } = this.props
+    const { list } = this.props
 
-    if (!topicList.data) {
+    if (!list.data) {
       this.loadPostsList(()=>{
         // self.setState({})
       })
@@ -81,9 +83,9 @@ class TopicList extends Component {
 
   renderFooter() {
 
-    const { topicList } = this.props
+    const { list } = this.props
 
-    if (topicList.loading) {
+    if (list.loading) {
       return (
         <View>
           <Text>加载中</Text>
@@ -99,10 +101,19 @@ class TopicList extends Component {
 
   render() {
 
-    const { topicList } = this.props
+    const { list } = this.props
+
+    console.log(list);
+    if (list.loading && list.data.length == 0 || !list.data) {
+      return (<Loading />)
+    }
+    
+    if (!list.loading && !list.more && list.data.length == 0) {
+      return (<Nothing content="还未关注话题" />)
+    }
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    let topics = ds.cloneWithRows(topicList.data || [])
+    let topics = ds.cloneWithRows(list.data || [])
 
     return (
       <View style={styles.container}>
@@ -217,7 +228,7 @@ const styles = StyleSheet.create({
 })
 
 export default connect((state, props) => ({
-    topicList: getTopicListByName(state, props.id)
+    list: getTopicListByName(state, props.id)
   }),
   (dispatch) => ({
     loadTopicList: bindActionCreators(loadTopicList, dispatch)

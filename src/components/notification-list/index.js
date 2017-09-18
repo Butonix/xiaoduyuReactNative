@@ -1,10 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   AppRegistry,
   StyleSheet,
@@ -15,7 +10,7 @@ import {
   NavigatorIOS,
   ScrollView,
   refreshControl,
-  RefreshControl,
+  // RefreshControl,
   Navigator,
   TouchableOpacity,
   ActivityIndicator
@@ -30,6 +25,12 @@ import { DateDiff } from '../../common/date'
 
 import CommentItem from '../../components/comment-item'
 import HTMLView from '../../components/html-view'
+
+import Loading from '../../components/ui/loading'
+import Nothing from '../../components/nothing'
+import ListFooter from '../../components/ui/list-footer'
+import RefreshControl from '../../components/ui/refresh-control'
+import ListViewOnScroll from '../../common/list-view-onscroll'
 
 class NotificationList extends Component {
 
@@ -128,6 +129,12 @@ class NotificationList extends Component {
       return (
         <View style={styles.loading}>
           <ActivityIndicator animating={true} color={'#484848'} size={'small'} />
+        </View>
+      )
+    } else if (!list.more) {
+      return (
+        <View>
+          <Text>没有更多了</Text>
         </View>
       )
     }
@@ -310,32 +317,31 @@ class NotificationList extends Component {
   render() {
 
     const self = this
-    // let list = getPostListByName(this.props.state, 'test')
 
     const { list } = this.props
 
-    // console.log(list);
-
-    if (!list.data) {
-      return (<View></View>)
+    if (list.loading && list.data.length == 0 || !list.data) {
+      return (<Loading />)
     }
-
-    // console.log(list);
+    
+    if (!list.loading && !list.more && list.data.length == 0) {
+      return (<Nothing content="没有通知" />)
+    }
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let itemlist = ds.cloneWithRows(list.data || [])
 
     return (
-      <View style={styles.container}>
         <ListView
           enableEmptySections={true}
           dataSource={itemlist}
-          renderRow={(item) => (<View style={styles.item}>
-            {this.renderNotice(item)}
-          </View>)}
+          renderRow={(item) => (<View style={styles.item}>{this.renderNotice(item)}</View>)}
           renderHeader={this.renderHeader}
-          renderFooter={this.renderFooter}
+          renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
+          // renderFooter={this.renderFooter}
           removeClippedSubviews={false}
+          refreshControl={<RefreshControl onRefresh={callback=>self.loadList(callback, true)} />}
+          /*
           refreshControl={
             <RefreshControl
               refreshing={this.state.isRefreshing}
@@ -347,11 +353,12 @@ class NotificationList extends Component {
               progressBackgroundColor="#ffffff"
             />
           }
-          onScroll={this._onScroll.bind(this)}
+          */
+          onScroll={ListViewOnScroll(self.loadList)}
+          // onScroll={this._onScroll.bind(this)}
           scrollEventThrottle={50}
         />
-      </View>
-    );
+    )
   }
 
   goTo(posts){
@@ -477,12 +484,9 @@ const styles = StyleSheet.create({
 
 
 export default connect((state, props) => ({
-    // state: state，
     list: getNotificationByName(state, props.name)
   }),
   (dispatch) => ({
     loadNotifications: bindActionCreators(loadNotifications, dispatch)
   })
-)(NotificationList);
-
-// export default PostsList
+)(NotificationList)

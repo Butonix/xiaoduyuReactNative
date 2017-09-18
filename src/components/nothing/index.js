@@ -4,9 +4,18 @@ import { Text, View, StyleSheet } from 'react-native'
 
 class nothing extends PureComponent {
   render() {
-    return (<View style={styles.nothingView}>
-      <Text style={styles.nothingText}>没有帖子</Text>
-    </View>)
+
+    const { content } = this.props
+
+    let main = null
+
+    if (content && typeof content === 'string') {
+      main = <Text style={styles.nothingText}>{content}</Text>
+    } else if (content) {
+      main = content
+    }
+
+    return (<View style={styles.nothingView}>{main}</View>)
   }
 }
 

@@ -19,41 +19,15 @@ class FollowPeopleList extends Component {
 
   constructor (props) {
     super(props)
-
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-    this.state = {
-      topics: ds.cloneWithRows([]),
-      sourcePostsList: [],
-      loadMore: false,
-      more: true,
-      isRefreshing: false,
-      filters: {
-        lt_date: new Date().getTime(),
-        per_page: 20
-      },
-      list: {
-        loading: false,
-        more: true
-      }
-    }
+    this.state = {}
     this.toPeople = this.toPeople.bind(this)
     this.loadList = this.loadList.bind(this)
-    // this.renderHeader = this.renderHeader.bind(this)
-    // this.renderFooter = this.renderFooter.bind(this)
     this.handleFollow = this.handleFollow.bind(this)
   }
 
   componentWillMount() {
-
     const { list } = this.props
-
-    // console.log(list);
-
-    if (!list.data) {
-      this.loadList()
-    }
-
+    if (!list.data) this.loadList()
   }
 
   toPeople(people){
@@ -83,29 +57,24 @@ class FollowPeopleList extends Component {
     }
 
     if (!list.loading && !list.more && list.data.length == 0) {
-      return (<Nothing />)
+      return (<Nothing content="没有数据" />)
     }
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let data = ds.cloneWithRows(list.data || [])
 
     return (
-      <View style={styles.container}>
         <ListView
           enableEmptySections={true}
           dataSource={data}
           renderRow={(item) => (<PeopleItem {...self.props} people={list.filters.user_id ? item.people_id : item.user_id} />)}
-          // renderHeader={this.renderHeader}
-          // renderFooter={this.renderFooter}
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
           removeClippedSubviews={false}
           refreshControl={<RefreshControl onRefresh={callback=>self.loadList(callback, true)} />}
-          // onScroll={this._onScroll.bind(this)}
           onScroll={ListViewOnScroll(self.loadList)}
           scrollEventThrottle={50}
         />
-      </View>
-    );
+    )
   }
 
 }
