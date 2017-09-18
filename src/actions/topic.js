@@ -142,7 +142,7 @@ export function loadTopicList({ name, filters = {}, callback = ()=>{} }) {
       callback: (res)=>{
 
         nodeList.loading = false
-        
+
         if (res.success) {
           nodeList.more = res.data.length < nodeList.filters.per_page ? false : true
           nodeList.data = nodeList.data.concat(res.data)

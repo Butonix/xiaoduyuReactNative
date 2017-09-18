@@ -28,7 +28,7 @@ class Topic extends React.Component {
   }
 
   render() {
-    return <TopicList id="topic" filters={{ child:1 }} {...this.props} />
+    return <TopicList name="topic" filters={{ child:1 }} {...this.props} />
   }
 }
 

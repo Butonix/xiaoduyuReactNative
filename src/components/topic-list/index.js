@@ -63,10 +63,10 @@ class TopicList extends Component {
 
   loadPostsList(callback, restart) {
 
-    const { id, filters } = this.props
+    const { name, filters } = this.props
 
     this.props.loadTopicList({
-      name:id,
+      name:name,
       filters,
       callback,
       restart
@@ -103,18 +103,17 @@ class TopicList extends Component {
 
     const { list } = this.props
 
-    console.log(list);
     if (list.loading && list.data.length == 0 || !list.data) {
       return (<Loading />)
     }
-    
+
     if (!list.loading && !list.more && list.data.length == 0) {
       return (<Nothing content="还未关注话题" />)
     }
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let topics = ds.cloneWithRows(list.data || [])
-
+    
     return (
       <View style={styles.container}>
         <ListView
@@ -228,7 +227,7 @@ const styles = StyleSheet.create({
 })
 
 export default connect((state, props) => ({
-    list: getTopicListByName(state, props.id)
+    list: getTopicListByName(state, props.name)
   }),
   (dispatch) => ({
     loadTopicList: bindActionCreators(loadTopicList, dispatch)

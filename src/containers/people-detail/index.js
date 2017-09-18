@@ -86,7 +86,7 @@ class PeopleDetail extends React.Component {
       <View style={styles.brief}>
         {people.brief ? <Text>{people.brief}</Text> : null}
       </View>
-      
+
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: people._id, filters: { user_id: people._id }, title: people.nickname + '的帖子' }) }}>
         <ListItem name={"他发布的帖子"} rightText={people.posts_count} />
       </TouchableOpacity>
@@ -95,7 +95,7 @@ class PeopleDetail extends React.Component {
         <ListItem name={"他的评论"} rightText={people.comment_count} />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'TopicList', id: people._id, filters: { people_id: people._id }, title: people.nickname + '关注的话题' }) }}>
+      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'TopicList', id: people._id, filters: { people_id: people._id, child:1 }, title: people.nickname + '关注的话题' }) }}>
         <ListItem name={"他的关注的话题"} rightText={people.follow_topic_count} />
       </TouchableOpacity>
 
