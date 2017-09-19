@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   fullButton: {
+    flex:1,
     backgroundColor:'#0f98d8',
     height:45,
     borderRadius:4,
@@ -43,48 +44,7 @@ const styles = StyleSheet.create({
     borderColor: '#dce0e0'
   },
 
-  // 圆角input
-  radiusInput: {
-    height: 45,
-    borderColor: '#efefef',
-    borderWidth: 1,
-    paddingLeft: 10,
-    borderRadius: 5
-  },
-  radiusInputTop: {
-    height: 45,
-    borderColor: '#efefef',
-    borderWidth: 1,
-    paddingLeft: 10,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5
-  },
-  radiusInputCenter: {
-    height: 45,
-    borderColor: '#efefef',
-    borderWidth: 1,
-    paddingLeft: 10,
-    marginTop:-1
-  },
-  radiusInputBottom: {
-    height: 45,
-    borderColor: '#efefef',
-    borderWidth: 1,
-    paddingLeft: 10,
-    marginTop:-1,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5
-  },
 
-  radiusInputLeft: {
-    height: 45,
-    borderColor: '#efefef',
-    borderWidth: 1,
-    paddingLeft: 10,
-    marginTop:-1,
-    borderBottomLeftRadius: 5,
-    borderTopLeftRadius: 5
-  },
 
 
   item: {
@@ -108,15 +68,84 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 
-  //
+
+  // 圆角input
+  radiusInput: {
+    height: 45,
+    borderColor: '#efefef',
+    borderWidth: 1,
+    paddingLeft: 10,
+    borderRadius: 5,
+    justifyContent: 'center'
+  },
+  radiusInputTop: {
+    height: 45,
+    borderColor: '#efefef',
+    borderWidth: 1,
+    paddingLeft: 10,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    justifyContent: 'center'
+  },
+  radiusInputCenter: {
+    height: 45,
+    borderColor: '#efefef',
+    borderWidth: 1,
+    paddingLeft: 10,
+    marginTop:-1,
+    justifyContent: 'center'
+  },
+  radiusInputBottom: {
+    height: 45,
+    borderColor: '#efefef',
+    borderWidth: 1,
+    paddingLeft: 10,
+    marginTop:-1,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    justifyContent: 'center'
+  },
+
+  radiusInputLeft: {
+    height: 45,
+    borderColor: '#efefef',
+    borderWidth: 1,
+    paddingLeft: 10,
+    marginTop:-1,
+    borderBottomLeftRadius: 5,
+    borderTopLeftRadius: 5,
+    justifyContent: 'center'
+  },
+
+  // margin
+  m10: { margin:10 },
   mt10: { marginTop:10 },
   mr10: { marginRight:10 },
   mb10: { marginBottom:10 },
   ml10: { marginLeft:10 },
+  m20: { margin:20 },
   mt20: { marginTop:20 },
   mr20: { marginRight:20 },
   mb20: { marginBottom:20 },
-  ml20: { marginLeft:20 }
+  ml20: { marginLeft:20 },
+
+  // padding
+  p10: { padding:10 },
+  pt10: { paddingTop:10 },
+  pr10: { paddingRight:10 },
+  pb10: { paddingBottom:10 },
+  pl10: { paddingLeft:10 },
+  p20: { padding:20 },
+  pt20: { paddingTop:20 },
+  pr20: { paddingRight:20 },
+  pb20: { paddingBottom:20 },
+  pl20: { paddingLeft:20 },
+
+  // color
+  red: { color: 'rgb(232, 60, 60)' },
+  yellow: { color: 'rgb(255, 132, 42)' },
+  darkGray: { color: 'rgb(150, 150, 150)' },
+  white: { color: '#fff' }
 })
 
 export default styles

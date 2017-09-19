@@ -15,10 +15,19 @@ import { signup, signin } from '../../actions/sign'
 import gStyles from '../../styles'
 import CaptchaButton from '../../components/captcha-button'
 
+import KeyboardSpacer from 'react-native-keyboard-spacer'
+
+import Dimensions from 'Dimensions'
+const screenWidth = Dimensions.get('window').width
+
 class SignUp extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: '注册'
+    headerTitle: '注册',
+    headerStyle: {
+      backgroundColor: '#ffffff',
+    },
+    headerTintColor: '#191919'
   })
 
   constructor (props) {
@@ -54,7 +63,7 @@ class SignUp extends Component {
         email: email,
         password: password,
         captcha: captcha,
-        gender: gender
+        gender: gender == 'male' ? 1 : 0
       },
       callback: (res)=>{
 
@@ -120,69 +129,80 @@ class SignUp extends Component {
     const { nickname, email, password, captcha, gender } = this.state.error
 
     var radio_props = [
-      {label: '男     ', value: 1 },
-      {label: '女     ', value: 0 }
+      {label: '男     ', value: 'male' },
+      {label: '女     ', value: 'female' }
     ];
 
     return (<ScrollView style={styles.container}>
+      <View style={gStyles.m20}>
 
-      {nickname ? <View style={gStyles.item}><Text>{nickname}</Text></View> : null}
-      <View style={gStyles.item}>
         <TextInput
-            style={gStyles.input}
-            onChangeText={(nickname) => this.setState({nickname})}
-            placeholder='昵称'
+          style={gStyles.radiusInputTop}
+          onChangeText={(nickname) => this.setState({nickname})}
+          placeholder='昵称'
+          maxLength={40}
           />
-      </View>
 
-      {email ? <View style={gStyles.item}><Text>{email}</Text></View> : null}
-      <View style={gStyles.item}>
+        {nickname ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{nickname}</Text></View> : null}
+
         <TextInput
-            style={gStyles.input}
-            autoCapitalize="none"
-            onChangeText={(email) => this.setState({email})}
-            placeholder='电子邮箱'
+          style={gStyles.radiusInputCenter}
+          autoCapitalize="none"
+          onChangeText={(email) => this.setState({email})}
+          placeholder='电子邮箱'
+          maxLength={60}
           />
-      </View>
 
-      {captcha ? <View style={gStyles.item}><Text>{captcha}</Text></View> : null}
-      <View style={gStyles.rowItem}>
-        <View style={styles.itemLeft}>
-          <TextInput
-              style={gStyles.input}
-              onChangeText={(captcha) => this.setState({captcha})}
-              placeholder='验证码'
-            />
-        </View>
+        {email ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{email}</Text></View> : null}
+
         <View>
-          <CaptchaButton sendCaptcha={this.sendCaptcha} />
+          <TextInput
+            style={gStyles.radiusInputCenter}
+            onChangeText={(captcha) => this.setState({captcha})}
+            placeholder='验证码'
+            maxLength={6}
+            keyboardType={'numeric'}
+            />
+          <View style={{
+            position: 'absolute',
+            marginTop: 0,
+            height:45,
+            justifyContent: 'center',
+            marginLeft: screenWidth - 150
+          }}>
+            <CaptchaButton sendCaptcha={this.sendCaptcha} />
+          </View>
         </View>
-      </View>
 
-      {password ? <View style={gStyles.item}><Text>{password}</Text></View> : null}
-      <View style={gStyles.item}>
+        {captcha ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{captcha}</Text></View> : null}
+
         <TextInput
-            style={gStyles.input}
-            onChangeText={(password) => this.setState({password})}
-            secureTextEntry={true}
-            placeholder='密码'
+          style={gStyles.radiusInputCenter}
+          onChangeText={(password) => this.setState({password})}
+          secureTextEntry={true}
+          placeholder='密码'
+          maxLength={30}
           />
-      </View>
 
-      {gender ? <View style={gStyles.item}><Text>{gender}</Text></View> : null}
-      <View style={gStyles.item}>
-        <RadioForm
-          radio_props={radio_props}
-          initial={3}
-          formHorizontal={true}
-          onPress={(gender) => this.setState({gender})}
-        />
-      </View>
+        {password ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{password}</Text></View> : null}
 
-      <TouchableOpacity onPress={this.submit} style={gStyles.fullButton}>
-        <Text style={styles.buttonText}>注册</Text>
-      </TouchableOpacity>
+        <View style={gender ? gStyles.radiusInputCenter : gStyles.radiusInputBottom}>
+          <RadioForm
+            radio_props={radio_props}
+            initial={3}
+            formHorizontal={true}
+            onPress={(gender) => this.setState({gender})}
+          />
+        </View>
 
+        {gender ? <View style={gStyles.radiusInputBottom}><Text style={gStyles.darkGray}>{gender}</Text></View> : null}
+
+        <TouchableOpacity onPress={this.submit} style={[gStyles.fullButton, gStyles.mt20]}>
+          <Text style={gStyles.white}>注册</Text>
+        </TouchableOpacity>
+
+    </View>
+    <KeyboardSpacer />
     </ScrollView>)
   }
 }
@@ -190,57 +210,8 @@ class SignUp extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f8f8f9',
-    flex: 1
-  },
-  input: {
-    height: 40,
-    borderColor: '#efefef',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10
-  },
-  button:{
-    backgroundColor:'#63B8FF',
-    height:40,
-    borderRadius:20,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
-  buttonText: {
-    color:'#fff'
-  },
-
-  captchaContainer: {
-    flexDirection: 'row'
-  },
-  captchaInput: {
-    flex: 1
-  },
-  caption: {
-    width:80,
-    height:30,
-    marginTop:5,
-    marginLeft:10
-  },
-  item: {
-    marginBottom: 10
-  },
-  itemLeft: {
-    flex: 1
-  },
-  captchaButton:{
-    width: 100,
-    backgroundColor:'#63B8FF',
-    height:40,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  genderPicker: {
-    height: 200,
-    backgroundColor:'#333',
-    alignSelf: 'flex-end'
+    flex:1,
+    backgroundColor: '#ffff'
   }
 })
 

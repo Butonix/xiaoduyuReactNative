@@ -23,7 +23,7 @@ class FastSignIn extends Component {
 
   static navigationOptions = ({navigation}) => ({
     header: null,
-    headerTitle: '登录'
+    headerTitle: '欢迎页'
   })
 
   constructor (props) {

@@ -12,12 +12,19 @@ import gStyles from '../../styles'
 
 import CaptchaButton from '../../components/captcha-button'
 
+import Dimensions from 'Dimensions'
+const screenWidth = Dimensions.get('window').width
+
 class Forgot extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: '通过邮箱重置密码'
+    headerTitle: '通过邮箱重置密码',
+    headerStyle: {
+      backgroundColor: '#ffffff',
+    },
+    headerTintColor: '#191919'
   })
-
+  
   constructor (props) {
     super(props)
     this.state = {
@@ -107,54 +114,51 @@ class Forgot extends Component {
 
     return (<ScrollView style={styles.container}>
 
-      <View style={gStyles.item}>
         <TextInput
-            style={gStyles.input}
-            autoCapitalize="none"
-            onChangeText={(email) => this.setState({email})}
-            placeholder='请输入你的注册邮箱'
+          style={gStyles.radiusInputTop}
+          autoCapitalize="none"
+          onChangeText={(email) => this.setState({email})}
+          placeholder='请输入你的注册邮箱'
           />
-      </View>
 
-      <View style={gStyles.rowItem}>
-        <View style={styles.itemLeft}>
+        <View>
           <TextInput
-              style={gStyles.input}
+              style={gStyles.radiusInputCenter}
               onChangeText={(captcha) => this.setState({captcha})}
               placeholder='请输入验证码'
             />
+            <View style={{
+              position: 'absolute',
+              marginTop: 0,
+              height:45,
+              justifyContent: 'center',
+              marginLeft: screenWidth - 150
+            }}>
+              <CaptchaButton sendCaptcha={this.sendCaptcha} />
+            </View>
         </View>
-        <View>
-          <CaptchaButton sendCaptcha={this.sendCaptcha} />
-        </View>
-      </View>
 
-      <View style={gStyles.item}>
         <TextInput
-            style={gStyles.input}
-            onChangeText={(password) => this.setState({password})}
-            secureTextEntry={true}
-            placeholder='请输入新密码'
+          style={gStyles.radiusInputCenter}
+          onChangeText={(password) => this.setState({password})}
+          secureTextEntry={true}
+          placeholder='请输入新密码'
           />
-      </View>
 
-      <View style={gStyles.item}>
         <TextInput
-            style={gStyles.input}
-            onChangeText={(confirmPassword) => this.setState({confirmPassword})}
-            secureTextEntry={true}
-            placeholder='请再次输入新密码'
+          style={gStyles.radiusInputBottom}
+          onChangeText={(confirmPassword) => this.setState({confirmPassword})}
+          secureTextEntry={true}
+          placeholder='请再次输入新密码'
           />
-      </View>
 
-      <TouchableOpacity onPress={this.submit} style={styles.button}>
-        <Text style={styles.buttonText}>提交</Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={this.submit} style={[gStyles.fullButton, gStyles.mt20]}>
+          <Text style={gStyles.white}>提交</Text>
+        </TouchableOpacity>
 
     </ScrollView>)
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {

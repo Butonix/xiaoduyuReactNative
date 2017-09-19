@@ -15,7 +15,7 @@ const converterErrorInfo = (res) => {
   if (res.error) {
     if (typeof res.error == 'string' || typeof res.error == 'number') {
       res.error = errors[res.error] || '错误代码: '+res.error
-    } else if (typeof res.error == 'array') {
+    } else if (typeof res.error == 'object') {
       for (let i in res.error) {
         res.error[i] = errors[res.error[i]] || '错误代码: '+res.error[i]
       }
