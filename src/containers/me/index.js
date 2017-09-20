@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
   }
 });
 
-// export default Me
 export default connect(state => ({
     me: getUserInfo(state)
   }),

@@ -22,6 +22,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		14730FF7F4FB49C48A30A66D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76C2788587F42C5B790321B /* CFNetwork.framework */; };
+		1A67AB2FE9034D5DA8FA22C4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F54DA3A0AF3C450CBD81CADE /* Foundation.framework */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -34,6 +36,7 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* xiaoduyuReactNativeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* xiaoduyuReactNativeTests.m */; };
+		35327BFF62814AC58E32EE94 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B19CA29E9B9A49128E0A9036 /* SystemConfiguration.framework */; };
 		43BF5F8F1F5C0397002E0271 /* OpenShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BF5F811F5C0397002E0271 /* OpenShare.m */; };
 		43BF5F901F5C0397002E0271 /* OpenShare+Alipay.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BF5F831F5C0397002E0271 /* OpenShare+Alipay.m */; };
 		43BF5F911F5C0397002E0271 /* OpenShare+QQ.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BF5F851F5C0397002E0271 /* OpenShare+QQ.m */; };
@@ -41,10 +44,20 @@
 		43BF5F931F5C0397002E0271 /* OpenShare+Weibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BF5F891F5C0397002E0271 /* OpenShare+Weibo.m */; };
 		43BF5F941F5C0397002E0271 /* OpenShare+Weixin.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BF5F8B1F5C0397002E0271 /* OpenShare+Weixin.m */; };
 		43BF5F951F5C0397002E0271 /* SocietyLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BF5F8E1F5C0397002E0271 /* SocietyLoginManager.m */; };
+		5759C15896144345A39C7020 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 44554A01851C455491624DD6 /* libresolv.tbd */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		6E357508A97F44EBA3C7260E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D102FB1C77BD4152BC927F31 /* CoreGraphics.framework */; };
+		7A01EA36FFF74B57A25E65FC /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D64AA087E104165ADD41D38 /* CoreTelephony.framework */; };
+		7E7316F1D3EF4036B3089FB5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FB08233CCF48C3B7BB4D30 /* libz.tbd */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		96A7A18672F6434095630331 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617CF8A68F9D4679BCFDCEBD /* UIKit.framework */; };
 		AC57AD1B43A30BAB9DF42985 /* libPods-xiaoduyuReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9354F8FE4A695886965FBCF9 /* libPods-xiaoduyuReactNative.a */; };
+		B1C4520FEB7E4651954A2ABF /* libRCTJPushModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1D7DE63A4249DD8367521C /* libRCTJPushModule.a */; };
+		BD03F7ED9DE749B3A6CEECEA /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62DF7B37B166422ABA59A091 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C22A3A5E3F7A46E08E8F2E85 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 512FF13028204B3B88F5ED9F /* CoreFoundation.framework */; };
 		C27EC2AB1F542F79005324E3 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C27EC2AA1F542F54005324E3 /* libRCTCameraRoll.a */; };
+		C6AFDE8C36FC409A80D613C0 /* libRCTJCoreModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3F9AC27D354912850DD45C /* libRCTJCoreModule.a */; };
+		DBC1AF69E1C7499390298369 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC0842883874819AEE5028F /* Security.framework */; };
 		E9E963EDC228445D8CB0D08C /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B41F55BD90440168B59AC06 /* libimageCropPicker.a */; };
 		F3F73B7F2AED44FA891C023A /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF39D6628C7F43848CBC949F /* libSplashScreen.a */; };
 /* End PBXBuildFile section */
@@ -246,6 +259,20 @@
 			remoteGlobalIDString = 3400A8081CEB54A6008A0BC7;
 			remoteInfo = imageCropPicker;
 		};
+		C23311F01F7124F200BABF67 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B726ADD3CB524BCD9FAD6B83 /* RCTJCoreModule.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6212E9B41F3990DC00BDF51A;
+			remoteInfo = RCTJCoreModule;
+		};
+		C233120D1F7124F200BABF67 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F3170E3398D94A358F9CD53D /* RCTJPushModule.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6280980A1CEDC407000D3A81;
+			remoteInfo = RCTJPushModule;
+		};
 		C27EC2581F542CE6005324E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -313,6 +340,8 @@
 		1682942E7EA548B1B465FB61 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* xiaoduyuReactNative-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "xiaoduyuReactNative-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* xiaoduyuReactNative-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xiaoduyuReactNative-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		37FB08233CCF48C3B7BB4D30 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		3DC0842883874819AEE5028F /* Security.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		43BF5F801F5C0397002E0271 /* OpenShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenShare.h; path = "../node_modules/react-native-open-share/src/OpenShare.h"; sourceTree = "<group>"; };
 		43BF5F811F5C0397002E0271 /* OpenShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenShare.m; path = "../node_modules/react-native-open-share/src/OpenShare.m"; sourceTree = "<group>"; };
 		43BF5F821F5C0397002E0271 /* OpenShare+Alipay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenShare+Alipay.h"; path = "../node_modules/react-native-open-share/src/OpenShare+Alipay.h"; sourceTree = "<group>"; };
@@ -328,15 +357,29 @@
 		43BF5F8C1F5C0397002E0271 /* OpenShareHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenShareHeader.h; path = "../node_modules/react-native-open-share/src/OpenShareHeader.h"; sourceTree = "<group>"; };
 		43BF5F8D1F5C0397002E0271 /* SocietyLoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocietyLoginManager.h; path = "../node_modules/react-native-open-share/src/SocietyLoginManager.h"; sourceTree = "<group>"; };
 		43BF5F8E1F5C0397002E0271 /* SocietyLoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocietyLoginManager.m; path = "../node_modules/react-native-open-share/src/SocietyLoginManager.m"; sourceTree = "<group>"; };
+		44554A01851C455491624DD6 /* libresolv.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		512FF13028204B3B88F5ED9F /* CoreFoundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		617CF8A68F9D4679BCFDCEBD /* UIKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		62DF7B37B166422ABA59A091 /* UserNotifications.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		6BF5A98E5C7E4D48BB08CF6F /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		9354F8FE4A695886965FBCF9 /* libPods-xiaoduyuReactNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-xiaoduyuReactNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B41F55BD90440168B59AC06 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
+		9D64AA087E104165ADD41D38 /* CoreTelephony.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		9D88D94CC1A79C9ED349C49B /* Pods-xiaoduyuReactNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xiaoduyuReactNative.debug.xcconfig"; path = "Pods/Target Support Files/Pods-xiaoduyuReactNative/Pods-xiaoduyuReactNative.debug.xcconfig"; sourceTree = "<group>"; };
 		AF39D6628C7F43848CBC949F /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
+		B19CA29E9B9A49128E0A9036 /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		B726ADD3CB524BCD9FAD6B83 /* RCTJCoreModule.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTJCoreModule.xcodeproj; path = "../node_modules/jcore-react-native/ios/RCTJCoreModule.xcodeproj"; sourceTree = "<group>"; };
+		C233120F1F71252F00BABF67 /* xiaoduyuReactNative.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = xiaoduyuReactNative.entitlements; path = xiaoduyuReactNative/xiaoduyuReactNative.entitlements; sourceTree = "<group>"; };
 		C27EC2A51F542F53005324E3 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
+		CC3F9AC27D354912850DD45C /* libRCTJCoreModule.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTJCoreModule.a; sourceTree = "<group>"; };
+		D102FB1C77BD4152BC927F31 /* CoreGraphics.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DF1D7DE63A4249DD8367521C /* libRCTJPushModule.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTJPushModule.a; sourceTree = "<group>"; };
+		E76C2788587F42C5B790321B /* CFNetwork.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		F3170E3398D94A358F9CD53D /* RCTJPushModule.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTJPushModule.xcodeproj; path = "../node_modules/jpush-react-native/ios/RCTJPushModule.xcodeproj"; sourceTree = "<group>"; };
+		F54DA3A0AF3C450CBD81CADE /* Foundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FAA71945CC59B06ABB59A5C4 /* Pods-xiaoduyuReactNative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xiaoduyuReactNative.release.xcconfig"; path = "Pods/Target Support Files/Pods-xiaoduyuReactNative/Pods-xiaoduyuReactNative.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -368,6 +411,19 @@
 				F3F73B7F2AED44FA891C023A /* libSplashScreen.a in Frameworks */,
 				E9E963EDC228445D8CB0D08C /* libimageCropPicker.a in Frameworks */,
 				AC57AD1B43A30BAB9DF42985 /* libPods-xiaoduyuReactNative.a in Frameworks */,
+				C6AFDE8C36FC409A80D613C0 /* libRCTJCoreModule.a in Frameworks */,
+				B1C4520FEB7E4651954A2ABF /* libRCTJPushModule.a in Frameworks */,
+				7E7316F1D3EF4036B3089FB5 /* libz.tbd in Frameworks */,
+				BD03F7ED9DE749B3A6CEECEA /* UserNotifications.framework in Frameworks */,
+				7A01EA36FFF74B57A25E65FC /* CoreTelephony.framework in Frameworks */,
+				DBC1AF69E1C7499390298369 /* Security.framework in Frameworks */,
+				14730FF7F4FB49C48A30A66D /* CFNetwork.framework in Frameworks */,
+				C22A3A5E3F7A46E08E8F2E85 /* CoreFoundation.framework in Frameworks */,
+				35327BFF62814AC58E32EE94 /* SystemConfiguration.framework in Frameworks */,
+				1A67AB2FE9034D5DA8FA22C4 /* Foundation.framework in Frameworks */,
+				96A7A18672F6434095630331 /* UIKit.framework in Frameworks */,
+				5759C15896144345A39C7020 /* libresolv.tbd in Frameworks */,
+				6E357508A97F44EBA3C7260E /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +532,7 @@
 		13B07FAE1A68108700A75B9A /* xiaoduyuReactNative */ = {
 			isa = PBXGroup;
 			children = (
+				C233120F1F71252F00BABF67 /* xiaoduyuReactNative.entitlements */,
 				43BF5F7D1F5C0333002E0271 /* OpenShare */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -564,6 +621,8 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				6BF5A98E5C7E4D48BB08CF6F /* SplashScreen.xcodeproj */,
 				1682942E7EA548B1B465FB61 /* imageCropPicker.xcodeproj */,
+				B726ADD3CB524BCD9FAD6B83 /* RCTJCoreModule.xcodeproj */,
+				F3170E3398D94A358F9CD53D /* RCTJPushModule.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -610,6 +669,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		C23311E51F7124F200BABF67 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C23311F11F7124F200BABF67 /* libRCTJCoreModule.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C233120A1F7124F200BABF67 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C233120E1F7124F200BABF67 /* libRCTJPushModule.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C27EC2811F542D3A005324E3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -639,6 +714,17 @@
 			isa = PBXGroup;
 			children = (
 				9354F8FE4A695886965FBCF9 /* libPods-xiaoduyuReactNative.a */,
+				37FB08233CCF48C3B7BB4D30 /* libz.tbd */,
+				62DF7B37B166422ABA59A091 /* UserNotifications.framework */,
+				9D64AA087E104165ADD41D38 /* CoreTelephony.framework */,
+				3DC0842883874819AEE5028F /* Security.framework */,
+				E76C2788587F42C5B790321B /* CFNetwork.framework */,
+				512FF13028204B3B88F5ED9F /* CoreFoundation.framework */,
+				B19CA29E9B9A49128E0A9036 /* SystemConfiguration.framework */,
+				F54DA3A0AF3C450CBD81CADE /* Foundation.framework */,
+				617CF8A68F9D4679BCFDCEBD /* UIKit.framework */,
+				44554A01851C455491624DD6 /* libresolv.tbd */,
+				D102FB1C77BD4152BC927F31 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -737,6 +823,14 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = G2NVNBKXXW;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -784,6 +878,14 @@
 				{
 					ProductGroup = 00C302BC1ABCB91800DB3ED1 /* Products */;
 					ProjectRef = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
+				},
+				{
+					ProductGroup = C23311E51F7124F200BABF67 /* Products */;
+					ProjectRef = B726ADD3CB524BCD9FAD6B83 /* RCTJCoreModule.xcodeproj */;
+				},
+				{
+					ProductGroup = C233120A1F7124F200BABF67 /* Products */;
+					ProjectRef = F3170E3398D94A358F9CD53D /* RCTJPushModule.xcodeproj */;
 				},
 				{
 					ProductGroup = 78C398B11ACF4ADC00677621 /* Products */;
@@ -1009,6 +1111,20 @@
 			fileType = archive.ar;
 			path = libimageCropPicker.a;
 			remoteRef = C213B33E1F5D96FC0043DB68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C23311F11F7124F200BABF67 /* libRCTJCoreModule.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTJCoreModule.a;
+			remoteRef = C23311F01F7124F200BABF67 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C233120E1F7124F200BABF67 /* libRCTJPushModule.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTJPushModule.a;
+			remoteRef = C233120D1F7124F200BABF67 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		C27EC2591F542CE6005324E3 /* libthird-party.a */ = {
@@ -1255,12 +1371,16 @@
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/jcore-react-native/ios/RCTJCoreModule",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1285,12 +1405,16 @@
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/jcore-react-native/ios/RCTJCoreModule",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1312,6 +1436,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = xiaoduyuReactNative/xiaoduyuReactNative.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -1321,6 +1446,8 @@
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/jcore-react-native/ios/RCTJCoreModule",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1344,6 +1471,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = xiaoduyuReactNative/xiaoduyuReactNative.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G2NVNBKXXW;
@@ -1352,6 +1480,8 @@
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/jcore-react-native/ios/RCTJCoreModule",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1385,11 +1515,15 @@
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/jcore-react-native/ios/RCTJCoreModule",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = "xiaoduyuReactNative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1423,11 +1557,15 @@
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/jcore-react-native/ios/RCTJCoreModule",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = "xiaoduyuReactNative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1462,6 +1600,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.xiaoduyuReactNative-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1486,6 +1626,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

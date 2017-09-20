@@ -1,19 +1,45 @@
 
 
-import React, { PureComponent } from 'react'
-import { View, ScrollView, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { Component } from 'react'
+import { View, ScrollView, Image, StyleSheet, Alert, TouchableOpacity, AsyncStorage } from 'react-native'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
+
+
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { getUserInfo } from '../../reducers/user'
 
 import PostsList from '../../components/posts-list'
 import TabBar from '../../components/tab-bar'
 import MenuIcon from '../../components/ui/icon/menu'
 
-class Home extends PureComponent {
+import JPushModule from 'jpush-react-native'
+
+class Home extends Component {
 
   static navigationOptions = {
     header: null,
     title: '首页',
     tabBarIcon: ({ tintColor }) => (<Image source={require('./images/home.png')} style={[stylesIcon.icon, {tintColor: tintColor}]} />)
+  }
+
+  componentDidMount() {
+    const { me } = this.props
+    const { navigate } = this.props.navigation
+    JPushModule.addReceiveOpenNotificationListener((result) => {
+      if (result.routeName && result.params) {
+        navigate(result.routeName, result.params)
+      }
+    })
+    
+    AsyncStorage.getItem('jpush_alias', (errs, result)=>{
+      if (!result) {
+        AsyncStorage.setItem('jpush_alias', me._id, function(errs, result){
+          JPushModule.setAlias(me._id, ()=>{}, ()=>{})
+        })
+      }
+    })
+
   }
 
   render() {
@@ -66,4 +92,11 @@ const stylesIcon = StyleSheet.create({
   icon: { width: 24, height: 24 }
 })
 
-export default Home
+// export default Home
+
+export default connect(state => ({
+    me: getUserInfo(state)
+  }),
+  (dispatch) => ({
+  })
+)(Home)

@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { Text, View, AsyncStorage, NetInfo, StyleSheet, ActivityIndicator,
+  DeviceEventEmitter, NativeAppEventEmitter,
   TouchableOpacity
 } from 'react-native'
 
@@ -9,8 +10,7 @@ import reducers, { getInitialState } from './reducers'
 import getStore from './store/configure-store.js'
 import Navigators from './navigators/index'
 
-import SplashScreen from 'react-native-splash-screen'
-
+// import SplashScreen from 'react-native-splash-screen'
 
 import { connect } from 'react-redux'
 import { combineReducers, bindActionCreators } from 'redux'
@@ -18,7 +18,7 @@ import { loadUserInfo, addAccessToken, cleanUserInfo } from './actions/user'
 import { loadUnreadCount } from './actions/notification'
 import { cleanAllPosts } from './actions/posts'
 
-import { api_url } from '../config'
+import JPushModule from 'jpush-react-native'
 
 const store = getStore()
 
@@ -46,8 +46,6 @@ global.initReduxDate = (callback) => {
       accessToken: result,
       callback: (res)=>{
 
-        // console.log(res);
-
         if (res.success) {
           addAccessToken({ accessToken:  result })(store.dispatch, store.getState)
           callback(res.data)
@@ -65,103 +63,21 @@ global.initReduxDate = (callback) => {
 }
 
 
-
-
 class MainApp extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {
-      ready: false,
-      loading: true,
-      network: false
-    }
-
-    this.start = this.start.bind(this)
-  }
-
-  start(callback) {
-
-    const self = this
-
-    global.signIn = false
-
-    self.setState({ loading: true })
-
-    function handleFirstConnectivityChange(state) {
-
-      if (!state) {
-        self.setState({ loading: false })
-        callback(null)
-      } else {
-        global.initReduxDate((result)=>{
-          global.signIn = result ? true : false
-          self.setState({ loading: false, network: true, ready: true })
-          callback(result)
-        })
-      }
-
-      NetInfo.isConnected.removeEventListener('change', handleFirstConnectivityChange)
-    }
-
-    NetInfo.isConnected.addEventListener('change', handleFirstConnectivityChange)
-
-  }
-
-  componentDidMount() {
-
-    // console.log(this);
-
-    const self = this
-    this.start((userinfo)=>{
-
-      // if (userinfo) {
-      //   runWebSokcet(userinfo)
-      // }
-
-    })
-    SplashScreen.hide()
+    this.state = {}
   }
 
   render() {
-
-    const { loading, network, ready } = this.state
-
-    if (loading) {
-      return (<View style={styles.loading}>
-        <ActivityIndicator animating={true} color={'#484848'} size={'small'} />
-      </View>)
-    }
-
-    if (!loading && !network) {
-      return (<View style={styles.loading}>
-        <Text>连接网络失败</Text>
-        <TouchableOpacity onPress={this.start}>
-          <Text>重新连接</Text>
-        </TouchableOpacity>
-      </View>)
-    }
-
     return (
       <Provider store={store}>
         <Navigators />
       </Provider>
-    );
+    )
   }
 }
 
-var styles = StyleSheet.create({
-  loading: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-})
-
-
-if (!window.location) {
-    // App is running in simulator
-    window.navigator.userAgent = 'ReactNative';
-}
 
 export default MainApp

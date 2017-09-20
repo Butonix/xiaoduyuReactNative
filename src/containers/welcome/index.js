@@ -1,9 +1,13 @@
 
-
 import React, { Component } from 'react'
-import { StyleSheet, Text, Image, View, AppState } from 'react-native'
+import { StyleSheet, Text, Image, View, AppState,
+  TouchableOpacity,
+  NetInfo
+} from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
+import SplashScreen from 'react-native-splash-screen'
+import JPushModule from 'jpush-react-native'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -13,8 +17,8 @@ import { api_url } from '../../../config'
 
 import Loading from '../../components/ui/loading'
 
-// import io from 'socket.io-client'
-// let ws = null
+import websocket from '../../common/websocket'
+// import jpush from '../../common/jpush'
 
 class Welcome extends Component {
 
@@ -24,11 +28,45 @@ class Welcome extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {}
-    this.runWebSokcet = this.runWebSokcet.bind(this)
+    this.state = {
+      loading: true,
+      network: false,
+      notification: null
+    }
     this.handleMessage = this.handleMessage.bind(this)
+    this.testNetwork = this.testNetwork.bind(this)
+    this.enterApp = this.enterApp.bind(this)
+    this.componentDidMount = this.componentDidMount.bind(this)
   }
 
+  componentWillMount() {
+    const self = this
+    JPushModule.addOpenNotificationLaunchAppListener((result) => {
+      self.state.notification = result
+    })
+
+  }
+
+  componentDidMount() {
+
+    const self = this
+
+    SplashScreen.hide()
+    self.testNetwork((result)=>{
+      self.setState({ network: result, loading: result })
+
+      if (!result) return
+
+      global.initReduxDate((result)=>{
+        global.signIn = result ? true : false
+        self.state.loading = false
+        self.enterApp()
+      })
+
+    })
+  }
+
+  // websocket 执行的消息
   handleMessage(name, data) {
 
     const { me, loadUnreadCount, navigation } = this.props
@@ -53,91 +91,76 @@ class Welcome extends Component {
         }
         break
       case 'online-user-count':
-        // console.log(data);
+        console.log(data);
         break
     }
   }
 
-  // 启动websocket
-  runWebSokcet () {
-
+  // 进入主程序
+  enterApp() {
     const self = this
+    const { me, navigation } = this.props
 
-    /*
-    // 强制指定使用 websocket 作为传输通道
-    let socket = io.connect(api_url, {
-        transports: ['websocket']
-    });
+    const { navigate } = this.props.navigation
+    const { notification } = this.state
 
-
-    socket.on('connect', function(){
-
-      // console.log('1312312');
-
-      this.on('online-user-count', (res)=>{
-        console.log(res);
-      })
-
-      // setInterval(()=>{
-      //   console.log('心跳');
-      //   socket.emit('heartbeat')
-      // }, 1000 * 60)
-
-    });
-
-    socket.on('disconnect', this.runWebSokcet);
-    */
-
-    let ws = new WebSocket(api_url+'/socket.io/?transport=websocket')
-
-    ws.onopen = () => {
-      // console.log('连接成功');
-    }
-
-    ws.onmessage = (e) => {
-      // 接收到了一个消息
-
-      let re = /\[(.*?)\]$/
-      let data = e.data.match(re)
-
-      if (data && data[0]) {
-        data = JSON.parse(data[0])
-        self.handleMessage(data[0], data[1])
-      }
-    }
-
-    ws.onerror = (e) => {
-      // 发生了一个错误
-      // console.log(e.message);
-    }
-
-    ws.onclose = self.runWebSokcet
-  }
-
-  componentDidMount() {
-    const self = this
-    const { me, loadUnreadCount, navigation } = this.props
-
-    let routeName = 'FastSignIn'
+    let actions = []
+    let index = 0
 
     if (global.signIn) {
-      routeName = 'Main'
-      self.runWebSokcet()
+
+      // 已登陆
+      actions.push(NavigationActions.navigate({ routeName: 'Main' }))
+
+      // 启动websocket
+      websocket.start({ onmessage: this.handleMessage })
+      // 获取通知
       self.handleMessage('notiaction', [me._id])
+
+      // 显示推送页面
+      if (notification && notification.routeName && notification.params) {
+        index = 1
+        actions.push(NavigationActions.navigate({
+          routeName: notification.routeName,
+          params: notification.params
+        }))
+      }
+      
+    } else {
+      actions.push(NavigationActions.navigate({ routeName: 'FastSignIn' }))
     }
 
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName })
-      ]
-    })
+    // const resetAction = NavigationActions.reset({ index, actions })
 
-    this.props.navigation.dispatch(resetAction)
+    this.props.navigation.dispatch(NavigationActions.reset({ index, actions }))
+  }
+
+  // 测试是否有网
+  testNetwork(callback) {
+    this.setState({ loading: true })
+    function handleFirstConnectivityChange(state) {
+      console.log('网络状态:' + state);
+      callback(state)
+      NetInfo.isConnected.removeEventListener('change', handleFirstConnectivityChange)
+    }
+    NetInfo.isConnected.addEventListener('change', handleFirstConnectivityChange)
   }
 
   render() {
-    const { navigate } = this.props.navigation
+
+    const { loading, network } = this.state
+
+    if (loading) {
+      return (<View style={styles.container}><Loading /></View>)
+    } else if (!network) {
+      return (<View style={styles.container}>
+        <Text>连接网络失败</Text>
+        <TouchableOpacity onPress={this.componentDidMount}>
+          <Text>重新连接</Text>
+        </TouchableOpacity>
+      </View>)
+    }
+
     return (<View style={styles.container}><Loading /></View>)
   }
 }
@@ -146,7 +169,9 @@ class Welcome extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    flex: 1
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 

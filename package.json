@@ -3,12 +3,15 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "configureJPush": "node node_modules/jpush-react-native/JPushConfiguration.js",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "bundle-ios": "react-native bundle --entry-file index.ios.js --platform ios --dev false --bundle-output release_ios/main.jsbundle --assets-dest release_ios/"
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "jcore-react-native": "^1.1.8-beta2",
+    "jpush-react-native": "^2.0.8",
     "react": "16.0.0-alpha.12",
     "react-native": "0.46.4",
     "react-native-actionsheet": "^2.2.2",
