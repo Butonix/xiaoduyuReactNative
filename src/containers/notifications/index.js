@@ -27,11 +27,7 @@ class Notifications extends React.Component {
             style={[styles.icon, {tintColor: tintColor}]}
             />
         </View>
-      ),
-      headerStyle: {
-        backgroundColor: '#ffffff',
-      },
-      headerTintColor: '#191919'
+      )
     }
 
   }

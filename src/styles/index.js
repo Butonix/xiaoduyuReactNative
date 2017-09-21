@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   // 圆角input
   radiusInput: {
     height: 45,
-    borderColor: '#efefef',
+    borderColor: '#e2e2e2',
     borderWidth: 1,
     paddingLeft: 10,
     borderRadius: 5,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   radiusInputTop: {
     height: 45,
-    borderColor: '#efefef',
+    borderColor: '#e2e2e2',
     borderWidth: 1,
     paddingLeft: 10,
     borderTopLeftRadius: 5,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   radiusInputCenter: {
     height: 45,
-    borderColor: '#efefef',
+    borderColor: '#e2e2e2',
     borderWidth: 1,
     paddingLeft: 10,
     marginTop:-1,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   radiusInputBottom: {
     height: 45,
-    borderColor: '#efefef',
+    borderColor: '#e2e2e2',
     borderWidth: 1,
     paddingLeft: 10,
     marginTop:-1,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
 
   radiusInputLeft: {
     height: 45,
-    borderColor: '#efefef',
+    borderColor: '#e2e2e2',
     borderWidth: 1,
     paddingLeft: 10,
     marginTop:-1,

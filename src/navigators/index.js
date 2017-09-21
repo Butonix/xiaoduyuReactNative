@@ -83,7 +83,13 @@ const App = StackNavigator({
   FastSignIn: { screen: FastSignIn }
   // Test: { screen: Test }
 },{
-  initialRouteName: 'Welcome'
+  initialRouteName: 'Welcome',
+  navigationOptions: {
+    headerStyle: {
+      backgroundColor: '#fff',
+    },
+    headerTintColor: '#191919'
+  }
 })
 
 /*

@@ -1,9 +1,9 @@
 
 
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
-// import HTMLView from 'react-native-htmlview'
-import HTML from 'react-native-render-html'
+import { StyleSheet, View, Text, Linking } from 'react-native'
+import HTMLView from 'react-native-htmlview'
+// import HTML from 'react-native-render-html'
 
 import Img from '../image'
 
@@ -22,7 +22,7 @@ class HtmlView extends Component {
       return (<Img key={index} image={node.attribs.src} offset={imgOffset} />)
     }
   }
-  
+
   render () {
 
     const { imgOffset = 0 } = this.props
@@ -36,28 +36,30 @@ class HtmlView extends Component {
 
     const renderers = {
     	 	img: (htmlAttribs, children, passProps) => {
-          return (<Img key={htmlAttribs.src} image={htmlAttribs.src} offset={imgOffset} />)
+          console.log(htmlAttribs);
+          return (<View><Img key={htmlAttribs.src} image={htmlAttribs.src} offset={imgOffset} /><Text>111</Text></View>)
     	 	}
     	}
 
-    return (<HTML
-      			html={this.props.html}
-      			htmlStyles={stylesHtml}
-      			onLinkPress={(evt, href) => console.log(href)}
-      			renderers={renderers}
-      		/>)
+    // console.log(this.props.html);
 
-    /*
+    // return (<HTML
+    //   			html={this.props.html}
+    //   			htmlStyles={stylesHtml}
+    //   			onLinkPress={(evt, href) => console.log(href)}
+    //   			renderers={renderers}
+    //   		/>)
+
     return (
       <HTMLView
         stylesheet={htmlStyles}
         value={this.props.html}
-        onLinkPress={(url) => console.log('clicked link: ', url)}
+        onLinkPress={(url) => Linking.openURL(url)}
         renderNode={this.renderNode}
         addLineBreaks={false}
       />
     )
-    */
+
   }
 
 }

@@ -22,6 +22,7 @@ class nothing extends PureComponent {
 const styles = StyleSheet.create({
   nothingView: {
     flex:1,
+    padding:10,
     justifyContent: 'center',
     alignItems: 'center'
   },

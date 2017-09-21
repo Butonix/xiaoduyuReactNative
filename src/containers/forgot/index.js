@@ -18,13 +18,9 @@ const screenWidth = Dimensions.get('window').width
 class Forgot extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: '通过邮箱重置密码',
-    headerStyle: {
-      backgroundColor: '#ffffff',
-    },
-    headerTintColor: '#191919'
+    headerTitle: '通过邮箱重置密码'
   })
-  
+
   constructor (props) {
     super(props)
     this.state = {

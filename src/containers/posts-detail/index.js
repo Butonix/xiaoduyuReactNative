@@ -15,6 +15,9 @@ import CommentList from '../../components/comment-list'
 import BottomBar from '../../components/bottom-bar'
 import MenuIcon from '../../components/ui/icon/menu'
 
+import Loading from '../../components/ui/loading'
+import Nothing from '../../components/nothing'
+
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
 const CANCEL_INDEX = 0
 const DESTRUCTIVE_INDEX = 0
@@ -38,7 +41,9 @@ class PostsDetail extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      nothing: false
+    }
     this.goWriteComment = this.goWriteComment.bind(this)
     this.toPeople = this.toPeople.bind(this)
     this.menu = this.menu.bind(this)
@@ -54,6 +59,11 @@ class PostsDetail extends Component {
 
     if (!posts || !posts.content) {
       loadPostsById({ id, callback: (res)=>{
+
+        if (!res) {
+          self.setState({ nothing: true })
+          return
+        }
 
         if (me._id == posts.user_id._id) {
           this.props.navigation.setParams({
@@ -110,50 +120,50 @@ class PostsDetail extends Component {
   render() {
 
     const [ posts ] = this.props.posts
+    const { nothing } = this.state
 
-    let dom = <Text>加载中...</Text>
+    if (nothing) return (<Nothing content="帖子不存在或已删除" />)
+    if (!posts) return <Loading />
 
-    if (posts) {
-
-      dom = (<View>
-        <View style={styles.posts}>
-          <View style={styles.itemHead}>
-            <View>
-              <TouchableOpacity onPress={()=>{this.toPeople(posts.user_id)}}>
-                <Image source={{uri:'https:'+posts.user_id.avatar_url}} style={styles.avatar}  />
-              </TouchableOpacity>
-            </View>
-            <View>
-              <TouchableOpacity onPress={()=>{this.toPeople(posts.user_id)}}>
-                <Text>{posts.user_id.nickname}</Text>
-              </TouchableOpacity>
-              <Text>
-                {posts.topic_id.name} {posts.view_count ? posts.view_count+'次浏览' : null} {posts.like_count ? posts.like_count+'个赞' : null} {posts.follow_count ? posts.follow_count+'人关注' : null} {posts._create_at}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.itemMain}>
-            <Text>{posts.title}</Text>
-            <HTMLView html={posts.content_html} imgOffset={30} />
-          </View>
-        </View>
-        <View>
-          <CommentList
-            {...this.props}
-            name={posts._id}
-            filters={{ posts_id: posts._id, parent_exists: 0, per_page: 100 }}
-            displayLike={true}
-            displayReply={true}
-            displayCreateAt={true}
-            />
-        </View>
-
-      </View>)
-
-    }
+    // console.log(posts);
 
     return (<View style={styles.container}>
-        <ScrollView style={styles.main}>{dom}</ScrollView>
+        <ScrollView style={styles.main}>
+          <View>
+            <View style={styles.posts}>
+              <View style={styles.itemHead}>
+                <View>
+                  <TouchableOpacity onPress={()=>{this.toPeople(posts.user_id)}}>
+                    <Image source={{uri:'https:'+posts.user_id.avatar_url}} style={styles.avatar}  />
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity onPress={()=>{this.toPeople(posts.user_id)}}>
+                    <Text>{posts.user_id.nickname}</Text>
+                  </TouchableOpacity>
+                  <Text>
+                    {posts.topic_id.name} {posts.view_count ? posts.view_count+'次浏览' : null} {posts.like_count ? posts.like_count+'个赞' : null} {posts.follow_count ? posts.follow_count+'人关注' : null} {posts._create_at}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.itemMain}>
+                <Text>{posts.title}</Text>
+                <HTMLView html={posts.content_html} imgOffset={30} />
+              </View>
+            </View>
+            <View>
+              <CommentList
+                {...this.props}
+                name={posts._id}
+                filters={{ posts_id: posts._id, parent_exists: 0, per_page: 100 }}
+                displayLike={true}
+                displayReply={true}
+                displayCreateAt={true}
+                />
+            </View>
+
+          </View>
+        </ScrollView>
         <BottomBar {...this.props} posts={posts} />
         <ActionSheet
           ref={o => this.ActionSheet = o}
@@ -168,6 +178,11 @@ class PostsDetail extends Component {
 
 
 const styles = StyleSheet.create({
+  centerContainer: {
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   posts: {
     padding:15,
     borderBottomWidth: 1,

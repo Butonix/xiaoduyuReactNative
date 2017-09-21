@@ -44,7 +44,7 @@ class CommentDetail extends Component {
   }
 
   componentDidMount() {
-    
+
     const self = this
     const id = this.props.navigation.state.params.id
     const { loadCommentById, comment, me } = this.props

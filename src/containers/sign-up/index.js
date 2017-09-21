@@ -23,11 +23,7 @@ const screenWidth = Dimensions.get('window').width
 class SignUp extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: '注册',
-    headerStyle: {
-      backgroundColor: '#ffffff',
-    },
-    headerTintColor: '#191919'
+    headerTitle: '注册'
   })
 
   constructor (props) {

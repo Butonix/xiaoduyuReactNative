@@ -92,14 +92,14 @@ class CommentList extends Component {
     if (list.loading && list.data.length == 0 || !list.data) {
       return (<Loading />)
     }
-
+    
     if (!list.loading && !list.more && list.data.length == 0) {
       return (<Nothing content="没有评论" />)
     }
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let array = ds.cloneWithRows(list.data || [])
-    
+
     return (
       <View>
         <ListView

@@ -28,10 +28,6 @@ class SignIn extends Component {
     const { params = {} } = navigation.state
     return {
       headerTitle: '登录',
-      headerStyle: {
-        backgroundColor: '#ffffff',
-      },
-      headerTintColor: '#191919',
       headerRight: (<TouchableOpacity onPress={()=>params.signup()}><Text style={{fontSize:17, padding:10}}>注册</Text></TouchableOpacity>)
     }
   }

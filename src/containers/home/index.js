@@ -37,7 +37,7 @@ class Home extends Component {
     const { me } = this.props
     const { navigate } = this.props.navigation
     this.state.listener = (result) => {
-      console.log('收到了点击通知');
+      // console.log('收到了点击通知');
       if (result.routeName && result.params) {
         navigate(result.routeName, result.params)
         JPushModule.setBadge(0, ()=>{})

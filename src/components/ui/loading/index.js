@@ -13,6 +13,7 @@ class Loading extends PureComponent {
 const styles = StyleSheet.create({
   loading: {
     flex: 1,
+    padding:10,
     justifyContent: 'center',
     alignItems: 'center'
   }
