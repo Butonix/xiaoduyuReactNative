@@ -43,6 +43,7 @@ class Welcome extends Component {
     const self = this
     JPushModule.addOpenNotificationLaunchAppListener((result) => {
       self.state.notification = result
+      JPushModule.setBadge(0, ()=>{})
     })
 
   }
@@ -125,7 +126,7 @@ class Welcome extends Component {
           params: notification.params
         }))
       }
-      
+
     } else {
       actions.push(NavigationActions.navigate({ routeName: 'FastSignIn' }))
     }

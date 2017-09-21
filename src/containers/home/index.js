@@ -15,6 +15,8 @@ import MenuIcon from '../../components/ui/icon/menu'
 
 import JPushModule from 'jpush-react-native'
 
+// console.log(JPushModule.removeReceiveOpenNotificationListener);
+
 class Home extends Component {
 
   static navigationOptions = {
@@ -23,15 +25,28 @@ class Home extends Component {
     tabBarIcon: ({ tintColor }) => (<Image source={require('./images/home.png')} style={[stylesIcon.icon, {tintColor: tintColor}]} />)
   }
 
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      listener: null
+    }
+  }
+
   componentDidMount() {
     const { me } = this.props
     const { navigate } = this.props.navigation
-    JPushModule.addReceiveOpenNotificationListener((result) => {
+    this.state.listener = (result) => {
+      console.log('收到了点击通知');
       if (result.routeName && result.params) {
         navigate(result.routeName, result.params)
+        JPushModule.setBadge(0, ()=>{})
       }
-    })
-    
+    }
+
+    JPushModule.addReceiveOpenNotificationListener(this.state.listener)
+
+    // 设置别名
     AsyncStorage.getItem('jpush_alias', (errs, result)=>{
       if (!result) {
         AsyncStorage.setItem('jpush_alias', me._id, function(errs, result){
@@ -40,6 +55,24 @@ class Home extends Component {
       }
     })
 
+    // 设置标签，推送已登陆的用户
+    AsyncStorage.getItem('jpush_tag', (errs, result)=>{
+      if (!result) {
+        let tag = 'signin'
+        AsyncStorage.setItem('jpush_tag', tag, function(errs, result){
+          JPushModule.setTags(tag.split(','), ()=>{}, ()=>{})
+        })
+      }
+    })
+
+  }
+
+  componentWillUnmount() {
+    if (this.state.listener) {
+      // 移除监听事件
+      JPushModule.removeReceiveOpenNotificationListener(this.state.listener)
+      this.state.listener = null
+    }
   }
 
   render() {
