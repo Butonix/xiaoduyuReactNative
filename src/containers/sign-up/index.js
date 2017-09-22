@@ -16,6 +16,7 @@ import gStyles from '../../styles'
 import CaptchaButton from '../../components/captcha-button'
 
 import KeyboardSpacer from 'react-native-keyboard-spacer'
+import Wait from '../../components/ui/wait'
 
 import Dimensions from 'Dimensions'
 const screenWidth = Dimensions.get('window').width
@@ -33,7 +34,8 @@ class SignUp extends Component {
       password: '',
       captchaId: null,
       captcha: '',
-      error: {}
+      error: {},
+      visible: false
     }
     this.submit = this.submit.bind(this)
     this.sendCaptcha = this.sendCaptcha.bind(this)
@@ -45,13 +47,13 @@ class SignUp extends Component {
     const { nickname, email, password, captcha, gender } = this.state
     const { signup, signin, navigation } = this.props
 
-    if (!nickname || nickname.replace(/(^\s+)|(\s+$)/g, '') == '') return Alert.alert('', '请输入昵称')
-    // if (nickname.length > 16) Alert.alert('', '昵称不能大于16个字符')
+    if (!nickname || nickname.replace(/(^\s+)|(\s+$)/g, '') == '') return Alert.alert('', '请输入名字')
     if (!email) return Alert.alert('', '请输入邮箱')
     if (!captcha) return Alert.alert('', '请输入验证码')
     if (!password) return Alert.alert('', '请输入密码')
-    // if (password.length < 6) return Alert.alert('', '密码不能小于6个字符')
     if (!gender) return Alert.alert('', '请选择性别')
+
+    self.setState({ visible: true })
 
     signup({
       data: {
@@ -62,6 +64,8 @@ class SignUp extends Component {
         gender: gender == 'male' ? 1 : 0
       },
       callback: (res)=>{
+
+        self.setState({ visible: false })
 
         if (!res.success) {
           self.setState({ error: res.error })
@@ -198,6 +202,9 @@ class SignUp extends Component {
         </TouchableOpacity>
 
     </View>
+
+    {this.state.visible ? <Wait /> : null}
+
     <KeyboardSpacer />
     </ScrollView>)
   }

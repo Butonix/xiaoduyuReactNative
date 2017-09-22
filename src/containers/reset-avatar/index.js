@@ -14,7 +14,8 @@ import { getQiNiuToken } from '../../actions/qiniu'
 import Qiniu,{ Auth, ImgOps, Conf, Rs, Rpc } from 'react-native-qiniu'
 import ImagePicker from 'react-native-image-crop-picker'
 
-import Loading from 'react-native-loading-w'
+// import Loading from 'react-native-loading-w'
+import Wait from '../../components/ui/wait'
 
 import { uploadFile } from '../../common/upload-qiniu'
 
@@ -68,9 +69,9 @@ class ResetAvatar extends React.Component {
     })
   }
 
-  getLoading() {
-  	return this.refs['loading'];
-  }
+  // getLoading() {
+  // 	return this.refs['loading'];
+  // }
 
   updateAvatar(imageUrl, callback) {
 
@@ -133,7 +134,7 @@ class ResetAvatar extends React.Component {
       }).then(image => {
 
         image.localIdentifier = new Date().getTime() + '-' + me._id
-        self.getLoading().show('头像上传中...');
+        // self.getLoading().show('头像上传中...');
 
         uploadFile({
           name: new Date().getTime() + '-' + me._id,
@@ -142,7 +143,7 @@ class ResetAvatar extends React.Component {
           callback: (progress, imageUrl)=>{
             if (imageUrl) {
               self.updateAvatar(imageUrl,()=>{
-                self.getLoading().dismiss()
+                // self.getLoading().dismiss()
               })
             }
           }
@@ -173,7 +174,9 @@ class ResetAvatar extends React.Component {
       }).then(image => {
 
         image.localIdentifier = new Date().getTime() + '-' + me._id
-        self.getLoading().show('头像上传中...');
+        // self.getLoading().show('头像上传中...');
+
+        self.setState({ visible: true })
 
         uploadFile({
           name: new Date().getTime() + '-' + me._id,
@@ -182,12 +185,12 @@ class ResetAvatar extends React.Component {
           callback: (progress, imageUrl)=>{
             if (imageUrl) {
               self.updateAvatar(imageUrl,()=>{
-                self.getLoading().dismiss()
+                // self.getLoading().dismiss()
               })
             }
           }
         })
-
+        
         /*
         self.uploadQiniu(image, (progress, imageUrl)=>{
 
@@ -226,7 +229,9 @@ class ResetAvatar extends React.Component {
                 onPress={this.handlePress}
               />
 
-              <Loading ref={'loading'} text={'Loading...'} />
+              {this.state.visible ? <Wait text="头像上传中..." /> : null}
+
+              {/*<Loading ref={'loading'} text={'Loading...'} />*/}
 
           </View>)
   }

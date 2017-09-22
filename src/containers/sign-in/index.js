@@ -1,19 +1,19 @@
 
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, Image, View, Button, ScrollView, WebView, TextInput, Alert, TouchableOpacity, AsyncStorage, DeviceEventEmitter } from 'react-native'
+import { StyleSheet, Text, Image, View, Button, ScrollView, WebView, TextInput, Alert, TouchableOpacity, AsyncStorage, DeviceEventEmitter,
+  ActivityIndicator
+} from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
 
-// import openShare from 'react-native-open-share'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
+import Wait from '../../components/ui/wait'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { signin } from '../../actions/sign'
 import { getCaptchaId } from '../../actions/captcha'
-
-import Fieldset from '../../components/ui/fieldset'
 
 import gStyles from '../../styles'
 
@@ -38,7 +38,9 @@ class SignIn extends Component {
       email: '',
       password: '',
       captchaId: null,
-      captcha: ''
+      captcha: '',
+      visible: false,
+      error: ''
     }
     this.submit = this.submit.bind(this)
     this.loadCaptcha = this.loadCaptcha.bind(this)
@@ -115,17 +117,23 @@ class SignIn extends Component {
       return
     }
 
+    self.setState({ visible: true })
+
     signin({
       data: { email: email, password: password, captcha: captcha, captcha_id: captchaId },
       callback: (res)=>{
 
+        let params = { visible: false }
+
         if (!res.success) {
-          Alert.alert('', res.error)
+          params.error = res.error
+          // params.error = res.error
           self.loadCaptcha()
-          return
+        } else {
+          self.handleSignIn(res.data.access_token)
         }
 
-        self.handleSignIn(res.data.access_token)
+        self.setState(params)
 
       }
     })
@@ -133,13 +141,14 @@ class SignIn extends Component {
   }
 
   render() {
-
+    
     const self = this
-    const { captchaId } = this.state
-
+    const { captchaId, visible, error } = this.state
     const { navigate } = this.props.navigation
 
     return (<ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
+
+      {error ? <View style={[gStyles.bgDange, gStyles.mb20]}><Text>账号或密码错误</Text></View> : null}
 
       <TextInput
           ref="email"
@@ -185,6 +194,8 @@ class SignIn extends Component {
       <TouchableOpacity onPress={()=>{ navigate('Forgot') }} style={gStyles.whiteButton}>
         <Text>无法登录?</Text>
       </TouchableOpacity>
+
+      {visible ? <Wait /> : null}
 
       <KeyboardSpacer />
     </ScrollView>)

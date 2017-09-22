@@ -14,6 +14,9 @@ import CommentList from '../../components/comment-list'
 import BottomBar from '../../components/bottom-bar'
 import MenuIcon from '../../components/ui/icon/menu'
 
+import Loading from '../../components/ui/loading'
+import Nothing from '../../components/nothing'
+
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
 const CANCEL_INDEX = 0
 const DESTRUCTIVE_INDEX = 0
@@ -37,7 +40,9 @@ class CommentDetail extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      nothing: false
+    }
     this.toPeople = this.toPeople.bind(this)
     this.showSheet = this.showSheet.bind(this)
     this.menu = this.menu.bind(this)
@@ -54,6 +59,11 @@ class CommentDetail extends Component {
       loadCommentById({
         id,
         callback: (res)=>{
+
+          if (!res) {
+            self.state({ nothing: true })
+            return
+          }
 
           if (res && me._id == res.user_id._id) {
             self.props.navigation.setParams({
@@ -95,16 +105,16 @@ class CommentDetail extends Component {
     const { navigate } = this.props.navigation;
     navigate('PeopleDetail', { title: user.nickname, id: user._id })
   }
-
+  
   render() {
 
     let { data, loading } = this.props.comment
+    const { nothing } = this.state
 
     let comment = data && data[0] ? data[0] : null
 
-    if (!comment) {
-      return (<Text>加载中...</Text>)
-    }
+    if (nothing) return (<Nothing content="评论不存在或已删除" />)
+    if (!data || loading) return <Loading />
 
     return (<View style={styles.container}>
       <ScrollView style={styles.main}>

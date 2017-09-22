@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, Image, ImageBackground, View, Button, ScrollView, WebView, TextInput, Alert, TouchableOpacity, AsyncStorage, DeviceEventEmitter, Linking } from 'react-native'
+import { StyleSheet, Text, Image, ImageBackground, View, Button, ScrollView, WebView, TextInput, Alert, TouchableOpacity, AsyncStorage, DeviceEventEmitter, Modal } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
 
@@ -12,10 +12,9 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { signin } from '../../actions/sign'
 import { weiboGetUserInfo, QQGetUserInfo } from '../../actions/oauth'
+import { getClientInstalled } from '../../reducers/client-installed'
 
-// console.log(openShare);
 
-// import Share from 'react-native-open-share/share-ios/share'
 
 import gStyles from '../../styles'
 
@@ -34,27 +33,11 @@ class FastSignIn extends Component {
     super(props)
     this.state = {
       email: '',
-      password: '',
-      qq: false,
-      weibo: false
+      password: ''
     }
     this._weiboLogin = this._weiboLogin.bind(this)
     this._qqLogin = this._qqLogin.bind(this)
     this.handleSignIn = this.handleSignIn.bind(this)
-  }
-
-  componentWillMount() {
-
-    const self = this
-
-    Linking.canOpenURL('weibo://').then(function(result){
-      self.setState({ weibo: result })
-    })
-
-    Linking.canOpenURL('mqq://').then(function(result){
-      // console.log(result);
-      self.setState({ qq: result })
-    })
   }
 
   handleSignIn(access_token) {
@@ -145,7 +128,7 @@ class FastSignIn extends Component {
     const self = this
 
     const { navigate } = this.props.navigation
-    const { qq, weibo } = this.state
+    const { clientInstalled } = this.props
 
     return (<View style={styles.container} keyboardShouldPersistTaps={'always'}>
 
@@ -153,7 +136,7 @@ class FastSignIn extends Component {
           <Image source={require('./images/logo.png')} style={styles.logo} />
         </View>
 
-        {qq ?
+        {clientInstalled.qq ?
           <TouchableOpacity onPress={this._qqLogin} style={styles.fullButton}>
             <Text style={styles.buttonText}>使用QQ账号登录</Text>
           </TouchableOpacity>
@@ -163,7 +146,7 @@ class FastSignIn extends Component {
           <Text style={styles.buttonText}>使用Github账号登录</Text>
         </TouchableOpacity>
 
-        {weibo ?
+        {clientInstalled.weibo ?
           <TouchableOpacity onPress={this._weiboLogin} style={styles.fullButton}>
             <Text style={styles.buttonText}>使用微博账号登录</Text>
           </TouchableOpacity>
@@ -186,6 +169,7 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor: '#fff'
   },
+
   fullButton: {
     marginTop: 15,
     height:40,
@@ -221,7 +205,9 @@ const styles = StyleSheet.create({
 
 export default connect(
   (state, props) => {
-    return {}
+    return {
+      clientInstalled: getClientInstalled(state)
+    }
   },
   (dispatch, props) => ({
     signin: bindActionCreators(signin, dispatch),

@@ -11,6 +11,7 @@ import writePosts from './write-posts'
 import notification from './notification'
 import people from './people'
 import followPeople from './follow-people'
+import clientInstalled from './client-installed'
 
 let states = {
   posts,
@@ -20,7 +21,8 @@ let states = {
   writePosts,
   notification,
   people,
-  followPeople
+  followPeople,
+  clientInstalled
 }
 
 let _states = {}

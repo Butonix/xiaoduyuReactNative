@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, Image, View, Button, ScrollView, TextInput, Alert, TouchableOpacity, AsyncStorage } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
+import Wait from '../../components/ui/wait'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -27,7 +28,8 @@ class Forgot extends Component {
       email: '',
       password: '',
       captchaId: null,
-      captcha: ''
+      captcha: '',
+      visible: false
     }
     this.submit = this.submit.bind(this)
     this.sendCaptcha = this.sendCaptcha.bind(this)
@@ -67,6 +69,7 @@ class Forgot extends Component {
 
   submit() {
 
+    const self = this
     const { email, captcha, password, confirmPassword } = this.state
     const { resetPasswordByCaptcha, signin, navigation } = this.props
 
@@ -76,11 +79,15 @@ class Forgot extends Component {
     if (!confirmPassword) return Alert.alert('', '请再次输入新密码')
     if (password != confirmPassword) return Alert.alert('', '两次密码输入不一致')
 
+    self.setState({ visible: true })
+
     resetPasswordByCaptcha({
       email: email,
       captcha: captcha,
       newPassword: password,
       callback: function(result) {
+
+        self.setState({ visible: false })
 
         if (result.success) {
           alert('密码修改成功')
@@ -151,6 +158,8 @@ class Forgot extends Component {
         <TouchableOpacity onPress={this.submit} style={[gStyles.fullButton, gStyles.mt20]}>
           <Text style={gStyles.white}>提交</Text>
         </TouchableOpacity>
+
+        {this.state.visible ? <Wait /> : null}
 
     </ScrollView>)
   }

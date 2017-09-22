@@ -10,13 +10,12 @@ import reducers, { getInitialState } from './reducers'
 import getStore from './store/configure-store.js'
 import Navigators from './navigators/index'
 
-// import SplashScreen from 'react-native-splash-screen'
-
 import { connect } from 'react-redux'
 import { combineReducers, bindActionCreators } from 'redux'
 import { loadUserInfo, addAccessToken, cleanUserInfo } from './actions/user'
 import { loadUnreadCount } from './actions/notification'
 import { cleanAllPosts } from './actions/posts'
+import { checkClientInstalled } from './actions/client-installed'
 
 import JPushModule from 'jpush-react-native'
 
@@ -34,6 +33,9 @@ global.cleanRedux = () => {
 
 global.initReduxDate = (callback) => {
   global.cleanRedux()
+
+  // 检测是否安装了某些客户端
+  checkClientInstalled()(store.dispatch, store.getState)
 
   AsyncStorage.getItem('token', (errs, result)=>{
 

@@ -145,7 +145,34 @@ const styles = StyleSheet.create({
   red: { color: 'rgb(232, 60, 60)' },
   yellow: { color: 'rgb(255, 132, 42)' },
   darkGray: { color: 'rgb(150, 150, 150)' },
-  white: { color: '#fff' }
+  white: { color: '#fff' },
+
+  // bg
+  bgPrimary: {
+    backgroundColor: '#337ab7',
+    padding:10,
+    borderRadius: 5
+  },
+  bgSuccess: {
+    backgroundColor: '#dff0d8',
+    padding:10,
+    borderRadius: 5
+  },
+  bgInfo: {
+    backgroundColor: '#d9edf7',
+    padding:10,
+    borderRadius: 5
+  },
+  bgWarning: {
+    backgroundColor: '#fcf8e3',
+    padding:10,
+    borderRadius: 5
+  },
+  bgDange: {
+    backgroundColor: '#f2dede',
+    padding:10,
+    borderRadius: 5
+  }
 })
 
 export default styles

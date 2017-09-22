@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 import { StyleSheet, View, WebView } from 'react-native'
 import { official_website, api_url } from '../../../config'
 
+import Cookie from 'react-native-cookie'
+
 function GetQueryString(url, name) {
    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
    var r = url.substr(1).match(reg);
@@ -40,9 +42,13 @@ class GithubSignIn extends Component {
         failCallback(result)
       }
 
-
       navigation.goBack()
     }
+  }
+
+  componentWillUnmount() {
+    Cookie.clear()
+    console.log('清除成功');
   }
 
   render() {

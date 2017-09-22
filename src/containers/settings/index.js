@@ -1,35 +1,30 @@
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Button,
-  Alert,
-  Image,
-  TouchableOpacity,
-  AsyncStorage
-} from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Alert, Image, TouchableOpacity, AsyncStorage } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
+import JPushModule from 'jpush-react-native'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
 import { getUserInfo } from '../../reducers/user'
 import { signout } from '../../actions/sign'
-import { ListItem } from '../../components/ui'
+import { getClientInstalled } from '../../reducers/client-installed'
 
-import JPushModule from 'jpush-react-native'
+import { ListItem } from '../../components/ui'
 
 class Settings extends React.Component {
 
   static navigationOptions = {
     title: '设置'
   }
-
+  
   constructor (props) {
     super(props)
-
+    this.state = {
+      qq: false,
+      weibo: false
+    }
     this.signOut = this.signOut.bind(this)
   }
 
@@ -54,7 +49,7 @@ class Settings extends React.Component {
           AsyncStorage.removeItem('jpush_tag', function(){
             JPushModule.setTags(['invalid'], ()=>{})
           })
-          
+
           global.cleanRedux()
 
           global.signIn = false
@@ -77,8 +72,9 @@ class Settings extends React.Component {
 
   render() {
 
-    const { me } = this.props
+    const { me, clientInstalled } = this.props
     const { navigate } = this.props.navigation
+    // const { qq, weibo } = this.state
 
     if (!me || !me._id) {
       return (<View></View>)
@@ -122,13 +118,17 @@ class Settings extends React.Component {
 
             <View style={styles.gap}></View>
 
-            <TouchableOpacity onPress={()=>{ navigate('SocialAccount', { socialName: 'qq' }) }}>
-              <ListItem name={"QQ"} rightText={me.qq ? '已绑定' : '未绑定'} />
-            </TouchableOpacity>
+            {clientInstalled.qq ?
+              <TouchableOpacity onPress={()=>{ navigate('SocialAccount', { socialName: 'qq' }) }}>
+                <ListItem name={"QQ"} rightText={me.qq ? '已绑定' : '未绑定'} />
+              </TouchableOpacity>
+              : null}
 
-            <TouchableOpacity onPress={()=>{ navigate('SocialAccount', { socialName: 'weibo' }) }}>
-              <ListItem name={"微博"} rightText={me.weibo ? '已绑定' : '未绑定'} />
-            </TouchableOpacity>
+            {clientInstalled.weibo ?
+              <TouchableOpacity onPress={()=>{ navigate('SocialAccount', { socialName: 'weibo' }) }}>
+                <ListItem name={"微博"} rightText={me.weibo ? '已绑定' : '未绑定'} />
+              </TouchableOpacity>
+              :null}
 
             <TouchableOpacity onPress={()=>{ navigate('SocialAccount', { socialName: 'github' }) }}>
               <ListItem name={"GitHub"} rightText={me.github ? '已绑定' : '未绑定'} />
@@ -195,12 +195,13 @@ const styles = StyleSheet.create({
     paddingLeft:20,
     paddingRight: 20
   }
-});
+})
 
 export default connect(state => ({
-    me: getUserInfo(state)
+    me: getUserInfo(state),
+    clientInstalled: getClientInstalled(state)
   }),
   (dispatch) => ({
     signout: bindActionCreators(signout, dispatch)
   })
-)(Settings);
+)(Settings)
