@@ -10,7 +10,7 @@ import { ListItem } from '../../components/ui'
 class ResetGender extends React.Component {
 
   static navigationOptions = {
-    title: '个性签名'
+    title: '性别'
   }
 
   constructor (props) {
@@ -59,7 +59,7 @@ class ResetGender extends React.Component {
     const { me } = this.props
     const { submitting } = this.state
 
-    return (<View>
+    return (<View style={{marginTop:10}}>
             <TouchableOpacity onPress={()=>{this.submit(1)}}><ListItem type={me.gender == 1 ? "hook" : "none"} name={"男"} /></TouchableOpacity>
             <TouchableOpacity onPress={()=>{this.submit(0)}}><ListItem type={me.gender == 0 ? "hook" : "none"} name={"女"} /></TouchableOpacity>
           </View>)

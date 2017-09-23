@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -58,8 +59,8 @@
 		C6AFDE8C36FC409A80D613C0 /* libRCTJCoreModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3F9AC27D354912850DD45C /* libRCTJCoreModule.a */; };
 		DBC1AF69E1C7499390298369 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC0842883874819AEE5028F /* Security.framework */; };
 		E9E963EDC228445D8CB0D08C /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B41F55BD90440168B59AC06 /* libimageCropPicker.a */; };
-		F3F73B7F2AED44FA891C023A /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF39D6628C7F43848CBC949F /* libSplashScreen.a */; };
 		F12C6E8AF411481A82D94037 /* libRNCookieManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEEF0FDAFEC6480181FE57A7 /* libRNCookieManager.a */; };
+		F3F73B7F2AED44FA891C023A /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF39D6628C7F43848CBC949F /* libSplashScreen.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -315,6 +316,20 @@
 			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
 			remoteInfo = RCTCameraRoll;
 		};
+		C2E9A4E61F75638E003B7FDF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D78D9B648134C4F824F9358 /* RNCookieManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 101789301B283EE1006C41B8;
+			remoteInfo = RNCookieManager;
+		};
+		C2E9A4E81F75638E003B7FDF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D78D9B648134C4F824F9358 /* RNCookieManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1017893B1B283EE1006C41B8;
+			remoteInfo = RNCookieManagerTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -368,6 +383,7 @@
 		9354F8FE4A695886965FBCF9 /* libPods-xiaoduyuReactNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-xiaoduyuReactNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B41F55BD90440168B59AC06 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
 		9D64AA087E104165ADD41D38 /* CoreTelephony.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		9D78D9B648134C4F824F9358 /* RNCookieManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCookieManager.xcodeproj; path = "../node_modules/react-native-cookie/ios/RNCookieManager.xcodeproj"; sourceTree = "<group>"; };
 		9D88D94CC1A79C9ED349C49B /* Pods-xiaoduyuReactNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xiaoduyuReactNative.debug.xcconfig"; path = "Pods/Target Support Files/Pods-xiaoduyuReactNative/Pods-xiaoduyuReactNative.debug.xcconfig"; sourceTree = "<group>"; };
 		AF39D6628C7F43848CBC949F /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		B19CA29E9B9A49128E0A9036 /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -381,8 +397,7 @@
 		F3170E3398D94A358F9CD53D /* RCTJPushModule.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTJPushModule.xcodeproj; path = "../node_modules/jpush-react-native/ios/RCTJPushModule.xcodeproj"; sourceTree = "<group>"; };
 		F54DA3A0AF3C450CBD81CADE /* Foundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FAA71945CC59B06ABB59A5C4 /* Pods-xiaoduyuReactNative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xiaoduyuReactNative.release.xcconfig"; path = "Pods/Target Support Files/Pods-xiaoduyuReactNative/Pods-xiaoduyuReactNative.release.xcconfig"; sourceTree = "<group>"; };
-		9D78D9B648134C4F824F9358 /* RNCookieManager.xcodeproj */ = {isa = PBXFileReference; name = "RNCookieManager.xcodeproj"; path = "../node_modules/react-native-cookie/ios/RNCookieManager.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		FEEF0FDAFEC6480181FE57A7 /* libRNCookieManager.a */ = {isa = PBXFileReference; name = "libRNCookieManager.a"; path = "libRNCookieManager.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		FEEF0FDAFEC6480181FE57A7 /* libRNCookieManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCookieManager.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -713,8 +728,18 @@
 				9B41F55BD90440168B59AC06 /* libimageCropPicker.a */,
 				CC3F9AC27D354912850DD45C /* libRCTJCoreModule.a */,
 				DF1D7DE63A4249DD8367521C /* libRCTJPushModule.a */,
+				FEEF0FDAFEC6480181FE57A7 /* libRNCookieManager.a */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		C2E9A4E21F75638E003B7FDF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C2E9A4E71F75638E003B7FDF /* libRNCookieManager.a */,
+				C2E9A4E91F75638E003B7FDF /* RNCookieManagerTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		CCE97071FD024EF22E1ED48F /* Pods */ = {
@@ -930,6 +955,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = C2E9A4E21F75638E003B7FDF /* Products */;
+					ProjectRef = 9D78D9B648134C4F824F9358 /* RNCookieManager.xcodeproj */;
 				},
 				{
 					ProductGroup = C27EC2811F542D3A005324E3 /* Products */;
@@ -1183,6 +1212,20 @@
 			fileType = archive.ar;
 			path = libRCTCameraRoll.a;
 			remoteRef = C27EC2A91F542F54005324E3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C2E9A4E71F75638E003B7FDF /* libRNCookieManager.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCookieManager.a;
+			remoteRef = C2E9A4E61F75638E003B7FDF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C2E9A4E91F75638E003B7FDF /* RNCookieManagerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RNCookieManagerTests.xctest;
+			remoteRef = C2E9A4E81F75638E003B7FDF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1471,7 +1514,7 @@
 					"$(SRCROOT)/../node_modules/react-native-cookie/ios",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNative/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1506,7 +1549,7 @@
 					"$(SRCROOT)/../node_modules/react-native-cookie/ios",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNative/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

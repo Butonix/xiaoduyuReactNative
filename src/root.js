@@ -22,9 +22,15 @@ import JPushModule from 'jpush-react-native'
 const store = getStore()
 
 // 解决该组建，启动黑底的问题
-import { Theme } from 'teaset'
-Theme.set({ screenColor: '#fff', })
+// import { Theme } from 'teaset'
+// Theme.set({ screenColor: '#fff', })
 
+import Dimensions from 'Dimensions'
+
+global.screen = {
+  width: Dimensions.get('window').width,
+  height: Dimensions.get('window').height
+}
 
 global.cleanRedux = () => {
   cleanUserInfo()(store.dispatch, store.getState)

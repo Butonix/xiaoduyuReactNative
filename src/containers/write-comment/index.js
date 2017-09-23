@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native'
+import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native'
 
-import { Toast, ModalIndicator } from 'teaset'
+// import { Toast, ModalIndicator } from 'teaset'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { addComment, updateComment } from '../../actions/comment'
 
 import Editor from '../../components/editor'
+import Wait from '../../components/ui/wait'
 
 class WriteComment extends React.Component {
 
@@ -52,14 +53,7 @@ class WriteComment extends React.Component {
     const { comment } = self.props.navigation.state.params
 
     if (contentJSON == '' || contentHTML == '') {
-
-      Toast.show({
-        text: '请输入内容',
-        icon: 'info',
-        position: 'center',
-        duration: 1000
-      })
-
+      Alert.alert('', '请输入内容')
       return
     }
 
@@ -73,7 +67,8 @@ class WriteComment extends React.Component {
     if (parentId) data.parent_id = parentId
     if (replyId) data.reply_id = replyId
 
-    let s = ModalIndicator.show(`提交中...`);
+    // let s = ModalIndicator.show(`提交中...`);
+    self.setState({ visible: true })
 
     if (comment) {
       // 更新
@@ -82,8 +77,8 @@ class WriteComment extends React.Component {
         contentJSON: contentJSON,
         contentHTML: contentHTML,
         callback: (res)=>{
-          ModalIndicator.hide(s)
-
+          // ModalIndicator.hide(s)
+          self.setState({ visible: false })
           if (res && res.success) {
             navigation.goBack()
           } else {
@@ -98,25 +93,25 @@ class WriteComment extends React.Component {
         data,
         callback: (res) => {
 
-          ModalIndicator.hide(s)
+          // ModalIndicator.hide(s)
+          self.setState({ visible: false })
 
           if (res.success) {
-            Toast.show({
-              text: '提交成功',
-              icon: 'success',
-              position: 'center',
-              duration: 1000
-            })
+            // Toast.show({
+            //   text: '提交成功',
+            //   icon: 'success',
+            //   position: 'center',
+            //   duration: 1000
+            // })
             navigation.goBack()
           } else {
-
-            Toast.show({
-              text: res.error || '提交失败',
-              icon: 'fail',
-              position: 'center',
-              duration: 1000
-            })
-
+            Alert.alert('', res.error || '提交失败')
+            // Toast.show({
+            //   text: res.error || '提交失败',
+            //   icon: 'fail',
+            //   position: 'center',
+            //   duration: 1000
+            // })
           }
 
         }
@@ -139,6 +134,7 @@ class WriteComment extends React.Component {
         }}
         initialContentJSON={comment ? comment.content : null}
       />
+      {this.state.visible ? <Wait /> : null}
     </View>)
   }
 }

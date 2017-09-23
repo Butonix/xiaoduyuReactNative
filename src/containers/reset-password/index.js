@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Alert, Image, TextInput, TouchableOpacity, AsyncStorage } from 'react-native'
+import { StyleSheet, Text, ScrollView, View, Alert, Image, TextInput, TouchableOpacity, AsyncStorage } from 'react-native'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -16,7 +16,7 @@ import gStyles from '../../styles'
 class ResetPassword extends React.Component {
 
   static navigationOptions = {
-    title: '个性签名'
+    title: '修改密码'
   }
 
   constructor (props) {
@@ -47,7 +47,7 @@ class ResetPassword extends React.Component {
       currentPassword,
       newPassword,
       callback: (res) => {
-
+        
         if (!res.success) {
           self.setState({ submitting: false })
           Alert.alert('', res.error)
@@ -98,9 +98,9 @@ class ResetPassword extends React.Component {
     const { me } = this.props
     const { submitting } = this.state
 
-    return (<View>
+    return (<ScrollView style={styles.container}>
               <TextInput
-                style={gStyles.input}
+                style={gStyles.radiusInputTop}
                 autoCapitalize="none"
                 onChangeText={(currentPassword) => this.setState({currentPassword})}
                 secureTextEntry={true}
@@ -108,27 +108,31 @@ class ResetPassword extends React.Component {
                 autoFocus={true}
                 />
               <TextInput
-                style={gStyles.input}
+                style={gStyles.radiusInputCenter}
                 autoCapitalize="none"
                 onChangeText={(newPassword) => this.setState({newPassword})}
                 secureTextEntry={true}
                 placeholder='请输入新密码'
                 />
               <TextInput
-                style={gStyles.input}
+                style={gStyles.radiusInputBottom}
                 autoCapitalize="none"
                 onChangeText={(confirmPassword) => this.setState({confirmPassword})}
                 secureTextEntry={true}
                 placeholder='请再次输入新密码'
                 />
-              <TouchableOpacity onPress={this.submit}>
-                <ListItem type="center" name={submitting ? "提交中..." : "提交"} />
+              <TouchableOpacity onPress={this.submit} style={[gStyles.fullButton, gStyles.mt10]}>
+                <Text style={gStyles.white}>{submitting ? "提交中..." : "提交"}</Text>
               </TouchableOpacity>
-          </View>)
+          </ScrollView>)
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    padding:20
+  }
 })
 
 export default connect(state => ({

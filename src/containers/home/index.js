@@ -66,7 +66,7 @@ class Home extends Component {
     })
 
   }
-  
+
   componentWillUnmount() {
     if (this.state.listener) {
       // 移除监听事件

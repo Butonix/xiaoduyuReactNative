@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Alert, Image, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, ScrollView, Text, View, Alert, Image, TextInput, TouchableOpacity } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
 
@@ -16,7 +16,7 @@ import gStyles from '../../styles'
 class ResetEmail extends React.Component {
 
   static navigationOptions = {
-    title: '设置新邮箱'
+    title: '修改邮箱'
   }
 
   constructor (props) {
@@ -75,38 +75,44 @@ class ResetEmail extends React.Component {
     const { me } = this.props
     const { submitting } = this.state
 
-    return (<View>
+    return (<ScrollView style={styles.container}>
               <TextInput
-                style={gStyles.input}
+                style={gStyles.radiusInputTop}
                 autoCapitalize="none"
                 onChangeText={(email) => this.setState({email})}
                 placeholder='请输入你的新邮箱'
                 autoFocus={true}
                 />
-                
-                <View style={gStyles.rowItem}>
-                  <View style={styles.itemLeft}>
+
+                <View>
                     <TextInput
-                        style={gStyles.input}
+                        style={gStyles.radiusInputBottom}
                         onChangeText={(captcha) => this.setState({captcha})}
                         placeholder='验证码'
                       />
-                  </View>
-                  <View>
+
+                      <View style={{
+                        position: 'absolute',
+                        marginTop: 0,
+                        height:45,
+                        justifyContent: 'center',
+                        marginLeft: global.screen.width - 150
+                      }}>
                     <CaptchaButton sendCaptcha={this.sendCaptcha.bind(this)} />
                   </View>
                 </View>
 
-              <TouchableOpacity onPress={this.submit}>
-                <ListItem type="center" name={submitting ? "提交中..." : "提交"} />
+              <TouchableOpacity onPress={this.submit} style={[gStyles.fullButton, gStyles.mt10]}>
+                <Text style={gStyles.white}>{submitting ? "提交中..." : "提交"}</Text>
               </TouchableOpacity>
-          </View>)
+          </ScrollView>)
   }
 }
 
 const styles = StyleSheet.create({
-  itemLeft:{
-    flex: 1
+  container:{
+    flex: 1,
+    padding:20
   }
 })
 

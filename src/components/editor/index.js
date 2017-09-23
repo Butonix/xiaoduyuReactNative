@@ -10,8 +10,6 @@ import Qiniu,{ Auth, ImgOps, Conf, Rs, Rpc } from 'react-native-qiniu'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 
 import { WebView } from 'react-native-webview-messaging/WebView'
-// import { Loading, EasyLoading } from 'react-native-easy-loading'
-import { Toast } from 'teaset'
 
 import ImagePicker from 'react-native-image-crop-picker'
 
@@ -55,7 +53,7 @@ class Editor extends Component {
     // source={{uri:'http://192.168.1.106:9000'}}
     // source={require('../../../editor/dist/index.html')}
     return (<View style={styles.container}>
-      
+
             <WebView
               // source={{uri:'http://192.168.1.106:9000'}}
               source={require('../../../editor/dist/index.html')}

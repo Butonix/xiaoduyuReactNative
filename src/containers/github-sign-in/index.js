@@ -47,10 +47,10 @@ class GithubSignIn extends Component {
   }
 
   componentWillUnmount() {
-    Cookie.clear()
-    console.log('清除成功');
+    // Cookie.clear()
+    Cookie.clear('https://github.com');
   }
-
+  
   render() {
 
     const { accessToken } = this.props.navigation.state.params

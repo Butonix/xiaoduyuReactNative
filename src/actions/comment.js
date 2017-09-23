@@ -120,12 +120,16 @@ export function updateComment({ id, contentJSON, contentHTML, callback }) {
   }
 }
 
-export function loadCommentList({ name, filters = {}, callback = ()=>{} }) {
+export function loadCommentList({ name, filters = {}, callback = ()=>{}, restart = false }) {
   return (dispatch, getState) => {
 
     const accessToken = getState().user.accessToken
     let commentList = getState().comment[name] || {}
 
+    if (restart) {
+      commentList = {}
+    }
+    
     if (typeof(commentList.more) != 'undefined' && !commentList.more ||
       commentList.loading
     ) {
@@ -153,14 +157,12 @@ export function loadCommentList({ name, filters = {}, callback = ()=>{} }) {
     dispatch({ type: 'SET_COMMENT_LIST_BY_NAME', name, data: commentList })
 
     let headers = accessToken ? { 'AccessToken': accessToken } : null
-    
+
     return Ajax({
       url: '/comments',
       data: filters,
       headers,
       callback: (res) => {
-
-        console.log(res);
 
         if (!res || !res.success) {
           callback(res)
@@ -192,7 +194,7 @@ export const loadCommentById = ({ id, callback = () => {} }) => {
       restart: true,
       callback: (res) => {
 
-        if (res.success && res.data && res.data.length > 0) {
+        if (res && res.success && res.data && res.data.length > 0) {
           callback(res.data[0])
         } else {
           callback(null)

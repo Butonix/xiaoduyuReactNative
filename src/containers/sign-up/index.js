@@ -131,9 +131,9 @@ class SignUp extends Component {
     var radio_props = [
       {label: '男     ', value: 'male' },
       {label: '女     ', value: 'female' }
-    ];
+    ]
 
-    return (<ScrollView style={styles.container}>
+    return (<ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
       <View style={gStyles.m20}>
 
         <TextInput
@@ -141,6 +141,7 @@ class SignUp extends Component {
           onChangeText={(nickname) => this.setState({nickname})}
           placeholder='昵称'
           maxLength={40}
+          autoFocus={true}
           />
 
         {nickname ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{nickname}</Text></View> : null}

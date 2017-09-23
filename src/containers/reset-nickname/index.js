@@ -16,7 +16,7 @@ class ResetNickname extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
     return {
-      title: '设置',
+      title: '名字',
       headerRight: (<View><Button onPress={()=>params.submit()} title={"提交"} /></View>),
     }
   }
@@ -26,7 +26,7 @@ class ResetNickname extends React.Component {
     this.state = {}
     this.submit = this.submit.bind(this)
   }
-  
+
   componentWillMount() {
     const { me } = this.props
     this.state.nickname = me.nickname

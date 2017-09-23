@@ -64,6 +64,7 @@ class PostsList extends Component {
 
   goTo(posts){
     const { navigate } = this.props.navigation;
+    // navigate('PostsDetail', { title: posts.title, id: '58b2850ed8831fe9027a5f92' })
     navigate('PostsDetail', { title: posts.title, id: posts._id })
   }
 
@@ -73,7 +74,7 @@ class PostsList extends Component {
   }
 
   render() {
-    
+
     const self = this
     const { list } = this.props
 
@@ -104,7 +105,7 @@ class PostsList extends Component {
                       </TouchableOpacity>
                     </View>
                     <View>
-                      <Text onPress={()=>{this.toPeople(topic)}} style={styles.nickname}>{topic.user_id.nickname}</Text>
+                      <Text onPress={()=>{this.toPeople(topic.user_id)}} style={styles.nickname}>{topic.user_id.nickname}</Text>
                       <View style={styles.itemHeadOther}>
                         <Text style={styles.itemHeadOtherItem}>{topic.topic_id.name}</Text>
                         {topic.view_count ? <Text style={styles.itemHeadOtherItem}>{topic.view_count+'次浏览'}</Text> : null}
@@ -115,7 +116,7 @@ class PostsList extends Component {
                   </View>
                   <View style={styles.itemMain}>
                     <Text style={styles.title}>{topic.title}</Text>
-                    {topic.content_summary ? <Text>{topic.content_summary}</Text> : null}
+                    {topic.content_summary ? <Text style={styles.contentText}>{topic.content_summary}</Text> : null}
                     <View style={styles.flexContainer}>
                       {topic.images.map(img=>{
                         let _img = 'https:' + img.split('?')[0] + '?imageMogr2/auto-orient/thumbnail/!200/format/jpg'
@@ -131,7 +132,7 @@ class PostsList extends Component {
                 return (<View key={item._id}>
                   <TouchableOpacity onPress={()=>{this.goToComment(item)}}>
                     <View>
-                      <CommentItem {...this.props} comment={item} />
+                      <CommentItem {...this.props} comment={item} displayEdit={false} />
                     </View>
                   </TouchableOpacity>
                 </View>)

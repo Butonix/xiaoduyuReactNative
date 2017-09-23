@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, ScrollView, Button, TextInput, Alert } from 'react-native'
 
+import { NavigationActions } from 'react-navigation'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getUserInfo } from '../../reducers/user'
 import { addPosts, updatePostsById } from '../../actions/posts'
 
 import Editor from '../../components/editor'
-
-import { Toast, ModalIndicator } from 'teaset'
+import Wait from '../../components/ui/wait'
 
 class WritePosts extends React.Component {
 
@@ -41,13 +42,15 @@ class WritePosts extends React.Component {
 
   submit() {
 
+    const self = this
     const { addPosts, updatePostsById, navigation } = this.props
     const { navigate } = navigation
-    const { topic, posts } = navigation.state.params
-
+    const { topic, posts, goBackKey, goBack } = navigation.state.params
     const { title, contentJSON, contentHTML } = this.state
 
-    let loading = ModalIndicator.show('');
+    if (!title) return Alert.alert('', '请输入标题')
+
+    self.setState({ visible: true })
 
     if (posts) {
       // 更新
@@ -60,7 +63,7 @@ class WritePosts extends React.Component {
         // device: 1,
         type: 1,
         callback: (res)=>{
-          ModalIndicator.hide(loading)
+          self.setState({ visible: false })
           if (res && res.success) {
             navigation.goBack()
           } else {
@@ -78,9 +81,28 @@ class WritePosts extends React.Component {
         device: 1,
         type: 1,
         callback: (res)=>{
-          ModalIndicator.hide(loading)
+          self.setState({ visible: false })
           if (res && res.success) {
             let posts = res.data
+
+            if (goBackKey == 'Home') {
+              console.log('123');
+              self.props.navigation.dispatch(NavigationActions.reset({
+                index: 1,
+                actions: [
+                  NavigationActions.navigate({
+                    routeName: 'Main'
+                  }),
+                  NavigationActions.navigate({
+                    routeName: 'PostsDetail',
+                    params: { title: posts.title, id: posts._id }
+                  })
+                ]
+              }))
+              return
+            }
+
+            navigation.goBack(goBackKey)
             navigate('PostsDetail', { title: posts.title, id: posts._id })
           } else {
             Alert.alert('', res && res.error ? res.error : '发布失败')
@@ -114,6 +136,7 @@ class WritePosts extends React.Component {
           initialContentJSON={posts ? posts.content : null}
         />
       </View>
+      {this.state.visible ? <Wait /> : null}
     </View>)
   }
 }

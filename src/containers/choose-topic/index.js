@@ -15,7 +15,7 @@ class ChooseTopic extends React.Component {
       title: '请选择一个话题'
     }
   }
-  
+
   constructor (props) {
     super(props)
     this.cancel = this.cancel.bind(this)
@@ -42,12 +42,10 @@ class ChooseTopic extends React.Component {
   }
 
   choose(topic) {
-
     const { navigate } = this.props.navigation
-    navigate('WritePosts', { topic })
-
-    // this.props.setTopic({ topic: topic })
-    // this.cancel()
+    const { goBackKey } = this.props.navigation.state.params
+    // console.log(this.props.navigation.state.params.goBackKey);
+    navigate('WritePosts', { topic, goBackKey })
   }
 
   render() {

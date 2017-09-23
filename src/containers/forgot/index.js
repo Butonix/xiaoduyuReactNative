@@ -115,13 +115,14 @@ class Forgot extends Component {
 
   render() {
 
-    return (<ScrollView style={styles.container}>
+    return (<ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
 
         <TextInput
           style={gStyles.radiusInputTop}
           autoCapitalize="none"
           onChangeText={(email) => this.setState({email})}
           placeholder='请输入你的注册邮箱'
+          autoFocus={true}
           />
 
         <View>

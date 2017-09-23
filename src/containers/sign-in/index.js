@@ -141,7 +141,7 @@ class SignIn extends Component {
   }
 
   render() {
-    
+
     const self = this
     const { captchaId, visible, error } = this.state
     const { navigate } = this.props.navigation
@@ -156,6 +156,8 @@ class SignIn extends Component {
           autoCapitalize={'none'}
           onChangeText={(email) => this.setState({email})}
           placeholder='请输入邮箱'
+          autoFocus={true}
+          maxLength={60}
         />
 
       <TextInput
@@ -164,8 +166,9 @@ class SignIn extends Component {
           onChangeText={(password) => this.setState({password})}
           secureTextEntry={true}
           placeholder='请输入密码'
+          maxLength={60}
         />
-
+        
         {captchaId ?
             <View>
               <TextInput

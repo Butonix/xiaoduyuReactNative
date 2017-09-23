@@ -62,7 +62,7 @@ class ResetBrief extends React.Component {
                   style={styles.input}
                   autoCapitalize="none"
                   onChangeText={(brief) => this.setState({brief})}
-                  placeholder='请输入你的个人签名'
+                  placeholder='请用一句话介绍你自己'
                   defaultValue={me.brief}
                   autoFocus={true}
                 />
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     paddingTop:10,
   },
   input: {
+    marginTop:10,
     padding:10,
     backgroundColor:'#fff'
   }

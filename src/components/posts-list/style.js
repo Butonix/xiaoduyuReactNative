@@ -65,5 +65,8 @@ export default StyleSheet.create({
   },
   loading: {
     height: 60
+  },
+  contentText: {
+    lineHeight:18
   }
 })

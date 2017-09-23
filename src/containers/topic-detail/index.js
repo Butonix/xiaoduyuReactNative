@@ -35,13 +35,14 @@ class TopicDetail extends Component {
   }
 
   createPosts() {
+
     const { navigate } = this.props.navigation
     const { topic } = this.props.navigation.state.params
     navigate('WritePosts', { topic })
   }
 
   render() {
-    
+
     const { topic } = this.props.navigation.state.params
 
     const { navigation } = this.props

@@ -29,13 +29,14 @@ class CommentItem extends React.Component {
   }
 
   editComment(comment) {
-
+    
     const { navigate } = this.props.navigation;
     const { loadCommentById } = this.props
 
     loadCommentById({
       id: comment._id,
       callback: (res)=>{
+        console.log(res);
         if (res) {
           navigate('WriteComment', { comment: res })
         }
@@ -45,12 +46,14 @@ class CommentItem extends React.Component {
 
   render() {
 
+    const self = this
     const {
       comment,
       displayLike = false,
       displayReply = false,
       subitem = false,
       displayCreateAt = false,
+      displayEdit = true,
       me
     } = this.props
 
@@ -74,13 +77,13 @@ class CommentItem extends React.Component {
             <View style={styles.headRight}>
               {displayLike ? <Text style={styles.like}>赞</Text> : null}
               {displayReply ? <TouchableOpacity onPress={()=>{this.reply(comment)}} style={styles.like}><Text>回复</Text></TouchableOpacity> : null}
-              {me && me._id == comment.user_id._id ? <TouchableOpacity onPress={()=>{this.editComment(comment)}}><Text>编辑</Text></TouchableOpacity> : null}
+              {displayEdit && me && me._id == comment.user_id._id ? <TouchableOpacity onPress={()=>{self.editComment(comment)}}><Text>编辑</Text></TouchableOpacity> : null}
             </View>
           </View>
-          
+
           <View style={styles.content}>
           {comment.content_summary ?
-            <Text>{comment.content_summary}</Text> :
+            <Text style={styles.contentText}>{comment.content_summary}</Text> :
             <HtmlView html={comment.content_html} imgOffset={80} />}
           </View>
 
@@ -112,7 +115,8 @@ const styles = StyleSheet.create({
   head:{
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom:5
   },
   headLeft: {
     flexDirection: 'row'
@@ -137,6 +141,9 @@ const styles = StyleSheet.create({
   content: {
     flex:1,
     paddingRight: 15
+  },
+  contentText: {
+    lineHeight: 18
   }
 })
 

@@ -16,6 +16,7 @@
     "react-native": "0.46.4",
     "react-native-actionsheet": "^2.2.2",
     "react-native-cookie": "^0.2.0",
+    "react-native-html-render": "^1.0.5",
     "react-native-htmlview": "^0.11.1",
     "react-native-image-crop-picker": "^0.16.0",
     "react-native-keyboard-spacer": "^0.3.1",
@@ -26,11 +27,10 @@
     "react-native-simple-radio-button": "^2.6.0",
     "react-native-splash-screen": "^2.1.0",
     "react-native-webview-messaging": "^1.1.0",
-    "react-navigation": "^1.0.0-beta.11",
+    "react-navigation": "^1.0.0-beta.12",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
-    "teaset": "^0.4.1"
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",

@@ -125,8 +125,6 @@ class PostsDetail extends Component {
     if (nothing) return (<Nothing content="帖子不存在或已删除" />)
     if (!posts) return <Loading />
 
-    // console.log(posts);
-
     return (<View style={styles.container}>
         <ScrollView style={styles.main}>
           <View>
@@ -161,7 +159,6 @@ class PostsDetail extends Component {
                 displayCreateAt={true}
                 />
             </View>
-
           </View>
         </ScrollView>
         <BottomBar {...this.props} posts={posts} />

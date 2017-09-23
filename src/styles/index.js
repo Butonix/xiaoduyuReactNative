@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 10,
     borderRadius: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor:'#fff'
   },
   radiusInputTop: {
     height: 45,
@@ -85,7 +86,8 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor:'#fff'
   },
   radiusInputCenter: {
     height: 45,
@@ -93,7 +95,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 10,
     marginTop:-1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor:'#fff'
   },
   radiusInputBottom: {
     height: 45,
@@ -103,7 +106,8 @@ const styles = StyleSheet.create({
     marginTop:-1,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor:'#fff'
   },
 
   radiusInputLeft: {
@@ -114,7 +118,8 @@ const styles = StyleSheet.create({
     marginTop:-1,
     borderBottomLeftRadius: 5,
     borderTopLeftRadius: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor:'#fff'
   },
 
   // margin

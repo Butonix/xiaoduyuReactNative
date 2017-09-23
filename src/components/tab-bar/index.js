@@ -19,7 +19,7 @@ class Tabbar extends Component {
         </View>
         <View style={styles.itemFixed}>
           <View></View>
-          <TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic', { typeId: 1 }) }}>
+          <TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic', { typeId: 1, goBackKey: navigation.state.key }) }}>
             <WriteIcon />
           </TouchableOpacity>
         </View>
