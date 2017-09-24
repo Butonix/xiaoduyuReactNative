@@ -38,14 +38,20 @@ export function loadUserInfo({ accessToken = null, callback = ()=>{} }) {
 export function resetAvatar({ avatar, callback =()=>{} }) {
   return (dispatch, getState) => {
     let accessToken = getState().user.accessToken
-
+    
     return Ajax({
       url: '/reset-avatar',
       type: 'post',
       data: { avatar: avatar },
       headers: { AccessToken: accessToken },
       callback: (res)=>{
-        if (res && res.success) loadUserInfo({})(dispatch, getState)
+        if (res && res.success) loadUserInfo({
+          callback: (res)=>{
+            if (res && res.success) {
+              dispatch({ type: 'UPDATE_POSTS_LIST_USER_AVATAR_BY_USER_ID', userId: res.data._id, avatar: res.data.avatar_url })
+            }
+          }
+        })(dispatch, getState)
         callback(res)
       }
     })

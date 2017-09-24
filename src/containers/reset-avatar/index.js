@@ -135,6 +135,7 @@ class ResetAvatar extends React.Component {
 
         image.localIdentifier = new Date().getTime() + '-' + me._id
         // self.getLoading().show('头像上传中...');
+        self.setState({ visible: true })
 
         uploadFile({
           name: new Date().getTime() + '-' + me._id,
@@ -143,6 +144,7 @@ class ResetAvatar extends React.Component {
           callback: (progress, imageUrl)=>{
             if (imageUrl) {
               self.updateAvatar(imageUrl,()=>{
+                self.setState({ visible: false })
                 // self.getLoading().dismiss()
               })
             }
@@ -185,12 +187,13 @@ class ResetAvatar extends React.Component {
           callback: (progress, imageUrl)=>{
             if (imageUrl) {
               self.updateAvatar(imageUrl,()=>{
+                self.setState({ visible: false })
                 // self.getLoading().dismiss()
               })
             }
           }
         })
-        
+
         /*
         self.uploadQiniu(image, (progress, imageUrl)=>{
 
@@ -228,7 +231,7 @@ class ResetAvatar extends React.Component {
                 destructiveButtonIndex={DESTRUCTIVE_INDEX}
                 onPress={this.handlePress}
               />
-
+              
               {this.state.visible ? <Wait text="头像上传中..." /> : null}
 
               {/*<Loading ref={'loading'} text={'Loading...'} />*/}

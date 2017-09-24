@@ -57,18 +57,13 @@ class NotificationList extends Component {
     this.goTo = this.goTo.bind(this)
     this.goToComment = this.goToComment.bind(this)
     this.loadList = this.loadList.bind(this)
-    this.test = this.test.bind(this)
-    this.renderHeader = this.renderHeader.bind(this)
+    // this.renderHeader = this.renderHeader.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
     this.renderNotice = this.renderNotice.bind(this)
     this.toPeople = this.toPeople.bind(this)
     this.toPosts = this.toPosts.bind(this)
     this.toComment = this.toComment.bind(this)
     this.toReply = this.toReply.bind(this)
-  }
-
-  test() {
-    console.log('214')
   }
 
   componentWillMount() {
@@ -119,7 +114,7 @@ class NotificationList extends Component {
   }
 
   renderHeader() {
-    return (<View><Text></Text></View>)
+    // return (<View><Text></Text></View>)
   }
 
   renderFooter() {
@@ -141,75 +136,65 @@ class NotificationList extends Component {
   }
 
   renderNotice(notice) {
-    const avatar = <Image source={{ uri: 'https:'+notice.sender_id.avatar_url }} style={styles.avatar} />
+    const avatar = <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}}><Image source={{ uri: 'https:'+notice.sender_id.avatar_url }} style={styles.avatar} /></TouchableOpacity>
 
     switch (notice.type) {
 
       case 'follow-you':
         content = (<View>
-            <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}}>
             <View style={styles.head}>
               {avatar}
-              <Text style={styles.nickname}>{notice.sender_id.nickname}</Text>
+              <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
               <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
             </View>
-            </TouchableOpacity>
             <Text style={styles.gray}>关注了你</Text>
           </View>)
         break
 
       case 'follow-posts':
-        content = (<TouchableOpacity onPress={()=>{this.toPosts(notice.posts_id)}}><View>
-            <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}}>
+        content = (<View>
             <View style={styles.head}>
               {avatar}
-              <Text style={styles.nickname}>{notice.sender_id.nickname}</Text>
+              <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
               <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
             </View>
-            </TouchableOpacity>
             <Text>
               <Text style={styles.gray}>关注了你的</Text>
-              <Text>{notice.posts_id.title}</Text>
+              <Text onPress={()=>{this.toPosts(notice.posts_id)}}>{notice.posts_id.title}</Text>
               <Text style={styles.gray}>帖子</Text>
             </Text>
-          </View></TouchableOpacity>)
+          </View>)
         break
 
       case 'like-posts':
-        content = (<TouchableOpacity onPress={()=>{this.toPosts(notice.posts_id)}}>
-          <View>
-            <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}}>
+        content = (<View>
             <View style={styles.head}>
               {avatar}
-              <Text style={styles.nickname}>{notice.sender_id.nickname}</Text>
+              <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
               <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
             </View>
-            </TouchableOpacity>
             <Text>
               <Text style={styles.gray}>赞了你的</Text>
-              <Text>{notice.posts_id.title}</Text>
+              <Text onPress={()=>{this.toPosts(notice.posts_id)}}>{notice.posts_id.title}</Text>
               <Text style={styles.gray}>帖子</Text>
             </Text>
-          </View>
-          </TouchableOpacity>)
+          </View>)
         break
 
       case 'reply':
         content = (<View>
-          <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}}>
           <View style={styles.head}>
             {avatar}
-            <Text style={styles.nickname}>{notice.sender_id.nickname}</Text>
+            <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
             <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
           </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=>{this.toComment(notice.comment_id.parent_id)}}>
           <Text>
             <Text style={styles.gray}>回复了你的</Text>
-            <Text>{notice.comment_id.reply_id ? notice.comment_id.reply_id.content_trim : notice.comment_id.parent_id.content_trim}</Text>
+            <Text onPress={()=>{this.toComment(notice.comment_id.parent_id)}}>
+              {notice.comment_id.reply_id ? notice.comment_id.reply_id.content_trim : notice.comment_id.parent_id.content_trim}
+            </Text>
             <Text style={styles.gray}>回复</Text>
           </Text>
-          </TouchableOpacity>
           <TouchableOpacity onPress={()=>{this.toReply(notice.comment_id)}}>
           <View style={styles.commentContent}>
             <Text>{notice.comment_id.content_trim}</Text>
@@ -219,19 +204,17 @@ class NotificationList extends Component {
         break
 
       case 'comment':
-        content = (<TouchableOpacity onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>
+        content = (
           <View>
-          <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}}>
           <View style={styles.head}>
             {avatar}
-            <Text style={styles.nickname}>{notice.sender_id.nickname}</Text>
+            <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
             <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
           </View>
-          </TouchableOpacity>
 
             <Text>
               <Text style={styles.gray}>评论了你的</Text>
-              <Text>{notice.comment_id.posts_id.title}</Text>
+              <Text onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>{notice.comment_id.posts_id.title}</Text>
               <Text style={styles.gray}>帖子</Text>
             </Text>
 
@@ -240,71 +223,59 @@ class NotificationList extends Component {
               <Text>{notice.comment_id.content}</Text>
             </View>
           </TouchableOpacity>
-        </View>
-        </TouchableOpacity>)
+        </View>)
         break
 
       case 'like-reply':
-        content = (<TouchableOpacity onPress={()=>{this.toComment(notice.comment_id)}}>
+        content = (
           <View>
-          <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}}>
           <View style={styles.head}>
             {avatar}
-            <Text style={styles.nickname}>{notice.sender_id.nickname}</Text>
+            <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
             <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
           </View>
-          </TouchableOpacity>
           <Text>
             <Text style={styles.gray}>赞了你的</Text>
-            <Text>{notice.comment_id.content_trim}</Text>
+            <Text onPress={()=>{this.toComment(notice.comment_id)}}>{notice.comment_id.content_trim}</Text>
             <Text style={styles.gray}>回复</Text>
           </Text>
-        </View>
-        </TouchableOpacity>)
+        </View>)
         break
 
       case 'like-comment':
-        content = (<TouchableOpacity onPress={()=>{this.toComment(notice.comment_id)}}>
+        content = (
         <View>
-          <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}}>
           <View style={styles.head}>
             {avatar}
-            <Text style={styles.nickname}>{notice.sender_id.nickname}</Text>
+            <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
             <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
           </View>
-          </TouchableOpacity>
           <Text>
             <Text style={styles.gray}>赞了你的</Text>
-            <Text>{notice.comment_id.content_trim}</Text>
+            <Text onPress={()=>{this.toComment(notice.comment_id)}}>{notice.comment_id.content_trim}</Text>
             <Text style={styles.gray}>评论</Text>
           </Text>
-        </View>
-        </TouchableOpacity>)
+        </View>)
         break
 
       // 新的回答通知
       case 'new-comment':
-        content = (<TouchableOpacity onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>
+        content = (
           <View>
-          <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}}>
           <View style={styles.head}>
             {avatar}
-            <Text style={styles.nickname}>{notice.sender_id.nickname}</Text>
+            <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
             <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
           </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>
           <Text>
             <Text style={styles.gray}>评论了</Text>
-            <Text>{notice.comment_id.posts_id.title}</Text>
+            <Text onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>{notice.comment_id.posts_id.title}</Text>
             <Text style={styles.gray}>帖子</Text>
           </Text>
-          </TouchableOpacity>
           <View>
             <Text>{notice.comment_id.content_trim}</Text>
           </View>
-        </View>
-        </TouchableOpacity>)
+        </View>)
         break
     }
 
@@ -323,7 +294,7 @@ class NotificationList extends Component {
     if (list.loading && list.data.length == 0 || !list.data) {
       return (<Loading />)
     }
-    
+
     if (!list.loading && !list.more && list.data.length == 0) {
       return (<Nothing content="没有通知" />)
     }
@@ -336,7 +307,7 @@ class NotificationList extends Component {
           enableEmptySections={true}
           dataSource={itemlist}
           renderRow={(item) => (<View style={styles.item}>{this.renderNotice(item)}</View>)}
-          renderHeader={this.renderHeader}
+          // renderHeader={this.renderHeader}
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
           // renderFooter={this.renderFooter}
           removeClippedSubviews={false}
@@ -413,7 +384,7 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: '#fff',
     padding:10,
-    marginBottom: 10,
+    marginTop: 10,
   },
   space: {
     width:50,

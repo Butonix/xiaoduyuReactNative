@@ -16,11 +16,11 @@ class WriteComment extends React.Component {
     const { params = {} } = navigation.state
     return {
       // headerLeft: (<View><Button onPress={()=>params.cancel()} title={"取消"} /></View>),
-      title: '编写评论',
+      title: params.replyId ? '编写回复' : '编写评论',
       headerRight: (<View><Button onPress={()=>params.submit()} title={"提交"} /></View>),
     }
   }
-
+  
   constructor (props) {
     super(props)
     this.state = {

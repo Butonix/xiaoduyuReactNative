@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import { View, ScrollView, Image, StyleSheet, Alert, TouchableOpacity, AsyncStorage } from 'react-native'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
-
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../reducers/user'
@@ -14,8 +13,6 @@ import TabBar from '../../components/tab-bar'
 import MenuIcon from '../../components/ui/icon/menu'
 
 import JPushModule from 'jpush-react-native'
-
-// console.log(JPushModule.removeReceiveOpenNotificationListener);
 
 class Home extends Component {
 
@@ -100,7 +97,8 @@ class Home extends Component {
             weaken: 1,
             method: 'user_custom',
             include_comments: 1,
-            comments_sort: 'create_at:-1'
+            comments_sort: 'create_at:-1',
+            device: 'ios'
           }}
           />
 

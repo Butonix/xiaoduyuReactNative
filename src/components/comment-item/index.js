@@ -29,14 +29,13 @@ class CommentItem extends React.Component {
   }
 
   editComment(comment) {
-    
+
     const { navigate } = this.props.navigation;
     const { loadCommentById } = this.props
 
     loadCommentById({
       id: comment._id,
       callback: (res)=>{
-        console.log(res);
         if (res) {
           navigate('WriteComment', { comment: res })
         }

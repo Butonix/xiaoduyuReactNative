@@ -1,11 +1,11 @@
 
 
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Image, Button, ScrollView, WebView, TouchableOpacity } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Image, Button, ScrollView, WebView, TouchableOpacity, AsyncStorage } from 'react-native'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { loadPostsById } from '../../actions/posts'
+import { loadPostsById, addViewById } from '../../actions/posts'
 import { getPostsById } from '../../reducers/posts'
 import { getUserInfo } from '../../reducers/user'
 
@@ -50,7 +50,7 @@ class PostsDetail extends Component {
     this.showSheet = this.showSheet.bind(this)
   }
 
-  componentDidMount() {
+  componentWillMount() {
 
     const self = this
     const id = this.props.navigation.state.params.id
@@ -80,6 +80,44 @@ class PostsDetail extends Component {
         menu: this.menu
       })
     }
+
+  }
+
+  componentDidMount() {
+
+    const self = this
+    const id = this.props.navigation.state.params.id
+    const { addViewById } = this.props
+
+    AsyncStorage.getItem('view-posts', (errs, viewPosts)=>{
+
+        if (!viewPosts) viewPosts = ''
+
+      AsyncStorage.getItem('last-viewed-posts-at', (errs, lastViewPostsAt)=>{
+        if (!lastViewPostsAt) {
+          lastViewPostsAt =  new Date().getTime()
+        } else {
+          lastViewPostsAt = parseInt(lastViewPostsAt)
+        }
+
+        // 如果超过1小时，那么浏览数据清零
+        if (new Date().getTime() - lastViewPostsAt > 3600000) viewPosts = ''
+
+        viewPosts = viewPosts.split(',')
+
+        if (!viewPosts[0]) viewPosts = []
+
+        if (viewPosts.indexOf(id) == -1) {
+
+          viewPosts.push(id)
+
+          AsyncStorage.setItem('view-posts', viewPosts.join(','), function(errs, result){})
+          AsyncStorage.setItem('last-viewed-posts-at', new Date().getTime()+'', function(errs, result){})
+          addViewById({ id: id })
+        }
+
+      })
+    })
 
   }
 
@@ -245,6 +283,7 @@ export default connect((state, props) => {
     }
   },
   (dispatch) => ({
-    loadPostsById: bindActionCreators(loadPostsById, dispatch)
+    loadPostsById: bindActionCreators(loadPostsById, dispatch),
+    addViewById: bindActionCreators(addViewById, dispatch)
   })
 )(PostsDetail);

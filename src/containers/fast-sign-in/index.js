@@ -133,7 +133,7 @@ class FastSignIn extends Component {
     return (<View style={styles.container} keyboardShouldPersistTaps={'always'}>
 
         <View style={styles.logoMain}>
-          <Image source={require('./images/logo.png')} style={styles.logo} />
+          <Image source={require('./images/logo.png')} style={styles.logo} resizeMode="cover" />
         </View>
 
         {clientInstalled.qq ?

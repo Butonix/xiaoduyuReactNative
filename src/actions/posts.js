@@ -215,3 +215,21 @@ export function updatePostsById({ id, type, topicId, title, content, contentHTML
 
   }
 }
+
+
+export function addViewById({ id, callback = ()=>{ } }) {
+  return (dispatch, getState) => {
+
+    return Ajax({
+      url: '/view-posts',
+      type: 'get',
+      data: { posts_id: id },
+      callback: (result) => {
+        if (result && result.success) {
+          dispatch({ type: 'UPDATE_POSTS_VIEW', id: id })
+        }
+        callback(result)
+      }
+    })
+  }
+}

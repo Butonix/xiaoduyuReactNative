@@ -83,6 +83,30 @@ export default function posts(state = initialState, action = {}) {
       }
       return merge({}, state, {})
 
+
+    case 'UPDATE_POSTS_LIST_USER_AVATAR_BY_USER_ID':
+      var { userId, avatar } = action
+
+      for (let i in state) {
+        state[i].data.map(item => {
+
+          if (item.user_id._id == userId) {
+            item.user_id.avatar_url = avatar
+          }
+
+          if (item.comment && item.comment.length) {
+            item.comment.map(comment=>{
+              if (comment.user_id._id == userId) {
+                comment.user_id.avatar_url = avatar
+              }
+            })
+          }
+
+        })
+      }
+
+      return merge({}, state, {})
+
     default:
       return state;
   }
