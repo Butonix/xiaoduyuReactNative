@@ -29,7 +29,11 @@ export function loadPeopleById({ id, callback = ()=>{} }) {
   }
 }
 
-
+export const cleanAllPeople = () => {
+  return (dispatch, getState) => {
+    dispatch({ type: 'CLEAN_ALL_PEOPLE' })
+  }
+}
 
 /*
 export function loadFollowPeoples({ callback = ()=>{} }) {

@@ -235,3 +235,9 @@ export function loadUnreadCount({ callback=()=>{} }) {
 
   }
 }
+
+export const cleanAllNotification = () => {
+  return (dispatch, getState) => {
+    dispatch({ type: 'CLEAN_ALL_NOTIFICATION' })
+  }
+}

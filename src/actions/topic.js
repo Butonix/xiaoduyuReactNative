@@ -157,3 +157,9 @@ export function loadTopicList({ name, filters = {}, callback = ()=>{} }) {
 
   }
 }
+
+export const cleanAllTopic = () => {
+  return (dispatch, getState) => {
+    dispatch({ type: 'CLEAN_ALL_TOPIC' })
+  }
+}

@@ -10,6 +10,9 @@ let initialState = {
 export default function peoples(state = initialState, action = {}) {
   switch (action.type) {
 
+    case 'CLEAN_ALL_PEOPLE':
+      return merge({}, {}, {})
+
     case 'SET_PEOPLE_LIST_BY_NAME':
       var { name, data } = action
       state[name] = data
@@ -22,8 +25,6 @@ export default function peoples(state = initialState, action = {}) {
       return merge({}, state, {})
 
     case 'UPLOAD_PEOPLE_FOLLOW':
-    
-      console.log('123123');
 
       var { peopleId, followStatus, selfId } = action
 

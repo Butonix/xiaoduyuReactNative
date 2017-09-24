@@ -1,7 +1,7 @@
 
 // 开发环境配置
 var development = {
-  debug: true,
+  debug: false,
   // 官网
   official_website: 'https://www.xiaoduyu.com',
   // API 地址

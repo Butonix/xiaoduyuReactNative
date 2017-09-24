@@ -129,7 +129,7 @@ export function loadCommentList({ name, filters = {}, callback = ()=>{}, restart
     if (restart) {
       commentList = {}
     }
-    
+
     if (typeof(commentList.more) != 'undefined' && !commentList.more ||
       commentList.loading
     ) {
@@ -203,6 +203,12 @@ export const loadCommentById = ({ id, callback = () => {} }) => {
       }
     })(dispatch, getState)
 
+  }
+}
+
+export const cleanAllComment = () => {
+  return (dispatch, getState) => {
+    dispatch({ type: 'CLEAN_ALL_COMMENT' })
   }
 }
 

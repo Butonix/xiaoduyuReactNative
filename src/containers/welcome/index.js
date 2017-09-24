@@ -92,7 +92,7 @@ class Welcome extends Component {
         }
         break
       case 'online-user-count':
-        console.log(data);
+        // console.log(data);
         break
     }
   }
@@ -140,7 +140,7 @@ class Welcome extends Component {
   testNetwork(callback) {
     this.setState({ loading: true })
     function handleFirstConnectivityChange(state) {
-      console.log('网络状态:' + state);
+      // console.log('网络状态:' + state);
       callback(state)
       NetInfo.isConnected.removeEventListener('change', handleFirstConnectivityChange)
     }
@@ -148,7 +148,7 @@ class Welcome extends Component {
   }
 
   render() {
-
+    
     const { loading, network } = this.state
 
     if (loading) {

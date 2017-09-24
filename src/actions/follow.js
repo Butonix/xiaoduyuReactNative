@@ -212,3 +212,9 @@ export function loadFollowPosts({ name, filters = {}, callback = ()=>{}, restart
 
   }
 }
+
+export const cleanAllFollow = () => {
+  return (dispatch, getState) => {
+    dispatch({ type: 'CLEAN_ALL_FOLLOW_PEOPLE' })
+  }
+}

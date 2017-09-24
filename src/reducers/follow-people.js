@@ -7,6 +7,9 @@ let initialState = {
 export default function followPeople(state = initialState, action = {}) {
   switch (action.type) {
 
+    case 'CLEAN_ALL_FOLLOW_PEOPLE':
+      return merge({}, {}, {})
+
     case 'SET_FOLLOW_PEOPLE':
       return merge({}, action.state, {})
 

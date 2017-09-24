@@ -7,6 +7,9 @@ let initialState = {
 export default function comment(state = initialState, action = {}) {
   switch (action.type) {
 
+    case 'CLEAN_ALL_COMMENT':
+      return merge({}, {}, {})
+      
     case 'SET_COMMENT_LIST_BY_NAME':
       var { name, data } = action
       state[name] = data

@@ -6,20 +6,25 @@ import { Text, View, AsyncStorage, NetInfo, StyleSheet, ActivityIndicator,
   TouchableOpacity
 } from 'react-native'
 
-import reducers, { getInitialState } from './reducers'
+// import reducers, { getInitialState } from './reducers'
 import getStore from './store/configure-store.js'
 import Navigators from './navigators/index'
 
-import { connect } from 'react-redux'
-import { combineReducers, bindActionCreators } from 'redux'
+// import { connect } from 'react-redux'
+// import { combineReducers, bindActionCreators } from 'redux'
 import { loadUserInfo, addAccessToken, cleanUserInfo } from './actions/user'
-import { loadUnreadCount } from './actions/notification'
+import { loadUnreadCount, cleanAllNotification } from './actions/notification'
 import { cleanAllPosts } from './actions/posts'
+import { cleanAllComment } from './actions/comment'
+import { cleanAllFollow } from './actions/follow'
+import { cleanAllPeople } from './actions/people'
+import { cleanAllTopic } from './actions/topic'
+
 import { checkClientInstalled } from './actions/client-installed'
 
 import JPushModule from 'jpush-react-native'
 
-const store = getStore()
+let store = getStore()
 
 // 解决该组建，启动黑底的问题
 // import { Theme } from 'teaset'
@@ -35,6 +40,11 @@ global.screen = {
 global.cleanRedux = () => {
   cleanUserInfo()(store.dispatch, store.getState)
   cleanAllPosts()(store.dispatch, store.getState)
+  cleanAllComment()(store.dispatch, store.getState)
+  cleanAllNotification()(store.dispatch, store.getState)
+  cleanAllFollow()(store.dispatch, store.getState)
+  cleanAllPeople()(store.dispatch, store.getState)
+  cleanAllTopic()(store.dispatch, store.getState)
 }
 
 global.initReduxDate = (callback) => {

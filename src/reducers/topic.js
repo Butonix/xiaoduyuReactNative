@@ -11,6 +11,9 @@ export default function topic(state = initialState, action = {}) {
 
   switch (action.type) {
 
+    case 'CLEAN_ALL_TOPIC':
+      return merge({}, {}, {})
+
     case 'SET_TOPIC_LIST_BY_NAME':
       var { name, data } = action
       state[name] = data
@@ -43,7 +46,7 @@ export default function topic(state = initialState, action = {}) {
       for (let i in state) {
 
         if (!state[i].data) continue
-        
+
         state[i].data.map(item=>{
 
           if (item._id == id) {
