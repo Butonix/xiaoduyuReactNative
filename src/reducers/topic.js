@@ -12,7 +12,11 @@ export default function topic(state = initialState, action = {}) {
   switch (action.type) {
 
     case 'CLEAN_ALL_TOPIC':
-      return merge({}, {}, {})
+      return merge({}, {
+        other: {
+          data: []
+        }
+      }, {})
 
     case 'SET_TOPIC_LIST_BY_NAME':
       var { name, data } = action

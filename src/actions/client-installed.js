@@ -9,7 +9,7 @@ const check = (url, callback) => {
 
 export function checkClientInstalled() {
   return (dispatch, getState) => {
-    
+
     check('weibo://', (result)=>{
       if (result) dispatch({ type: 'HAS_CLIENT_INSTALLED', name: 'weibo' })
     })

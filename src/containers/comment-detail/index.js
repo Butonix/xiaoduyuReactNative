@@ -105,8 +105,10 @@ class CommentDetail extends Component {
     const { navigate } = this.props.navigation;
     navigate('PeopleDetail', { title: user.nickname, id: user._id })
   }
-  
+
   render() {
+
+    const { restart = false } = this.props.navigation.state.params
 
     let { data, loading } = this.props.comment
     const { nothing } = this.state
@@ -147,6 +149,7 @@ class CommentDetail extends Component {
             displayReply={true}
             displayLike={true}
             displayCreateAt={true}
+            restart={restart}
             />
         </View>
       </ScrollView>

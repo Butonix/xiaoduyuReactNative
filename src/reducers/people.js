@@ -11,8 +11,12 @@ export default function peoples(state = initialState, action = {}) {
   switch (action.type) {
 
     case 'CLEAN_ALL_PEOPLE':
-      return merge({}, {}, {})
-
+      return merge({}, {
+        other: {
+          data: []
+        }
+      }, {})
+      
     case 'SET_PEOPLE_LIST_BY_NAME':
       var { name, data } = action
       state[name] = data

@@ -21,7 +21,7 @@ const converterErrorInfo = (res) => {
       }
     }
   }
-
+  
   // 替换字符串中的参数
   if (res.error_data) {
     if (typeof res.error == 'array') {

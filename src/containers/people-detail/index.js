@@ -22,6 +22,7 @@ import { loadPeopleById } from '../../actions/people'
 import { getPeopleById } from '../../reducers/people'
 import { ListItem } from '../../components/ui'
 import FollowButton from '../../components/follow-button'
+import Loading from '../../components/ui/loading'
 
 class PeopleDetail extends React.Component {
 
@@ -31,7 +32,6 @@ class PeopleDetail extends React.Component {
 
     return {
       title: params.title
-      // headerRight: (<View><Button onPress={()=>params.submit()} title={"关注"} /></View>),
     }
 
   }
@@ -41,16 +41,13 @@ class PeopleDetail extends React.Component {
   }
 
   componentWillMount() {
-    // console.log(this);
-    const { id } = this.props.navigation.state.params
 
+    const { id } = this.props.navigation.state.params
     const { loadPeopleById } = this.props
     const [ people ] = this.props.people
 
     if (!people) {
-      loadPeopleById({
-        id
-      })
+      loadPeopleById({ id })
     }
 
   }
@@ -58,14 +55,10 @@ class PeopleDetail extends React.Component {
   render() {
 
     const [ people ] = this.props.people
-
-      const { navigate } = this.props.navigation
-
+    const { navigate } = this.props.navigation
 
     if (!people) {
-      return (<View>
-        <Text>Loading...</Text>
-      </View>)
+      return (<Loading />)
     }
 
     return (<ScrollView>

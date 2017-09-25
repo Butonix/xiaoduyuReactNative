@@ -36,23 +36,8 @@ class CommentList extends Component {
 
   constructor (props) {
     super(props)
-
-    var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-
     this.state = {
-      topics: ds.cloneWithRows([]),
-      sourcePostsList: [],
-      loadMore: false,
-      more: true,
-      isRefreshing: false,
-      filters: {
-        lt_date: new Date().getTime(),
-        per_page: 20
-      },
-      list: {
-        loading: false,
-        more: true
-      }
+      isRefreshing: false
     }
     this.goTo = this.goTo.bind(this)
     this.load = this.load.bind(this)
@@ -92,7 +77,7 @@ class CommentList extends Component {
     if (list.loading && list.data.length == 0 || !list.data) {
       return (<Loading />)
     }
-    
+
     if (!list.loading && !list.more && list.data.length == 0) {
       return (<Nothing content="没有评论" />)
     }

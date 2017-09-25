@@ -1,13 +1,11 @@
 
-import { combineReducers } from 'redux'
-
-import merge from 'lodash/merge'
+// import { combineReducers } from 'redux'
+// import merge from 'lodash/merge'
 
 import posts from './posts'
 import topic from './topic'
 import comment from './comment'
 import user from './user'
-import writePosts from './write-posts'
 import notification from './notification'
 import people from './people'
 import followPeople from './follow-people'
@@ -18,13 +16,13 @@ let states = {
   topic,
   comment,
   user,
-  writePosts,
   notification,
   people,
   followPeople,
   clientInstalled
 }
 
+/*
 let _states = {}
 
 for (let i in states) {
@@ -38,3 +36,5 @@ export const getInitialState = () => {
 }
 
 export default merge({}, states, {})
+*/
+export default states

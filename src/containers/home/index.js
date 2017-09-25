@@ -7,6 +7,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../reducers/user'
+import { cleanAllComment } from '../../actions/comment'
 
 import PostsList from '../../components/posts-list'
 import TabBar from '../../components/tab-bar'
@@ -31,19 +32,19 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const { me } = this.props
+    const { me, cleanAllComment } = this.props
     const { navigate } = this.props.navigation
     this.state.listener = (result) => {
-      // console.log('收到了点击通知');
       if (result.routeName && result.params) {
-        navigate(result.routeName, result.params)
+        cleanAllComment()
         JPushModule.setBadge(0, ()=>{})
+        navigate(result.routeName, result.params)
       }
     }
 
     JPushModule.addReceiveOpenNotificationListener(this.state.listener)
 
-    // 设置别名
+    // 设置别名, 发送给指定的用户
     AsyncStorage.getItem('jpush_alias', (errs, result)=>{
       if (!result) {
         AsyncStorage.setItem('jpush_alias', me._id, function(errs, result){
@@ -51,7 +52,7 @@ class Home extends Component {
         })
       }
     })
-
+    
     // 设置标签，推送已登陆的用户
     AsyncStorage.getItem('jpush_tag', (errs, result)=>{
       if (!result) {
@@ -129,5 +130,6 @@ export default connect(state => ({
     me: getUserInfo(state)
   }),
   (dispatch) => ({
+    cleanAllComment: bindActionCreators(cleanAllComment, dispatch)
   })
 )(Home)

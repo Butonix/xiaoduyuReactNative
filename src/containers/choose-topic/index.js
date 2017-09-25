@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, ScrollView, Button, TouchableOpacity } from 're
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setTopic } from '../../actions/write-posts'
 import { loadTopicList } from '../../actions/topic'
 import { getTopicListByName } from '../../reducers/topic'
 
@@ -44,7 +43,6 @@ class ChooseTopic extends React.Component {
   choose(topic) {
     const { navigate } = this.props.navigation
     const { goBackKey } = this.props.navigation.state.params
-    // console.log(this.props.navigation.state.params.goBackKey);
     navigate('WritePosts', { topic, goBackKey })
   }
 
@@ -121,7 +119,6 @@ export default connect(state => ({
     topicList: getTopicListByName(state, 'all-topic')
   }),
   (dispatch) => ({
-    setTopic: bindActionCreators(setTopic, dispatch),
     loadTopicList: bindActionCreators(loadTopicList, dispatch)
   })
 )(ChooseTopic);
