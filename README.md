@@ -9,7 +9,7 @@
 + 以及上传头像、裁剪头像、修改昵称、个性签名、WebSocket获取新通知等等
 
 ## 界面截图
-![小度鱼iOS界面截图](https://img.xiaoduyu.com/a9d602a7-e747-46c6-8d4f-5eedf39fb53d.png?imageMogr2/auto-orient/thumbnail/!590 "小度鱼iOS界面截图")
+![小度鱼iOS界面截图](https://img.xiaoduyu.com/a9d602a7-e747-46c6-8d4f-5eedf39fb53d.png?imageMogr2/auto-orient/thumbnail/!900 "小度鱼iOS界面截图")
 
 ## 线上站点
 [https://www.xiaoduyu.com](https://www.xiaoduyu.com)  
