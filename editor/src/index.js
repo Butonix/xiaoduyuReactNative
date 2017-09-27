@@ -639,7 +639,7 @@ export class MyEditor extends React.Component {
             <div ref="draftHtml" style={{display:'none'}}>
               {rendered}
             </div>
-
+            
             <Editor
               blockRendererFn={mediaBlockRenderer}
               editorState={editorState}
@@ -648,6 +648,7 @@ export class MyEditor extends React.Component {
               handleKeyCommand={this.handleKeyCommand}
               placeholder={placeholder}
               ref="editor"
+              stripPastedStyles={true}
               spellCheck
             />
 

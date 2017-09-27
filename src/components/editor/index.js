@@ -55,8 +55,8 @@ class Editor extends Component {
     return (<View style={styles.container}>
 
             <WebView
-              // source={{uri:'http://192.168.1.106:9000'}}
-              source={require('../../../editor/dist/index.html')}
+              source={{uri:'http://192.168.1.106:9000'}}
+              // source={require('../../../editor/dist/index.html')}
               style={styles.editor}
               ref={ webview => { this.webview = webview; }}
               onLoad={()=>{ self.init() }}
@@ -166,9 +166,6 @@ Editor.defaultProps = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop:10,
-    paddingLeft:10,
-    paddingRight:10,
     backgroundColor:'#fff'
   },
   editor: {

@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import { follow, unfollow } from '../../actions/follow'
 // import { getUserInfo } from '../../reducers/user'
 
+const S = global.styles
+
 class FollowButton extends Component {
 
   constructor (props) {
@@ -39,16 +41,20 @@ class FollowButton extends Component {
 
   render() {
     const { follow = false, follow_count, posts_id } = this.props
-    return (<TouchableOpacity onPress={this.follow.bind(this)}>
-            <View>
-              <Text>{follow ? '已关注' : '关注'}{posts_id ? '帖子' : ''} {follow_count || ''}</Text>
-            </View>
+    return (<TouchableOpacity onPress={this.follow.bind(this)} style={styles.item}>
+              <Image source={require('../comment-item/images/follow.png')} style={[{width:24,height:24}]} resizeMode="cover" />
+              <Text style={S['f-s-10']}>{follow ? '已关注' : '关注'}{posts_id ? '帖子' : null}{follow_count || null}</Text>
           </TouchableOpacity>)
   }
 }
 
 
 const styles = StyleSheet.create({
+  item: {
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })
 
 export default connect((state, props) => {

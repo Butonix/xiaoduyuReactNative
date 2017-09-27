@@ -1,9 +1,9 @@
 
 import React, { PureComponent } from 'react'
 import { Provider } from 'react-redux'
+import initGlobalParam from './global'
 import Navigators from './navigators/index'
 import getStore from './store/configure-store.js'
-import initGlobalParam from './global'
 
 let store = getStore()
 initGlobalParam(store)

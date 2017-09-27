@@ -23,6 +23,11 @@ const CANCEL_INDEX = 0
 const DESTRUCTIVE_INDEX = 0
 const options = [ '取消', '编辑']
 
+
+const S = global.styles
+
+// console.log(S);
+
 class PostsDetail extends Component {
 
   static navigationOptions = ({ navigation }) => {
@@ -163,6 +168,8 @@ class PostsDetail extends Component {
     if (nothing) return (<Nothing content="帖子不存在或已删除" />)
     if (!posts) return <Loading />
 
+
+
     return (<View style={styles.container}>
         <ScrollView style={styles.main}>
           <View>
@@ -174,12 +181,14 @@ class PostsDetail extends Component {
                   </TouchableOpacity>
                 </View>
                 <View>
-                  <TouchableOpacity onPress={()=>{this.toPeople(posts.user_id)}}>
-                    <Text>{posts.user_id.nickname}</Text>
-                  </TouchableOpacity>
-                  <Text>
-                    {posts.topic_id.name} {posts.view_count ? posts.view_count+'次浏览' : null} {posts.like_count ? posts.like_count+'个赞' : null} {posts.follow_count ? posts.follow_count+'人关注' : null} {posts._create_at}
-                  </Text>
+                  <Text onPress={()=>{this.toPeople(posts.user_id)}} style={[S['bold'], S['m-b-5']]}>{posts.user_id.nickname}</Text>
+                  <View style={{ flexDirection: 'row' }}>
+                    {posts.topic_id.name ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.topic_id.name}</Text> : null}
+                    {posts.view_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.view_count}次浏览</Text> : null}
+                    {posts.like_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.like_count}个赞</Text> : null}
+                    {posts.follow_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.follow_count}人关注</Text> : null}
+                    <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts._create_at}</Text>
+                  </View>
                 </View>
               </View>
               <View style={styles.itemMain}>
@@ -219,9 +228,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   posts: {
-    padding:15,
-    borderBottomWidth: 1,
-    borderColor: '#efefef'
+    padding:15
+    // borderBottomWidth: 1,
+    // borderColor: '#efefef'
   },
   container: {
     flex: 1,

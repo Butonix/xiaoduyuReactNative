@@ -5,8 +5,8 @@ var development = {
   // 官网
   official_website: 'https://www.xiaoduyu.com',
   // API 地址
-  // api_url: 'https://www.xiaoduyu.com',
-  api_url: 'http://192.168.1.107:3000',
+  api_url: 'https://www.xiaoduyu.com',
+  // api_url: 'http://192.168.1.107:3000',
   api_verstion: 'api/v1',
   GA: ''
 }

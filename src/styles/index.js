@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 
 
-const styles = StyleSheet.create({
+let style = {
   button:{
     backgroundColor:'rgb(22, 177, 244)',
     height:50,
@@ -123,6 +123,11 @@ const styles = StyleSheet.create({
   },
 
   // margin
+  m5: { margin:5 },
+  mt5: { marginTop:5 },
+  mr5: { marginRight:5 },
+  mb5: { marginBottom:5 },
+  ml5: { marginLeft:5 },
   m10: { margin:10 },
   mt10: { marginTop:10 },
   mr10: { marginRight:10 },
@@ -150,7 +155,9 @@ const styles = StyleSheet.create({
   red: { color: 'rgb(232, 60, 60)' },
   yellow: { color: 'rgb(255, 132, 42)' },
   darkGray: { color: 'rgb(150, 150, 150)' },
+  'dark-gray': { color: 'rgb(150, 150, 150)' },
   white: { color: '#fff' },
+
 
   // bg
   bgPrimary: {
@@ -177,7 +184,43 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2dede',
     padding:10,
     borderRadius: 5
-  }
-})
+  },
 
-export default styles
+  //
+  bold: {
+    fontWeight: 'bold',
+
+  },
+
+  // flexDirection
+  'f-d-r': {
+    flexDirection: 'row'
+  },
+  'f-d-r-r': {
+    flexDirection: 'row-reverse'
+  },
+  'f-d-r-c': {
+    flexDirection: 'column'
+  },
+  'f-d-r-r': {
+    flexDirection: 'column-reverse'
+  },
+}
+
+let make = (marks, params, values, modify) => {
+  values.map(v=>{
+    marks.map((m,k)=>{
+      style[m+v] = {}
+      style[m+v][params[k]] = modify ? modify(v) : v
+    })
+  })
+}
+
+make(['m-','m-t-','m-r-','m-b-','m-l-'], ['margin', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft'], [5,10,15,20,25,30])
+make(['p-','p-t-','p-r-','p-b-','p-l-'], ['padding', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft'], [5,10,15,20,25,30])
+make(['f-s-'], ['fontSize'], [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24])
+make(['black-'], ['color'], [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100], (value)=>'rgba(0, 0, 0, '+value/100+')')
+
+console.log(style);
+
+export default StyleSheet.create(style)

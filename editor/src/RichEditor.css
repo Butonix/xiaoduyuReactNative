@@ -1,11 +1,12 @@
 
 
 html, body{
-  padding: 0;
+  padding: 5px 5px 0 5px;
   margin: 0;
   color: #23232b;
   font-size: 14px;
   font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  margin-bottom: 80px;
 }
 
 /* 内容样式 */

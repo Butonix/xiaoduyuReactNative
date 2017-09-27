@@ -10,6 +10,8 @@ import { getUserInfo } from '../../reducers/user'
 import LikeButton from '../../components/like-button'
 import FollowButton from '../../components/follow-button'
 
+const S = global.styles
+
 class BottomBar extends Component {
 
   constructor (props) {
@@ -51,13 +53,15 @@ class BottomBar extends Component {
 
           {comment ?
             <TouchableOpacity onPress={this.goWriteComment.bind(this)} style={styles.item}>
-              <Text style={styles.comment}>回复{target.reply_count || ''}</Text>
+              <Image source={require('../comment-item/images/reply.png')} style={[{width:24,height:24}]} resizeMode="cover" />
+              <Text style={S['f-s-10']}>回复{target.reply_count || ''}</Text>
             </TouchableOpacity>
             : null}
-            
+
           {target ?
             <TouchableOpacity onPress={this.goWriteComment.bind(this)} style={styles.item}>
-              <Text style={styles.comment}>评论{target.comment_count || ''}</Text>
+              <Image source={require('../comment-item/images/reply.png')} style={[{width:24,height:24}]} resizeMode="cover" />
+              <Text style={S['f-s-10']}>评论{target.comment_count || ''}</Text>
             </TouchableOpacity>
             : null}
 
@@ -77,10 +81,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   comment: {
-    width: 50,
-    height: 50,
-    lineHeight: 50,
-    textAlign: 'center'
+    // width: 50,
+    // height: 50,
+    // lineHeight: 50,
+    // textAlign: 'center'
   },
   item: {
     flex:1,

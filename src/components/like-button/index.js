@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import { like, unlike } from '../../actions/like'
 import { getUserInfo } from '../../reducers/user'
 
+const S = global.styles
+
 class LikeButton extends Component {
 
   constructor (props) {
@@ -41,7 +43,8 @@ class LikeButton extends Component {
 
     return (
           <TouchableOpacity onPress={this.like.bind(this)} style={styles.item}>
-            <Text>{like ? '已赞' : '赞'} {like_count || ''}</Text>
+            <Image source={require('../comment-item/images/like.png')} style={[{width:24,height:24}]} resizeMode="cover" />
+            <Text style={S['f-s-10']}>{like ? '已赞' : '赞'}{like_count || null}</Text>
           </TouchableOpacity>
         )
   }

@@ -11,6 +11,9 @@ import { cleanAllFollow } from './actions/follow'
 import { cleanAllPeople } from './actions/people'
 import { cleanAllTopic } from './actions/topic'
 import { checkClientInstalled } from './actions/client-installed'
+import styles from './styles'
+
+global.styles = styles
 
 export default ({ dispatch, getState }) => {
 
