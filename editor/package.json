@@ -11,7 +11,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
     "css-loader": "^0.28.5",
-    "draft-js": "0.10.1",
+    "draft-js": "^0.10.2",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "html-webpack-inline-source-plugin": "0.0.9",

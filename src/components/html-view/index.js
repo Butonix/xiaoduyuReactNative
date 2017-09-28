@@ -8,6 +8,8 @@ import HTMLView from 'react-native-htmlview'
 
 import Img from '../image'
 
+
+
 class HtmlView extends Component {
 
   constructor (props) {
@@ -18,11 +20,12 @@ class HtmlView extends Component {
   renderNode(node, index, siblings, parent, defaultRenderer) {
 
     const { imgOffset = 0 } = this.props
-
     // console.log(node);
 
     if (node.name == 'img') {
-      return (<Img key={index} image={node.attribs.src} offset={imgOffset} />)
+      return (
+          <Img key={index} image={node.attribs.src} offset={imgOffset} />
+        )
     }
 
     /*

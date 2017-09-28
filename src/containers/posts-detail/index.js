@@ -164,11 +164,10 @@ class PostsDetail extends Component {
 
     const [ posts ] = this.props.posts
     const { nothing } = this.state
+    // const { navigate } = this.props.navigation
 
     if (nothing) return (<Nothing content="帖子不存在或已删除" />)
     if (!posts) return <Loading />
-
-
 
     return (<View style={styles.container}>
         <ScrollView style={styles.main}>

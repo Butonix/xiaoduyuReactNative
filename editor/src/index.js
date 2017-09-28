@@ -632,14 +632,10 @@ export class MyEditor extends React.Component {
 
   render() {
     const { editorState, readOnly, rendered, placeholder } = this.state
-    const { displayControls } = this.props
-
-    return(<div className="RichEditor-editor">
-
-            <div ref="draftHtml" style={{display:'none'}}>
-              {rendered}
-            </div>
-            
+    // const { displayControls } = this.props
+    
+    return(<div>
+          <div className="RichEditor-editor">
             <Editor
               blockRendererFn={mediaBlockRenderer}
               editorState={editorState}
@@ -651,8 +647,11 @@ export class MyEditor extends React.Component {
               stripPastedStyles={true}
               spellCheck
             />
-
-          </div>)
+          </div>
+          <div ref="draftHtml" style={{display:'none'}}>
+            {rendered}
+          </div>
+        </div>)
   }
 }
 
@@ -662,7 +661,7 @@ MyEditor.defaultProps = {
   content: '',
   readOnly: false,
   getEditor: (editor)=>{},
-  placeholder: '请输入正文'
+  placeholder: '请输入内容'
 }
 
 ReactDOM.render(

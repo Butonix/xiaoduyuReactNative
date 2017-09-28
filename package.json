@@ -20,6 +20,7 @@
     "react-native-htmlview": "^0.11.1",
     "react-native-image-crop-picker": "^0.16.0",
     "react-native-keyboard-spacer": "^0.3.1",
+    "react-native-lightbox": "^0.7.0",
     "react-native-open-share": "git+https://github.com/mozillo/react-native-open-share.git",
     "react-native-qiniu": "^0.3.0",
     "react-native-render-html": "^2.1.0",

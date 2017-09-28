@@ -86,7 +86,7 @@ class WritePosts extends React.Component {
             let posts = res.data
 
             if (goBackKey == 'Home') {
-              console.log('123');
+              // console.log('123');
               self.props.navigation.dispatch(NavigationActions.reset({
                 index: 1,
                 actions: [
@@ -146,11 +146,11 @@ const styles = StyleSheet.create({
     flex:1
   },
   title: {
-    height: 40,
     justifyContent: 'center',
     borderColor: '#efefef',
     borderWidth: 1,
-    paddingLeft: 10,
+    padding: 15,
+    fontSize:18,
     backgroundColor: '#fff'
   }
 });

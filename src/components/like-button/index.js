@@ -32,7 +32,7 @@ class LikeButton extends Component {
       }
     })
   }
-
+  
   render() {
 
     const { like = false, me, user_id, like_count } = this.props

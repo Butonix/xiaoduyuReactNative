@@ -55,17 +55,19 @@ class Editor extends Component {
     return (<View style={styles.container}>
 
             <WebView
-              source={{uri:'http://192.168.1.106:9000'}}
-              // source={require('../../../editor/dist/index.html')}
+              // source={{uri:'http://192.168.1.106:9000'}}
+              source={require('../../../editor/dist/index.html')}
               style={styles.editor}
               ref={ webview => { this.webview = webview; }}
               onLoad={()=>{ self.init() }}
+              scalesPageToFit={false}
               />
 
             {qiniu ? <View style={styles.control}>
                       {!loading ?
                         <TouchableOpacity onPress={this.addPhoto} style={styles.addPhoto}>
                           <Image source={require('./images/photo.png')} style={styles.photoIcon} />
+                          <Text style={styles.photoText}>上传图片</Text>
                         </TouchableOpacity>
                         : <View style={styles.addPhoto}><Text>图片上传中...</Text></View>}
                       <View style={{flex:1}}></View>
@@ -174,12 +176,19 @@ const styles = StyleSheet.create({
   control: {
   },
   addPhoto: {
-    height:40,
-    justifyContent: 'center'
+    paddingTop:8,
+    paddingBottom:8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   photoIcon: {
-    height:25,
-    width:25
+    height:20,
+    width:20
+  },
+  photoText: {
+    marginLeft: 5,
+    color: '#rgb(129, 129, 129)'
   }
 })
 

@@ -131,12 +131,11 @@ class PostsList extends Component {
             {topic.comment && topic.comment.map(item=>{
                 return (<View key={item._id}>
                   <TouchableOpacity onPress={()=>{this.goToComment(item)}}>
-                    <View>
-                      <CommentItem {...this.props} comment={item} displayEdit={false} />
-                    </View>
+                    <CommentItem {...this.props} comment={item} displayEdit={false} canClick={false} />
                   </TouchableOpacity>
                 </View>)
               })}
+
           </View>)}
           // renderHeader={this.renderHeader}
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}

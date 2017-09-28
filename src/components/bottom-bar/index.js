@@ -58,7 +58,7 @@ class BottomBar extends Component {
             </TouchableOpacity>
             : null}
 
-          {target ?
+          {posts ?
             <TouchableOpacity onPress={this.goWriteComment.bind(this)} style={styles.item}>
               <Image source={require('../comment-item/images/reply.png')} style={[{width:24,height:24}]} resizeMode="cover" />
               <Text style={S['f-s-10']}>评论{target.comment_count || ''}</Text>

@@ -4,6 +4,8 @@ import Dimensions from 'Dimensions'
 const screenWidth = Dimensions.get('window').width
 // const screenHeight = Dimensions.get('window').height
 
+import Lightbox from 'react-native-lightbox'
+
 class Img extends React.Component {
 
   constructor(props) {
@@ -15,7 +17,7 @@ class Img extends React.Component {
   }
 
   componentDidMount() {
-    
+
     const self = this
     const { offset = 0 } = this.props
 
@@ -39,9 +41,9 @@ class Img extends React.Component {
 
   render() {
     return (
-      <Image
-        style={{width: this.state.width, height: this.state.height, marginTop: 5, marginBottom: 5 }}
-        source={{uri: this.props.image}} />
+        <Image
+          style={{width: this.state.width, height: this.state.height, marginTop: 5, marginBottom: 5 }}
+          source={{uri: this.props.image}} />
     )
   }
 }
