@@ -15,7 +15,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-
+#import <React/RCTLinkingManager.h>
 #import "OpenShareHeader.h"
 #import "SplashScreen.h"
 
@@ -69,6 +69,23 @@
   return YES;
 }
 
+// ios 8.x or older
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+  if ([OpenShare handleOpenURL:url]) {
+    return YES;
+  }
+  return [RCTLinkingManager application:application openURL:url
+  sourceApplication:sourceApplication annotation:annotation];
+}
+
+// ios 9.0+
+// - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+//             options:(NSDictionary<NSString*, id> *)options
+// {
+//   return [RCTLinkingManager application:application openURL:url options:options];
+// }
+/*
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
   //第二步：添加回调
   if ([OpenShare handleOpenURL:url]) {
@@ -77,6 +94,7 @@
   //这里可以写上其他OpenShare不支持的客户端的回调，比如支付宝等。
   return YES;
 }
+*/
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 [JPUSHService registerDeviceToken:deviceToken];

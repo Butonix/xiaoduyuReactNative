@@ -3,6 +3,7 @@ package com.xiaoduyureactnative;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.theweflex.react.WeChatPackage;
 import im.shimo.react.cookie.CookieManagerPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.cboy.rn.splashscreen.SplashScreenReactPackage;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new WeChatPackage(),
             new CookieManagerPackage(),
             new PickerPackage(),
             new SplashScreenReactPackage()

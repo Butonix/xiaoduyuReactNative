@@ -67,7 +67,7 @@ class PeopleDetail extends React.Component {
       }
 
     }
-    
+
     return (<ScrollView>
       <View style={styles.head}>
         <View>
@@ -84,17 +84,13 @@ class PeopleDetail extends React.Component {
               {people.follow_people_count ? <Text>{people.follow_people_count} 关注</Text> : null}
             </View>
             <View>
-              <Text>{people.brief}</Text>
+              {people.brief ? <Text>{people.brief}</Text> : null}
             </View>
           </View>
           <View>
             <FollowButton people_id={people._id} follow={people.follow} />
           </View>
         </View>
-      </View>
-
-      <View style={styles.brief}>
-        {people.brief ? <Text>{people.brief}</Text> : null}
       </View>
 
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: people._id, filters: { user_id: people._id }, title: people.nickname + '的帖子' }) }}>

@@ -18,5 +18,9 @@ export function checkClientInstalled() {
       if (result) dispatch({ type: 'HAS_CLIENT_INSTALLED', name: 'qq' })
     })
 
+    check('weixin://', (result)=>{
+      if (result) dispatch({ type: 'HAS_CLIENT_INSTALLED', name: 'weixin' })
+    })
+
   }
 }
