@@ -113,7 +113,9 @@ class TopicList extends Component {
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let topics = ds.cloneWithRows(list.data || [])
-    
+
+    console.log(list);
+
     return (
       <View style={styles.container}>
         <ListView

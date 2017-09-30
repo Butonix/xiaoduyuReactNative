@@ -53,18 +53,18 @@ class BottomBar extends Component {
 
           {comment ?
             <TouchableOpacity onPress={this.goWriteComment.bind(this)} style={styles.item}>
-              <Image source={require('../comment-item/images/reply.png')} style={[{width:24,height:24}]} resizeMode="cover" />
-              <Text style={S['f-s-10']}>回复{target.reply_count || ''}</Text>
+              <Image source={require('../comment-item/images/reply.png')} style={[{width:22,height:22}]} resizeMode="cover" />
+              <Text style={[S['f-s-13'], S['m-l-5']]}>{target.reply_count || ''}</Text>
             </TouchableOpacity>
             : null}
 
           {posts ?
             <TouchableOpacity onPress={this.goWriteComment.bind(this)} style={styles.item}>
-              <Image source={require('../comment-item/images/reply.png')} style={[{width:24,height:24}]} resizeMode="cover" />
-              <Text style={S['f-s-10']}>评论{target.comment_count || ''}</Text>
+              <Image source={require('../comment-item/images/reply.png')} style={[{width:22,height:22}]} resizeMode="cover" />
+              <Text style={[S['f-s-13'], S['m-l-5']]}>{target.comment_count || ''}</Text>
             </TouchableOpacity>
             : null}
-
+            
           <LikeButton likeType={posts ? 'posts' : 'comment'} target_id={target._id} {...target} />
           {posts ? <View style={styles.item}><FollowButton posts_id={posts._id} {...target} /></View> : null}
         </View>
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
   },
   item: {
     flex:1,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   }

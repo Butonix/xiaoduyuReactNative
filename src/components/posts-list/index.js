@@ -1,20 +1,6 @@
 
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  ListView,
-  Image,
-  NavigatorIOS,
-  ScrollView,
-  // refreshControl,
-  // RefreshControl,
-  Navigator,
-  TouchableOpacity,
-  ActivityIndicator
-} from 'react-native'
+import { Text, View, ListView, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -135,6 +121,10 @@ class PostsList extends Component {
                   </TouchableOpacity>
                 </View>)
               })}
+
+            {topic.comment && topic.comment_count > topic.comment.length ?
+              <TouchableOpacity onPress={()=>{this.goTo(topic)}} style={styles.more}><Text>还有{topic.comment_count - topic.comment.length}条评论，查看全部</Text></TouchableOpacity>
+              : null}
 
           </View>)}
           // renderHeader={this.renderHeader}

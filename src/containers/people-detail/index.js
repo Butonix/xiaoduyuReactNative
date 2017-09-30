@@ -1,20 +1,5 @@
 import React, { Component } from 'react'
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  ListView,
-  Image,
-  NavigatorIOS,
-  ScrollView,
-  refreshControl,
-  RefreshControl,
-  Navigator,
-  Button,
-  TouchableOpacity,
-  TextInput
-} from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput, navigator, Dimensions } from 'react-native'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -24,16 +9,22 @@ import { ListItem } from '../../components/ui'
 import FollowButton from '../../components/follow-button'
 import Loading from '../../components/ui/loading'
 
+import Lightbox from 'react-native-lightbox'
+import Carousel from 'react-native-looped-carousel'
+
+const S = global.styles
+
+const WINDOW_WIDTH = Dimensions.get('window').width;
+const BASE_PADDING = 10;
+
+
 class PeopleDetail extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
-
     const { params = {} } = navigation.state
-
     return {
       title: params.title
     }
-
   }
 
   constructor (props) {
@@ -61,18 +52,44 @@ class PeopleDetail extends React.Component {
       return (<Loading />)
     }
 
+    let renderCarousel = null
+
+    if (people.avatar_url) {
+
+      renderCarousel = () => {
+        return (<Carousel style={{ width: WINDOW_WIDTH, height: WINDOW_WIDTH }}>
+          <Image
+            style={{ flex: 1 }}
+            resizeMode="contain"
+            source={{ uri: 'https:'+people.avatar_url.split('&')[0] }}
+          />
+        </Carousel>)
+      }
+
+    }
+    
     return (<ScrollView>
       <View style={styles.head}>
         <View>
-          {people.avatar_url ? <Image source={{uri:'https:'+people.avatar_url}} style={styles.avatar}  /> : null}
+          {people.avatar_url ?
+            <Lightbox springConfig={{tension: 15, friction: 7}} swipeToDismiss={false} renderContent={renderCarousel}>
+              <Image source={{uri:'https:'+people.avatar_url}} style={styles.avatar} />
+            </Lightbox> : null}
         </View>
-        <View>
-          {people.nickname ? <Text style={styles.nickname}>{people.nickname}</Text> : null}
-          <View style={styles.other}>
-            {people.fans_count ? <Text style={styles.fans}>{people.fans_count} 粉丝</Text> : null}
-            {people.follow_people_count ? <Text>{people.follow_people_count} 关注</Text> : null}
+        <View style={[S['f-d-r'], {flex:1,justifyContent:'space-between'}]}>
+          <View>
+            {people.nickname ? <Text style={styles.nickname}>{people.nickname}</Text> : null}
+            <View style={styles.other}>
+              {people.fans_count ? <Text style={styles.fans}>{people.fans_count} 粉丝</Text> : null}
+              {people.follow_people_count ? <Text>{people.follow_people_count} 关注</Text> : null}
+            </View>
+            <View>
+              <Text>{people.brief}</Text>
+            </View>
           </View>
-          <FollowButton people_id={people._id} follow={people.follow} />
+          <View>
+            <FollowButton people_id={people._id} follow={people.follow} />
+          </View>
         </View>
       </View>
 
@@ -84,7 +101,7 @@ class PeopleDetail extends React.Component {
         <ListItem name={"他发布的帖子"} rightText={people.posts_count} />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'CommentList', id: people._id, filters: { user_id: people._id, sort: -1, include_reply: -1 }, title: people.nickname + '的评论' }) }}>
+      <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'CommentList', id: people._id, filters: { user_id: people._id, sort: -1, include_reply: -1, parent_exists:-1 }, canClick:false, title: people.nickname + '的评论' }) }}>
         <ListItem name={"他的评论"} rightText={people.comment_count} />
       </TouchableOpacity>
 

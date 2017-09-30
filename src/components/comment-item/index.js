@@ -104,7 +104,10 @@ class CommentItem extends React.Component {
     options.push(comment.like ? '取消赞' : '赞')
     options.push('回复')
     if (displayEdit && me && me._id == comment.user_id._id) options.push('编辑')
-    
+
+
+    // console.log(comment);
+
     let main = (<View style={[styles.item, subitem ? styles.subitem : null]}>
 
       <TouchableOpacity onPress={()=>{ this.toPeople(comment.user_id) }}>
@@ -112,12 +115,15 @@ class CommentItem extends React.Component {
       </TouchableOpacity>
 
       <View style={styles.main}>
-
+        
         <View style={styles.head}>
           <View style={styles.headLeft}>
             <Text style={styles.nickname} onPress={()=>{this.toPeople(comment.user_id)}}>
               {comment.user_id.nickname}
             </Text>
+
+            {comment.reply_id ? <Text style={[S['m-l-5'], S['f-s-12'], S['black-20']]}> 回复了 </Text> : null}
+            {comment.reply_id ? <Text style={S['bold']}>{comment.reply_id.user_id.nickname}</Text> : null}
 
             {displayCreateAt ? <Text style={[S['m-l-10'], S['f-s-12'], S['black-20']]}>{comment._create_at}</Text> : null}
             {comment.reply_count ? <Text style={[S['m-l-10'], S['f-s-12'], S['black-20']]}>{comment.reply_count + '个回复'}</Text> : null}

@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-na
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { follow, unfollow } from '../../actions/follow'
-// import { getUserInfo } from '../../reducers/user'
+import { getUserInfo } from '../../reducers/user'
 
 const S = global.styles
 
@@ -40,10 +40,15 @@ class FollowButton extends Component {
   }
 
   render() {
-    const { follow = false, follow_count, posts_id } = this.props
-    return (<TouchableOpacity onPress={this.follow.bind(this)} style={styles.item}>
-              <Image source={require('../comment-item/images/follow.png')} style={[{width:24,height:24}]} resizeMode="cover" />
-              <Text style={S['f-s-10']}>{follow ? '已关注' : '关注'}{posts_id ? '帖子' : null}{follow_count || null}</Text>
+    const { follow = false, follow_count, people_id, me } = this.props
+
+    // 如果是关注用户，如果是自己的话，则没有关注按钮
+    if (people_id && me._id == people_id) return (<View></View>)
+
+    return (<TouchableOpacity onPress={this.follow.bind(this)} style={follow ? styles.itema : styles.item}>
+              <Image source={require('../comment-item/images/follow.png')} style={[{width:14,height:14}]} resizeMode="cover" />
+              {/*<Text style={S['f-s-10']}>{follow ? '已关注' : '关注'}{posts_id ? '帖子' : null}{follow_count || null}</Text>*/}
+              <Text style={[S['f-s-12'], S['m-l-5'], { color: '#5f5f5f' }]}>{follow ? '已关注' : '关注'}</Text>
           </TouchableOpacity>)
   }
 }
@@ -51,15 +56,36 @@ class FollowButton extends Component {
 
 const styles = StyleSheet.create({
   item: {
-    flex:1,
+    // flex:1,
+    paddingTop:5,
+    paddingBottom:5,
+    paddingLeft:5,
+    paddingRight:5,
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    // backgroundColor:'#efefef',
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#5f5f5f'
+  },
+  itema: {
+    // flex:1,
+    paddingTop:5,
+    paddingBottom:5,
+    paddingLeft:5,
+    paddingRight:5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'#efefef',
+    borderRadius: 4
   }
 })
 
 export default connect((state, props) => {
     return {
-      // me: getUserInfo(state)
+      me: getUserInfo(state)
     }
   },
   (dispatch) => ({

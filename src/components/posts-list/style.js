@@ -15,7 +15,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  
+
   topicItem: {
     backgroundColor: '#fff',
     padding:15
@@ -68,5 +68,11 @@ export default StyleSheet.create({
   },
   contentText: {
     lineHeight:18
+  },
+  more: {
+    borderTopWidth: 1,
+    borderColor: '#efefef',
+    padding:15,
+    backgroundColor:'#fff'
   }
 })

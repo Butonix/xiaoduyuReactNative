@@ -32,7 +32,7 @@ class LikeButton extends Component {
       }
     })
   }
-  
+
   render() {
 
     const { like = false, me, user_id, like_count } = this.props
@@ -43,8 +43,8 @@ class LikeButton extends Component {
 
     return (
           <TouchableOpacity onPress={this.like.bind(this)} style={styles.item}>
-            <Image source={require('../comment-item/images/like.png')} style={[{width:24,height:24}]} resizeMode="cover" />
-            <Text style={S['f-s-10']}>{like ? '已赞' : '赞'}{like_count || null}</Text>
+            <Image source={like ? require('../comment-item/images/like-red.png') : require('../comment-item/images/like.png')} style={[{width:24,height:24}]} resizeMode="cover" />
+            <Text style={[S['f-s-13'], S['m-l-5']]}>{like_count || null}</Text>
           </TouchableOpacity>
         )
   }
@@ -54,6 +54,7 @@ class LikeButton extends Component {
 const styles = StyleSheet.create({
   item: {
     flex:1,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   }

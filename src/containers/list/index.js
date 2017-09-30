@@ -22,7 +22,7 @@ class List extends Component {
   render() {
     const { navigation } = this.props
 
-    const { id, filters, componentName } = this.props.navigation.state.params
+    const { id, filters, componentName, canClick = true } = this.props.navigation.state.params
 
     let component = null
 
@@ -31,7 +31,7 @@ class List extends Component {
         component = <PostsList {...this.props} name={id} filters={filters}  />
         break
       case 'CommentList':
-        component = <CommentList {...this.props} name={id} filters={filters}  />
+        component = <CommentList {...this.props} name={id} filters={filters} canClick={canClick} />
         break
       case 'TopicList':
         component = <TopicList {...this.props} name={id} filters={filters}  />

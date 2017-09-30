@@ -6,18 +6,15 @@
 
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
   ListView,
   Image,
-  NavigatorIOS,
   ScrollView,
   refreshControl,
   RefreshControl,
-  Navigator,
-  TouchableWithoutFeedback
+  TouchableOpacity
 } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -71,8 +68,10 @@ class CommentList extends Component {
       displayLike = false,
       displayReply = false,
       displayCreateAt = false,
+      canClick = true,
       me
     } = this.props
+    const { navigate } = this.props.navigation;
 
     if (list.loading && list.data.length == 0 || !list.data) {
       return (<Loading />)
@@ -91,12 +90,24 @@ class CommentList extends Component {
           enableEmptySections={true}
           dataSource={array}
           renderRow={(item) => (<View>
-              <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} displayCreateAt={displayCreateAt} comment={item} />
+              <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} displayCreateAt={displayCreateAt} canClick={canClick} comment={item} />
+
               {item.reply && item.reply.map(item=>{
                 return(<View key={item._id} style={styles.reply}>
-                  <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} displayCreateAt={displayCreateAt} comment={item} subitem={true} />
+                  <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} displayCreateAt={displayCreateAt} canClick={canClick} comment={item} subitem={true} />
                 </View>)
               })}
+
+              {item.reply && item.reply_count > item.reply.length ?
+                <TouchableOpacity
+                  onPress={()=>{
+                    navigate('CommentDetail', { title: item.content_summary, id: item._id })
+                  }}
+                  style={styles.more}>
+                  <Text>还有{item.reply_count - item.reply.length}条回复，查看全部</Text>
+                </TouchableOpacity>
+                : null}
+
           </View>)}
           renderFooter={this.renderFooter}
           removeClippedSubviews={false}
@@ -119,22 +130,8 @@ class CommentList extends Component {
   }
 
   goTo(posts){
-
     const { navigate } = this.props.navigation;
-
     navigate('PostsDetail', { title: posts.title, id: posts._id })
-
-    /*
-    this.props.navigator.push({
-      component: PostsDetail,
-      title: '详情',
-      id: id
-      // rightButtonTitle: '收藏',
-      // onRightButtonPress: function(){
-      //   alert('点击了收藏按钮。');
-      // }
-    });
-    */
   }
 
   _onScroll(event) {
@@ -165,6 +162,13 @@ class CommentList extends Component {
 const styles = StyleSheet.create({
   reply: {
     paddingLeft: 60
+  },
+  more: {
+    marginLeft:60,
+    paddingTop:15,
+    paddingBottom:15,
+    borderTopWidth: 1,
+    borderColor: '#efefef'
   }
 })
 
