@@ -18,8 +18,9 @@ import { ListItem } from '../../components/ui'
 class Me extends React.Component {
 
   static navigationOptions = {
-    title: '我的',
-    tabBarIcon: ({ tintColor }) => (<Image source={require('./images/me.png')} style={[styles.icon, {tintColor: tintColor}]} />),
+    header: null,
+    title: '我的'
+    // tabBarIcon: ({ tintColor }) => (<Image source={require('./images/me.png')} style={[styles.icon, {tintColor: tintColor}]} />),
   }
 
   constructor (props) {
@@ -37,7 +38,7 @@ class Me extends React.Component {
 
     return (<ScrollView>
 
-          <View>
+          <View style={styles.container}>
 
             <TouchableOpacity onPress={()=>{ this.props.navigation.navigate('Settings') }}>
 
@@ -91,6 +92,9 @@ class Me extends React.Component {
 
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop:10
+  },
   avatarItem: {
     alignItems:'center',
     paddingTop: 20,

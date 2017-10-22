@@ -58,3 +58,5 @@ fastlane/screenshots
 #第三方登录配置文件
 ios/xiaoduyuReactNative/AppDelegate.m
 ios/xiaoduyuReactNative/Info.plist
+
+config/index.js

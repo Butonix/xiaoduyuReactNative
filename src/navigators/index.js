@@ -8,6 +8,7 @@ import SignUp from '../containers/sign-up'
 import GithubSignIn from '../containers/github-sign-in'
 import Forgot from '../containers/forgot'
 import Home from '../containers/home'
+import MineFollow from '../containers/mine-follow'
 import PostsDetail from '../containers/posts-detail'
 import Topics from '../containers/topics'
 import Notifications from '../containers/notifications'
@@ -37,22 +38,34 @@ import ResetAvatar from '../containers/reset-avatar'
 
 const MainScreenNavigator = TabNavigator({
   Home: { screen: Home },
-  Topics: { screen: Topics },
+  MineFollow: { screen: MineFollow },
   Notifications: { screen: Notifications },
   Me: { screen: Me }
 },
 {
   initialRouteName: 'Home',
-  tabBarPosition: 'bottom',
-  swipeEnabled:false,
-  animationEnabled:false,
+  tabBarPosition: 'top',
+  swipeEnabled:true,
+  animationEnabled:true,
   lazy: true,
   tabBarOptions: {
-    style: { height:45 },
-    activeBackgroundColor:'#fff',
-    activeTintColor:'#27a8fb',
+    style: { height:65 },
+    activeBackgroundColor:'white',
+    activeTintColor:'#08f',
     inactiveBackgroundColor:'white',
-    inactiveTintColor:'#484848',
+    inactiveTintColor:'#23232b',
+    allowFontScaling: false,
+    labelStyle: {
+      fontSize: 14,
+      paddingBottom:15,
+      zIndex:-1,
+      borderBottomWidth:1,
+      borderColor: 'red'
+    },
+    tabStyle:{
+      borderBottomWidth:1,
+      borderColor: '#e3e3e3'
+    }
     // showLabel:false,
   }
 })

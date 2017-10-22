@@ -12,7 +12,7 @@ import JPushModule from 'jpush-react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../reducers/user'
-import { loadUnreadCount } from '../../actions/notification'
+import { loadUnreadCount, loadNewNotifications } from '../../actions/notification'
 import { api_url } from '../../../config'
 
 import Loading from '../../components/ui/loading'
@@ -70,7 +70,7 @@ class Welcome extends Component {
   // websocket 执行的消息
   handleMessage(name, data) {
 
-    const { me, loadUnreadCount, navigation } = this.props
+    const { me, loadUnreadCount, loadNewNotifications, navigation } = this.props
 
     switch (name) {
       case 'notiaction':
@@ -81,7 +81,7 @@ class Welcome extends Component {
             callback: (unreadNotice)=>{
 
               const setParamsAction = NavigationActions.setParams({
-                params: { unreadNotice: unreadNotice },
+                params: { unreadNotice, loadNewNotifications },
                 key: 'Notifications',
               })
               navigation.dispatch(setParamsAction)
@@ -148,7 +148,7 @@ class Welcome extends Component {
   }
 
   render() {
-    
+
     const { loading, network } = this.state
 
     if (loading) {
@@ -183,6 +183,7 @@ export default connect(
     }
   },
   (dispatch, props) => ({
-    loadUnreadCount: bindActionCreators(loadUnreadCount, dispatch)
+    loadUnreadCount: bindActionCreators(loadUnreadCount, dispatch),
+    loadNewNotifications: bindActionCreators(loadNewNotifications, dispatch)
   })
 )(Welcome)

@@ -1,20 +1,6 @@
 
 import React, { Component } from 'react'
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  ListView,
-  Image,
-  NavigatorIOS,
-  ScrollView,
-  refreshControl,
-  // RefreshControl,
-  Navigator,
-  TouchableOpacity,
-  ActivityIndicator
-} from 'react-native'
+import { StyleSheet, Text, View, ListView, Image, refreshControl, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -204,6 +190,7 @@ class NotificationList extends Component {
         break
 
       case 'comment':
+
         content = (
           <View>
           <View style={styles.head}>
@@ -219,8 +206,8 @@ class NotificationList extends Component {
             </Text>
 
           <TouchableOpacity onPress={()=>{this.toReply(notice.comment_id)}}>
-            <View>
-              <Text>{notice.comment_id.content}</Text>
+            <View style={styles.commentContent}>
+              <Text>{notice.comment_id.content_trim}</Text>
             </View>
           </TouchableOpacity>
         </View>)
