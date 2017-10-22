@@ -1,16 +1,16 @@
 
 // 开发环境配置
 var development = {
-  debug: false,
+  debug: true,
   // 官网
   official_website: 'https://www.xiaoduyu.com',
   // API 地址
-  // api_url: 'https://www.xiaoduyu.com',
-  api_url: 'http://192.168.1.107:3000',
+  api_url: 'https://www.xiaoduyu.com',
+  // api_url: 'http://192.168.1.105:3000',
   api_verstion: 'api/v1',
   GA: '',
   // 微信开放平台，移动应用openid
-  wechat_appid: 'wx690339d09f80310e'
+  wechat_appid: 'wxdc4c0a66df9da9b5'
 }
 
 module.exports = development

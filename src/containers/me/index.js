@@ -50,12 +50,12 @@ class Me extends React.Component {
             </TouchableOpacity>
 
             <View>
-
+              
               <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: me._id, filters: { user_id: me._id }, title: me.nickname + '的帖子' }) }}>
                 <ListItem name={"我创建的帖子"} rightText={me.posts_count} />
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'CommentList', id: me._id + '-posts', filters: { user_id: me._id }, title: me.nickname + '的评论' }) }}>
+              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'CommentList', id: me._id + '-posts', filters: { user_id: me._id, sort: -1, include_reply: -1, parent_exists:-1 }, title: me.nickname + '的评论' }) }}>
                 <ListItem name={"我编写的评论"} rightText={me.follow_posts_count} />
               </TouchableOpacity>
 

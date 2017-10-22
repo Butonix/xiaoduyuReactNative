@@ -10,6 +10,7 @@ import notification from './notification'
 import people from './people'
 import followPeople from './follow-people'
 import clientInstalled from './client-installed'
+import countries from './countries'
 
 let states = {
   posts,
@@ -19,7 +20,8 @@ let states = {
   notification,
   people,
   followPeople,
-  clientInstalled
+  clientInstalled,
+  countries
 }
 
 /*

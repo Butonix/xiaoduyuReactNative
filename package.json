@@ -26,6 +26,7 @@
     "react-native-qiniu": "^0.3.0",
     "react-native-render-html": "^2.1.0",
     "react-native-scrollable-tab-view": "^0.6.7",
+    "react-native-simple-picker": "^1.4.3",
     "react-native-simple-radio-button": "^2.6.0",
     "react-native-splash-screen": "^2.1.0",
     "react-native-webview-messaging": "^1.1.0",

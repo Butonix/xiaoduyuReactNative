@@ -14,12 +14,15 @@ import { connect } from 'react-redux'
 import { signup, signin } from '../../actions/sign'
 import gStyles from '../../styles'
 import CaptchaButton from '../../components/captcha-button'
+import SelectCountry from '../../components/select-country'
 
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 import Wait from '../../components/ui/wait'
 
 import Dimensions from 'Dimensions'
 const screenWidth = Dimensions.get('window').width
+
+
 
 class SignUp extends Component {
 
@@ -30,12 +33,13 @@ class SignUp extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      email: '',
+      account: '',
       password: '',
       captchaId: null,
       captcha: '',
       error: {},
-      visible: false
+      visible: false,
+      areaCode: ''
     }
     this.submit = this.submit.bind(this)
     this.sendCaptcha = this.sendCaptcha.bind(this)
@@ -43,12 +47,14 @@ class SignUp extends Component {
   }
 
   submit() {
+
     const self = this
-    const { nickname, email, password, captcha, gender } = this.state
+    const { nickname, account, password, captcha, gender, areaCode } = this.state
     const { signup, signin, navigation } = this.props
 
     if (!nickname || nickname.replace(/(^\s+)|(\s+$)/g, '') == '') return Alert.alert('', '请输入名字')
-    if (!email) return Alert.alert('', '请输入邮箱')
+    if (!areaCode) return Alert.alert('', '请选择区号')
+    if (!account) return Alert.alert('', '请输入手机号')
     if (!captcha) return Alert.alert('', '请输入验证码')
     if (!password) return Alert.alert('', '请输入密码')
     if (!gender) return Alert.alert('', '请选择性别')
@@ -58,23 +64,24 @@ class SignUp extends Component {
     signup({
       data: {
         nickname: nickname,
-        email: email,
+        phone: account,
+        area_code: areaCode,
         password: password,
         captcha: captcha,
-        gender: gender == 'male' ? 1 : 0
+        gender: gender == 'male' ? 1 : 0,
+        source: 5
       },
       callback: (res)=>{
 
-        self.setState({ visible: false })
-
         if (!res.success) {
-          self.setState({ error: res.error })
+          self.setState({ error: res.error, visible: false })
         } else {
-          Alert.alert('', '注册成功')
 
           signin({
-            data: { email: email, password: password },
+            data: { phone: account, password: password },
             callback: (res)=>{
+
+              self.setState({ visible: false })
 
               if (!res.success) {
                 navigation.goBack()
@@ -118,15 +125,17 @@ class SignUp extends Component {
   }
 
   sendCaptcha(callback) {
-    const { email } = this.state
-    if (!email) return Alert.alert('', '请输入Email')
-    callback({ email, type: 'signup' })
+    const { account, areaCode } = this.state
+    if (!areaCode) return Alert.alert('', '请输入手机区号未选择')
+    if (!account) return Alert.alert('', '请输入手机号')
+    callback({ phone: account, area_code: areaCode, type: 'signup' })
   }
 
   render() {
 
+    const self = this
     const { captchaId } = this.state
-    const { nickname, email, password, captcha, gender } = this.state.error
+    const { nickname, phone, password, captcha, gender } = this.state.error
 
     var radio_props = [
       {label: '男     ', value: 'male' },
@@ -139,22 +148,33 @@ class SignUp extends Component {
         <TextInput
           style={gStyles.radiusInputTop}
           onChangeText={(nickname) => this.setState({nickname})}
-          placeholder='昵称'
+          placeholder='名字'
           maxLength={40}
           autoFocus={true}
           />
 
         {nickname ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{nickname}</Text></View> : null}
 
-        <TextInput
-          style={gStyles.radiusInputCenter}
-          autoCapitalize="none"
-          onChangeText={(email) => this.setState({email})}
-          placeholder='电子邮箱'
-          maxLength={60}
-          />
+        <View style={{ flexDirection: 'row', borderWidth: 1, marginTop:-1, borderColor: '#e2e2e2', paddingLeft:10 }}>
+          <View>
+            <SelectCountry
+              onChoose={(res)=>{
+                self.setState({ areaCode: res.code })
+              }}
+              />
+          </View>
+          <View style={{flex:1}}>
+          <TextInput
+            style={{ height:45, borderLeftWidth: 1, borderColor: '#e2e2e2', paddingLeft:10 }}
+            autoCapitalize="none"
+            onChangeText={(account) => this.setState({account})}
+            placeholder='手机号'
+            maxLength={60}
+            />
+          </View>
+        </View>
 
-        {email ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{email}</Text></View> : null}
+        {phone ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{phone}</Text></View> : null}
 
         <View>
           <TextInput

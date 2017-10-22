@@ -44,9 +44,9 @@ class CaptchaButton extends Component {
 
           let run = () =>{
 
-            // if (!self._reactInternalInstance) {
-            //   return
-            // }
+            if (!self._reactInternalInstance) {
+              return
+            }
 
             if (self.state.countdown == 0) {
               self.setState({ loading: false })
