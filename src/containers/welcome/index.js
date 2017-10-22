@@ -117,7 +117,7 @@ class Welcome extends Component {
       websocket.start({ onmessage: this.handleMessage })
       // 获取通知
       self.handleMessage('notiaction', [me._id])
-
+      
       // 显示推送页面
       if (notification && notification.routeName && notification.params) {
         index = 1

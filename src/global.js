@@ -11,11 +11,32 @@ import { cleanAllFollow } from './actions/follow'
 import { cleanAllPeople } from './actions/people'
 import { cleanAllTopic } from './actions/topic'
 import { checkClientInstalled } from './actions/client-installed'
+import { exchangeNewToken } from './actions/token'
 import styles from './styles'
 
 global.styles = styles
 
 export default ({ dispatch, getState }) => {
+
+  const load = (accessToken, callback) => {
+    loadUserInfo({ accessToken, callback: (res)=>{
+
+      if (res && res.success) {
+        // 正常登陆
+        addAccessToken({ accessToken })(dispatch, getState)
+        callback(res.data)
+      } else if (res && !res.success) {
+        // token失效
+        AsyncStorage.removeItem('token',(res)=>{
+          callback(false)
+        })
+      } else {
+        // api
+        callback(false)
+      }
+
+    }})(dispatch, getState)
+  }
 
   global.screen = {
     width: Dimensions.get('window').width,
@@ -43,31 +64,40 @@ export default ({ dispatch, getState }) => {
     checkClientInstalled()(dispatch, getState)
 
     // 如果存在token，那么检测token，是否有效
-    AsyncStorage.getItem('token', (errs, result)=>{
+    AsyncStorage.getItem('token', (errs, accessToken)=>{
 
-      if (!result) return callback(false)
+      if (!accessToken) return callback(false)
 
-      loadUserInfo({
-        accessToken: result,
-        callback: (res)=>{
+      AsyncStorage.getItem('token_expires', (errs, expires)=>{
 
-          if (res && res.success) {
-            // 正常登陆
-            addAccessToken({ accessToken: result })(dispatch, getState)
-            callback(res.data)
-          } else if (res && !res.success) {
-            // token失效
-            AsyncStorage.removeItem('token',(res)=>{
-              callback(false)
-            })
-          } else {
-            // api
-            callback(false)
-          }
+        // 提前7天兑换新的token
+        if (expires && new Date().getTime() > parseInt(expires) - 1000 * 60 * 60 * 24 * 7) {
 
+          exchangeNewToken({
+            accessToken,
+            callback: (res)=>{
+
+              if (res && res.success) {
+                // 储存token
+                AsyncStorage.setItem('token', res.data.access_token, function(errs, result){
+                  // 储存token有效时间
+                  AsyncStorage.setItem('token_expires', (new Date().getTime() + 1000 * 60 * 60 * 24 * 30) + '', function(errs, result){
+                    load(accessToken, callback)
+                  })
+                })
+              } else {
+                callback(false)
+              }
+
+            }
+          })(dispatch, getState)
+
+          return
         }
-      })(dispatch, getState)
 
+        load(accessToken, callback)
+
+      })
     })
 
   }

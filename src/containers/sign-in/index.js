@@ -84,17 +84,24 @@ class SignIn extends Component {
 
     const self = this
 
+    // 储存token
     AsyncStorage.setItem('token', access_token, function(errs, result){
-      const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'Main'})
-        ]
+      // 储存token有效时间
+      AsyncStorage.setItem('token_expires', (new Date().getTime() + 1000 * 60 * 60 * 24 * 30) + '', function(errs, result){
+
+        const resetAction = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'Main'})
+          ]
+        })
+
+        global.initReduxDate(()=>{
+          self.props.navigation.dispatch(resetAction)
+        })
+
       })
 
-      global.initReduxDate(()=>{
-        self.props.navigation.dispatch(resetAction)
-      })
     })
 
   }
@@ -123,11 +130,12 @@ class SignIn extends Component {
       data: { email: email, password: password, captcha: captcha, captcha_id: captchaId },
       callback: (res)=>{
 
+        console.log(res);
+
         let params = { visible: false }
 
         if (!res.success) {
           params.error = res.error
-          // params.error = res.error
           self.loadCaptcha()
         } else {
           self.handleSignIn(res.data.access_token)
@@ -168,7 +176,7 @@ class SignIn extends Component {
           placeholder='请输入密码'
           maxLength={60}
         />
-        
+
         {captchaId ?
             <View>
               <TextInput
