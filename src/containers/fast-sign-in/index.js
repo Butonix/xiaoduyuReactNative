@@ -153,7 +153,7 @@ class FastSignIn extends Component {
           : null}
 
         <TouchableOpacity onPress={()=>navigate('SignIn')} style={styles.fullButton}>
-          <Text style={styles.buttonText}>使用邮箱注册或登陆</Text>
+          <Text style={styles.buttonText}>手机号登陆或注册</Text>
         </TouchableOpacity>
 
         <View style={{flex:1}}></View>

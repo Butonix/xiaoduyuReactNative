@@ -35,7 +35,7 @@ class SignIn extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      email: '',
+      account: '',
       password: '',
       captchaId: null,
       captcha: '',
@@ -108,7 +108,7 @@ class SignIn extends Component {
 
   submit() {
     const self = this
-    const { email, password, captcha, captchaId } = this.state
+    const { account, password, captcha, captchaId } = this.state
     const { signin } = this.props
 
     const { navigation } = this.props
@@ -116,21 +116,23 @@ class SignIn extends Component {
 
     let routeName = ''
 
-    if (!email) {
-      Alert.alert('', '请输入邮箱')
-      return
-    } else if (!password) {
-      Alert.alert('', '请输入密码')
-      return
-    }
+    if (!account) return Alert.alert('', '请输入手机号或邮箱')
+    if (!password) return Alert.alert('', '请输入密码')
 
     self.setState({ visible: true })
 
-    signin({
-      data: { email: email, password: password, captcha: captcha, captcha_id: captchaId },
-      callback: (res)=>{
+    let data = {
+      email: account.indexOf('@') != -1 ? account : '',
+      phone: account.indexOf('@') == -1 ? account : '',
+      password
+    }
 
-        console.log(res);
+    if (captcha) data.captcha = captcha
+    if (captchaId) data.captcha_id = captchaId
+
+    signin({
+      data,
+      callback: (res)=>{
 
         let params = { visible: false }
 
@@ -162,8 +164,8 @@ class SignIn extends Component {
           ref="email"
           style={gStyles.radiusInputTop}
           autoCapitalize={'none'}
-          onChangeText={(email) => this.setState({email})}
-          placeholder='请输入邮箱'
+          onChangeText={(account) => this.setState({account})}
+          placeholder='请输入手机号或邮箱'
           autoFocus={true}
           maxLength={60}
         />

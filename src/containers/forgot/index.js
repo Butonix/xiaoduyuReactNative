@@ -19,13 +19,13 @@ const screenWidth = Dimensions.get('window').width
 class Forgot extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: '通过邮箱重置密码'
+    headerTitle: '通过手机号/邮箱重置密码'
   })
 
   constructor (props) {
     super(props)
     this.state = {
-      email: '',
+      account: '',
       password: '',
       captchaId: null,
       captcha: '',
@@ -37,9 +37,21 @@ class Forgot extends Component {
   }
 
   sendCaptcha(callback) {
-    const { email } = this.state
-    if (!email) return Alert.alert('', '请输入邮箱')
-    callback({ email, type: 'forgot' })
+
+    const { account } = this.state
+
+    if (!account) return Alert.alert('', '请输入注册的手机号或邮箱')
+
+    let params = { type: 'forgot' }
+
+    if (account.indexOf('@') != -1) {
+      params.email = account
+    } else {
+      params.phone = account
+    }
+
+    callback(params)
+
   }
 
   handleSignIn(access_token) {
@@ -70,10 +82,10 @@ class Forgot extends Component {
   submit() {
 
     const self = this
-    const { email, captcha, password, confirmPassword } = this.state
+    const { account, captcha, password, confirmPassword } = this.state
     const { resetPasswordByCaptcha, signin, navigation } = this.props
 
-    if (!email) return Alert.alert('', '请输入邮箱')
+    if (!account) return Alert.alert('', '请输入注册手机号或邮箱')
     if (!captcha) return Alert.alert('', '验证码')
     if (!password) return Alert.alert('', '请输入新密码')
     if (!confirmPassword) return Alert.alert('', '请再次输入新密码')
@@ -81,8 +93,8 @@ class Forgot extends Component {
 
     self.setState({ visible: true })
 
-    resetPasswordByCaptcha({
-      email: email,
+    let option = {
+      // email: email,
       captcha: captcha,
       newPassword: password,
       callback: function(result) {
@@ -90,26 +102,46 @@ class Forgot extends Component {
         self.setState({ visible: false })
 
         if (result.success) {
-          alert('密码修改成功')
+          // alert('密码修改成功')
 
-          signin({
-            data: { email: email, password: password },
+          let option = {
+            password: password,
             callback: (res)=>{
 
               if (!res.success) {
+                alert('密码修改成功')
                 navigation.goBack()
               } else {
                 self.handleSignIn(res.data.access_token)
               }
 
             }
-          })
+          }
+          if (account.indexOf('@') != -1) {
+            option.email = account
+          } else {
+            option.phone = account
+          }
+
+          signin(option)
 
         } else {
-          Alert.alert('', result.error || '密码修改失败')
+          setTimeout(()=>{
+            Alert.alert('', result.error || '密码修改失败')
+          }, 1000)
         }
       }
-    })
+    }
+
+    if (account.indexOf('@') != -1) {
+      option.email = account
+    } else {
+      option.phone = account
+    }
+
+    // console.log(option);
+
+    resetPasswordByCaptcha(option)
 
   }
 
@@ -120,8 +152,8 @@ class Forgot extends Component {
         <TextInput
           style={gStyles.radiusInputTop}
           autoCapitalize="none"
-          onChangeText={(email) => this.setState({email})}
-          placeholder='请输入你的注册邮箱'
+          onChangeText={(account) => this.setState({account})}
+          placeholder='请输入你的注册的手机号或邮箱'
           autoFocus={true}
           />
 

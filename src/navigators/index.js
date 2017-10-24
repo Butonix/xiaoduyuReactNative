@@ -30,7 +30,7 @@ import ResetGender from '../containers/reset-gender'
 import ResetPassword from '../containers/reset-password'
 import ResetEmail from '../containers/reset-email'
 import ResetAvatar from '../containers/reset-avatar'
-
+import ResetPhone from '../containers/reset-phone'
 
 // test
 // import Test from '../containers/test'
@@ -46,7 +46,7 @@ const MainScreenNavigator = TabNavigator({
   initialRouteName: 'Home',
   tabBarPosition: 'top',
   swipeEnabled:true,
-  animationEnabled:true,
+  animationEnabled:false,
   lazy: true,
   tabBarOptions: {
     style: { height:65 },
@@ -56,8 +56,8 @@ const MainScreenNavigator = TabNavigator({
     inactiveTintColor:'#23232b',
     allowFontScaling: false,
     labelStyle: {
-      fontSize: 14,
-      paddingBottom:15,
+      fontSize: 16,
+      paddingBottom:10,
       zIndex:-1,
       borderBottomWidth:1,
       borderColor: 'red'
@@ -93,15 +93,16 @@ const App = StackNavigator({
   ResetEmail: { screen: ResetEmail },
   ResetAvatar: { screen: ResetAvatar },
   SocialAccount: { screen: SocialAccount },
-  FastSignIn: { screen: FastSignIn }
+  FastSignIn: { screen: FastSignIn },
+  ResetPhone: { screen: ResetPhone }
   // Test: { screen: Test }
 },{
   initialRouteName: 'Welcome',
   navigationOptions: {
     headerStyle: {
-      backgroundColor: '#fff',
+      backgroundColor: '#fff'
     },
-    headerTintColor: '#191919'
+    headerTintColor: '#23232b'
   }
 })
 

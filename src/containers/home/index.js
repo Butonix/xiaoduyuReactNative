@@ -12,6 +12,7 @@ import { cleanAllComment } from '../../actions/comment'
 import PostsList from '../../components/posts-list'
 import TabBar from '../../components/tab-bar'
 import MenuIcon from '../../components/ui/icon/menu'
+import BindingPhoneModal from '../../components/binding-phone-modal'
 
 import JPushModule from 'jpush-react-native'
 
@@ -73,13 +74,30 @@ class Home extends Component {
     }
   }
 
+  componentDidMount() {
+    const { me } = this.props
+
+    if (me.phone) return
+    
+    AsyncStorage.getItem('binding-phone-tips', (errs, result)=>{
+      if (result && new Date().getTime() > parseInt(result) || !result) {
+        this.show()
+        AsyncStorage.setItem('binding-phone-tips', (new Date().getTime() + 1000 * 60 * 60 * 24 * 3) + '', function(errs, result){
+        })
+      }
+    })
+
+  }
+
   render() {
 
     const { navigation } = this.props
 
     // return (<View></View>)
 
-    return (<PostsList
+    return (<View>
+      <BindingPhoneModal show={(s)=>{ this.show = s }} />
+      <PostsList
               {...this.props}
               tabLabel='发现'
               navigation={navigation}
@@ -90,7 +108,8 @@ class Home extends Component {
                 include_comments: 1,
                 comments_sort: 'create_at:-1'
               }}
-              />)
+            />
+          </View>)
   }
 }
 

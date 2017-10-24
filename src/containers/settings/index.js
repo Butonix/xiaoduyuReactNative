@@ -12,13 +12,14 @@ import { signout } from '../../actions/sign'
 import { getClientInstalled } from '../../reducers/client-installed'
 
 import { ListItem } from '../../components/ui'
+import BindingPhoneModal from '../../components/binding-phone-modal'
 
 class Settings extends React.Component {
 
   static navigationOptions = {
     title: '设置'
   }
-  
+
   constructor (props) {
     super(props)
     this.state = {
@@ -104,19 +105,29 @@ class Settings extends React.Component {
 
             <View style={styles.gap}></View>
 
-            {me.email ?
-              <TouchableOpacity onPress={()=>{ navigate('ResetEmail', {}) }}>
-                <ListItem name={"修改邮箱"} rightText={me.email} />
-              </TouchableOpacity>
-              : <ListItem name={"邮箱"} rightText={'未绑定'} />}
-
-            {me.email ?
+            {me.email || me.phone ?
               <TouchableOpacity onPress={()=>{ navigate('ResetPassword', {}) }}>
                 <ListItem name={"修改密码"} />
               </TouchableOpacity>
               :null}
 
             <View style={styles.gap}></View>
+
+            {me.email ?
+              <TouchableOpacity onPress={()=>{ navigate('ResetEmail', {}) }}>
+                <ListItem name={"修改邮箱"} rightText={me.email} />
+              </TouchableOpacity>
+              : <ListItem name={"邮箱"} rightText={'未绑定'} />}
+
+            <BindingPhoneModal show={(s)=>{  this.show = s }} />
+
+            {me.phone ?
+              <TouchableOpacity onPress={()=>{ navigate('ResetPhone', {}) }}>
+                <ListItem name={"修改手机号"} rightText={me.phone} />
+              </TouchableOpacity>
+              : <TouchableOpacity onPress={()=>{ this.show() }}>
+                <ListItem name={"手机号"} rightText={'未绑定'} />
+              </TouchableOpacity>}
 
             {clientInstalled.qq ?
               <TouchableOpacity onPress={()=>{ navigate('SocialAccount', { socialName: 'qq' }) }}>
