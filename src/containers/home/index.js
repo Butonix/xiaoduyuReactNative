@@ -12,7 +12,6 @@ import { cleanAllComment } from '../../actions/comment'
 import PostsList from '../../components/posts-list'
 import TabBar from '../../components/tab-bar'
 import MenuIcon from '../../components/ui/icon/menu'
-import BindingPhoneModal from '../../components/binding-phone-modal'
 
 import JPushModule from 'jpush-react-native'
 
@@ -76,14 +75,26 @@ class Home extends Component {
 
   componentDidMount() {
     const { me } = this.props
+    const { navigate } = this.props.navigation
 
     if (me.phone) return
-    
+
     AsyncStorage.getItem('binding-phone-tips', (errs, result)=>{
+      // result = null
       if (result && new Date().getTime() > parseInt(result) || !result) {
-        this.show()
-        AsyncStorage.setItem('binding-phone-tips', (new Date().getTime() + 1000 * 60 * 60 * 24 * 3) + '', function(errs, result){
-        })
+        Alert.alert('绑定手机号', '亲爱的用户，应2017年10月1日起实施的《中华人民共和国网络安全法》要求，网站须强化用户实名认证机制。您需要验证手机方可使用社区功能，烦请您将账号与手机进行绑定。', [
+          {
+            text: '暂不',
+            onPress: () => {
+              AsyncStorage.setItem('binding-phone-tips', (new Date().getTime() + 1000 * 60 * 60 * 24 * 3) + '', ()=>{})
+            }
+          },
+            {
+              text: '去绑定',
+              onPress: () => navigate('BindingPhone')
+            }
+          ]
+        )
       }
     })
 
@@ -93,11 +104,7 @@ class Home extends Component {
 
     const { navigation } = this.props
 
-    // return (<View></View>)
-
-    return (<View>
-      <BindingPhoneModal show={(s)=>{ this.show = s }} />
-      <PostsList
+    return (<PostsList
               {...this.props}
               tabLabel='发现'
               navigation={navigation}
@@ -106,10 +113,9 @@ class Home extends Component {
                 weaken: 1,
                 // method: 'user_custom'
                 include_comments: 1,
-                comments_sort: 'create_at:-1'
+                comments_sort: 'like_count:-1,reply_count:-1'
               }}
-            />
-          </View>)
+            />)
   }
 }
 

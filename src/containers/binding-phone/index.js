@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getUserInfo } from '../../reducers/user'
 import { loadUserInfo } from '../../actions/user'
-import { reset } from '../../actions/phone'
+import { binding } from '../../actions/phone'
 
 import CaptchaButton from '../../components/captcha-button'
 import SelectCountry from '../../components/select-country'
@@ -15,7 +15,7 @@ import gStyles from '../../styles'
 class BindingPhone extends React.Component {
 
   static navigationOptions = {
-    title: '修改手机号'
+    title: '绑定手机'
   }
 
   constructor (props) {
@@ -30,31 +30,23 @@ class BindingPhone extends React.Component {
   submit() {
 
     const self = this
-    const { reset, loadUserInfo } = this.props
+    const { binding, loadUserInfo } = this.props
     const { captcha, phone, areaCode } = this.state
     const { navigation } = this.props
 
     if (!phone) return this.refs.phone.focus()
     if (!captcha) return this.refs.captcha.focus()
 
-    reset({
+    binding({
       data: {
         captcha: captcha,
         phone: phone,
         area_code: areaCode
       },
       callback: function(result){
-
-        if (result && result.success) {
-          Alert.alert('手机号修改成功')
-          loadUserInfo({})
-          navigation.goBack()
-        } else if (result && result.error) {
-          alert(result.error)
-        } else {
-          alert('提交异常')
-        }
-
+        loadUserInfo({})
+        alert(result.success ? '绑定成功' : '绑定失败')
+        navigation.goBack()
       }
     })
 
@@ -67,7 +59,7 @@ class BindingPhone extends React.Component {
     if (!phone) return this.refs.phone.focus()
     if (!areaCode) return Alert.alert('', '请选择手机区号')
 
-    callback({ phone: phone, area_code: areaCode, type: 'reset-phone' })
+    callback({ phone: phone, area_code: areaCode, type: 'binding-phone' })
   }
 
   render() {
@@ -131,7 +123,7 @@ export default connect(state => ({
     me: getUserInfo(state)
   }),
   (dispatch) => ({
-    reset: bindActionCreators(reset, dispatch),
+    binding: bindActionCreators(binding, dispatch),
     loadUserInfo: bindActionCreators(loadUserInfo, dispatch)
   })
-)(BindingPhone)
+)(BindingPhone);

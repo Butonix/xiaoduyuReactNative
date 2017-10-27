@@ -39,7 +39,7 @@ class ResetBrief extends React.Component {
     const { brief } = this.state
 
     if (me.brief == brief) return navigation.goBack()
-
+    
     resetBrief({
       brief,
       callback: (res) => {

@@ -47,7 +47,7 @@ class ResetPassword extends React.Component {
       currentPassword,
       newPassword,
       callback: (res) => {
-        
+
         if (!res.success) {
           self.setState({ submitting: false })
           Alert.alert('', res.error)
@@ -98,7 +98,7 @@ class ResetPassword extends React.Component {
     const { me } = this.props
     const { submitting } = this.state
 
-    return (<ScrollView style={styles.container}>
+    return (<ScrollView style={styles.container} keyboardShouldPersistTaps="always">
               <TextInput
                 style={gStyles.radiusInputTop}
                 autoCapitalize="none"

@@ -12,7 +12,6 @@ import { signout } from '../../actions/sign'
 import { getClientInstalled } from '../../reducers/client-installed'
 
 import { ListItem } from '../../components/ui'
-import BindingPhoneModal from '../../components/binding-phone-modal'
 
 class Settings extends React.Component {
 
@@ -38,6 +37,8 @@ class Settings extends React.Component {
       {text:'取消',onPress:()=>{}},
       {text:'确定',onPress:()=>{
         signout()
+
+        AsyncStorage.removeItem('binding-phone-tips', function(res){})
 
         AsyncStorage.removeItem('token', function(res){
 
@@ -92,7 +93,7 @@ class Settings extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={()=>{ navigate('ResetNickname', {}) }}>
-              <ListItem name={"修改名字"} rightText={me.nickname} />
+              <ListItem name={"名字"} rightText={me.nickname} />
             </TouchableOpacity>
 
             <TouchableOpacity onPress={()=>{ navigate('ResetGender', {}) }}>
@@ -107,7 +108,7 @@ class Settings extends React.Component {
 
             {me.email || me.phone ?
               <TouchableOpacity onPress={()=>{ navigate('ResetPassword', {}) }}>
-                <ListItem name={"修改密码"} />
+                <ListItem name={"密码"} />
               </TouchableOpacity>
               :null}
 
@@ -115,17 +116,15 @@ class Settings extends React.Component {
 
             {me.email ?
               <TouchableOpacity onPress={()=>{ navigate('ResetEmail', {}) }}>
-                <ListItem name={"修改邮箱"} rightText={me.email} />
+                <ListItem name={"邮箱"} rightText={me.email} />
               </TouchableOpacity>
               : <ListItem name={"邮箱"} rightText={'未绑定'} />}
 
-            <BindingPhoneModal show={(s)=>{  this.show = s }} />
-
             {me.phone ?
               <TouchableOpacity onPress={()=>{ navigate('ResetPhone', {}) }}>
-                <ListItem name={"修改手机号"} rightText={me.phone} />
+                <ListItem name={"手机号"} rightText={me.phone} />
               </TouchableOpacity>
-              : <TouchableOpacity onPress={()=>{ this.show() }}>
+              : <TouchableOpacity onPress={()=>{ navigate('BindingPhone') }}>
                 <ListItem name={"手机号"} rightText={'未绑定'} />
               </TouchableOpacity>}
 

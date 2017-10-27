@@ -75,7 +75,7 @@ class ResetEmail extends React.Component {
     const { me } = this.props
     const { submitting } = this.state
 
-    return (<ScrollView style={styles.container}>
+    return (<ScrollView style={styles.container} keyboardShouldPersistTaps="always">
               <TextInput
                 style={gStyles.radiusInputTop}
                 autoCapitalize="none"
@@ -123,4 +123,4 @@ export default connect(state => ({
     resetEmail: bindActionCreators(resetEmail, dispatch),
     loadUserInfo: bindActionCreators(loadUserInfo, dispatch)
   })
-)(ResetEmail);
+)(ResetEmail)

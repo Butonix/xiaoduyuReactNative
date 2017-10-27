@@ -60,3 +60,4 @@ ios/xiaoduyuReactNative/AppDelegate.m
 ios/xiaoduyuReactNative/Info.plist
 
 config/index.js
+release_ios/*
