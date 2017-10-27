@@ -11,7 +11,8 @@ class ChooseTopic extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
     return {
-      title: '请选择一个话题'
+      header: null,
+      title: '话题'
     }
   }
 
@@ -75,6 +76,7 @@ class ChooseTopic extends React.Component {
     }
 
     return (<ScrollView style={styles.container}>
+      <View style={styles.slogan}><Text style={styles.sloganText}>选择一个话题与大家分享吧</Text></View>
       {parentTopicList.map(item=>{
         return (<View key={item._id} style={styles.group}>
                   <View><Text style={styles.title}>{item.name}</Text></View>
@@ -98,6 +100,14 @@ const styles = StyleSheet.create({
   container: {
     padding:20,
     backgroundColor:'#fff'
+  },
+  slogan: {
+    paddingTop:10,
+    paddingBottom:30
+  },
+  sloganText: {
+    fontSize:22,
+    fontWeight: 'bold'
   },
   group: {
     marginBottom:30

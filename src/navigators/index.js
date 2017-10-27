@@ -40,6 +40,7 @@ import BindingPhone from '../containers/binding-phone'
 const MainScreenNavigator = TabNavigator({
   Home: { screen: Home },
   MineFollow: { screen: MineFollow },
+  ChooseTopic: { screen: ChooseTopic },
   Notifications: { screen: Notifications },
   Me: { screen: Me }
 },
@@ -57,7 +58,7 @@ const MainScreenNavigator = TabNavigator({
     inactiveTintColor:'#23232b',
     allowFontScaling: false,
     labelStyle: {
-      fontSize: 16,
+      fontSize: 15,
       paddingBottom:10,
       zIndex:-1,
       borderBottomWidth:1,
@@ -101,10 +102,21 @@ const App = StackNavigator({
 },{
   initialRouteName: 'Welcome',
   navigationOptions: {
+    headerTruncatedBackTitle: '返回',
+    // headerBackTitle: null,
     headerStyle: {
       backgroundColor: '#fff'
     },
-    headerTintColor: '#23232b'
+    headerTintColor: '#23232b',
+    headerTitleStyle: {
+      fontSize: 15
+    },
+    headerBackTitleStyle: {
+      backgroundColor: '#333'
+    },
+    headerBackTitleStyle: {
+      fontSize:15
+    }
   }
 })
 

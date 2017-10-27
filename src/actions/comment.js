@@ -94,6 +94,8 @@ export function updateComment({ id, contentJSON, contentHTML, callback }) {
 
           posts[i].data.map(item=>{
 
+            if (!item.comment) return
+
             item.comment.map((comment, index)=>{
               if (comment._id == id) {
                 item.comment[index].content_html = contentHTML

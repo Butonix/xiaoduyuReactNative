@@ -61,7 +61,8 @@ export default StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    lineHeight: 20
+    fontSize: 16,
+    marginBottom:5
   },
   loading: {
     height: 60

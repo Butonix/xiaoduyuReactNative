@@ -59,6 +59,10 @@ class PostsList extends Component {
     navigate('CommentDetail', { title: comment.content_summary, id: comment._id })
   }
 
+  renderHeader() {
+    // return (<View><Text>发表</Text></View>)
+  }
+
   render() {
 
     const self = this
@@ -127,7 +131,7 @@ class PostsList extends Component {
               : null}
 
           </View>)}
-          // renderHeader={this.renderHeader}
+          renderHeader={this.renderHeader}
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
           removeClippedSubviews={false}
           refreshControl={<RefreshControl onRefresh={callback=>self.loadPostsList(callback, true)} />}

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native'
 
-// import { Toast, ModalIndicator } from 'teaset'
-
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { addComment, updateComment } from '../../actions/comment'
@@ -20,7 +18,7 @@ class WriteComment extends React.Component {
       headerRight: (<View><Button onPress={()=>params.submit()} title={"提交"} /></View>),
     }
   }
-  
+
   constructor (props) {
     super(props)
     this.state = {
@@ -28,20 +26,13 @@ class WriteComment extends React.Component {
       contentHTML: ''
     }
     this.submit = this.submit.bind(this)
-    // this.cancel = this.cancel.bind(this)
   }
 
   componentDidMount() {
     this.props.navigation.setParams({
       submit: this.submit
-      // cancel: this.cancel
     })
   }
-
-  // cancel() {
-  //   const { navigation } = this.props
-  //   navigation.goBack()
-  // }
 
   submit() {
 
@@ -67,7 +58,6 @@ class WriteComment extends React.Component {
     if (parentId) data.parent_id = parentId
     if (replyId) data.reply_id = replyId
 
-    // let s = ModalIndicator.show(`提交中...`);
     self.setState({ visible: true })
 
     if (comment) {
@@ -77,7 +67,6 @@ class WriteComment extends React.Component {
         contentJSON: contentJSON,
         contentHTML: contentHTML,
         callback: (res)=>{
-          // ModalIndicator.hide(s)
           self.setState({ visible: false })
           if (res && res.success) {
             navigation.goBack()
@@ -93,25 +82,12 @@ class WriteComment extends React.Component {
         data,
         callback: (res) => {
 
-          // ModalIndicator.hide(s)
           self.setState({ visible: false })
 
           if (res.success) {
-            // Toast.show({
-            //   text: '提交成功',
-            //   icon: 'success',
-            //   position: 'center',
-            //   duration: 1000
-            // })
             navigation.goBack()
           } else {
             Alert.alert('', res.error || '提交失败')
-            // Toast.show({
-            //   text: res.error || '提交失败',
-            //   icon: 'fail',
-            //   position: 'center',
-            //   duration: 1000
-            // })
           }
 
         }
