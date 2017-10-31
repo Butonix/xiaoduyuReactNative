@@ -50,7 +50,9 @@ const processPostsList = (list) => {
 
         comment._create_at = DateDiff(comment.create_at)
 
-        let text = comment.content_html.replace(/<[^>]+>/g,"")
+        let text = comment.content_html.replace(/<img[^>]+>/g,"[图片]")
+        text = text.replace(/<[^>]+>/g,"")
+
         if (text.length > 140) text = text.slice(0, 140)+'...'
         comment.content_summary = text
 

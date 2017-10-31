@@ -99,8 +99,10 @@ export function updateComment({ id, contentJSON, contentHTML, callback }) {
             item.comment.map((comment, index)=>{
               if (comment._id == id) {
                 item.comment[index].content_html = contentHTML
+                
+                let text = contentHTML.replace(/<img[^>]+>/g,"[图片]")
+                text = text.replace(/<[^>]+>/g,"")
 
-                let text = contentHTML.replace(/<[^>]+>/g,"")
                 if (text.length > 200) text = text.slice(0, 200)+'...'
 
                 item.comment[index].content_summary = text

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 
 let style = {
   button:{
-    backgroundColor:'rgb(22, 177, 244)',
+    backgroundColor:'#277eff',
     height:50,
     borderRadius:4,
     justifyContent: 'center',
@@ -11,7 +11,7 @@ let style = {
   },
   fullButton: {
     // flex:1,
-    backgroundColor:'#0f98d8',
+    backgroundColor:'#277eff',
     height:45,
     borderRadius:4,
     justifyContent: 'center',

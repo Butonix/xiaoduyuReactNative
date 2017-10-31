@@ -1,5 +1,6 @@
 
 import { StackNavigator, TabNavigator } from 'react-navigation'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 import Welcome from '../containers/welcome'
 import FastSignIn from '../containers/fast-sign-in'
@@ -51,7 +52,13 @@ const MainScreenNavigator = TabNavigator({
   animationEnabled:false,
   lazy: true,
   tabBarOptions: {
-    style: { height:65 },
+    style: {
+      ...ifIphoneX({
+          height: 75
+      }, {
+          height: 65
+      })
+    },
     activeBackgroundColor:'white',
     activeTintColor:'#08f',
     inactiveBackgroundColor:'white',
@@ -101,11 +108,20 @@ const App = StackNavigator({
   // Test: { screen: Test }
 },{
   initialRouteName: 'Welcome',
+  // cardStyle: {},
   navigationOptions: {
     headerTruncatedBackTitle: '返回',
     // headerBackTitle: null,
     headerStyle: {
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      ...ifIphoneX({
+          paddingTop:30,
+          height: 75,
+          borderBottomWidth:1,
+          borderColor: '#efefef'
+      }, {
+          height: 65
+      })
     },
     headerTintColor: '#23232b',
     headerTitleStyle: {

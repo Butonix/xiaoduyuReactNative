@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    color: '#0f98d8'
+    color: '#277eff'
   },
   logoMain: {
     height:screenHeight*0.35,
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     marginBottom:20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'#0f98d8'
+    backgroundColor:'#277eff'
   },
   logo: {
     width:90,

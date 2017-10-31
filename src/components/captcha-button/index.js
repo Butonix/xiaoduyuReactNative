@@ -79,7 +79,7 @@ class CaptchaButton extends Component {
 
 const styles = StyleSheet.create({
   captchaButton:{
-    backgroundColor:'#0f98d8',
+    backgroundColor:'#277eff',
     height:30,
     width:100,
     justifyContent: 'center',

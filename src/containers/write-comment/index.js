@@ -71,9 +71,10 @@ class WriteComment extends React.Component {
           if (res && res.success) {
             navigation.goBack()
           } else {
-            Alert.alert('', res && res.error ? res.error : '更新失败')
+            setTimeout(()=>{
+              Alert.alert('', res && res.error ? res.error : '更新失败')
+            }, 2000)
           }
-
         }
       })
     } else {
@@ -83,11 +84,13 @@ class WriteComment extends React.Component {
         callback: (res) => {
 
           self.setState({ visible: false })
-
+          
           if (res.success) {
             navigation.goBack()
           } else {
-            Alert.alert('', res.error || '提交失败')
+            setTimeout(()=>{
+              Alert.alert('', res.error || '提交失败')
+            }, 2000)
           }
 
         }
