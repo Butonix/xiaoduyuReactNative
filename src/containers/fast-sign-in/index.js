@@ -158,7 +158,9 @@ class FastSignIn extends Component {
 
         <View style={{flex:1}}></View>
 
-        <View style={styles.protocol}><Text style={styles.protocolText}>登陆即表示同意 用户协议</Text></View>
+        <View style={styles.protocol}>
+          <Text style={styles.protocolText} onPress={()=>{ navigate('Privacy') }}>登陆即表示同意 用户协议</Text>
+        </View>
 
       </View>)
   }

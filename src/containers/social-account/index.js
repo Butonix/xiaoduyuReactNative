@@ -56,7 +56,7 @@ class SocialAccount extends React.Component {
     const self = this;
     const { me, accessToken } = this.props
     const { socialName } = this.props.navigation.state.params
-    const { unbindingSocialAccount, loadUserInfo, weiboGetUserInfo } = this.props
+    const { unbindingSocialAccount, loadUserInfo, weiboGetUserInfo, QQGetUserInfo } = this.props
     const { navigate } = this.props.navigation
 
     let binding = me[socialName]
@@ -131,7 +131,7 @@ class SocialAccount extends React.Component {
           )
       }
 
-    } else {
+    } else if (socialName == 'qq') {
 
       openShare.qqLogin()
 
@@ -188,7 +188,7 @@ class SocialAccount extends React.Component {
       <TouchableOpacity onPress={this.showActionSheet}>
         <ListItem type="center" name={(me[socialName] ? '已绑定' : '绑定') + name } />
       </TouchableOpacity>
-      
+
       <ActionSheet
         ref={o => this.ActionSheet = o}
         title={me[socialName] ? '解除绑定后，您将无法通过该 '+name+' 账户登陆' : '绑定后，您将可以通过该 '+name+' 账户登陆'}

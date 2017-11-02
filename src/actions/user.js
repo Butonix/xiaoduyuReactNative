@@ -38,7 +38,7 @@ export function loadUserInfo({ accessToken = null, callback = ()=>{} }) {
 export function resetAvatar({ avatar, callback =()=>{} }) {
   return (dispatch, getState) => {
     let accessToken = getState().user.accessToken
-    
+
     return Ajax({
       url: '/reset-avatar',
       type: 'post',

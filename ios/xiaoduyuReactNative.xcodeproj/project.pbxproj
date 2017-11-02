@@ -61,6 +61,8 @@
 		C22A3A5E3F7A46E08E8F2E85 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 512FF13028204B3B88F5ED9F /* CoreFoundation.framework */; };
 		C22D2C081F7F39B000BBD85F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C22D2BE11F7F39B000BBD85F /* libc++.tbd */; };
 		C22D2C0A1F7F39C500BBD85F /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C22D2C091F7F39C500BBD85F /* libsqlite3.0.tbd */; };
+		C2483AAF1FAB705D008CA242 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = C2483AAD1FAB705D008CA242 /* assets */; };
+		C2483AB01FAB705D008CA242 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = C2483AAE1FAB705D008CA242 /* main.jsbundle */; };
 		C27EC2AB1F542F79005324E3 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C27EC2AA1F542F54005324E3 /* libRCTCameraRoll.a */; };
 		C6AFDE8C36FC409A80D613C0 /* libRCTJCoreModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3F9AC27D354912850DD45C /* libRCTJCoreModule.a */; };
 		DA8A2D7912C840ECB1717AFB /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC640C0E653C4591B3C9D075 /* libyoga.a */; };
@@ -420,6 +422,8 @@
 		C22D2BE11F7F39B000BBD85F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		C22D2C091F7F39C500BBD85F /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		C233120F1F71252F00BABF67 /* xiaoduyuReactNative.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = xiaoduyuReactNative.entitlements; path = xiaoduyuReactNative/xiaoduyuReactNative.entitlements; sourceTree = "<group>"; };
+		C2483AAD1FAB705D008CA242 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../release_ios/assets; sourceTree = "<group>"; };
+		C2483AAE1FAB705D008CA242 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../release_ios/main.jsbundle; sourceTree = "<group>"; };
 		C27EC2A51F542F53005324E3 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		CC3F9AC27D354912850DD45C /* libRCTJCoreModule.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTJCoreModule.a; sourceTree = "<group>"; };
 		D102FB1C77BD4152BC927F31 /* CoreGraphics.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -591,6 +595,8 @@
 		13B07FAE1A68108700A75B9A /* xiaoduyuReactNative */ = {
 			isa = PBXGroup;
 			children = (
+				C2483AAD1FAB705D008CA242 /* assets */,
+				C2483AAE1FAB705D008CA242 /* main.jsbundle */,
 				C233120F1F71252F00BABF67 /* xiaoduyuReactNative.entitlements */,
 				43BF5F7D1F5C0333002E0271 /* OpenShare */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -1319,8 +1325,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2483AAF1FAB705D008CA242 /* assets in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				C2483AB01FAB705D008CA242 /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

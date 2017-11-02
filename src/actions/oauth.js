@@ -20,7 +20,7 @@ export function QQGetUserInfo({ data, callback = ()=>{} }) {
 
     let accessToken = getState().user.accessToken
     if (accessToken) data.access_token = accessToken
-
+    
     return Ajax({
       url: '/qq-get-user-info',
       type: 'post',

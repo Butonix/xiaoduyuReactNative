@@ -10,8 +10,8 @@ import { getUserInfo } from '../../reducers/user'
 import { cleanAllComment } from '../../actions/comment'
 
 import PostsList from '../../components/posts-list'
-import TabBar from '../../components/tab-bar'
-import MenuIcon from '../../components/ui/icon/menu'
+// import TabBar from '../../components/tab-bar'
+// import MenuIcon from '../../components/ui/icon/menu'
 
 import JPushModule from 'jpush-react-native'
 
@@ -32,6 +32,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
+
     const { me, cleanAllComment } = this.props
     const { navigate } = this.props.navigation
     this.state.listener = (result) => {
@@ -48,7 +49,9 @@ class Home extends Component {
     AsyncStorage.getItem('jpush_alias', (errs, result)=>{
       if (!result) {
         AsyncStorage.setItem('jpush_alias', me._id, function(errs, result){
-          JPushModule.setAlias(me._id, ()=>{}, ()=>{})
+          JPushModule.setAlias(me._id, (res)=>{
+          }, (res)=>{
+          })
         })
       }
     })
@@ -62,20 +65,6 @@ class Home extends Component {
         })
       }
     })
-
-  }
-
-  componentWillUnmount() {
-    if (this.state.listener) {
-      // 移除监听事件
-      JPushModule.removeReceiveOpenNotificationListener(this.state.listener)
-      this.state.listener = null
-    }
-  }
-
-  componentDidMount() {
-    const { me } = this.props
-    const { navigate } = this.props.navigation
 
     if (me.phone) return
 
@@ -100,6 +89,14 @@ class Home extends Component {
 
   }
 
+  componentWillUnmount() {
+    if (this.state.listener) {
+      // 移除监听事件
+      JPushModule.removeReceiveOpenNotificationListener(this.state.listener)
+      this.state.listener = null
+    }
+  }
+
   render() {
 
     const { navigation } = this.props
@@ -111,7 +108,6 @@ class Home extends Component {
               name="discover"
               filters={{
                 weaken: 1,
-                // method: 'user_custom'
                 include_comments: 1,
                 comments_sort: 'like_count:-1,reply_count:-1'
               }}
@@ -119,11 +115,9 @@ class Home extends Component {
   }
 }
 
-const stylesIcon = StyleSheet.create({
-  icon: { width: 24, height: 24 }
-})
-
-// export default Home
+// const stylesIcon = StyleSheet.create({
+//   icon: { width: 24, height: 24 }
+// })
 
 export default connect(state => ({
     me: getUserInfo(state)

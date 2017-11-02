@@ -162,6 +162,8 @@ class Forgot extends Component {
               style={gStyles.radiusInputCenter}
               onChangeText={(captcha) => this.setState({captcha})}
               placeholder='请输入验证码'
+              maxLength={6}
+              keyboardType={'numeric'}
             />
             <View style={{
               position: 'absolute',

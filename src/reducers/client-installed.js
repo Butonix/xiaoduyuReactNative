@@ -9,7 +9,6 @@ export default function clientInstalled(state = initialState, action = {}) {
     case 'HAS_CLIENT_INSTALLED':
       var { name } = action
       state[name] = true
-      console.log(state);
       return merge({}, state, {})
     default:
       return state;

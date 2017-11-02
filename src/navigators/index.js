@@ -23,6 +23,7 @@ import TopicDetail from '../containers/topic-detail'
 import PeopleDetail from '../containers/people-detail'
 import List from '../containers/list'
 import SocialAccount from '../containers/social-account'
+import Privacy from '../containers/privacy'
 
 // setting
 import ResetNickname from '../containers/reset-nickname'
@@ -104,7 +105,8 @@ const App = StackNavigator({
   SocialAccount: { screen: SocialAccount },
   FastSignIn: { screen: FastSignIn },
   ResetPhone: { screen: ResetPhone },
-  BindingPhone: { screen: BindingPhone }
+  BindingPhone: { screen: BindingPhone },
+  Privacy: { screen: Privacy }
   // Test: { screen: Test }
 },{
   initialRouteName: 'Welcome',

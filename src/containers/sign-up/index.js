@@ -39,7 +39,8 @@ class SignUp extends Component {
       captcha: '',
       error: {},
       visible: false,
-      areaCode: ''
+      areaCode: '',
+      submitting: false
     }
     this.submit = this.submit.bind(this)
     this.sendCaptcha = this.sendCaptcha.bind(this)
@@ -47,6 +48,8 @@ class SignUp extends Component {
   }
 
   submit() {
+
+    if (this.state.submitting) return
 
     const self = this
     const { nickname, account, password, captcha, gender, areaCode } = this.state
@@ -61,6 +64,8 @@ class SignUp extends Component {
 
     self.setState({ visible: true })
 
+    self.state.submitting = true
+
     signup({
       data: {
         nickname: nickname,
@@ -73,15 +78,19 @@ class SignUp extends Component {
       },
       callback: (res)=>{
 
+        self.state.submitting = false
+
         if (!res.success) {
           self.setState({ error: res.error, visible: false })
         } else {
+
+          self.setState({ visible: false })
 
           signin({
             data: { phone: account, password: password },
             callback: (res)=>{
 
-              self.setState({ visible: false })
+              Alert.alert('', '注册成功')
 
               if (!res.success) {
                 navigation.goBack()

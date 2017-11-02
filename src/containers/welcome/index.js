@@ -12,7 +12,7 @@ import JPushModule from 'jpush-react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../reducers/user'
-import { loadUnreadCount, loadNewNotifications } from '../../actions/notification'
+import { loadUnreadCount, loadNewNotifications, cancelNotiaction } from '../../actions/notification'
 import { api_url } from '../../../config'
 
 import Loading from '../../components/ui/loading'
@@ -45,7 +45,6 @@ class Welcome extends Component {
       self.state.notification = result
       JPushModule.setBadge(0, ()=>{})
     })
-
   }
 
   componentDidMount() {
@@ -70,13 +69,11 @@ class Welcome extends Component {
   // websocket 执行的消息
   handleMessage(name, data) {
 
-    const { me, loadUnreadCount, loadNewNotifications, navigation } = this.props
+    const { me, loadUnreadCount, loadNewNotifications, cancelNotiaction, navigation } = this.props
 
     switch (name) {
       case 'notiaction':
-
         if (data.indexOf(me._id) != -1) {
-          // console.log('需要更新');
           loadUnreadCount({
             callback: (unreadNotice)=>{
 
@@ -90,6 +87,19 @@ class Welcome extends Component {
           })
 
         }
+        break
+      case 'cancel-notiaction':
+        cancelNotiaction({
+          id: data,
+          callback: (unreadNotice)=>{
+            const setParamsAction = NavigationActions.setParams({
+              params: { unreadNotice, loadNewNotifications },
+              key: 'Notifications',
+            })
+            navigation.dispatch(setParamsAction)
+          }
+        })
+
         break
       case 'online-user-count':
         // console.log(data);
@@ -117,7 +127,7 @@ class Welcome extends Component {
       websocket.start({ onmessage: this.handleMessage })
       // 获取通知
       self.handleMessage('notiaction', [me._id])
-      
+
       // 显示推送页面
       if (notification && notification.routeName && notification.params) {
         index = 1
@@ -130,8 +140,6 @@ class Welcome extends Component {
     } else {
       actions.push(NavigationActions.navigate({ routeName: 'FastSignIn' }))
     }
-
-    // const resetAction = NavigationActions.reset({ index, actions })
 
     this.props.navigation.dispatch(NavigationActions.reset({ index, actions }))
   }
@@ -184,6 +192,7 @@ export default connect(
   },
   (dispatch, props) => ({
     loadUnreadCount: bindActionCreators(loadUnreadCount, dispatch),
-    loadNewNotifications: bindActionCreators(loadNewNotifications, dispatch)
+    loadNewNotifications: bindActionCreators(loadNewNotifications, dispatch),
+    cancelNotiaction: bindActionCreators(cancelNotiaction, dispatch)
   })
 )(Welcome)
