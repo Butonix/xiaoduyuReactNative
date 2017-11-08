@@ -35,6 +35,8 @@ import ResetAvatar from '../containers/reset-avatar'
 import ResetPhone from '../containers/reset-phone'
 import BindingPhone from '../containers/binding-phone'
 
+import Report from '../containers/report'
+
 // test
 // import Test from '../containers/test'
 // import Editor from '../containers/editor'
@@ -106,7 +108,8 @@ const App = StackNavigator({
   FastSignIn: { screen: FastSignIn },
   ResetPhone: { screen: ResetPhone },
   BindingPhone: { screen: BindingPhone },
-  Privacy: { screen: Privacy }
+  Privacy: { screen: Privacy },
+  Report: { screen: Report }
   // Test: { screen: Test }
 },{
   initialRouteName: 'Welcome',

@@ -18,9 +18,7 @@ import Loading from '../../components/ui/loading'
 import Nothing from '../../components/nothing'
 
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
-const CANCEL_INDEX = 0
-const DESTRUCTIVE_INDEX = 0
-const options = [ '取消', '编辑']
+
 
 class CommentDetail extends Component {
 
@@ -65,22 +63,18 @@ class CommentDetail extends Component {
             return
           }
 
-          if (res && me._id == res.user_id._id) {
-            self.props.navigation.setParams({
-              menu: self.menu
-            })
-          }
+          self.props.navigation.setParams({
+            menu: self.menu
+          })
 
         }
       })
       return
     }
 
-    if (me._id == data[0].user_id._id) {
-      this.props.navigation.setParams({
-        menu: this.menu
-      })
-    }
+    this.props.navigation.setParams({
+      menu: this.menu
+    })
 
   }
 
@@ -92,12 +86,17 @@ class CommentDetail extends Component {
 
     if (!key) return
 
-    let { data, loading } = this.props.comment
+    const { me } = this.props
+    const { navigate } = this.props.navigation
+    const { data, loading } = this.props.comment
 
     let comment = data && data[0] ? data[0] : null
 
-    const { navigate } = this.props.navigation
-    navigate('WriteComment', { comment })
+    if (me._id == comment.user_id._id && key == 1) {
+      navigate('WriteComment', { comment })
+    } else if (key == 1 || key == 2) {
+      navigate('Report', { comment })
+    }
 
   }
 
@@ -112,11 +111,17 @@ class CommentDetail extends Component {
 
     let { data, loading } = this.props.comment
     const { nothing } = this.state
+    const { me } = this.props
 
     let comment = data && data[0] ? data[0] : null
 
     if (nothing) return (<Nothing content="评论不存在或已删除" />)
     if (!data || loading) return <Loading />
+
+    let options = ['取消']
+
+    if (me._id == comment.user_id._id) options.push('编辑')
+    options.push('举报')
 
     return (<View style={styles.container}>
       <ScrollView style={styles.main}>
@@ -157,10 +162,11 @@ class CommentDetail extends Component {
       <ActionSheet
         ref={o => this.ActionSheet = o}
         options={options}
-        cancelButtonIndex={CANCEL_INDEX}
-        destructiveButtonIndex={DESTRUCTIVE_INDEX}
+        cancelButtonIndex={0}
+        destructiveButtonIndex={0}
         onPress={this.showSheet}
       />
+
       </View>)
   }
 }

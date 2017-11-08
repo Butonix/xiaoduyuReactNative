@@ -16,6 +16,7 @@
     "react-native": "0.46.4",
     "react-native-actionsheet": "^2.2.2",
     "react-native-cookie": "^0.2.0",
+    "react-native-flexi-radio-button": "^0.2.2",
     "react-native-html-render": "^1.0.5",
     "react-native-htmlview": "^0.11.1",
     "react-native-image-crop-picker": "^0.16.0",

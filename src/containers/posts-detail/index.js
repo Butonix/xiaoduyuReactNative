@@ -19,14 +19,9 @@ import Loading from '../../components/ui/loading'
 import Nothing from '../../components/nothing'
 
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
-const CANCEL_INDEX = 0
-const DESTRUCTIVE_INDEX = 0
-const options = [ '取消', '编辑']
 
 
 const S = global.styles
-
-// console.log(S);
 
 class PostsDetail extends Component {
 
@@ -70,21 +65,21 @@ class PostsDetail extends Component {
           return
         }
 
-        if (me._id == posts.user_id._id) {
+        // if (me._id == posts.user_id._id) {
           this.props.navigation.setParams({
             menu: this.menu
           })
-        }
+        // }
 
       }})
       return
     }
 
-    if (me._id == posts.user_id._id) {
+    // if (me._id == posts.user_id._id) {
       this.props.navigation.setParams({
         menu: this.menu
       })
-    }
+    // }
 
   }
 
@@ -135,9 +130,14 @@ class PostsDetail extends Component {
     if (!key) return
 
     const [ posts ] = this.props.posts
-
     const { navigate } = this.props.navigation;
-    navigate('WritePosts', { topic: posts.topic_id, posts })
+    const { me } = this.props
+
+    if (me._id == posts.user_id._id && key == 1) {
+      navigate('WritePosts', { topic: posts.topic_id, posts })
+    } else {
+      navigate('Report', { posts })
+    }
 
   }
 
@@ -164,10 +164,15 @@ class PostsDetail extends Component {
 
     const [ posts ] = this.props.posts
     const { nothing } = this.state
+    const { me } = this.props
     // const { navigate } = this.props.navigation
 
     if (nothing) return (<Nothing content="帖子不存在或已删除" />)
     if (!posts) return <Loading />
+
+    let options = [ '取消' ]
+    if (me._id == posts.user_id._id) options.push('编辑')
+    options.push('举报')
 
     return (<View style={styles.container}>
         <ScrollView style={styles.main}>
@@ -208,11 +213,12 @@ class PostsDetail extends Component {
           </View>
         </ScrollView>
         <BottomBar {...this.props} posts={posts} />
+
         <ActionSheet
           ref={o => this.ActionSheet = o}
           options={options}
-          cancelButtonIndex={CANCEL_INDEX}
-          destructiveButtonIndex={DESTRUCTIVE_INDEX}
+          cancelButtonIndex={0}
+          destructiveButtonIndex={0}
           onPress={this.showSheet}
         />
       </View>)

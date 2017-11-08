@@ -39,7 +39,7 @@ class CommentItem extends React.Component {
   }
 
   editComment(comment) {
-
+    
     const { navigate } = this.props.navigation;
     const { loadCommentById } = this.props
 
@@ -51,13 +51,15 @@ class CommentItem extends React.Component {
         }
       }
     })
+
   }
 
   showSheet(key) {
 
     if (!key) return
-    const { comment, handleUnlike, handleLike } = this.props
 
+    const { comment, handleUnlike, handleLike, me } = this.props
+    const { navigate } = this.props.navigation
 
     if (key == 1) {
 
@@ -71,7 +73,7 @@ class CommentItem extends React.Component {
         },
         callback: (res)=> {
 
-          console.log(res);
+          // console.log(res);
           if (res && !res.success) {
             Alert.alert('', res.error : '提交失败')
           }
@@ -82,8 +84,8 @@ class CommentItem extends React.Component {
     }
 
     if (key == 2) return this.reply(comment)
-
-    if (key == 3) return this.editComment(comment)
+    if (me && me._id == comment.user_id._id && key == 3) return this.editComment(comment)
+    if (key == 3 || key == 4) return navigate('Report', { comment })
   }
 
   render() {
@@ -104,7 +106,7 @@ class CommentItem extends React.Component {
     options.push(comment.like ? '取消赞' : '赞')
     options.push('回复')
     if (displayEdit && me && me._id == comment.user_id._id) options.push('编辑')
-
+    options.push('举报')
 
     // console.log(comment);
 
@@ -115,7 +117,7 @@ class CommentItem extends React.Component {
       </TouchableOpacity>
 
       <View style={styles.main}>
-        
+
         <View style={styles.head}>
           <View style={styles.headLeft}>
             <Text style={styles.nickname} onPress={()=>{this.toPeople(comment.user_id)}}>

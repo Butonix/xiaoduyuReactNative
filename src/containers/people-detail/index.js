@@ -9,6 +9,8 @@ import { ListItem } from '../../components/ui'
 import FollowButton from '../../components/follow-button'
 import Loading from '../../components/ui/loading'
 
+import MenuIcon from '../../components/ui/icon/menu'
+
 import Lightbox from 'react-native-lightbox'
 import Carousel from 'react-native-looped-carousel'
 
@@ -18,17 +20,44 @@ const WINDOW_WIDTH = Dimensions.get('window').width;
 const BASE_PADDING = 10;
 
 
+import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
+const CANCEL_INDEX = 0
+const DESTRUCTIVE_INDEX = 0
+const options = [ '取消', '举报' ]
+
 class PeopleDetail extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
-    return {
-      title: params.title
+
+    let option = {
+      headerTitle: params.title
     }
+
+    if (params.menu) {
+      option.headerRight = (<TouchableOpacity onPress={()=>params.menu()}><MenuIcon /></TouchableOpacity>)
+    }
+
+    return option
   }
 
   constructor (props) {
     super(props)
+    this.menu = this.menu.bind(this)
+    this.showSheet = this.showSheet.bind(this)
+  }
+
+  menu(key) {
+    this.ActionSheet.show()
+  }
+
+  showSheet(key) {
+
+    const { navigate } = this.props.navigation;
+    const [ people ] = this.props.people
+
+    if (!key) return
+    if (key == 1) return navigate('Report', { people })
   }
 
   componentWillMount() {
@@ -38,8 +67,20 @@ class PeopleDetail extends React.Component {
     const [ people ] = this.props.people
 
     if (!people) {
-      loadPeopleById({ id })
+      loadPeopleById({
+        id,
+        callback:(res) => {
+          this.props.navigation.setParams({
+            menu: this.menu
+          })
+        }
+      })
+      return
     }
+
+    this.props.navigation.setParams({
+      menu: this.menu
+    })
 
   }
 
@@ -69,7 +110,8 @@ class PeopleDetail extends React.Component {
     }
 
     return (<ScrollView>
-      <View style={styles.head}>
+
+      <View style={[styles.head, S['m-b-10'], S['m-t-10']]}>
         <View>
           {people.avatar_url ?
             <Lightbox springConfig={{tension: 15, friction: 7}} swipeToDismiss={false} renderContent={renderCarousel}>
@@ -116,6 +158,14 @@ class PeopleDetail extends React.Component {
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPeopleList', id: people._id + '-fans', filters: { people_id: people._id, people_exsits: 1 }, title: people.nickname + '的粉丝' }) }}>
         <ListItem name={"他的粉丝"} rightText={people.fans_count} />
       </TouchableOpacity>
+
+      <ActionSheet
+        ref={o => this.ActionSheet = o}
+        options={options}
+        cancelButtonIndex={CANCEL_INDEX}
+        destructiveButtonIndex={DESTRUCTIVE_INDEX}
+        onPress={this.showSheet}
+      />
 
     </ScrollView>)
   }
