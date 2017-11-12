@@ -159,7 +159,8 @@ class FastSignIn extends Component {
         <View style={{flex:1}}></View>
 
         <View style={styles.protocol}>
-          <Text style={styles.protocolText} onPress={()=>{ navigate('Privacy') }}>登陆即表示同意 用户协议</Text>
+          <Text style={styles.protocolText}>登陆即表示您同意</Text>
+          <Text style={[styles.protocolText, styles.green]} onPress={()=>{ navigate('Agreement') }}>用户协议</Text>
         </View>
 
       </View>)
@@ -195,6 +196,7 @@ const styles = StyleSheet.create({
     height:90
   },
   protocol:{
+    flexDirection: 'row',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center'
@@ -202,6 +204,10 @@ const styles = StyleSheet.create({
   protocolText: {
     fontSize:12,
     color:'rgb(145, 145, 145)'
+  },
+  green: {
+    color:'rgb(80, 145, 255)',
+    marginLeft:10
   }
 })
 

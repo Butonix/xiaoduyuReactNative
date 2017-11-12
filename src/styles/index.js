@@ -44,9 +44,6 @@ let style = {
     borderColor: '#dce0e0'
   },
 
-
-
-
   item: {
     paddingLeft:15,
     paddingRight:15,

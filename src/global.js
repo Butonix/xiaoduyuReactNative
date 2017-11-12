@@ -10,6 +10,8 @@ import { cleanAllComment } from './actions/comment'
 import { cleanAllFollow } from './actions/follow'
 import { cleanAllPeople } from './actions/people'
 import { cleanAllTopic } from './actions/topic'
+import { cleanAllBlock } from './actions/block'
+
 import { checkClientInstalled } from './actions/client-installed'
 import { exchangeNewToken } from './actions/token'
 import styles from './styles'
@@ -52,6 +54,7 @@ export default ({ dispatch, getState }) => {
     cleanAllFollow()(dispatch, getState)
     cleanAllPeople()(dispatch, getState)
     cleanAllTopic()(dispatch, getState)
+    cleanAllBlock()(dispatch, getState)
   }
 
   // 初始化redux数据

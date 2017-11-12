@@ -23,7 +23,7 @@ import TopicDetail from '../containers/topic-detail'
 import PeopleDetail from '../containers/people-detail'
 import List from '../containers/list'
 import SocialAccount from '../containers/social-account'
-import Privacy from '../containers/privacy'
+import Agreement from '../containers/agreement'
 
 // setting
 import ResetNickname from '../containers/reset-nickname'
@@ -36,6 +36,7 @@ import ResetPhone from '../containers/reset-phone'
 import BindingPhone from '../containers/binding-phone'
 
 import Report from '../containers/report'
+import Block from '../containers/block'
 
 // test
 // import Test from '../containers/test'
@@ -108,8 +109,9 @@ const App = StackNavigator({
   FastSignIn: { screen: FastSignIn },
   ResetPhone: { screen: ResetPhone },
   BindingPhone: { screen: BindingPhone },
-  Privacy: { screen: Privacy },
-  Report: { screen: Report }
+  Agreement: { screen: Agreement },
+  Report: { screen: Report },
+  Block: { screen: Block }
   // Test: { screen: Test }
 },{
   initialRouteName: 'Welcome',

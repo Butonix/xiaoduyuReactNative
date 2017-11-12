@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { follow, unfollow } from '../../actions/follow'
+import { block, unblock } from '../../actions/block'
+import { getUserInfo } from '../../reducers/user'
 
 class PeopleItem extends Component {
 
@@ -13,6 +15,7 @@ class PeopleItem extends Component {
     super(props)
     this.toPeople = this.toPeople.bind(this)
     this.handleFollow = this.handleFollow.bind(this)
+    this.handleBlock = this.handleBlock.bind(this)
   }
 
   toPeople(people){
@@ -27,10 +30,22 @@ class PeopleItem extends Component {
       follow({ data: { people_id: people._id } })
   }
 
+  handleBlock(people) {
+    const { block, unblock, me } = this.props
+    me.block_people.indexOf(people._id) == -1 ?
+      block({ data: { people_id: people._id } }) :
+      unblock({ data: { people_id: people._id } })
+  }
+
   render() {
 
-    const { people } = this.props
-    
+    const {
+      people,
+      displayFollowButton = true,
+      displayBlockButton = false,
+      me
+    } = this.props
+
     if (!people) return (<View></View>)
 
     return (<View>
@@ -44,9 +59,19 @@ class PeopleItem extends Component {
               {people.comment_count ? <Text>评论{people.comment_count}</Text> : null}
             </View>
           </View>
-          <TouchableOpacity style={styles.itemRight} onPress={()=>this.handleFollow(people)}>
-            <Text>{people.follow ? '已关注' : '关注'}</Text>
-          </TouchableOpacity>
+
+          {displayFollowButton ?
+            <TouchableOpacity style={styles.itemRight} onPress={()=>this.handleFollow(people)}>
+              <Text>{people.follow ? '已关注' : '关注'}</Text>
+            </TouchableOpacity>
+            : null}
+
+          {/*displayBlockButton ?
+            <TouchableOpacity style={styles.itemRight} onPress={()=>this.handleBlock(people)}>
+              <Text>{me.block_people.indexOf(people._id) == -1 ? '屏蔽' : '取消屏蔽'}</Text>
+            </TouchableOpacity>
+            : null*/}
+
         </TouchableOpacity>
       </View>)
   }
@@ -74,15 +99,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   itemCenter:{
-    flex: 1
+    flex: 1,
+    justifyContent: 'center'
   }
 })
 
 
 export default connect((state, props) => ({
+    me: getUserInfo(state)
   }),
   (dispatch) => ({
     follow: bindActionCreators(follow, dispatch),
-    unfollow: bindActionCreators(unfollow, dispatch)
+    unfollow: bindActionCreators(unfollow, dispatch),
+    block: bindActionCreators(block, dispatch),
+    unblock: bindActionCreators(unblock, dispatch)
   })
 )(PeopleItem)

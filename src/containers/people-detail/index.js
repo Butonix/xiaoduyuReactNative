@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput, navigator, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput, navigator, Dimensions, Alert } from 'react-native'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { loadPeopleById } from '../../actions/people'
+import { block, unblock } from '../../actions/block'
 import { getPeopleById } from '../../reducers/people'
+import { getUserInfo } from '../../reducers/user'
+
 import { ListItem } from '../../components/ui'
 import FollowButton from '../../components/follow-button'
 import Loading from '../../components/ui/loading'
@@ -21,9 +24,7 @@ const BASE_PADDING = 10;
 
 
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
-const CANCEL_INDEX = 0
-const DESTRUCTIVE_INDEX = 0
-const options = [ '取消', '举报' ]
+
 
 class PeopleDetail extends React.Component {
 
@@ -55,32 +56,69 @@ class PeopleDetail extends React.Component {
 
     const { navigate } = this.props.navigation;
     const [ people ] = this.props.people
+    const { block, unblock, me } = this.props
 
     if (!key) return
-    if (key == 1) return navigate('Report', { people })
+    if (key == 2) return navigate('Report', { people })
+    if (key == 1) {
+
+      if (me.block_people.indexOf(people._id) == -1) {
+
+        block({
+          data: { people_id: people._id },
+          callback: (res)=>{
+            if (res && res.success) {
+              Alert.alert('', '屏蔽成功')
+            } else {
+              Alert.alert('', res.error || '提交失败')
+            }
+          }
+        })
+
+      } else {
+
+        unblock({
+          data: { people_id: people._id },
+          callback: (res)=>{
+            if (res && res.success) {
+              Alert.alert('', '取消屏蔽成功')
+            } else {
+              Alert.alert('', res.error || '提交失败')
+            }
+          }
+        })
+
+      }
+
+    }
   }
 
   componentWillMount() {
 
+    const self = this
     const { id } = this.props.navigation.state.params
-    const { loadPeopleById } = this.props
+    const { loadPeopleById, me } = this.props
     const [ people ] = this.props.people
 
     if (!people) {
       loadPeopleById({
         id,
         callback:(res) => {
-          this.props.navigation.setParams({
-            menu: this.menu
-          })
+          if (me && res && me._id != res._id) {
+            self.props.navigation.setParams({
+              menu: self.menu
+            })
+          }
         }
       })
       return
     }
 
-    this.props.navigation.setParams({
-      menu: this.menu
-    })
+    if (me && me._id != people._id) {
+      self.props.navigation.setParams({
+        menu: this.menu
+      })
+    }
 
   }
 
@@ -88,6 +126,7 @@ class PeopleDetail extends React.Component {
 
     const [ people ] = this.props.people
     const { navigate } = this.props.navigation
+    const { me } = this.props
 
     if (!people) {
       return (<Loading />)
@@ -146,7 +185,7 @@ class PeopleDetail extends React.Component {
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'TopicList', id: people._id, filters: { people_id: people._id, child:1 }, title: people.nickname + '关注的话题' }) }}>
         <ListItem name={"他的关注的话题"} rightText={people.follow_topic_count} />
       </TouchableOpacity>
-
+      
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPosts', id: people._id + '-posts', filters: { user_id: people._id, posts_exsits: 1 }, title: people.nickname + '关注的帖子' }) }}>
         <ListItem name={"他关注的帖子"} rightText={people.follow_posts_count} />
       </TouchableOpacity>
@@ -161,9 +200,9 @@ class PeopleDetail extends React.Component {
 
       <ActionSheet
         ref={o => this.ActionSheet = o}
-        options={options}
-        cancelButtonIndex={CANCEL_INDEX}
-        destructiveButtonIndex={DESTRUCTIVE_INDEX}
+        options={[ '取消', me.block_people.indexOf(people._id) == -1 ? '屏蔽' : '取消屏蔽', '举报' ]}
+        cancelButtonIndex={0}
+        destructiveButtonIndex={0}
         onPress={this.showSheet}
       />
 
@@ -208,9 +247,12 @@ const styles = StyleSheet.create({
 })
 
 export default connect((state, props) => ({
+    me: getUserInfo(state),
     people: getPeopleById(state, props.navigation.state.params.id)
   }),
   (dispatch) => ({
+    unblock: bindActionCreators(unblock, dispatch),
+    block: bindActionCreators(block, dispatch),
     loadPeopleById: bindActionCreators(loadPeopleById, dispatch)
   })
 )(PeopleDetail);

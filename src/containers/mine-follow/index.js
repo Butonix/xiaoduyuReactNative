@@ -11,7 +11,7 @@ class mineFollow extends React.Component {
   render() {
 
     const { navigation } = this.props
-
+    
     return <PostsList
               {...this.props}
               tabLabel='话题'
@@ -20,8 +20,8 @@ class mineFollow extends React.Component {
               filters={{
                 weaken: 1,
                 method: 'user_custom',
-                include_comments: 1,
-                comments_sort: 'like_count:-1,reply_count:-1',
+                // include_comments: 1,
+                // comments_sort: 'like_count:-1,reply_count:-1',
                 device: 'ios'
               }}
               />

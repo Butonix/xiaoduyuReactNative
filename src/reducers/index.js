@@ -12,6 +12,7 @@ import followPeople from './follow-people'
 import clientInstalled from './client-installed'
 import countries from './countries'
 import report from './report'
+import block from './block'
 
 let states = {
   posts,
@@ -23,7 +24,8 @@ let states = {
   followPeople,
   clientInstalled,
   countries,
-  report
+  report,
+  block
 }
 
 /*

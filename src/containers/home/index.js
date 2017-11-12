@@ -107,9 +107,9 @@ class Home extends Component {
               navigation={navigation}
               name="discover"
               filters={{
-                weaken: 1,
-                include_comments: 1,
-                comments_sort: 'like_count:-1,reply_count:-1'
+                weaken: 1
+                // include_comments: 1,
+                // comments_sort: 'like_count:-1,reply_count:-1'
               }}
             />)
   }

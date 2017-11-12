@@ -33,13 +33,13 @@ class ResetBrief extends React.Component {
   }
 
   submit() {
-
+    
     const self = this
     const { me, resetBrief, navigation } = this.props
     const { brief } = this.state
 
     if (me.brief == brief) return navigation.goBack()
-    
+
     resetBrief({
       brief,
       callback: (res) => {

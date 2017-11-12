@@ -1,13 +1,14 @@
 
 
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Image, Button, ScrollView, WebView, TouchableOpacity, AsyncStorage } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Image, Button, ScrollView, WebView, TouchableOpacity, AsyncStorage, Alert } from 'react-native'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { loadPostsById, addViewById } from '../../actions/posts'
 import { getPostsById } from '../../reducers/posts'
 import { getUserInfo } from '../../reducers/user'
+import { block, unblock } from '../../actions/block'
 
 import HTMLView from '../../components/html-view'
 import Img from '../../components/image'
@@ -130,12 +131,40 @@ class PostsDetail extends Component {
     if (!key) return
 
     const [ posts ] = this.props.posts
-    const { navigate } = this.props.navigation;
-    const { me } = this.props
+    const { navigate } = this.props.navigation
+    const { me, block, unblock, navigation } = this.props
 
     if (me._id == posts.user_id._id && key == 1) {
       navigate('WritePosts', { topic: posts.topic_id, posts })
-    } else {
+    } else if (key == 1) {
+
+      if (me.block_posts.indexOf(posts._id) == -1) {
+        block({
+          data: { posts_id: posts._id },
+          callback: (res)=>{
+            if (res && res.success) {
+              navigation.goBack()
+            } else {
+              Alert.alert('', res.error || '提交失败')
+            }
+          }
+        })
+      } else {
+        unblock({
+          data: { posts_id: posts._id },
+          callback: (res)=>{
+            if (res && res.success) {
+              navigation.goBack()
+              // Alert.alert('', '已取消屏蔽')
+            } else {
+              Alert.alert('', res.error || '提交失败')
+            }
+          }
+        })
+      }
+
+
+    } else if (key == 2) {
       navigate('Report', { posts })
     }
 
@@ -165,14 +194,17 @@ class PostsDetail extends Component {
     const [ posts ] = this.props.posts
     const { nothing } = this.state
     const { me } = this.props
-    // const { navigate } = this.props.navigation
 
     if (nothing) return (<Nothing content="帖子不存在或已删除" />)
     if (!posts) return <Loading />
 
     let options = [ '取消' ]
-    if (me._id == posts.user_id._id) options.push('编辑')
-    options.push('举报')
+    if (me._id == posts.user_id._id) {
+      options.push('编辑')
+    } else {
+      options.push(me.block_posts.indexOf(posts._id) == -1 ? '屏蔽' : '取消屏蔽')
+      options.push('举报')
+    }
 
     return (<View style={styles.container}>
         <ScrollView style={styles.main}>
@@ -298,6 +330,8 @@ export default connect((state, props) => {
   },
   (dispatch) => ({
     loadPostsById: bindActionCreators(loadPostsById, dispatch),
-    addViewById: bindActionCreators(addViewById, dispatch)
+    addViewById: bindActionCreators(addViewById, dispatch),
+    block: bindActionCreators(block, dispatch),
+    unblock: bindActionCreators(unblock, dispatch)
   })
 )(PostsDetail);

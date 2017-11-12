@@ -8,6 +8,7 @@ import PostsList from '../../components/posts-list'
 import TopicList from '../../components/topic-list'
 import FollowPeopleList from '../../components/follow-people-list'
 import FollowPosts from '../../components/follow-posts'
+import BlockList from '../../components/block-list'
 
 class List extends Component {
 
@@ -20,27 +21,30 @@ class List extends Component {
   }
 
   render() {
-    const { navigation } = this.props
 
+    const { navigation } = this.props
     const { id, filters, componentName, canClick = true } = this.props.navigation.state.params
 
     let component = null
 
     switch(componentName) {
       case 'PostsList':
-        component = <PostsList {...this.props} name={id} filters={filters}  />
+        component = <PostsList {...this.props} name={id} filters={filters} />
         break
       case 'CommentList':
         component = <CommentList {...this.props} name={id} filters={filters} canClick={canClick} />
         break
       case 'TopicList':
-        component = <TopicList {...this.props} name={id} filters={filters}  />
+        component = <TopicList {...this.props} name={id} filters={filters} />
         break
       case 'FollowPeopleList':
-        component = <FollowPeopleList {...this.props} name={id} filters={filters}  />
+        component = <FollowPeopleList {...this.props} name={id} filters={filters} />
         break
       case 'FollowPosts':
-        component = <FollowPosts {...this.props} name={id} filters={filters}  />
+        component = <FollowPosts {...this.props} name={id} filters={filters} />
+        break
+      case 'BlockList':
+        component = <BlockList {...this.props} name={id} filters={filters} />
         break
     }
 
@@ -51,8 +55,7 @@ class List extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f8f8f9',
-    flex: 1
+    flex:1
   }
 })
 

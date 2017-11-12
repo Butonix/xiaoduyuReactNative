@@ -146,6 +146,12 @@ class Settings extends React.Component {
 
             <View style={styles.gap}></View>
 
+            <TouchableOpacity onPress={()=>{ navigate('Block') }}>
+              <ListItem name={"屏蔽设置"} />
+            </TouchableOpacity>
+
+            <View style={styles.gap}></View>
+
             <TouchableOpacity onPress={()=>{this.signOut()}}>
               <ListItem type="center" name={"退出"} />
             </TouchableOpacity>
