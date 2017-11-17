@@ -17,14 +17,14 @@ import MenuIcon from '../../components/ui/icon/menu'
 import Lightbox from 'react-native-lightbox'
 import Carousel from 'react-native-looped-carousel'
 
+import Wait from '../../components/ui/wait'
+
 const S = global.styles
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const BASE_PADDING = 10;
 
-
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
-
 
 class PeopleDetail extends React.Component {
 
@@ -44,6 +44,9 @@ class PeopleDetail extends React.Component {
 
   constructor (props) {
     super(props)
+    this.state = {
+      visibleWait: false
+    }
     this.menu = this.menu.bind(this)
     this.showSheet = this.showSheet.bind(this)
   }
@@ -54,6 +57,7 @@ class PeopleDetail extends React.Component {
 
   showSheet(key) {
 
+    const self = this
     const { navigate } = this.props.navigation;
     const [ people ] = this.props.people
     const { block, unblock, me } = this.props
@@ -62,16 +66,24 @@ class PeopleDetail extends React.Component {
     if (key == 2) return navigate('Report', { people })
     if (key == 1) {
 
+      self.setState({ visibleWait: true })
+
       if (me.block_people.indexOf(people._id) == -1) {
 
         block({
           data: { people_id: people._id },
           callback: (res)=>{
-            if (res && res.success) {
-              Alert.alert('', '屏蔽成功')
-            } else {
-              Alert.alert('', res.error || '提交失败')
-            }
+
+            self.setState({ visibleWait: false }, ()=>{
+              setTimeout(()=>{
+                if (res && res.success) {
+                  Alert.alert('', '屏蔽成功')
+                } else {
+                  Alert.alert('', res.error || '提交失败')
+                }
+              }, 1000)
+            })
+
           }
         })
 
@@ -80,11 +92,24 @@ class PeopleDetail extends React.Component {
         unblock({
           data: { people_id: people._id },
           callback: (res)=>{
+
+            self.setState({ visibleWait: false }, ()=>{
+              setTimeout(()=>{
+                if (res && res.success) {
+                  Alert.alert('', '取消屏蔽成功')
+                } else {
+                  Alert.alert('', res.error || '提交失败')
+                }
+              }, 1000)
+            })
+
+            /*
             if (res && res.success) {
               Alert.alert('', '取消屏蔽成功')
             } else {
               Alert.alert('', res.error || '提交失败')
             }
+            */
           }
         })
 
@@ -128,9 +153,7 @@ class PeopleDetail extends React.Component {
     const { navigate } = this.props.navigation
     const { me } = this.props
 
-    if (!people) {
-      return (<Loading />)
-    }
+    if (!people) return (<Loading />)
 
     let renderCarousel = null
 
@@ -185,7 +208,7 @@ class PeopleDetail extends React.Component {
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'TopicList', id: people._id, filters: { people_id: people._id, child:1 }, title: people.nickname + '关注的话题' }) }}>
         <ListItem name={"他的关注的话题"} rightText={people.follow_topic_count} />
       </TouchableOpacity>
-      
+
       <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'FollowPosts', id: people._id + '-posts', filters: { user_id: people._id, posts_exsits: 1 }, title: people.nickname + '关注的帖子' }) }}>
         <ListItem name={"他关注的帖子"} rightText={people.follow_posts_count} />
       </TouchableOpacity>
@@ -205,6 +228,8 @@ class PeopleDetail extends React.Component {
         destructiveButtonIndex={0}
         onPress={this.showSheet}
       />
+
+      {this.state.visibleWait ? <Wait /> : null}
 
     </ScrollView>)
   }

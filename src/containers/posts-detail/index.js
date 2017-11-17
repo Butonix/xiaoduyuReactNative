@@ -19,8 +19,9 @@ import MenuIcon from '../../components/ui/icon/menu'
 import Loading from '../../components/ui/loading'
 import Nothing from '../../components/nothing'
 
-import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
+import Wait from '../../components/ui/wait'
 
+import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
 
 const S = global.styles
 
@@ -130,6 +131,7 @@ class PostsDetail extends Component {
 
     if (!key) return
 
+    const self = this
     const [ posts ] = this.props.posts
     const { navigate } = this.props.navigation
     const { me, block, unblock, navigation } = this.props
@@ -138,32 +140,42 @@ class PostsDetail extends Component {
       navigate('WritePosts', { topic: posts.topic_id, posts })
     } else if (key == 1) {
 
+      self.setState({ visibleWait: true })
+
       if (me.block_posts.indexOf(posts._id) == -1) {
+
         block({
           data: { posts_id: posts._id },
           callback: (res)=>{
-            if (res && res.success) {
-              navigation.goBack()
-            } else {
-              Alert.alert('', res.error || '提交失败')
-            }
+            self.setState({ visibleWait: false }, ()=>{
+              if (res && res.success) {
+                navigation.goBack()
+              } else {
+                setTimeout(()=>{
+                  Alert.alert('', res.error || '提交失败')
+                }, 1000)
+              }
+            })
           }
         })
       } else {
         unblock({
           data: { posts_id: posts._id },
           callback: (res)=>{
-            if (res && res.success) {
-              navigation.goBack()
-              // Alert.alert('', '已取消屏蔽')
-            } else {
-              Alert.alert('', res.error || '提交失败')
-            }
+
+            self.setState({ visibleWait: false }, ()=>{
+              if (res && res.success) {
+                navigation.goBack()
+              } else {
+                setTimeout(()=>{
+                  Alert.alert('', res.error || '提交失败')
+                }, 1000)
+              }
+            })
+
           }
         })
       }
-
-
     } else if (key == 2) {
       navigate('Report', { posts })
     }
@@ -244,6 +256,7 @@ class PostsDetail extends Component {
             </View>
           </View>
         </ScrollView>
+
         <BottomBar {...this.props} posts={posts} />
 
         <ActionSheet
@@ -253,6 +266,9 @@ class PostsDetail extends Component {
           destructiveButtonIndex={0}
           onPress={this.showSheet}
         />
+
+        {this.state.visibleWait ? <Wait /> : null}
+
       </View>)
   }
 }

@@ -69,16 +69,16 @@ class BlockList extends Component {
                 color: '#fff'
               }
             ]
-
+            
             if (filters.posts_exsits) {
               return (<View style={gStyles['mt10']} key={item._id}>
-                <Swipeout right={swipeoutBtns} backgroundColor="#f7f7f8">
+                <Swipeout right={swipeoutBtns} backgroundColor="#e6e6ed">
                   <PostsItem {...self.props} posts={item.posts_id} />
                 </Swipeout>
               </View>)
             } else {
               return (<View key={item._id}>
-                <Swipeout right={swipeoutBtns} backgroundColor="#f7f7f8">
+                <Swipeout right={swipeoutBtns} backgroundColor="#e6e6ed">
                   <PeopleItem {...self.props} people={item.people_id} displayFollowButton={false} displayBlockButton={true} />
                 </Swipeout>
               </View>)

@@ -97,7 +97,7 @@ class Settings extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={()=>{ navigate('ResetGender', {}) }}>
-              <ListItem name={"性别"} rightText={me.gender == 1 ? '男' : '女'} />
+              <ListItem name={"性别"} rightText={typeof me.gender != 'undefined' ? (me.gender == 1 ? '男' : '女') : ''} />
             </TouchableOpacity>
 
             <TouchableOpacity onPress={()=>{ navigate('ResetBiref', {}) }}>

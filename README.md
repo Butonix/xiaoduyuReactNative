@@ -8,6 +8,9 @@
 + 支持上传图片到七牛
 + 以及上传头像、裁剪头像、修改昵称、个性签名、WebSocket获取新通知等等
 
+## iOS APP 下载
+[https://itunes.apple.com/cn/app/小度鱼/id1261181004?mt=8](https://itunes.apple.com/cn/app/小度鱼/id1261181004?mt=8)  
+
 ## 界面截图
 ![小度鱼iOS界面截图](https://img.xiaoduyu.com/a9d602a7-e747-46c6-8d4f-5eedf39fb53d.png?imageMogr2/auto-orient/thumbnail/!900 "小度鱼iOS界面截图")
 

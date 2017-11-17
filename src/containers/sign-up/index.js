@@ -55,12 +55,13 @@ class SignUp extends Component {
     const { nickname, account, password, captcha, gender, areaCode } = this.state
     const { signup, signin, navigation } = this.props
 
-    if (!nickname || nickname.replace(/(^\s+)|(\s+$)/g, '') == '') return Alert.alert('', '请输入名字')
+    if (!nickname) return this.refs.nickname.focus()
+    if (nickname.replace(/(^\s+)|(\s+$)/g, '') == '') return Alert.alert('', '名字不能都是空格')
     if (!areaCode) return Alert.alert('', '请选择区号')
-    if (!account) return Alert.alert('', '请输入手机号')
-    if (!captcha) return Alert.alert('', '请输入验证码')
-    if (!password) return Alert.alert('', '请输入密码')
-    if (!gender) return Alert.alert('', '请选择性别')
+    if (!account) return this.refs.phone.focus()
+    if (!captcha) return this.refs.captcha.focus()
+    if (!password) return this.refs.password.focus()
+    // if (!gender) return Alert.alert('', '请选择性别')
 
     self.setState({ visible: true })
 
@@ -73,7 +74,7 @@ class SignUp extends Component {
         area_code: areaCode,
         password: password,
         captcha: captcha,
-        gender: gender == 'male' ? 1 : 0,
+        // gender: gender == 'male' ? 1 : 0,
         source: 5
       },
       callback: (res)=>{
@@ -90,7 +91,7 @@ class SignUp extends Component {
             data: { phone: account, password: password },
             callback: (res)=>{
 
-              Alert.alert('', '注册成功')
+              // Alert.alert('', '注册成功')
 
               if (!res.success) {
                 navigation.goBack()
@@ -146,10 +147,10 @@ class SignUp extends Component {
     const { captchaId } = this.state
     const { nickname, phone, password, captcha, gender } = this.state.error
 
-    var radio_props = [
-      {label: '男     ', value: 'male' },
-      {label: '女     ', value: 'female' }
-    ]
+    // var radio_props = [
+    //   {label: '男     ', value: 'male' },
+    //   {label: '女     ', value: 'female' }
+    // ]
 
     return (<ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
       <View style={gStyles.m20}>
@@ -158,6 +159,7 @@ class SignUp extends Component {
           style={gStyles.radiusInputTop}
           onChangeText={(nickname) => this.setState({nickname})}
           placeholder='名字'
+          ref="nickname"
           maxLength={40}
           autoFocus={true}
           />
@@ -178,6 +180,7 @@ class SignUp extends Component {
             autoCapitalize="none"
             onChangeText={(account) => this.setState({account})}
             placeholder='手机号'
+            ref="phone"
             maxLength={60}
             />
           </View>
@@ -190,6 +193,7 @@ class SignUp extends Component {
             style={gStyles.radiusInputCenter}
             onChangeText={(captcha) => this.setState({captcha})}
             placeholder='验证码'
+            ref="captcha"
             maxLength={6}
             keyboardType={'numeric'}
             />
@@ -207,15 +211,17 @@ class SignUp extends Component {
         {captcha ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{captcha}</Text></View> : null}
 
         <TextInput
-          style={gStyles.radiusInputCenter}
+          style={gStyles.radiusInputBottom}
           onChangeText={(password) => this.setState({password})}
           secureTextEntry={true}
           placeholder='密码'
           maxLength={30}
+          ref="password"
           />
 
         {password ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{password}</Text></View> : null}
 
+        {/*
         <View style={gender ? gStyles.radiusInputCenter : gStyles.radiusInputBottom}>
           <RadioForm
             radio_props={radio_props}
@@ -224,8 +230,9 @@ class SignUp extends Component {
             onPress={(gender) => this.setState({gender})}
           />
         </View>
+        */}
 
-        {gender ? <View style={gStyles.radiusInputBottom}><Text style={gStyles.darkGray}>{gender}</Text></View> : null}
+        {/*gender ? <View style={gStyles.radiusInputBottom}><Text style={gStyles.darkGray}>{gender}</Text></View> : null*/}
 
         <TouchableOpacity onPress={this.submit} style={[gStyles.fullButton, gStyles.mt20]}>
           <Text style={gStyles.white}>注册</Text>

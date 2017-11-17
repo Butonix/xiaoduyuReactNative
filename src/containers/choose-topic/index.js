@@ -76,7 +76,7 @@ class ChooseTopic extends React.Component {
     }
 
     return (<ScrollView style={styles.container}>
-      <View style={styles.slogan}><Text style={styles.sloganText}>选择一个话题与大家分享吧</Text></View>
+      <View style={styles.slogan}><Text style={styles.sloganText}>选择一个话题与大家讨论吧</Text></View>
       {parentTopicList.map(item=>{
         return (<View key={item._id} style={styles.group}>
                   <View><Text style={styles.title}>{item.name}</Text></View>

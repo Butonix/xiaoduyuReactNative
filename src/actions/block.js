@@ -24,7 +24,7 @@ export function block({ data = {}, callback = ()=>{} }) {
         callback(result)
       }
     })
-
+    
   }
 }
 
@@ -86,8 +86,6 @@ export function loadBlockList({ name, filters = {}, callback = ()=>{}, restart =
       data: filters,
       headers: { AccessToken: accessToken },
       callback: (res)=>{
-
-        console.log(res);
 
         if (res && !res.success) return callback(res)
 
