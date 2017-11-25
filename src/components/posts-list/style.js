@@ -34,7 +34,8 @@ export default StyleSheet.create({
     marginTop: -4
   },
   nickname: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color:'#484848'
   },
   itemHeadOther: {
     marginTop: 5,
@@ -62,13 +63,15 @@ export default StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 16,
-    marginBottom:5
+    marginBottom:5,
+    color:'#484848'
   },
   loading: {
     height: 60
   },
   contentText: {
-    lineHeight:18
+    lineHeight:18,
+    color:'#484848'
   },
   more: {
     borderTopWidth: 1,

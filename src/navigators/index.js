@@ -58,27 +58,37 @@ const MainScreenNavigator = TabNavigator({
   tabBarOptions: {
     style: {
       ...ifIphoneX({
-          height: 75
+          height: 75,
+          backgroundColor:'#fff'
       }, {
-          height: 65
+          height: 60,
+          backgroundColor:'#fff'
       })
     },
-    activeBackgroundColor:'white',
+    activeBackgroundColor:'#fff',
     activeTintColor:'#08f',
-    inactiveBackgroundColor:'white',
-    inactiveTintColor:'#23232b',
+    inactiveBackgroundColor:'#fff',
+    inactiveTintColor:'#484848',
     allowFontScaling: false,
     labelStyle: {
-      fontSize: 15,
-      paddingBottom:10,
-      zIndex:-1,
-      borderBottomWidth:1,
-      borderColor: 'red'
+      marginTop:15
+      // fontSize: 15,
+      // paddingBottom:20,
+      // zIndex:-1,
+      // borderBottomWidth:1,
+      // borderColor: 'red'
     },
     tabStyle:{
-      borderBottomWidth:1,
-      borderColor: '#e3e3e3'
-    }
+      // borderBottomWidth:1,
+      // borderColor: '#e3e3e3'
+    },
+
+    // android
+    showIcon: false,
+    // showLabel: false,
+    // iconStyle: { width:24, height:24 },
+    // labelStyle:{ fontSize: 8, marginTop:0 },
+    indicatorStyle: { backgroundColor: '#08f' }
     // showLabel:false,
   }
 })

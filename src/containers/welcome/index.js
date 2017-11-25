@@ -9,6 +9,7 @@ import { NavigationActions } from 'react-navigation'
 import SplashScreen from 'react-native-splash-screen'
 import JPushModule from 'jpush-react-native'
 
+
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../reducers/user'

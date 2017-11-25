@@ -50,8 +50,8 @@
   // [OpenShare connectRenrenWithAppId:@"228525" AndAppKey:@"1dd8cba4215d4d4ab96a49d3058c1d7f"];
   NSURL *jsCodeLocation;
 
-  // jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
-  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+  // jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"xiaoduyuReactNative"
@@ -69,7 +69,13 @@
   return YES;
 }
 
+// https://github.com/reactnativecn/react-native-qq
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  return [RCTLinkingManager application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+}
+
 // ios 8.x or older
+/*
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
   if ([OpenShare handleOpenURL:url]) {
@@ -78,6 +84,7 @@
   return [RCTLinkingManager application:application openURL:url
   sourceApplication:sourceApplication annotation:annotation];
 }
+*/
 
 // ios 9.0+
 // - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url

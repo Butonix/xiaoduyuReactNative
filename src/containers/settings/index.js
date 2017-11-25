@@ -44,12 +44,12 @@ class Settings extends React.Component {
 
           // 设置别名
           AsyncStorage.removeItem('jpush_alias', function(){
-            JPushModule.setAlias('invalid', ()=>{})
+            // JPushModule.setAlias('invalid', ()=>{})
           })
-
+          
           // 清除tag
           AsyncStorage.removeItem('jpush_tag', function(){
-            JPushModule.setTags(['invalid'], ()=>{})
+            // JPushModule.setTags(['invalid'], ()=>{})
           })
 
           global.cleanRedux()

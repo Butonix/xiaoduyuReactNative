@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Text, View, ListView, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, View, ListView, Image, ScrollView, TouchableOpacity, RefreshControl } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -12,7 +12,7 @@ import CommentItem from '../../components/comment-item'
 import Loading from '../../components/ui/loading'
 import Nothing from '../../components/nothing'
 import ListFooter from '../../components/ui/list-footer'
-import RefreshControl from '../../components/ui/refresh-control'
+// import RefreshControl from '../../components/ui/refresh-control'
 
 import ListViewOnScroll from '../../common/list-view-onscroll'
 
@@ -61,6 +61,20 @@ class PostsList extends Component {
 
   renderHeader() {
     // return (<View><Text>发表</Text></View>)
+  }
+
+  _onRefresh() {
+    const self = this
+    this.setState({ isRefreshing: true })
+
+    self.loadPostsList(()=>{
+      self.setState({ isRefreshing: false })
+    }, true)
+    /*
+    self.load(()=>{
+      self.setState({ isRefreshing: false })
+    }, true)
+    */
   }
 
   render() {
@@ -118,30 +132,48 @@ class PostsList extends Component {
               </TouchableOpacity>
             </View>
 
-            {topic.comment && topic.comment.map(item=>{
+            {/*topic.comment && topic.comment.map(item=>{
                 return (<View key={item._id}>
                   <TouchableOpacity onPress={()=>{this.goToComment(item)}}>
                     <CommentItem {...this.props} comment={item} displayEdit={false} canClick={false} />
                   </TouchableOpacity>
                 </View>)
-              })}
+              })*/}
 
-            {topic.comment && topic.comment_count > topic.comment.length ?
+            {/*topic.comment && topic.comment_count > topic.comment.length ?
               <TouchableOpacity onPress={()=>{this.goTo(topic)}} style={styles.more}><Text>还有{topic.comment_count - topic.comment.length}条评论，查看全部</Text></TouchableOpacity>
-              : null}
+              : null*/}
 
           </View>)}
           renderHeader={this.renderHeader}
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
           removeClippedSubviews={false}
-          refreshControl={<RefreshControl onRefresh={callback=>self.loadPostsList(callback, true)} />}
           onScroll={ListViewOnScroll(self.loadPostsList)}
           scrollEventThrottle={50}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this._onRefresh.bind(this)}
+              tintColor="#484848"
+              title="加载中..."
+              titleColor="#484848"
+              colors={['#ff0000', '#00ff00', '#0000ff']}
+              progressBackgroundColor="#ffffff"
+            />
+          }
         />
     )
   }
 
 }
+
+/*
+refreshControl={<RefreshControl onRefresh={callback=>self.loadPostsList(callback, true)} />}
+
+
+
+
+*/
 
 export default connect((state, props) => ({
     // state: state，

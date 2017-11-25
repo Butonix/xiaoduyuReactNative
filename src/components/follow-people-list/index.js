@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ListView, Image, refreshControl, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, ListView, Image, refreshControl, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -11,7 +11,7 @@ import { getPeopleListByName } from '../../reducers/follow-people'
 import Loading from '../ui/loading'
 import Nothing from '../nothing'
 import ListFooter from '../ui/list-footer'
-import RefreshControl from '../ui/refresh-control'
+// import RefreshControl from '../ui/refresh-control'
 import ListViewOnScroll from '../../common/list-view-onscroll'
 import PeopleItem from '../people-item'
 
@@ -19,7 +19,7 @@ class FollowPeopleList extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = { isRefreshing: false }
     this.toPeople = this.toPeople.bind(this)
     this.loadList = this.loadList.bind(this)
     this.handleFollow = this.handleFollow.bind(this)
@@ -47,6 +47,16 @@ class FollowPeopleList extends Component {
       follow({ data: { people_id: people._id } })
   }
 
+  _onRefresh() {
+    const self = this
+    this.setState({ isRefreshing: true })
+
+    self.loadList(()=>{
+      self.setState({ isRefreshing: false })
+    }, true)
+
+  }
+
   render() {
 
     const self = this
@@ -70,7 +80,18 @@ class FollowPeopleList extends Component {
           renderRow={(item) => (<PeopleItem {...self.props} people={list.filters.user_id ? item.people_id : item.user_id} />)}
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
           removeClippedSubviews={false}
-          refreshControl={<RefreshControl onRefresh={callback=>self.loadList(callback, true)} />}
+          // refreshControl={<RefreshControl onRefresh={callback=>self.loadList(callback, true)} />}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this._onRefresh.bind(this)}
+              tintColor="#484848"
+              title="加载中..."
+              titleColor="#484848"
+              colors={['#ff0000', '#00ff00', '#0000ff']}
+              progressBackgroundColor="#ffffff"
+            />
+          }
           onScroll={ListViewOnScroll(self.loadList)}
           scrollEventThrottle={50}
         />

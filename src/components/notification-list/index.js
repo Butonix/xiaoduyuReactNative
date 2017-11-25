@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, ListView, Image, refreshControl, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, ListView, Image, refreshControl, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -15,7 +15,7 @@ import HTMLView from '../../components/html-view'
 import Loading from '../../components/ui/loading'
 import Nothing from '../../components/nothing'
 import ListFooter from '../../components/ui/list-footer'
-import RefreshControl from '../../components/ui/refresh-control'
+// import RefreshControl from '../../components/ui/refresh-control'
 import ListViewOnScroll from '../../common/list-view-onscroll'
 
 class NotificationList extends Component {
@@ -298,8 +298,8 @@ class NotificationList extends Component {
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
           // renderFooter={this.renderFooter}
           removeClippedSubviews={false}
-          refreshControl={<RefreshControl onRefresh={callback=>self.loadList(callback, true)} />}
-          /*
+          // refreshControl={<RefreshControl onRefresh={callback=>self.loadList(callback, true)} />}
+
           refreshControl={
             <RefreshControl
               refreshing={this.state.isRefreshing}
@@ -311,7 +311,7 @@ class NotificationList extends Component {
               progressBackgroundColor="#ffffff"
             />
           }
-          */
+
           onScroll={ListViewOnScroll(self.loadList)}
           // onScroll={this._onScroll.bind(this)}
           scrollEventThrottle={50}

@@ -4,6 +4,12 @@
  * @flow
  */
 
+import Root from './src/root'
+import { AppRegistry } from 'react-native'
+
+AppRegistry.registerComponent('xiaoduyuReactNative', () => Root)
+
+/*
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -51,3 +57,4 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('xiaoduyuReactNative', () => xiaoduyuReactNative);
+*/

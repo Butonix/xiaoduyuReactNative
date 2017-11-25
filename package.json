@@ -6,7 +6,9 @@
     "configureJPush": "node node_modules/jpush-react-native/JPushConfiguration.js",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "bundle-ios": "react-native bundle --entry-file index.ios.js --platform ios --dev false --bundle-output release_ios/main.jsbundle --assets-dest release_ios/"
+    "bundle-ios": "react-native bundle --entry-file index.ios.js --platform ios --dev false --bundle-output release_ios/main.jsbundle --assets-dest release_ios/",
+    "android": "cd android && sudo ./gradlew clean && cd .. && sudo react-native run-android --deviceId 1ceb601b",
+    "bundle-android": "cd android && sudo ./gradlew assembleRelease && cd .."
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -26,6 +28,7 @@
     "react-native-looped-carousel": "^0.1.7",
     "react-native-open-share": "git+https://github.com/mozillo/react-native-open-share.git",
     "react-native-qiniu": "^0.3.0",
+    "react-native-qq": "^2.0.5",
     "react-native-render-html": "^2.1.0",
     "react-native-scrollable-tab-view": "^0.6.7",
     "react-native-simple-picker": "^1.4.3",

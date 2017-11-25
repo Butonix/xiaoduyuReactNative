@@ -28,9 +28,13 @@ class BottomBar extends Component {
 
   constructor (props) {
     super(props)
-
+    this.state = {}
     this.shareToWeChat = this.shareToWeChat.bind(this)
-    WeChat.registerApp(wechat_appid)
+  }
+
+  componentDidMount() {
+    let s = WeChat.registerApp(wechat_appid)
+    console.log(s);
   }
 
   goWriteComment() {
@@ -84,6 +88,15 @@ class BottomBar extends Component {
 
           if (description.length > 100) description = description.slice(0, 100)+'...'
 
+
+console.log({
+  type: 'news',
+  title,
+  description,
+  webpageUrl,
+  thumbImage
+});
+
           WeChat.shareToSession({
             type: 'news',
             title,
@@ -100,7 +113,9 @@ class BottomBar extends Component {
             title,
             webpageUrl,
             thumbImage
-          });
+          }).catch((e)=>{
+            console.log(e)
+          })
         }
 
       // })

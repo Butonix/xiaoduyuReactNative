@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, ListView, View } from 'react-native'
+import { StyleSheet, ListView, View, RefreshControl } from 'react-native'
 import Swipeout from 'react-native-swipeout'
 
 // redux
@@ -13,7 +13,7 @@ import { getBlockListByName } from '../../reducers/block'
 import Loading from '../ui/loading'
 import Nothing from '../nothing'
 import ListFooter from '../ui/list-footer'
-import RefreshControl from '../ui/refresh-control'
+// import RefreshControl from '../ui/refresh-control'
 import ListViewOnScroll from '../../common/list-view-onscroll'
 import PeopleItem from '../people-item'
 import PostsItem from '../posts-item'
@@ -25,7 +25,7 @@ class BlockList extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = { isRefreshing: false }
     this.loadList = this.loadList.bind(this)
   }
 
@@ -37,6 +37,16 @@ class BlockList extends Component {
   loadList(callback, restart) {
     const { name, filters } = this.props
     this.props.loadList({ name, filters, callback, restart })
+  }
+
+  _onRefresh() {
+    const self = this
+    this.setState({ isRefreshing: true })
+
+    self.loadList(()=>{
+      self.setState({ isRefreshing: false })
+    }, true)
+
   }
 
   render() {
@@ -69,7 +79,7 @@ class BlockList extends Component {
                 color: '#fff'
               }
             ]
-            
+
             if (filters.posts_exsits) {
               return (<View style={gStyles['mt10']} key={item._id}>
                 <Swipeout right={swipeoutBtns} backgroundColor="#e6e6ed">
@@ -86,7 +96,18 @@ class BlockList extends Component {
           }}
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
           removeClippedSubviews={false}
-          refreshControl={<RefreshControl onRefresh={callback=>self.loadList(callback, true)} />}
+          // refreshControl={<RefreshControl onRefresh={callback=>self.loadList(callback, true)} />}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this._onRefresh.bind(this)}
+              tintColor="#484848"
+              title="加载中..."
+              titleColor="#484848"
+              colors={['#ff0000', '#00ff00', '#0000ff']}
+              progressBackgroundColor="#ffffff"
+            />
+          }
           onScroll={ListViewOnScroll(self.loadList)}
           scrollEventThrottle={50}
         />

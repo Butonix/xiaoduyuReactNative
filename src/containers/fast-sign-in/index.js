@@ -6,6 +6,7 @@ import { StyleSheet, Text, Image, ImageBackground, View, Button, ScrollView, Web
 import { NavigationActions } from 'react-navigation'
 
 import openShare from 'react-native-open-share'
+import * as QQAPI from 'react-native-qq'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 
 import { bindActionCreators } from 'redux'
@@ -13,7 +14,6 @@ import { connect } from 'react-redux'
 import { signin } from '../../actions/sign'
 import { weiboGetUserInfo, QQGetUserInfo } from '../../actions/oauth'
 import { getClientInstalled } from '../../reducers/client-installed'
-
 
 
 import gStyles from '../../styles'
@@ -38,6 +38,12 @@ class FastSignIn extends Component {
     this._weiboLogin = this._weiboLogin.bind(this)
     this._qqLogin = this._qqLogin.bind(this)
     this.handleSignIn = this.handleSignIn.bind(this)
+  }
+
+  componentDidMount() {
+
+    // console.log(QQAPI);
+    // console.log('test');
   }
 
   handleSignIn(access_token) {
@@ -93,6 +99,39 @@ class FastSignIn extends Component {
   }
 
   _qqLogin () {
+
+    const self = this
+    const { QQGetUserInfo } = this.props
+
+    QQAPI.login().then((res)=>{
+      if (res &&
+          res.expires_in &&
+          res.openid &&
+          res.access_token
+      ) {
+
+        console.log('test----');
+
+        console.log(res);
+
+        QQGetUserInfo({
+          data: {
+            qq_access_token: res.access_token,
+            refresh_token: '',
+            openid: res.openid,
+            expires_in: res.expires_in
+          },
+          callback: (res)=>{
+            if (res.success) {
+              self.handleSignIn(res.data.access_token)
+            }
+          }
+        })
+
+      }
+    })
+
+      /*
       var _this = this;
       openShare.qqLogin()
 
@@ -121,6 +160,7 @@ class FastSignIn extends Component {
               }
           );
       }
+      */
   }
 
   render() {

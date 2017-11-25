@@ -61,3 +61,4 @@ ios/xiaoduyuReactNative/Info.plist
 
 config/index.js
 release_ios/*
+android/app/build.gradle

@@ -15,7 +15,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  
+
   topicItem: {
     backgroundColor: '#fff',
     padding:15
@@ -60,6 +60,7 @@ export default StyleSheet.create({
     flexWrap: 'wrap'
   },
   title: {
+    color: '#484848',
     fontWeight: 'bold',
     fontSize: 16,
     marginBottom:5

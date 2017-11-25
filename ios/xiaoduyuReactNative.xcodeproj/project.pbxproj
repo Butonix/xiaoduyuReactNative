@@ -25,6 +25,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		14730FF7F4FB49C48A30A66D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E76C2788587F42C5B790321B /* CFNetwork.framework */; };
 		1A67AB2FE9034D5DA8FA22C4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F54DA3A0AF3C450CBD81CADE /* Foundation.framework */; };
+		23D7953B646E4A5194951FB7 /* libRCTQQAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0FF8C258EB746949948F967 /* libRCTQQAPI.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -61,6 +62,8 @@
 		C22A3A5E3F7A46E08E8F2E85 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 512FF13028204B3B88F5ED9F /* CoreFoundation.framework */; };
 		C22D2C081F7F39B000BBD85F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C22D2BE11F7F39B000BBD85F /* libc++.tbd */; };
 		C22D2C0A1F7F39C500BBD85F /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C22D2C091F7F39C500BBD85F /* libsqlite3.0.tbd */; };
+		C23C91351FC15EA300161902 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C23C91341FC15EA300161902 /* libiconv.tbd */; };
+		C23C91371FC15EBB00161902 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C23C91361FC15EBB00161902 /* libsqlite3.tbd */; };
 		C27EC2AB1F542F79005324E3 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C27EC2AA1F542F54005324E3 /* libRCTCameraRoll.a */; };
 		C6AFDE8C36FC409A80D613C0 /* libRCTJCoreModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3F9AC27D354912850DD45C /* libRCTJCoreModule.a */; };
 		DA8A2D7912C840ECB1717AFB /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC640C0E653C4591B3C9D075 /* libyoga.a */; };
@@ -297,6 +300,13 @@
 			remoteGlobalIDString = 6280980A1CEDC407000D3A81;
 			remoteInfo = RCTJPushModule;
 		};
+		C23C91321FC14DE200161902 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B31D683E2CE44BF68216CC8E /* RCTQQAPI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9139321C1C232D310085E3BA;
+			remoteInfo = RCTQQAPI;
+		};
 		C27EC2581F542CE6005324E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -411,8 +421,10 @@
 		9D64AA087E104165ADD41D38 /* CoreTelephony.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		9D78D9B648134C4F824F9358 /* RNCookieManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCookieManager.xcodeproj; path = "../node_modules/react-native-cookie/ios/RNCookieManager.xcodeproj"; sourceTree = "<group>"; };
 		9D88D94CC1A79C9ED349C49B /* Pods-xiaoduyuReactNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xiaoduyuReactNative.debug.xcconfig"; path = "Pods/Target Support Files/Pods-xiaoduyuReactNative/Pods-xiaoduyuReactNative.debug.xcconfig"; sourceTree = "<group>"; };
+		A0FF8C258EB746949948F967 /* libRCTQQAPI.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTQQAPI.a; sourceTree = "<group>"; };
 		AF39D6628C7F43848CBC949F /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		B19CA29E9B9A49128E0A9036 /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		B31D683E2CE44BF68216CC8E /* RCTQQAPI.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTQQAPI.xcodeproj; path = "../node_modules/react-native-qq/ios/RCTQQAPI.xcodeproj"; sourceTree = "<group>"; };
 		B726ADD3CB524BCD9FAD6B83 /* RCTJCoreModule.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTJCoreModule.xcodeproj; path = "../node_modules/jcore-react-native/ios/RCTJCoreModule.xcodeproj"; sourceTree = "<group>"; };
 		BC52B4FBC9FA418FA0247B65 /* libcxxreact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libcxxreact.a; sourceTree = "<group>"; };
 		BC640C0E653C4591B3C9D075 /* libyoga.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libyoga.a; sourceTree = "<group>"; };
@@ -420,6 +432,8 @@
 		C22D2BE11F7F39B000BBD85F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		C22D2C091F7F39C500BBD85F /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		C233120F1F71252F00BABF67 /* xiaoduyuReactNative.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = xiaoduyuReactNative.entitlements; path = xiaoduyuReactNative/xiaoduyuReactNative.entitlements; sourceTree = "<group>"; };
+		C23C91341FC15EA300161902 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		C23C91361FC15EBB00161902 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		C27EC2A51F542F53005324E3 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		CC3F9AC27D354912850DD45C /* libRCTJCoreModule.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTJCoreModule.a; sourceTree = "<group>"; };
 		D102FB1C77BD4152BC927F31 /* CoreGraphics.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -479,10 +493,13 @@
 				F12C6E8AF411481A82D94037 /* libRNCookieManager.a in Frameworks */,
 				E1B946FB414A474B82E6F8A6 /* libReact.a in Frameworks */,
 				DA8A2D7912C840ECB1717AFB /* libyoga.a in Frameworks */,
+				C23C91351FC15EA300161902 /* libiconv.tbd in Frameworks */,
 				0C34858369494F4BB8F554F1 /* libcxxreact.a in Frameworks */,
 				687094802DFD4DE990B02DB6 /* libjschelpers.a in Frameworks */,
+				C23C91371FC15EBB00161902 /* libsqlite3.tbd in Frameworks */,
 				A049F9FA6A20494AA857C398 /* libthird-party.a in Frameworks */,
 				F3EABA941D8B4F3A9F67793B /* libdouble-conversion.a in Frameworks */,
+				23D7953B646E4A5194951FB7 /* libRCTQQAPI.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,6 +701,7 @@
 				B726ADD3CB524BCD9FAD6B83 /* RCTJCoreModule.xcodeproj */,
 				F3170E3398D94A358F9CD53D /* RCTJPushModule.xcodeproj */,
 				9D78D9B648134C4F824F9358 /* RNCookieManager.xcodeproj */,
+				B31D683E2CE44BF68216CC8E /* RCTQQAPI.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -756,6 +774,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		C23C912F1FC14DE200161902 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C23C91331FC14DE200161902 /* libRCTQQAPI.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C27EC2811F542D3A005324E3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -786,6 +812,7 @@
 				532054E2D8DD48E498D1BB25 /* libjschelpers.a */,
 				DDC95616C30C482380DA6B24 /* libthird-party.a */,
 				2B42FD0345D146D9A40F0E56 /* libdouble-conversion.a */,
+				A0FF8C258EB746949948F967 /* libRCTQQAPI.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -811,6 +838,8 @@
 		EC78502C6AF87551A910F7D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C23C91361FC15EBB00161902 /* libsqlite3.tbd */,
+				C23C91341FC15EA300161902 /* libiconv.tbd */,
 				C22D2C091F7F39C500BBD85F /* libsqlite3.0.tbd */,
 				C22D2BE11F7F39B000BBD85F /* libc++.tbd */,
 				9354F8FE4A695886965FBCF9 /* libPods-xiaoduyuReactNative.a */,
@@ -994,6 +1023,10 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = C23C912F1FC14DE200161902 /* Products */;
+					ProjectRef = B31D683E2CE44BF68216CC8E /* RCTQQAPI.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1247,6 +1280,13 @@
 			fileType = archive.ar;
 			path = libRCTJPushModule.a;
 			remoteRef = C233120D1F7124F200BABF67 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C23C91331FC14DE200161902 /* libRCTQQAPI.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTQQAPI.a;
+			remoteRef = C23C91321FC14DE200161902 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		C27EC2591F542CE6005324E3 /* libthird-party.a */ = {
@@ -1511,12 +1551,14 @@
 					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 					"$(SRCROOT)/../node_modules/react-native-cookie/ios",
 					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI/**",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1554,12 +1596,14 @@
 					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 					"$(SRCROOT)/../node_modules/react-native-cookie/ios",
 					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI/**",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1595,6 +1639,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = G2NVNBKXXW;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
@@ -1604,14 +1649,28 @@
 					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 					"$(SRCROOT)/../node_modules/react-native-cookie/ios",
 					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI/**",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/QBImagePickerController\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/RSKImageCropper\"",
+					"-isystem",
+					"\"$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"-framework",
+					"\"TencentOpenAPI\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xiaoduyu.react-native";
 				PRODUCT_NAME = xiaoduyuReactNative;
@@ -1632,6 +1691,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G2NVNBKXXW;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
@@ -1641,14 +1701,28 @@
 					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 					"$(SRCROOT)/../node_modules/react-native-cookie/ios",
 					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI/**",
 				);
 				INFOPLIST_FILE = xiaoduyuReactNative/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/QBImagePickerController\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/RSKImageCropper\"",
+					"-isystem",
+					"\"$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"-framework",
+					"\"TencentOpenAPI\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xiaoduyu.react-native";
 				PRODUCT_NAME = xiaoduyuReactNative;
@@ -1679,11 +1753,13 @@
 					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 					"$(SRCROOT)/../node_modules/react-native-cookie/ios",
 					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI/**",
 				);
 				INFOPLIST_FILE = "xiaoduyuReactNative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1730,11 +1806,13 @@
 					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 					"$(SRCROOT)/../node_modules/react-native-cookie/ios",
 					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native-qq/ios/RCTQQAPI/**",
 				);
 				INFOPLIST_FILE = "xiaoduyuReactNative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1787,6 +1865,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.xiaoduyuReactNative-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1811,6 +1890,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

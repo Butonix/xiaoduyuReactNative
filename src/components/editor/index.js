@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../reducers/user'
 
+import Platform from 'Platform'
+
 import Qiniu,{ Auth, ImgOps, Conf, Rs, Rpc } from 'react-native-qiniu'
 
 import KeyboardSpacer from 'react-native-keyboard-spacer'
@@ -73,7 +75,7 @@ class Editor extends Component {
                       <View style={{flex:1}}></View>
                     </View>: null}
 
-            <KeyboardSpacer />
+            {Platform.OS === 'android' ? null : <KeyboardSpacer />}
           </View>)
   }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, Alert, Image, TextInput, Button, TouchableOpacity, DeviceEventEmitter } from 'react-native'
+import * as QQAPI from 'react-native-qq'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -133,6 +134,40 @@ class SocialAccount extends React.Component {
 
     } else if (socialName == 'qq') {
 
+
+      QQAPI.login().then((res)=>{
+        if (res &&
+            res.expires_in &&
+            res.openid &&
+            res.access_token
+        ) {
+
+          QQGetUserInfo({
+            data: {
+              qq_access_token: res.access_token,
+              refresh_token: '',
+              openid: res.openid,
+              expires_in: res.expires_in
+            },
+            callback: (res) => {
+
+              if (res.success) {
+                loadUserInfo({
+                  callback:()=>{
+                    Alert.alert('', '绑定成功')
+                  }
+                })
+              } else {
+                Alert.alert('', res.error || '绑定失败')
+              }
+
+            }
+          })
+
+        }
+      })
+
+      /*
       openShare.qqLogin()
 
       if (!self.qqLogin) {
@@ -166,6 +201,7 @@ class SocialAccount extends React.Component {
               }
           );
       }
+      */
 
     }
 

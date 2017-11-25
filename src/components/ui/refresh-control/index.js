@@ -1,16 +1,16 @@
 
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, RefreshControl } from 'react-native'
+import { View, Text, RefreshControl } from 'react-native'
 
 class _RefreshControl extends Component {
 
   constructor (props) {
     super(props)
     this.state = { display: false }
-    this.onRefresh = this.onRefresh.bind(this)
+    this._onRefresh = this._onRefresh.bind(this)
   }
 
-  onRefresh () {
+  _onRefresh () {
     const self = this
     const { onRefresh } = this.props
     self.setState({ display: true })
@@ -22,7 +22,7 @@ class _RefreshControl extends Component {
     return (
       <RefreshControl
         refreshing={this.state.display}
-        onRefresh={this.onRefresh}
+        onRefresh={this._onRefresh}
         tintColor="#484848"
         title="加载中..."
         titleColor="#484848"
@@ -33,8 +33,5 @@ class _RefreshControl extends Component {
   }
 
 }
-
-const styles = StyleSheet.create({
-})
 
 export default _RefreshControl

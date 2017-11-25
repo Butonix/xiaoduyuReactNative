@@ -14,6 +14,7 @@ import PostsList from '../../components/posts-list'
 // import MenuIcon from '../../components/ui/icon/menu'
 
 import JPushModule from 'jpush-react-native'
+import Platform from 'Platform'
 
 class Home extends Component {
 
@@ -35,6 +36,7 @@ class Home extends Component {
 
     const { me, cleanAllComment } = this.props
     const { navigate } = this.props.navigation
+
     this.state.listener = (result) => {
       if (result.routeName && result.params) {
         cleanAllComment()
@@ -43,28 +45,35 @@ class Home extends Component {
       }
     }
 
-    JPushModule.addReceiveOpenNotificationListener(this.state.listener)
+    /*
+    if (Platform.OS === 'android') {
+      JPushModule.initPush();
+    }
 
-    // 设置别名, 发送给指定的用户
-    AsyncStorage.getItem('jpush_alias', (errs, result)=>{
-      if (!result) {
-        AsyncStorage.setItem('jpush_alias', me._id, function(errs, result){
-          JPushModule.setAlias(me._id, (res)=>{
-          }, (res)=>{
+      JPushModule.addReceiveOpenNotificationListener(this.state.listener)
+
+      // 设置别名, 发送给指定的用户
+      AsyncStorage.getItem('jpush_alias', (errs, result)=>{
+        if (!result) {
+          AsyncStorage.setItem('jpush_alias', me._id, function(errs, result){
+            JPushModule.setAlias(me._id, (res)=>{
+            }, (res)=>{
+            })
           })
-        })
-      }
-    })
+        }
+      })
 
-    // 设置标签，推送已登陆的用户
-    AsyncStorage.getItem('jpush_tag', (errs, result)=>{
-      if (!result) {
-        let tag = 'signin'
-        AsyncStorage.setItem('jpush_tag', tag, function(errs, result){
-          JPushModule.setTags(tag.split(','), ()=>{}, ()=>{})
-        })
-      }
-    })
+      // 设置标签，推送已登陆的用户
+      AsyncStorage.getItem('jpush_tag', (errs, result)=>{
+        if (!result) {
+          let tag = 'signin'
+          AsyncStorage.setItem('jpush_tag', tag, function(errs, result){
+            JPushModule.setTags(tag.split(','), ()=>{}, ()=>{})
+          })
+        }
+      })
+
+    */
 
     if (me.phone) return
 
@@ -94,9 +103,10 @@ class Home extends Component {
   }
 
   componentWillUnmount() {
+
     if (this.state.listener) {
       // 移除监听事件
-      JPushModule.removeReceiveOpenNotificationListener(this.state.listener)
+      // JPushModule.removeReceiveOpenNotificationListener(this.state.listener)
       this.state.listener = null
     }
   }

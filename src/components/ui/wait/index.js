@@ -7,7 +7,7 @@ class Wait extends PureComponent {
 
     const { text = '加载中...' } = this.props
 
-    return (<Modal transparent={true}>
+    return (<Modal transparent={true} onRequestClose={()=>{}}>
             <View style={styles.loading}>
               <ActivityIndicator style={styles.animation} animating={true} color={'#fff'} size={'large'} />
               <Text style={styles.loadingText}>{text}</Text>
