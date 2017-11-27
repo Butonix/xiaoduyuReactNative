@@ -7,7 +7,7 @@ import { StyleSheet, Text, Image, View, Button, ScrollView,
 } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
-import RadioForm from 'react-native-simple-radio-button'
+// import RadioForm from 'react-native-simple-radio-button'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -22,7 +22,7 @@ import Wait from '../../components/ui/wait'
 import Dimensions from 'Dimensions'
 const screenWidth = Dimensions.get('window').width
 
-
+import Platform from 'Platform'
 
 class SignUp extends Component {
 
@@ -162,6 +162,7 @@ class SignUp extends Component {
           ref="nickname"
           maxLength={40}
           autoFocus={true}
+          underlineColorAndroid='transparent'
           />
 
         {nickname ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{nickname}</Text></View> : null}
@@ -182,6 +183,7 @@ class SignUp extends Component {
             placeholder='手机号'
             ref="phone"
             maxLength={60}
+            underlineColorAndroid='transparent'
             />
           </View>
         </View>
@@ -196,6 +198,7 @@ class SignUp extends Component {
             ref="captcha"
             maxLength={6}
             keyboardType={'numeric'}
+            underlineColorAndroid='transparent'
             />
           <View style={{
             position: 'absolute',
@@ -217,6 +220,7 @@ class SignUp extends Component {
           placeholder='密码'
           maxLength={30}
           ref="password"
+          underlineColorAndroid='transparent'
           />
 
         {password ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{password}</Text></View> : null}
@@ -242,7 +246,8 @@ class SignUp extends Component {
 
     {this.state.visible ? <Wait /> : null}
 
-    <KeyboardSpacer />
+    {Platform.OS === 'android' ? null : <KeyboardSpacer />}
+
     </ScrollView>)
   }
 }

@@ -106,6 +106,7 @@ class ResetPassword extends React.Component {
                 secureTextEntry={true}
                 placeholder='请输入当前密码'
                 autoFocus={true}
+                underlineColorAndroid='transparent'
                 />
               <TextInput
                 style={gStyles.radiusInputCenter}
@@ -113,6 +114,7 @@ class ResetPassword extends React.Component {
                 onChangeText={(newPassword) => this.setState({newPassword})}
                 secureTextEntry={true}
                 placeholder='请输入新密码'
+                underlineColorAndroid='transparent'
                 />
               <TextInput
                 style={gStyles.radiusInputBottom}
@@ -120,6 +122,7 @@ class ResetPassword extends React.Component {
                 onChangeText={(confirmPassword) => this.setState({confirmPassword})}
                 secureTextEntry={true}
                 placeholder='请再次输入新密码'
+                underlineColorAndroid='transparent'
                 />
               <TouchableOpacity onPress={this.submit} style={[gStyles.fullButton, gStyles.mt10]}>
                 <Text style={gStyles.white}>{submitting ? "提交中..." : "提交"}</Text>

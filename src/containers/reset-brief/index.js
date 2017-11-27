@@ -33,7 +33,7 @@ class ResetBrief extends React.Component {
   }
 
   submit() {
-    
+
     const self = this
     const { me, resetBrief, navigation } = this.props
     const { brief } = this.state
@@ -65,6 +65,7 @@ class ResetBrief extends React.Component {
                   placeholder='请用一句话介绍你自己'
                   defaultValue={me.brief}
                   autoFocus={true}
+                  underlineColorAndroid='transparent'
                 />
           </View>)
   }

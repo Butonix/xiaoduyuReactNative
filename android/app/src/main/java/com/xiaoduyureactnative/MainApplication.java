@@ -3,6 +3,7 @@ package com.xiaoduyureactnative;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+// import cn.reactnative.modules.weibo.WeiboPackage;
 import cn.reactnative.modules.qq.QQPackage;
 import com.theweflex.react.WeChatPackage;
 import im.shimo.react.cookie.CookieManagerPackage;
@@ -35,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            // new WeiboPackage(),
             new QQPackage(),
             new WeChatPackage(),
             new CookieManagerPackage(),

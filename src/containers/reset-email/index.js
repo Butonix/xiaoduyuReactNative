@@ -82,6 +82,7 @@ class ResetEmail extends React.Component {
                 onChangeText={(email) => this.setState({email})}
                 placeholder='请输入你的新邮箱'
                 autoFocus={true}
+                underlineColorAndroid='transparent'
                 />
 
                 <View>
@@ -89,6 +90,7 @@ class ResetEmail extends React.Component {
                         style={gStyles.radiusInputBottom}
                         onChangeText={(captcha) => this.setState({captcha})}
                         placeholder='验证码'
+                        underlineColorAndroid='transparent'
                       />
 
                       <View style={{

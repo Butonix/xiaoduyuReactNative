@@ -58,7 +58,7 @@ class ResetNickname extends React.Component {
   }
 
   render() {
-
+    
     const { me } = this.props
 
     return (<View style={styles.container}>
@@ -69,6 +69,7 @@ class ResetNickname extends React.Component {
                   placeholder='你的名字'
                   defaultValue={me.nickname}
                   autoFocus={true}
+                  underlineColorAndroid='transparent'
                 />
           </View>)
   }

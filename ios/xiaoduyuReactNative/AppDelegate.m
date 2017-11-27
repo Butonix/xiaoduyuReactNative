@@ -19,6 +19,8 @@
 #import "OpenShareHeader.h"
 #import "SplashScreen.h"
 
+// #import "../Libraries/LinkingIOS/RCTLinkingManager.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

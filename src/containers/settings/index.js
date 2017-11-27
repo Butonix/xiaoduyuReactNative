@@ -42,11 +42,12 @@ class Settings extends React.Component {
 
         AsyncStorage.removeItem('token', function(res){
 
+
           // 设置别名
           AsyncStorage.removeItem('jpush_alias', function(){
             // JPushModule.setAlias('invalid', ()=>{})
           })
-          
+
           // 清除tag
           AsyncStorage.removeItem('jpush_tag', function(){
             // JPushModule.setTags(['invalid'], ()=>{})
@@ -56,14 +57,17 @@ class Settings extends React.Component {
 
           global.signIn = false
 
-          const resetAction = NavigationActions.reset({
-            index: 0,
-            actions: [
-              NavigationActions.navigate({ routeName: 'Welcome'})
-            ]
-          })
 
-          self.props.navigation.dispatch(resetAction)
+            const resetAction = NavigationActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'Welcome'})
+              ]
+            })
+
+            self.props.navigation.dispatch(resetAction)
+
+
 
         })
 

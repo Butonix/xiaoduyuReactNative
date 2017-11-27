@@ -12,11 +12,26 @@ function GetQueryString(url, name) {
    if(r!=null)return  unescape(r[2]); return null;
 }
 
-class GithubSignIn extends Component {
+class OtherSignIn extends Component {
 
-  static navigationOptions = ({navigation}) => ({
-    headerTitle: 'GitHub 登陆'
-  })
+  static navigationOptions = ({navigation}) => {
+
+    const { name } = navigation.state.params
+
+    let headerTitle = ''
+    
+    if (name == 'github') {
+      headerTitle = 'GitHub 登陆'
+    } else if (name == 'qq') {
+      headerTitle = 'QQ 登陆'
+    } else if (name == 'weibo') {
+      headerTitle = '微博登陆'
+    }
+
+    return {
+      headerTitle: headerTitle
+    }
+  }
 
   constructor (props) {
     super(props)
@@ -50,16 +65,16 @@ class GithubSignIn extends Component {
     // Cookie.clear()
     Cookie.clear('https://github.com');
   }
-  
+
   render() {
 
-    const { accessToken } = this.props.navigation.state.params
+    const { accessToken, name } = this.props.navigation.state.params
 
     return (<View style={styles.container}>
       <WebView
         ref={'webview'}
         automaticallyAdjustContentInsets={false}
-        source={{uri: 'https://api.xiaoduyu.com/oauth/github'+(accessToken ? '?access_token='+accessToken : '')}}
+        source={{uri: `https://api.xiaoduyu.com/oauth/${name}${accessToken ? '?access_token='+accessToken : ''}`}}
         javaScriptEnabled={true}
         onNavigationStateChange={this.onNavigationStateChange}
         startInLoadingState={true}
@@ -76,4 +91,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default GithubSignIn
+export default OtherSignIn

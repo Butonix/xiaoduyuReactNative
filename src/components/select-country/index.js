@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native'
 
-import SimplePicker from 'react-native-simple-picker'
+// import SimplePicker from 'react-native-simple-picker'
+import ModalPicker from 'react-native-modal-picker'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -37,12 +38,38 @@ class SelectCountry extends Component {
     const self = this
     const { countries, onChoose } = this.props
     const { item } = this.state
-    const options = []
+    // const options = []
 
-    countries.map(item=>{ options.push(item.name + '' + item.code) })
+    // countries.map(item=>{ options.push(item.name + '' + item.code) })
 
+    const data = []
+    let index = 0
+
+    countries.map(item=>{
+      data.push({
+        key: index++,
+        label: item.name + '' + item.code
+      })
+    })
+    
     return (<View>
 
+      <ModalPicker
+          data={data}
+          initValue="Select something yummy!"
+          onChange={(option)=>{
+            self.setState({ item: countries[option.key] })
+            onChoose(countries[option.key])
+          }}>
+
+          <View style={styles.select}>
+          {item ? <Text>{item.name + item.code}</Text> : null}
+          {item ? <Image source={require('./images/select.png')} style={styles.selectIcon} /> : null}
+          </View>
+
+      </ModalPicker>
+
+        {/*
         <TouchableOpacity onPress={()=>this.refs.picker.show()} style={styles.select}>
           {item ? <Text>{item.name + item.code}</Text> : null}
           {item ? <Image source={require('./images/select.png')} style={styles.selectIcon} /> : null}
@@ -60,6 +87,7 @@ class SelectCountry extends Component {
             onChoose(countries[index])
           }}
         />
+        */}
 
     </View>)
   }

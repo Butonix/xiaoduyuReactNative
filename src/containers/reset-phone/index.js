@@ -90,6 +90,7 @@ class BindingPhone extends React.Component {
                     onChangeText={(phone) => this.setState({phone})}
                     placeholder='手机号'
                     maxLength={60}
+                    underlineColorAndroid='transparent'
                     />
                   </View>
                 </View>
@@ -100,6 +101,7 @@ class BindingPhone extends React.Component {
                         style={gStyles.radiusInputBottom}
                         onChangeText={(captcha) => this.setState({captcha})}
                         placeholder='验证码'
+                        underlineColorAndroid='transparent'
                       />
 
                       <View style={{

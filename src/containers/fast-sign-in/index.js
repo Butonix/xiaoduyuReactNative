@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, Image, ImageBackground, View, Button, ScrollView, WebView, TextInput, Alert, TouchableOpacity, AsyncStorage, DeviceEventEmitter, Modal } from 'react-native'
+import { StyleSheet, Text, Image, ImageBackground, View, Button, ScrollView, WebView, TextInput, Alert, TouchableOpacity, AsyncStorage, DeviceEventEmitter } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
 
@@ -15,6 +15,7 @@ import { signin } from '../../actions/sign'
 import { weiboGetUserInfo, QQGetUserInfo } from '../../actions/oauth'
 import { getClientInstalled } from '../../reducers/client-installed'
 
+// import * as WeiboAPI from 'react-native-weibo'
 
 import gStyles from '../../styles'
 
@@ -68,6 +69,34 @@ class FastSignIn extends Component {
   }
 
   _weiboLogin () {
+
+    var _this = this
+    const { weiboGetUserInfo } = this.props
+    /*
+    WeiboAPI.login({
+      scope: 'all',
+      redirectURI: 'https://api.xiaoduyu.com'
+    }).then((response)=>{
+
+      weiboGetUserInfo({
+        data: {
+          weibo_access_token: response.accessToken,
+          refresh_token: response.refreshToken,
+          user_id: response.userID,
+          expiration_date: response.expirationDate
+        },
+        callback: (res)=>{
+          if (res.success) {
+            _this.handleSignIn(res.data.access_token)
+          }
+        }
+      })
+
+      // console.log(res);
+    })
+    */
+
+    /*
       var _this = this;
       openShare.weiboLogin();
 
@@ -96,6 +125,7 @@ class FastSignIn extends Component {
               }
           );
       }
+    */
   }
 
   _qqLogin () {
@@ -109,10 +139,6 @@ class FastSignIn extends Component {
           res.openid &&
           res.access_token
       ) {
-
-        console.log('test----');
-
-        console.log(res);
 
         QQGetUserInfo({
           data: {
@@ -176,21 +202,59 @@ class FastSignIn extends Component {
           <Image source={require('./images/logo.png')} style={styles.logo} resizeMode="cover" />
         </View>
 
-        {clientInstalled.qq ?
+        {/*clientInstalled.qq ?
           <TouchableOpacity onPress={this._qqLogin} style={styles.fullButton}>
             <Text style={styles.buttonText}>使用QQ账号登录</Text>
           </TouchableOpacity>
-          : null}
+          : <TouchableOpacity
+              onPress={()=>{
+                navigate('OtherSignIn', {
+                  successCallback: token => self.handleSignIn(token),
+                  name: 'qq'
+                })
+              }}
+              style={styles.fullButton}>
+              <Text style={styles.buttonText}>使用QQ账号登录</Text>
+            </TouchableOpacity>*/}
 
-        <TouchableOpacity onPress={()=>{ navigate('GithubSignIn', { successCallback: token => self.handleSignIn(token) }) }} style={styles.fullButton}>
+        <TouchableOpacity
+            onPress={()=>{
+              navigate('OtherSignIn', {
+                successCallback: token => self.handleSignIn(token),
+                name: 'qq'
+              })
+            }}
+            style={styles.fullButton}>
+            <Text style={styles.buttonText}>使用QQ账号登录</Text>
+          </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={()=>{
+            navigate('OtherSignIn', {
+              successCallback: token => self.handleSignIn(token),
+              name: 'github'
+            })
+          }}
+          style={styles.fullButton}>
           <Text style={styles.buttonText}>使用Github账号登录</Text>
         </TouchableOpacity>
 
-        {clientInstalled.weibo ?
+        <TouchableOpacity
+          onPress={()=>{
+            navigate('OtherSignIn', {
+              successCallback: token => self.handleSignIn(token),
+              name: 'weibo'
+            })
+          }}
+          style={styles.fullButton}>
+          <Text style={styles.buttonText}>使用微博账号登录</Text>
+        </TouchableOpacity>
+
+        {/*clientInstalled.weibo ?
           <TouchableOpacity onPress={this._weiboLogin} style={styles.fullButton}>
             <Text style={styles.buttonText}>使用微博账号登录</Text>
           </TouchableOpacity>
-          : null}
+          : null*/}
 
         <TouchableOpacity onPress={()=>navigate('SignIn')} style={styles.fullButton}>
           <Text style={styles.buttonText}>手机号登陆或注册</Text>

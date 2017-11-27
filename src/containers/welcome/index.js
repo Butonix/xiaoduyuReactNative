@@ -54,6 +54,7 @@ class Welcome extends Component {
 
     SplashScreen.hide()
     self.testNetwork((result)=>{
+
       self.setState({ network: result, loading: result })
 
       if (!result) return
@@ -147,6 +148,11 @@ class Welcome extends Component {
 
   // 测试是否有网
   testNetwork(callback) {
+
+    callback(true)
+
+    return
+
     this.setState({ loading: true })
     function handleFirstConnectivityChange(state) {
       // console.log('网络状态:' + state);

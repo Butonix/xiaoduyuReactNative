@@ -6,7 +6,7 @@ import Welcome from '../containers/welcome'
 import FastSignIn from '../containers/fast-sign-in'
 import SignIn from '../containers/sign-in'
 import SignUp from '../containers/sign-up'
-import GithubSignIn from '../containers/github-sign-in'
+import OtherSignIn from '../containers/other-sign-in'
 import Forgot from '../containers/forgot'
 import Home from '../containers/home'
 import MineFollow from '../containers/mine-follow'
@@ -105,7 +105,7 @@ const App = StackNavigator({
   Settings: { screen: Settings },
   SignUp: { screen: SignUp },
   Forgot: { screen: Forgot },
-  GithubSignIn: { screen: GithubSignIn },
+  OtherSignIn: { screen: OtherSignIn },
   TopicDetail: { screen: TopicDetail },
   PeopleDetail: { screen: PeopleDetail },
   List: { screen: List },
@@ -140,9 +140,10 @@ const App = StackNavigator({
           height: 65
       })
     },
-    headerTintColor: '#23232b',
+    headerTintColor: '#484848',
     headerTitleStyle: {
-      fontSize: 15
+      fontSize: 15,
+      color:'#484848'
     },
     headerBackTitleStyle: {
       backgroundColor: '#333'

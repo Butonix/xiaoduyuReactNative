@@ -22,6 +22,8 @@ import { api_url, api_verstion } from '../../../config'
 import Dimensions from 'Dimensions'
 const screenWidth = Dimensions.get('window').width
 
+import Platform from 'Platform'
+
 class SignIn extends Component {
 
   static navigationOptions = ({navigation}) => {
@@ -168,6 +170,7 @@ class SignIn extends Component {
           placeholder='请输入手机号或邮箱'
           autoFocus={true}
           maxLength={60}
+          underlineColorAndroid='transparent'
         />
 
       <TextInput
@@ -177,6 +180,7 @@ class SignIn extends Component {
           secureTextEntry={true}
           placeholder='请输入密码'
           maxLength={60}
+          underlineColorAndroid='transparent'
         />
 
         {captchaId ?
@@ -187,12 +191,19 @@ class SignIn extends Component {
                   placeholder='请输入验证码'
                   maxLength={6}
                   keyboardType={'numeric'}
+                  underlineColorAndroid='transparent'
                 />
-            <TouchableOpacity onPress={this.loadCaptcha}>
-              <View style={{
+            <TouchableOpacity onPress={this.loadCaptcha}
+              style={{
                 position: 'absolute',
-                marginTop:-35,
+                marginTop: 10,
                 marginLeft: screenWidth - 130
+              }}
+              >
+              <View style={{
+                // position: 'absolute',
+                // marginTop:-15,
+                // marginLeft: screenWidth - 130
               }}>
                 <Image source={{ uri:api_url + '/' + api_verstion + '/captcha-image/' + captchaId }} style={{ width:80, height:30 }}  />
               </View>
@@ -210,7 +221,8 @@ class SignIn extends Component {
 
       {visible ? <Wait /> : null}
 
-      <KeyboardSpacer />
+      {Platform.OS === 'android' ? null : <KeyboardSpacer />}
+
     </ScrollView>)
   }
 }
