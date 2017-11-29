@@ -113,7 +113,7 @@ class WritePosts extends React.Component {
   }
 
   render() {
-
+    
     const self = this
     const { topic, posts } = this.props.navigation.state.params
 
@@ -125,6 +125,7 @@ class WritePosts extends React.Component {
           placeholder='请输入标题'
           defaultValue={posts ? posts.title : ''}
           autoFocus={true}
+          underlineColorAndroid='transparent'
           />
       </View>
       <View style={{ flex:1 }}>

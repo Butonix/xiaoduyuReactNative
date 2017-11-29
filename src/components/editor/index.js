@@ -52,13 +52,15 @@ class Editor extends Component {
     const { qiniu, loading } = this.state
     const { style } = this.props
 
+    const source = (Platform.OS == 'ios') ? require('../../../editor/dist/index.html') : { uri: 'file:///android_asset/index.html' }
+
     // source={{uri:'http://192.168.1.106:9000'}}
     // source={require('../../../editor/dist/index.html')}
     return (<View style={styles.container}>
 
             <WebView
               // source={{uri:'http://192.168.1.106:9000'}}
-              source={require('../../../editor/dist/index.html')}
+              source={source}
               style={styles.editor}
               ref={ webview => { this.webview = webview; }}
               onLoad={()=>{ self.init() }}

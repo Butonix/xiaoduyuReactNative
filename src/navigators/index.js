@@ -1,3 +1,4 @@
+import Platform from 'Platform'
 
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
@@ -42,28 +43,36 @@ import Block from '../containers/block'
 // import Test from '../containers/test'
 // import Editor from '../containers/editor'
 
-const MainScreenNavigator = TabNavigator({
-  Home: { screen: Home },
-  MineFollow: { screen: MineFollow },
-  ChooseTopic: { screen: ChooseTopic },
-  Notifications: { screen: Notifications },
-  Me: { screen: Me }
-},
-{
-  initialRouteName: 'Home',
-  tabBarPosition: 'top',
-  swipeEnabled:true,
-  animationEnabled:false,
-  lazy: true,
-  tabBarOptions: {
+let tabBarOptions = {
+  style: {
+    ...ifIphoneX({
+        height: 75,
+        backgroundColor:'#fff'
+    }, {
+        height: 60,
+        backgroundColor:'#fff'
+    })
+  },
+  activeBackgroundColor:'#fff',
+  activeTintColor:'#08f',
+  inactiveBackgroundColor:'#fff',
+  inactiveTintColor:'#484848',
+  allowFontScaling: false,
+  labelStyle: {
+    fontSize: 14,
+    paddingBottom:10
+  },
+  tabStyle:{
+    borderBottomWidth:1,
+    borderColor: '#e3e3e3'
+  }
+}
+
+if (Platform.OS === 'android') {
+  tabBarOptions = {
     style: {
-      ...ifIphoneX({
-          height: 75,
-          backgroundColor:'#fff'
-      }, {
-          height: 60,
-          backgroundColor:'#fff'
-      })
+      height: 60,
+      backgroundColor:'#fff'
     },
     activeBackgroundColor:'#fff',
     activeTintColor:'#08f',
@@ -72,11 +81,6 @@ const MainScreenNavigator = TabNavigator({
     allowFontScaling: false,
     labelStyle: {
       marginTop:15
-      // fontSize: 15,
-      // paddingBottom:20,
-      // zIndex:-1,
-      // borderBottomWidth:1,
-      // borderColor: 'red'
     },
     tabStyle:{
       // borderBottomWidth:1,
@@ -91,6 +95,23 @@ const MainScreenNavigator = TabNavigator({
     indicatorStyle: { backgroundColor: '#08f' }
     // showLabel:false,
   }
+}
+
+
+const MainScreenNavigator = TabNavigator({
+  Home: { screen: Home },
+  MineFollow: { screen: MineFollow },
+  ChooseTopic: { screen: ChooseTopic },
+  Notifications: { screen: Notifications },
+  Me: { screen: Me }
+},
+{
+  initialRouteName: 'Home',
+  tabBarPosition: 'top',
+  swipeEnabled:true,
+  animationEnabled:false,
+  lazy: true,
+  tabBarOptions: tabBarOptions
 })
 
 const App = StackNavigator({

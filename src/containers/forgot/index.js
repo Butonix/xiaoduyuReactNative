@@ -155,6 +155,7 @@ class Forgot extends Component {
           onChangeText={(account) => this.setState({account})}
           placeholder='请输入你的注册的手机号或邮箱'
           autoFocus={true}
+          underlineColorAndroid='transparent'
           />
 
         <View>
@@ -164,6 +165,7 @@ class Forgot extends Component {
               placeholder='请输入验证码'
               maxLength={6}
               keyboardType={'numeric'}
+              underlineColorAndroid='transparent'
             />
             <View style={{
               position: 'absolute',
@@ -181,6 +183,7 @@ class Forgot extends Component {
           onChangeText={(password) => this.setState({password})}
           secureTextEntry={true}
           placeholder='请输入新密码'
+          underlineColorAndroid='transparent'
           />
 
         <TextInput
@@ -188,6 +191,7 @@ class Forgot extends Component {
           onChangeText={(confirmPassword) => this.setState({confirmPassword})}
           secureTextEntry={true}
           placeholder='请再次输入新密码'
+          underlineColorAndroid='transparent'
           />
 
         <TouchableOpacity onPress={this.submit} style={[gStyles.fullButton, gStyles.mt20]}>

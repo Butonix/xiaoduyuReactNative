@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 
 import React, { Component } from 'react';
 import {
@@ -27,7 +22,7 @@ import CommentItem from '../../components/comment-item'
 
 import Loading from '../../components/ui/loading'
 import Nothing from '../../components/nothing'
-
+import HtmlView from '../html-view'
 
 class CommentList extends Component {
 
@@ -39,6 +34,7 @@ class CommentList extends Component {
     this.goTo = this.goTo.bind(this)
     this.load = this.load.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
+    this.toPosts = this.toPosts.bind(this)
   }
 
   componentWillMount() {
@@ -61,6 +57,11 @@ class CommentList extends Component {
     return (<View>{list.loading ? <Text>加载中</Text> : null}</View>)
   }
 
+  toPosts(posts){
+    const { navigate } = this.props.navigation;
+    navigate('PostsDetail', { title: posts.title, id: posts._id })
+  }
+
   render() {
 
     const {
@@ -69,6 +70,8 @@ class CommentList extends Component {
       displayReply = false,
       displayCreateAt = false,
       canClick = true,
+      // 只显示评论
+      onlyDisplayComment = false,
       me
     } = this.props
     const { navigate } = this.props.navigation;
@@ -84,40 +87,56 @@ class CommentList extends Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let array = ds.cloneWithRows(list.data || [])
 
+
+    let renderRow = (item) => (<View>
+        <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} displayCreateAt={displayCreateAt} canClick={canClick} comment={item} />
+
+        {item.reply && item.reply.map(item=>{
+          return(<View key={item._id} style={styles.reply}>
+            <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} displayCreateAt={displayCreateAt} canClick={canClick} comment={item} subitem={true} />
+          </View>)
+        })}
+
+        {item.reply && item.reply_count > item.reply.length ?
+          <TouchableOpacity
+            onPress={()=>{
+              navigate('CommentDetail', { title: item.content_summary, id: item._id })
+            }}
+            style={styles.more}>
+            <Text>还有{item.reply_count - item.reply.length}条回复，查看全部</Text>
+          </TouchableOpacity>
+          : null}
+
+      </View>)
+
+    if (onlyDisplayComment) {
+      
+      renderRow = (item) => (<View style={styles.commentItem}>
+          <TouchableOpacity style={styles.postsTitle} onPress={()=>{ this.toPosts(item.posts_id) }}>
+            <Text style={styles.postsTitleText}>{item.posts_id.title}</Text>
+          </TouchableOpacity>
+          <View><HtmlView html={item.content_html} imgOffset={20} /></View>
+        </View>)
+
+    }
+
+
+
     return (
       <View>
         <ListView
           enableEmptySections={true}
           dataSource={array}
-          renderRow={(item) => (<View>
-              <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} displayCreateAt={displayCreateAt} canClick={canClick} comment={item} />
-
-              {item.reply && item.reply.map(item=>{
-                return(<View key={item._id} style={styles.reply}>
-                  <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} displayCreateAt={displayCreateAt} canClick={canClick} comment={item} subitem={true} />
-                </View>)
-              })}
-
-              {item.reply && item.reply_count > item.reply.length ?
-                <TouchableOpacity
-                  onPress={()=>{
-                    navigate('CommentDetail', { title: item.content_summary, id: item._id })
-                  }}
-                  style={styles.more}>
-                  <Text>还有{item.reply_count - item.reply.length}条回复，查看全部</Text>
-                </TouchableOpacity>
-                : null}
-
-          </View>)}
+          renderRow={renderRow}
           renderFooter={this.renderFooter}
           removeClippedSubviews={false}
           refreshControl={
             <RefreshControl
               refreshing={this.state.isRefreshing}
               onRefresh={this._onRefresh.bind(this)}
-              tintColor="#ff0000"
+              tintColor="#484848"
               title="加载中..."
-              titleColor="#00ff00"
+              titleColor="#484848"
               colors={['#ff0000', '#00ff00', '#0000ff']}
               progressBackgroundColor="#ffffff"
             />
@@ -169,6 +188,22 @@ const styles = StyleSheet.create({
     paddingBottom:15,
     borderTopWidth: 1,
     borderColor: '#efefef'
+  },
+  commentItem: {
+    padding:15,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderColor: '#efefef'
+  },
+  postsTitle: {
+    backgroundColor: '#f5f5f5',
+    padding:10,
+    marginBottom:10,
+    borderRadius:4
+  },
+  postsTitleText: {
+    fontSize: 12,
+    color: 'rgb(98, 98, 98)'
   }
 })
 

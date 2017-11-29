@@ -94,8 +94,9 @@ class FollowPosts extends Component {
   render() {
 
     const self = this
-
     const { list } = this.props
+
+    console.log(list);
 
     if (list.loading && list.data.length == 0 || !list.data) {
       return (<Loading />)
@@ -109,18 +110,17 @@ class FollowPosts extends Component {
     let data = ds.cloneWithRows(list.data || [])
 
     return (
-      <View style={styles.container}>
         <ListView
           enableEmptySections={true}
           dataSource={data}
           renderRow={(item) => {
-
-            return (<View >
-                <TouchableOpacity onPress={()=>{this.toPosts(item.posts_id)}} style={styles.item}>
-                  <View><Text>{item.posts_id.title}</Text></View>
-                </TouchableOpacity>
-              </View>)
-
+            if (item.posts_id) {
+              return (<View><TouchableOpacity onPress={()=>{self.toPosts(item.posts_id)}} style={styles.item}>
+                    <View><Text>{item.posts_id.title}</Text></View>
+                  </TouchableOpacity></View>)
+            } else {
+              return (<View></View>)
+            }
           }}
           renderHeader={this.renderHeader}
           renderFooter={this.renderFooter}
@@ -129,9 +129,9 @@ class FollowPosts extends Component {
             <RefreshControl
               refreshing={this.state.isRefreshing}
               onRefresh={this._onRefresh.bind(this)}
-              tintColor="#ff0000"
+              tintColor="#484848"
               title="加载中..."
-              titleColor="#00ff00"
+              titleColor="#484848"
               colors={['#ff0000', '#00ff00', '#0000ff']}
               progressBackgroundColor="#ffffff"
             />
@@ -139,7 +139,6 @@ class FollowPosts extends Component {
           onScroll={this._onScroll.bind(this)}
           scrollEventThrottle={50}
         />
-      </View>
     )
   }
 
@@ -150,7 +149,8 @@ const styles = StyleSheet.create({
     padding:15,
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderColor: '#efefef'
+    borderColor: '#efefef',
+    backgroundColor: '#fff'
   },
   avatar: {
     width:40,
@@ -170,4 +170,4 @@ export default connect((state, props) => ({
   (dispatch) => ({
     loadList: bindActionCreators(loadFollowPosts, dispatch)
   })
-)(FollowPosts);
+)(FollowPosts)

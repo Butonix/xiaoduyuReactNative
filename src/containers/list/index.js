@@ -32,7 +32,7 @@ class List extends Component {
         component = <PostsList {...this.props} name={id} filters={filters} />
         break
       case 'CommentList':
-        component = <CommentList {...this.props} name={id} filters={filters} canClick={canClick} />
+        component = <CommentList {...this.props} name={id} filters={filters} canClick={canClick} onlyDisplayComment={true} />
         break
       case 'TopicList':
         component = <TopicList {...this.props} name={id} filters={filters} />

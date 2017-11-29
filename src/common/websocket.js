@@ -20,13 +20,13 @@ const start = ({ onmessage = ()=>{} }) => {
       data = JSON.parse(data[0])
       onmessage(data[0], data[1])
     }
-
+    
   }
 
   ws.onerror = (e) => {}
 
   ws.onclose = ()=>{
-    start({ onmessage })
+    // start({ onmessage })
   }
 }
 
