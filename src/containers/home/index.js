@@ -38,45 +38,67 @@ class Home extends Component {
     const { navigate } = this.props.navigation
 
     this.state.listener = (result) => {
+
+      if (Platform.OS === 'android') {
+        result = JSON.parse(result.extras)
+      }
+
       if (result.routeName && result.params) {
         cleanAllComment()
-        JPushModule.setBadge(0, ()=>{})
+
+        if (Platform.OS === 'android') {
+        } else {
+          JPushModule.setBadge(0, ()=>{})
+        }
+
         navigate(result.routeName, result.params)
       }
     }
 
-    /*
     if (Platform.OS === 'android') {
-      JPushModule.initPush();
+      JPushModule.initPush()
+
+      // JPushModule.notifyJSDidLoad((resultCode)=>{
+      //   console.log(resultCode);
+      // });
+
+      // JPushModule.resumePush()
     }
 
-      JPushModule.addReceiveOpenNotificationListener(this.state.listener)
+    JPushModule.addReceiveOpenNotificationListener(this.state.listener)
 
-      // 设置别名, 发送给指定的用户
-      AsyncStorage.getItem('jpush_alias', (errs, result)=>{
-        if (!result) {
-          AsyncStorage.setItem('jpush_alias', me._id, function(errs, result){
-            JPushModule.setAlias(me._id, (res)=>{
-            }, (res)=>{
-            })
+    // 设置别名, 发送给指定的用户
+    AsyncStorage.getItem('jpush_alias', (errs, result)=>{
+
+      console.log(result);
+
+      if (!result) {
+        AsyncStorage.setItem('jpush_alias', me._id, function(errs, result){
+          JPushModule.setAlias(me._id, (res)=>{}, (res)=>{
+            console.log(res);
           })
-        }
-      })
+        })
+      }
+    })
 
-      // 设置标签，推送已登陆的用户
-      AsyncStorage.getItem('jpush_tag', (errs, result)=>{
-        if (!result) {
-          let tag = 'signin'
-          AsyncStorage.setItem('jpush_tag', tag, function(errs, result){
-            JPushModule.setTags(tag.split(','), ()=>{}, ()=>{})
+    // 设置标签，推送已登陆的用户
+    AsyncStorage.getItem('jpush_tag', (errs, result)=>{
+
+      console.log(result);
+
+      if (!result) {
+        let tag = 'signin'
+        AsyncStorage.setItem('jpush_tag', tag, function(errs, result){
+          JPushModule.setTags(tag.split(','), (res)=>{}, (res)=>{
+            console.log(res);
           })
-        }
-      })
-
-    */
+        })
+      }
+    })
 
     if (me.phone) return
 
+    // 提示绑定手机
     AsyncStorage.getItem('binding-phone-tips', (errs, result)=>{
       result = null
       if (result && new Date().getTime() > parseInt(result)) {

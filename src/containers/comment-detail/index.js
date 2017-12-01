@@ -19,11 +19,15 @@ import Nothing from '../../components/nothing'
 
 import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
 
+import { NavigationActions } from 'react-navigation'
+
 
 class CommentDetail extends Component {
 
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
+
+    // console.log(navigation);
 
     let option = {
       headerTitle: params.title
@@ -53,27 +57,39 @@ class CommentDetail extends Component {
     const { loadCommentById, comment, me } = this.props
     let { data } = comment
 
+    // let { state } = self.props.navigation
+
+    // console.log(state);
+
+    // state.params.menu = self.menu
+
+    // const setParamsAction = NavigationActions.setParams(state)
+
     if (!data || !data.length) {
       loadCommentById({
         id,
         callback: (res)=>{
 
-          if (!res) {
-            self.state({ nothing: true })
-            return
-          }
+          if (!res) return self.state({ nothing: true })
 
           self.props.navigation.setParams({
             menu: self.menu
           })
 
+          // setTimeout(()=>{
+          //   self.props.navigation.dispatch(setParamsAction)
+          // })
         }
       })
       return
     }
 
-    this.props.navigation.setParams({
-      menu: this.menu
+    // setTimeout(()=>{
+    //   self.props.navigation.dispatch(setParamsAction)
+    // })
+
+    self.props.navigation.setParams({
+      menu: self.menu
     })
 
   }

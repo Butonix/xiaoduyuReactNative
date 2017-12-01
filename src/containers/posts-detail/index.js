@@ -62,26 +62,19 @@ class PostsDetail extends Component {
     if (!posts || !posts.content) {
       loadPostsById({ id, callback: (res)=>{
 
-        if (!res) {
-          self.setState({ nothing: true })
-          return
-        }
+        if (!res) return self.setState({ nothing: true })
 
-        // if (me._id == posts.user_id._id) {
-          this.props.navigation.setParams({
-            menu: this.menu
-          })
-        // }
+        this.props.navigation.setParams({
+          menu: this.menu
+        })
 
       }})
       return
     }
 
-    // if (me._id == posts.user_id._id) {
-      this.props.navigation.setParams({
-        menu: this.menu
-      })
-    // }
+    this.props.navigation.setParams({
+      menu: this.menu
+    })
 
   }
 

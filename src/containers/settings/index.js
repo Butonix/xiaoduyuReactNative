@@ -13,6 +13,8 @@ import { getClientInstalled } from '../../reducers/client-installed'
 
 import { ListItem } from '../../components/ui'
 
+import Platform from 'Platform'
+
 class Settings extends React.Component {
 
   static navigationOptions = {
@@ -45,13 +47,18 @@ class Settings extends React.Component {
 
           // 设置别名
           AsyncStorage.removeItem('jpush_alias', function(){
-            // JPushModule.setAlias('invalid', ()=>{})
+            JPushModule.setAlias('invalid', ()=>{})
           })
 
           // 清除tag
           AsyncStorage.removeItem('jpush_tag', function(){
-            // JPushModule.setTags(['invalid'], ()=>{})
+            JPushModule.setTags(['invalid'], ()=>{})
           })
+
+          // if (Platform.OS === 'android') {
+            // JPushModule.initPush();
+            // JPushModule.stopPush()
+          // }
 
           global.cleanRedux()
 

@@ -21,6 +21,8 @@ import Loading from '../../components/ui/loading'
 import websocket from '../../common/websocket'
 // import jpush from '../../common/jpush'
 
+import Platform from 'Platform'
+
 class Welcome extends Component {
 
   static navigationOptions = ({navigation}) => ({
@@ -42,9 +44,17 @@ class Welcome extends Component {
 
   componentWillMount() {
     const self = this
+
+    // self.state.notification = {
+    //   routeName: 'CommentDetail', params: { title:'测试', id:'5a1cc3c13e2be9372c51180b' }
+    // }
+
     JPushModule.addOpenNotificationLaunchAppListener((result) => {
       self.state.notification = result
-      JPushModule.setBadge(0, ()=>{})
+      if (Platform.OS === 'android') {
+      } else {
+        JPushModule.setBadge(0, ()=>{})
+      }
     })
   }
 
@@ -127,23 +137,36 @@ class Welcome extends Component {
 
       // 启动websocket
       websocket.start({ onmessage: this.handleMessage })
-      // 获取通知
-      self.handleMessage('notiaction', [me._id])
 
+      // 获取通知消息
+      self.handleMessage('notiaction', [me._id])
+      
+      /*
       // 显示推送页面
       if (notification && notification.routeName && notification.params) {
-        index = 1
+        // actions = []
+        // index = 1
         actions.push(NavigationActions.navigate({
           routeName: notification.routeName,
           params: notification.params
         }))
       }
+      */
 
     } else {
       actions.push(NavigationActions.navigate({ routeName: 'FastSignIn' }))
     }
 
     this.props.navigation.dispatch(NavigationActions.reset({ index, actions }))
+
+    if (notification && notification.routeName && notification.params) {
+      setTimeout(()=>{
+        navigate(notification.routeName, notification.params)
+      }, 1000)
+    }
+
+
+
   }
 
   // 测试是否有网
