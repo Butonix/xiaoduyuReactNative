@@ -202,6 +202,11 @@ let style = {
   'f-d-r-r': {
     flexDirection: 'column-reverse'
   },
+
+  // color
+  blue: {
+    color: '#08f'
+  }
 }
 
 let make = (marks, params, values, modify) => {

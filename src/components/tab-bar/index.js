@@ -13,13 +13,14 @@ class Tabbar extends Component {
         <View style={styles.item}>
           {tabs.map((item, index)=>{
             return (<TouchableOpacity key={index} onPress={()=>{ goToPage(index) }} style={activeTab == index ? styles.tabActive : styles.tab}>
-                  <Text style={{ color: activeTab == index ? 'red' : '#333', fontSize:15 }}>{item}</Text>
+                  <Text style={{ color: activeTab == index ? '#08f' : '#333', fontSize:16 }}>{item}</Text>
               </TouchableOpacity>)
           })}
         </View>
         <View style={styles.itemFixed}>
           <View></View>
-          <TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic', { typeId: 1, goBackKey: navigation.state.key }) }}>
+          {/* <TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic', { typeId: 1, goBackKey: navigation.state.key }) }}> */}
+          <TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic') }}>
             <WriteIcon />
           </TouchableOpacity>
         </View>
@@ -46,22 +47,22 @@ var styles = StyleSheet.create({
     borderColor: '#fff',
     marginLeft: 10,
     marginRight: 10,
-    width:60,
+    width:80,
     justifyContent: 'center',
     alignItems: 'center'
   },
   tabActive: {
     borderBottomWidth: 3,
-    borderColor: 'red',
+    borderColor: '#08f',
     marginLeft: 10,
     marginRight: 10,
-    width:60,
+    width:80,
     alignItems: 'center',
     justifyContent: 'center'
   },
   itemFixed: {
     height: 50,
-    width: 60,
+    width: 80,
     justifyContent: 'center',
     alignItems: 'center'
   }

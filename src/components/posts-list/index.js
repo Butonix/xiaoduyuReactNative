@@ -14,7 +14,7 @@ import Nothing from '../../components/nothing'
 import ListFooter from '../../components/ui/list-footer'
 // import RefreshControl from '../../components/ui/refresh-control'
 
-import ListViewOnScroll from '../../common/list-view-onscroll'
+// import ListViewOnScroll from '../../common/list-view-onscroll'
 
 class PostsList extends Component {
 
@@ -25,12 +25,14 @@ class PostsList extends Component {
 
     this.state = {
       loadMore: false,
-      isRefreshing: false
+      isRefreshing: false,
+      loading: false
     }
     this.goTo = this.goTo.bind(this)
     this.goToComment = this.goToComment.bind(this)
     this.loadPostsList = this.loadPostsList.bind(this)
     this.toPeople = this.toPeople.bind(this)
+    this.onScroll = this.onScroll.bind(this)
   }
 
   componentWillMount() {
@@ -77,10 +79,32 @@ class PostsList extends Component {
     */
   }
 
+  onScroll(event) {
+
+    const self = this
+    const y = event.nativeEvent.contentOffset.y;
+    const height = event.nativeEvent.layoutMeasurement.height;
+    const contentHeight = event.nativeEvent.contentSize.height;
+
+    if (y + height >= contentHeight - 50 && !self.state.loading) {
+      self.state.loading = true
+      self.loadPostsList(()=>{
+        setTimeout(()=>{
+          self.state.loading = false
+        }, 2000)
+      })
+    }
+
+  }
+
   render() {
 
     const self = this
-    const { list } = this.props
+    const {
+      list,
+      // 是否显示用户信息
+      hideUserInfo = false
+    } = this.props
 
     if (list.loading && list.data.length == 0 || !list.data) {
       return (<Loading />)
@@ -90,6 +114,8 @@ class PostsList extends Component {
       return (<Nothing content="没有帖子" />)
     }
 
+    // console.log(list.data);
+
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let topics = ds.cloneWithRows(list.data || [])
 
@@ -97,19 +123,32 @@ class PostsList extends Component {
         <ListView
           enableEmptySections={true}
           dataSource={topics}
-          renderRow={(topic) => (<View style={styles.item}>
+          renderRow={(topic) => {
+
+            let imagesUrl = ''
+
+            if (topic.images && topic.images[0]) {
+              imagesUrl = 'https:' + topic.images[0].split('?')[0] + '?imageMogr2/auto-orient/thumbnail/!400/format/jpg'
+            }
+
+            return(<TouchableOpacity style={styles.item} onPress={()=>{this.goTo(topic)}} activeOpacity={0.8}>
 
             <View style={styles.topicItem}>
-              <TouchableOpacity onPress={()=>{this.goTo(topic)}}>
                 <View>
                   <View style={styles.itemHead}>
+
+                    {!hideUserInfo ?
+                      <View>
+                        <TouchableOpacity onPress={()=>{this.toPeople(topic.user_id)}}>
+                          <Image source={{uri:'https:'+topic.user_id.avatar_url}} style={styles.avatar}  />
+                        </TouchableOpacity>
+                      </View>
+                      : null}
+
                     <View>
-                      <TouchableOpacity onPress={()=>{this.toPeople(topic.user_id)}}>
-                        <Image source={{uri:'https:'+topic.user_id.avatar_url}} style={styles.avatar}  />
-                      </TouchableOpacity>
-                    </View>
-                    <View>
-                      <Text onPress={()=>{this.toPeople(topic.user_id)}} style={styles.nickname}>{topic.user_id.nickname}</Text>
+                      {!hideUserInfo ?
+                        <Text onPress={()=>{this.toPeople(topic.user_id)}} style={styles.nickname}>{topic.user_id.nickname}</Text>
+                        : null}
                       <View style={styles.itemHeadOther}>
                         <Text style={styles.itemHeadOtherItem}>{topic.topic_id.name}</Text>
                         {topic.view_count ? <Text style={styles.itemHeadOtherItem}>{topic.view_count+'次浏览'}</Text> : null}
@@ -118,18 +157,26 @@ class PostsList extends Component {
                       </View>
                     </View>
                   </View>
+
+                  {imagesUrl ?
+                    <View><Image source={{uri:imagesUrl}} style={styles.images} resizeMode="cover" /></View>
+                    : null}
+
                   <View style={styles.itemMain}>
+
                     <Text style={styles.title}>{topic.title}</Text>
                     {topic.content_summary ? <Text style={styles.contentText}>{topic.content_summary}</Text> : null}
+                    {/*
                     <View style={styles.flexContainer}>
-                      {topic.images.map(img=>{
+                      topic.images.map(img=>{
                         let _img = 'https:' + img.split('?')[0] + '?imageMogr2/auto-orient/thumbnail/!200/format/jpg'
                         return (<Image key={img} source={{uri:_img}} style={styles.images} />)
-                      })}
+                      })
                     </View>
+                    */}
                   </View>
                 </View>
-              </TouchableOpacity>
+
             </View>
 
             {/*topic.comment && topic.comment.map(item=>{
@@ -144,11 +191,12 @@ class PostsList extends Component {
               <TouchableOpacity onPress={()=>{this.goTo(topic)}} style={styles.more}><Text>还有{topic.comment_count - topic.comment.length}条评论，查看全部</Text></TouchableOpacity>
               : null*/}
 
-          </View>)}
+          </TouchableOpacity>)
+          }}
           renderHeader={this.renderHeader}
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
           removeClippedSubviews={false}
-          onScroll={ListViewOnScroll(self.loadPostsList)}
+          onScroll={this.onScroll}
           scrollEventThrottle={50}
           refreshControl={
             <RefreshControl

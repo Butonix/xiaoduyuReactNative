@@ -15,25 +15,30 @@ class Notifications extends React.Component {
     const { params = {} } = navigation.state
 
     /*
-    //     <Image
-    //       source={require('./images/notification.png')}
-    //       style={[styles.icon, {tintColor: tintColor}]}
-    //       />
+
 */
     // params.unreadNotice = 3
 
     return {
-      header: null,
+      // header: null,
       title: '通知',
       tabBarLabel: '通知',
+
+      // tabBarLabel: (props) => {
+      //   return (<View style={stylesIcon.tabBarLabel}>
+      //     <View style={stylesIcon.tabBarLabelView}><Text>通知</Text></View>
+      //     <View style={[stylesIcon.tabBarLabelLine, props.focused ? stylesIcon.focused : null ]}></View>
+      //     </View>)
+      // },
+
       // tabBarVisible: false,
       tabBarIcon: ({ tintColor }) => (
-        <View>
+        <View >
+          <View style={styles.tabBarIcon}><Image source={require('./images/notification.png')} style={[styles.icon, {tintColor: tintColor}]} /></View>
           {params.unreadNotice && params.unreadNotice.length > 0 ?
-            <View style={styles.subscript}><Text style={styles.subscriptText}>{params.unreadNotice.length}</Text></View>
+            <View style={styles.subscript}><Text style={styles.subscriptText}>{params.unreadNotice.length > 99 ? 99 : params.unreadNotice.length}</Text></View>
             : null}
-        </View>
-      ),
+      </View>),
       tabBarOnPress: (scene, jumpToIndex)=>{
 
         const { params = {} } = navigation.state
@@ -88,12 +93,12 @@ const styles = StyleSheet.create({
   subscript: {
     position:'absolute',
     zIndex:99,
-    marginLeft:7,
-    marginTop:10,
+    marginLeft:0,
+    marginTop:-12,
     backgroundColor: 'red',
     borderRadius: 15,
-    paddingLeft:5,
-    paddingRight:5,
+    paddingLeft:4,
+    paddingRight:4,
     minWidth:10,
     height:15,
     justifyContent: 'center',
@@ -102,6 +107,34 @@ const styles = StyleSheet.create({
   subscriptText: {
     color: '#fff',
     fontSize:11
+  },
+  tabBarIcon:{
+    flex:1,
+    alignItems:'center',
+    justifyContent: 'center'
+  }
+})
+
+const stylesIcon = StyleSheet.create({
+  icon: { width: 24, height: 24 },
+  tabBarLabel: {
+    marginTop:20,
+    flex:1,
+    width:'100%',
+    // height:45,
+    // flexDirection: 'row'
+  },
+  tabBarLabelView: {
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  tabBarLabelLine: {
+    height:3,
+    backgroundColor:'#fff'
+  },
+  focused: {
+    backgroundColor:'#08f'
   }
 })
 

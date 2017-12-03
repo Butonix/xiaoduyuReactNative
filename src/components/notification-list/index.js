@@ -16,7 +16,7 @@ import Loading from '../../components/ui/loading'
 import Nothing from '../../components/nothing'
 import ListFooter from '../../components/ui/list-footer'
 // import RefreshControl from '../../components/ui/refresh-control'
-import ListViewOnScroll from '../../common/list-view-onscroll'
+// import ListViewOnScroll from '../../common/list-view-onscroll'
 
 class NotificationList extends Component {
 
@@ -31,6 +31,7 @@ class NotificationList extends Component {
       loadMore: false,
       more: true,
       isRefreshing: false,
+      loading: false,
       filters: {
         lt_date: new Date().getTime(),
         per_page: 20
@@ -50,6 +51,7 @@ class NotificationList extends Component {
     this.toPosts = this.toPosts.bind(this)
     this.toComment = this.toComment.bind(this)
     this.toReply = this.toReply.bind(this)
+    this.onScroll = this.onScroll.bind(this)
   }
 
   componentWillMount() {
@@ -103,6 +105,24 @@ class NotificationList extends Component {
     // return (<View><Text></Text></View>)
   }
 
+  onScroll(event) {
+
+    const self = this
+    const y = event.nativeEvent.contentOffset.y;
+    const height = event.nativeEvent.layoutMeasurement.height;
+    const contentHeight = event.nativeEvent.contentSize.height;
+
+    if (y + height >= contentHeight - 50 && !self.state.loading) {
+      self.state.loading = true
+      self.loadList(()=>{
+        setTimeout(()=>{
+          self.state.loading = false
+        }, 2000)
+      })
+    }
+
+  }
+
   renderFooter() {
     const { list } = this.props
 
@@ -122,7 +142,10 @@ class NotificationList extends Component {
   }
 
   renderNotice(notice) {
+
     const avatar = <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}}><Image source={{ uri: 'https:'+notice.sender_id.avatar_url }} style={styles.avatar} /></TouchableOpacity>
+
+    let content = null
 
     switch (notice.type) {
 
@@ -267,7 +290,9 @@ class NotificationList extends Component {
     }
 
     if (content) {
-      return (<View key={notice._id}>{content}</View>)
+      return (<View style={styles.item} key={notice._id}>{content}</View>)
+    } else {
+      return <View></View>
     }
 
   }
@@ -293,7 +318,7 @@ class NotificationList extends Component {
         <ListView
           enableEmptySections={true}
           dataSource={itemlist}
-          renderRow={(item) => (<View style={styles.item}>{this.renderNotice(item)}</View>)}
+          renderRow={(item) => this.renderNotice(item)}
           // renderHeader={this.renderHeader}
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
           // renderFooter={this.renderFooter}
@@ -312,7 +337,7 @@ class NotificationList extends Component {
             />
           }
 
-          onScroll={ListViewOnScroll(self.loadList)}
+          onScroll={this.onScroll}
           // onScroll={this._onScroll.bind(this)}
           scrollEventThrottle={50}
         />

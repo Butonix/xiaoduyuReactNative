@@ -62,7 +62,19 @@ class Welcome extends Component {
 
     const self = this
 
-    SplashScreen.hide()
+
+    global.initReduxDate((result)=>{
+
+      // console.log(result);
+
+      SplashScreen.hide()
+
+      global.signIn = result ? true : false
+      self.state.loading = false
+      self.enterApp()
+    })
+
+    /*
     self.testNetwork((result)=>{
 
       self.setState({ network: result, loading: result })
@@ -70,12 +82,16 @@ class Welcome extends Component {
       if (!result) return
 
       global.initReduxDate((result)=>{
+
+        SplashScreen.hide()
+
         global.signIn = result ? true : false
         self.state.loading = false
         self.enterApp()
       })
 
     })
+    */
   }
 
   // websocket 执行的消息
@@ -85,7 +101,7 @@ class Welcome extends Component {
 
     switch (name) {
       case 'notiaction':
-        if (data.indexOf(me._id) != -1) {
+        if (me._id && data.indexOf(me._id) != -1) {
           loadUnreadCount({
             callback: (unreadNotice)=>{
 
@@ -130,17 +146,19 @@ class Welcome extends Component {
     let actions = []
     let index = 0
 
+    // 启动websocket
+    websocket.start({ onmessage: this.handleMessage })
+
     if (global.signIn) {
 
       // 已登陆
       actions.push(NavigationActions.navigate({ routeName: 'Main' }))
 
-      // 启动websocket
-      websocket.start({ onmessage: this.handleMessage })
+
 
       // 获取通知消息
       self.handleMessage('notiaction', [me._id])
-      
+
       /*
       // 显示推送页面
       if (notification && notification.routeName && notification.params) {

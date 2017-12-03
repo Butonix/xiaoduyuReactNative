@@ -18,12 +18,14 @@ export default StyleSheet.create({
 
   topicItem: {
     backgroundColor: '#fff',
-    padding:15
+    // padding:15
     // borderBottomWidth: 1,
     // borderColor: '#efefef'
   },
   itemHead: {
     flexDirection: 'row',
+    padding:15,
+    paddingBottom:0,
     marginBottom: 10
   },
   avatar: {
@@ -47,14 +49,18 @@ export default StyleSheet.create({
     marginRight: 10
   },
   itemMain: {
+    padding:15,
+    paddingTop:0
     // marginTop:10
   },
   images:{
-    // flex: 1,
-    width: 100,
-    height: 100,
-    marginTop:10,
-    marginRight:10
+    flex: 1,
+    // width: 100,
+    height: 200,
+    // marginTop:10,
+    // marginRight:10,
+    marginBottom:20,
+    backgroundColor:'#efefef'
   },
   flexContainer: {
     flexDirection: 'row',
@@ -62,15 +68,16 @@ export default StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 17,
     marginBottom:5,
-    color:'#484848'
+    color:'#484848',
+    lineHeight:22
   },
   loading: {
     height: 60
   },
   contentText: {
-    lineHeight:18,
+    lineHeight:20,
     color:'#484848'
   },
   more: {

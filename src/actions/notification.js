@@ -15,7 +15,10 @@ export function loadNotifications({ name, filters = {}, callback = ()=>{}, resta
 
     if (restart)  list = { data: list.data || [] }
 
-    if (typeof(list.more) != 'undefined' && !list.more || list.loading) return
+    if (typeof(list.more) != 'undefined' && !list.more || list.loading) {
+      callback()
+      return
+    }
 
     if (!list.filters) {
       if (!filters.lt_create_at) filters.lt_create_at = new Date().getTime()
@@ -37,6 +40,8 @@ export function loadNotifications({ name, filters = {}, callback = ()=>{}, resta
       type: 'post',
       data: merge({}, filters, { access_token: accessToken }),
       callback: (res)=>{
+
+        console.log(res);
 
         if (restart) list.data = []
 

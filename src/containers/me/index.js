@@ -18,9 +18,15 @@ import { ListItem } from '../../components/ui'
 class Me extends React.Component {
 
   static navigationOptions = {
-    header: null,
-    title: '我的'
-    // tabBarIcon: ({ tintColor }) => (<Image source={require('./images/me.png')} style={[styles.icon, {tintColor: tintColor}]} />),
+    // header: null,
+    title: '我的',
+    // tabBarLabel: (props) => {
+    //   return (<View style={stylesIcon.tabBarLabel}>
+    //     <View style={stylesIcon.tabBarLabelView}><Text>我的</Text></View>
+    //     <View style={[stylesIcon.tabBarLabelLine, props.focused ? stylesIcon.focused : null ]}></View>
+    //     </View>)
+    // }
+    tabBarIcon: ({ tintColor }) => (<Image source={require('./images/me.png')} style={[styles.icon, {tintColor: tintColor}]} />)
   }
 
   constructor (props) {
@@ -32,9 +38,7 @@ class Me extends React.Component {
     const { me } = this.props
     const { navigate } = this.props.navigation
 
-    if (!me) {
-      return (<View></View>)
-    }
+    if (!me) return (<View></View>)
 
     return (<ScrollView>
 
@@ -50,8 +54,8 @@ class Me extends React.Component {
             </TouchableOpacity>
 
             <View>
-              
-              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: me._id, filters: { user_id: me._id }, title: me.nickname + '的帖子' }) }}>
+
+              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: me._id, filters: { user_id: me._id }, title: me.nickname + '的帖子', hideUserInfo: true }) }}>
                 <ListItem name={"我创建的帖子"} rightText={me.posts_count} />
               </TouchableOpacity>
 
@@ -126,6 +130,29 @@ const styles = StyleSheet.create({
     height: 10
   }
 });
+
+const stylesIcon = StyleSheet.create({
+  icon: { width: 24, height: 24 },
+  tabBarLabel: {
+    marginTop:20,
+    flex:1,
+    width:'100%',
+    // height:45,
+    // flexDirection: 'row'
+  },
+  tabBarLabelView: {
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  tabBarLabelLine: {
+    height:3,
+    backgroundColor:'#fff'
+  },
+  focused: {
+    backgroundColor:'#08f'
+  }
+})
 
 export default connect(state => ({
     me: getUserInfo(state)

@@ -27,6 +27,8 @@ import FollowButton from '../../components/follow-button'
 import Loading from '../ui/loading'
 import Nothing from '../nothing'
 
+import ListFooter from '../ui/list-footer'
+
 class TopicList extends Component {
 
   constructor (props) {
@@ -108,13 +110,13 @@ class TopicList extends Component {
     }
 
     if (!list.loading && !list.more && list.data.length == 0) {
-      return (<Nothing content="还未关注话题" />)
+      return (<Nothing content="没有话题" />)
     }
 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let topics = ds.cloneWithRows(list.data || [])
 
-    console.log(list);
+    // console.log(list);
 
     return (
       <View style={styles.container}>
@@ -132,6 +134,8 @@ class TopicList extends Component {
           </TouchableOpacity>)}
           scrollEventThrottle={50}
           removeClippedSubviews={false}
+          onScroll={this.onScroll.bind(this)}
+          renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
         />
       </View>
     )
@@ -142,18 +146,22 @@ class TopicList extends Component {
     navigate('PostsDetail', { title: posts.title, id: posts._id })
   }
 
-  _onScroll(event) {
+  onScroll(event) {
+
     const self = this
-    if (this.state.loadMore) return
-    let y = event.nativeEvent.contentOffset.y;
-    let height = event.nativeEvent.layoutMeasurement.height;
-    let contentHeight = event.nativeEvent.contentSize.height;
-    // console.log('offsetY-->' + y);
-    // console.log('height-->' + height);
-    // console.log('contentHeight-->' + contentHeight);
-    if (y+height>=contentHeight-20) {
-      self.loadPostsList()
+    const y = event.nativeEvent.contentOffset.y;
+    const height = event.nativeEvent.layoutMeasurement.height;
+    const contentHeight = event.nativeEvent.contentSize.height;
+
+    if (y + height >= contentHeight - 50 && !self.state.loading) {
+      self.state.loading = true
+      self.loadPostsList(()=>{
+        setTimeout(()=>{
+          self.state.loading = false
+        }, 1000)
+      })
     }
+
   }
 
   _onRefresh() {

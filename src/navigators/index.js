@@ -47,25 +47,42 @@ let tabBarOptions = {
   style: {
     ...ifIphoneX({
         height: 75,
-        backgroundColor:'#fff'
+        backgroundColor:'#fff',
+        // borderBottomWidth:1,
+        // borderColor: '#e3e3e3'
     }, {
-        height: 60,
-        backgroundColor:'#fff'
+        // height: 65,
+        backgroundColor:'#fff',
+        // borderTopWidth:3,
+        // borderColor: 'red'
     })
   },
-  activeBackgroundColor:'#fff',
+  // activeBackgroundColor:'#fff',
   activeTintColor:'#08f',
-  inactiveBackgroundColor:'#fff',
+  // inactiveBackgroundColor:'#fff',
   inactiveTintColor:'#484848',
-  allowFontScaling: false,
-  labelStyle: {
-    fontSize: 14,
-    paddingBottom:10
-  },
-  tabStyle:{
-    borderBottomWidth:1,
-    borderColor: '#e3e3e3'
-  }
+  // allowFontScaling: false,
+
+  // indicatorStyle:{ top:0 },
+
+  // activeTabStyle: {
+  //   backgroundColor: 'red'
+  // },
+
+  // 文本
+  // labelStyle: {
+    // color: 'rgb(115, 115, 115)'
+    // fontSize: 10
+    // marginBottom:15,
+    // fontWeight: "bold"
+  // },
+  // indicatorStyle: {
+  //   borderBottomWidth:10,
+  //   borderColor: 'red',
+  //   top:0
+  // },
+  // showIcon: true
+  // showLabel: false
 }
 
 if (Platform.OS === 'android') {
@@ -97,18 +114,17 @@ if (Platform.OS === 'android') {
   }
 }
 
-
 const MainScreenNavigator = TabNavigator({
   Home: { screen: Home },
-  MineFollow: { screen: MineFollow },
-  ChooseTopic: { screen: ChooseTopic },
+  // ChooseTopic: { screen: ChooseTopic },
+  Topics: { screen: Topics },
   Notifications: { screen: Notifications },
   Me: { screen: Me }
 },
 {
   initialRouteName: 'Home',
-  tabBarPosition: 'top',
-  swipeEnabled:true,
+  tabBarPosition: 'bottom',
+  swipeEnabled:false,
   animationEnabled:false,
   lazy: true,
   tabBarOptions: tabBarOptions
@@ -149,7 +165,7 @@ const App = StackNavigator({
   // cardStyle: {},
   navigationOptions: {
     headerTruncatedBackTitle: '返回',
-    // headerBackTitle: null,
+    headerBackTitle: null,
     headerStyle: {
       backgroundColor: '#fff',
       ...ifIphoneX({
@@ -172,7 +188,8 @@ const App = StackNavigator({
     headerBackTitleStyle: {
       fontSize:15
     }
-  }
+  },
+  headerMode: 'screen'
 })
 
 /*

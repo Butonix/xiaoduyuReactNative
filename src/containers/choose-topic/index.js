@@ -11,11 +11,17 @@ class ChooseTopic extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
     return {
-      header: null,
-      title: '话题'
+      // header: null,
+      title: '选择话题'
+      // tabBarLabel: (props) => {
+      //   return (<View style={stylesIcon.tabBarLabel}>
+      //     <View style={stylesIcon.tabBarLabelView}><Text>话题</Text></View>
+      //     <View style={[stylesIcon.tabBarLabelLine, props.focused ? stylesIcon.focused : null ]}></View>
+      //     </View>)
+      // }
     }
   }
-
+  
   constructor (props) {
     super(props)
     this.cancel = this.cancel.bind(this)
@@ -124,6 +130,29 @@ const styles = StyleSheet.create({
     color:'#rgb(120, 120, 120)'
   }
 });
+
+const stylesIcon = StyleSheet.create({
+  icon: { width: 24, height: 24 },
+  tabBarLabel: {
+    marginTop:20,
+    flex:1,
+    width:'100%',
+    // height:45,
+    // flexDirection: 'row'
+  },
+  tabBarLabelView: {
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  tabBarLabelLine: {
+    height:3,
+    backgroundColor:'#fff'
+  },
+  focused: {
+    backgroundColor:'#08f'
+  }
+})
 
 export default connect(state => ({
     topicList: getTopicListByName(state, 'all-topic')

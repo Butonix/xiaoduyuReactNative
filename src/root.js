@@ -9,11 +9,8 @@ let store = getStore()
 initGlobalParam(store)
 
 class APP extends PureComponent {
-
   render() {
-    return (<Provider store={store}>
-      <Navigators />
-    </Provider>)
+    return (<Provider store={store}><Navigators /></Provider>)
   }
 }
 

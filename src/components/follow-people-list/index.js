@@ -57,6 +57,24 @@ class FollowPeopleList extends Component {
 
   }
 
+  onScroll(event) {
+
+    const self = this
+    const y = event.nativeEvent.contentOffset.y;
+    const height = event.nativeEvent.layoutMeasurement.height;
+    const contentHeight = event.nativeEvent.contentSize.height;
+
+    if (y + height >= contentHeight - 50 && !self.state.loading) {
+      self.state.loading = true
+      self.loadList(()=>{
+        setTimeout(()=>{
+          self.state.loading = false
+        }, 1000)
+      })
+    }
+
+  }
+
   render() {
 
     const self = this
@@ -92,7 +110,8 @@ class FollowPeopleList extends Component {
               progressBackgroundColor="#ffffff"
             />
           }
-          onScroll={ListViewOnScroll(self.loadList)}
+          onScroll={this.onScroll.bind(this)}
+          // onScroll={ListViewOnScroll(self.loadList)}
           scrollEventThrottle={50}
         />
     )

@@ -24,7 +24,7 @@ class PostsItem extends Component {
     navigate('PeopleDetail', { title: people.nickname, id: people._id })
   }
 
-  goTo(posts){
+  goTo(posts) {
     const { navigate } = this.props.navigation;
     navigate('PostsDetail', { title: posts.title, id: posts._id })
   }
@@ -69,14 +69,14 @@ class PostsItem extends Component {
                   <View style={styles.itemMain}>
                     <Text style={styles.title}>{posts.title}</Text>
                     {posts.content_summary ? <Text style={styles.contentText}>{posts.content_summary}</Text> : null}
-                    {posts.images ?
+                    {/*posts.images ?
                       <View style={styles.flexContainer}>
                         {posts.images.map(img=>{
                           let _img = 'https:' + img.split('?')[0] + '?imageMogr2/auto-orient/thumbnail/!200/format/jpg'
                           return (<Image key={img} source={{uri:_img}} style={styles.images} />)
                         })}
                       </View>
-                      : null}
+                      : null*/}
                   </View>
                 </View>
               </TouchableOpacity>

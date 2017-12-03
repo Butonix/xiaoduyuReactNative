@@ -49,6 +49,24 @@ class BlockList extends Component {
 
   }
 
+  onScroll(event) {
+
+    const self = this
+    const y = event.nativeEvent.contentOffset.y;
+    const height = event.nativeEvent.layoutMeasurement.height;
+    const contentHeight = event.nativeEvent.contentSize.height;
+
+    if (y + height >= contentHeight - 50 && !self.state.loading) {
+      self.state.loading = true
+      self.loadList(()=>{
+        setTimeout(()=>{
+          self.state.loading = false
+        }, 2000)
+      })
+    }
+
+  }
+
   render() {
 
     const self = this
@@ -108,7 +126,8 @@ class BlockList extends Component {
               progressBackgroundColor="#ffffff"
             />
           }
-          onScroll={ListViewOnScroll(self.loadList)}
+          // onScroll={ListViewOnScroll(self.loadList)}
+          onScroll={this.onScroll.bind(this)}
           scrollEventThrottle={50}
         />
     )

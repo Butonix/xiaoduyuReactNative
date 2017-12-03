@@ -23,13 +23,13 @@ class List extends Component {
   render() {
 
     const { navigation } = this.props
-    const { id, filters, componentName, canClick = true } = this.props.navigation.state.params
+    const { id, filters, componentName, canClick = true, hideUserInfo = false } = this.props.navigation.state.params
 
     let component = null
-
+    
     switch(componentName) {
       case 'PostsList':
-        component = <PostsList {...this.props} name={id} filters={filters} />
+        component = <PostsList {...this.props} name={id} filters={filters} hideUserInfo={hideUserInfo} />
         break
       case 'CommentList':
         component = <CommentList {...this.props} name={id} filters={filters} canClick={canClick} onlyDisplayComment={true} />

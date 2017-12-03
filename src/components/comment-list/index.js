@@ -110,7 +110,7 @@ class CommentList extends Component {
       </View>)
 
     if (onlyDisplayComment) {
-      
+
       renderRow = (item) => (<View style={styles.commentItem}>
           <TouchableOpacity style={styles.postsTitle} onPress={()=>{ this.toPosts(item.posts_id) }}>
             <Text style={styles.postsTitleText}>{item.posts_id.title}</Text>
@@ -141,7 +141,7 @@ class CommentList extends Component {
               progressBackgroundColor="#ffffff"
             />
           }
-          onScroll={this._onScroll.bind(this)}
+          onScroll={this.onScroll.bind(this)}
           scrollEventThrottle={50}
         />
       </View>
@@ -153,18 +153,22 @@ class CommentList extends Component {
     navigate('PostsDetail', { title: posts.title, id: posts._id })
   }
 
-  _onScroll(event) {
+  onScroll(event) {
+
     const self = this
-    if (this.state.loadMore) return
-    let y = event.nativeEvent.contentOffset.y;
-    let height = event.nativeEvent.layoutMeasurement.height;
-    let contentHeight = event.nativeEvent.contentSize.height;
-    // console.log('offsetY-->' + y);
-    // console.log('height-->' + height);
-    // console.log('contentHeight-->' + contentHeight);
-    if (y+height>=contentHeight-20) {
-      self.load()
+    const y = event.nativeEvent.contentOffset.y;
+    const height = event.nativeEvent.layoutMeasurement.height;
+    const contentHeight = event.nativeEvent.contentSize.height;
+
+    if (y + height >= contentHeight - 50 && !self.state.loading) {
+      self.state.loading = true
+      self.load(()=>{
+        setTimeout(()=>{
+          self.state.loading = false
+        }, 1000)
+      })
     }
+
   }
 
   _onRefresh() {
