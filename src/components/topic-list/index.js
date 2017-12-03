@@ -123,7 +123,7 @@ class TopicList extends Component {
         <ListView
           enableEmptySections={true}
           dataSource={topics}
-          renderRow={(topic) => (<TouchableOpacity onPress={()=>{this.toTopic(topic)}}>
+          renderRow={(topic) => (<TouchableOpacity onPress={()=>{this.toTopic(topic)}} activeOpacity={0.8}>
             <View style={styles.item}>
               <View style={styles.itemLeft}><Image source={{uri:'https:'+topic.avatar}} style={styles.avatar} /></View>
               <View style={styles.itemCenter}><Text>{topic.name}</Text><Text style={styles.brief}>{topic.brief}</Text></View>
@@ -193,6 +193,9 @@ const styles = StyleSheet.create({
   itemCenter: {
     flex:1
   },
+  itemRight: {
+    marginLeft:10
+  },
   avatar: {
     width:40,
     height:40,
@@ -214,7 +217,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   brief: {
-    color: '#8a8a8a'
+    marginTop:3,
+    color: '#8a8a8a',
+    lineHeight: 20
   },
   button: {
     backgroundColor: '#333'

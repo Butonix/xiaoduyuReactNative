@@ -29,15 +29,15 @@ export default StyleSheet.create({
     marginBottom: 10
   },
   avatar: {
-    width:40,
-    height:40,
-    borderRadius: 20,
+    width:35,
+    height:35,
+    borderRadius: 35/2,
     marginRight:10,
-    marginTop: -4
+    marginTop: -1
   },
   nickname: {
     fontWeight: 'bold',
-    color:'#484848'
+    color:'#23232b'
   },
   itemHeadOther: {
     marginTop: 5,
@@ -70,7 +70,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 17,
     marginBottom:5,
-    color:'#484848',
+    color:'#23232b',
     lineHeight:22
   },
   loading: {
@@ -78,7 +78,7 @@ export default StyleSheet.create({
   },
   contentText: {
     lineHeight:20,
-    color:'#484848'
+    color:'#23232b'
   },
   more: {
     borderTopWidth: 1,

@@ -214,29 +214,32 @@ class PostsDetail extends Component {
     return (<View style={styles.container}>
         <ScrollView style={styles.main}>
           <View>
-            <View style={styles.posts}>
-              <View style={styles.itemHead}>
-                <View>
-                  <TouchableOpacity onPress={()=>{this.toPeople(posts.user_id)}}>
-                    <Image source={{uri:'https:'+posts.user_id.avatar_url}} style={styles.avatar}  />
-                  </TouchableOpacity>
-                </View>
-                <View>
-                  <Text onPress={()=>{this.toPeople(posts.user_id)}} style={[S['bold'], S['m-b-5']]}>{posts.user_id.nickname}</Text>
-                  <View style={{ flexDirection: 'row' }}>
-                    {posts.topic_id.name ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.topic_id.name}</Text> : null}
-                    {posts.view_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.view_count}次浏览</Text> : null}
-                    {posts.like_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.like_count}个赞</Text> : null}
-                    {posts.follow_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.follow_count}人关注</Text> : null}
-                    <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts._create_at}</Text>
-                  </View>
+
+            <View style={styles.itemHead}>
+              <View>
+                <TouchableOpacity onPress={()=>{this.toPeople(posts.user_id)}}>
+                  <Image source={{uri:'https:'+posts.user_id.avatar_url}} style={styles.avatar}  />
+                </TouchableOpacity>
+              </View>
+              <View>
+                <Text onPress={()=>{this.toPeople(posts.user_id)}} style={[S['bold'], S['m-b-5']]}>{posts.user_id.nickname}</Text>
+                <View style={{ flexDirection: 'row' }}>
+                  {posts.topic_id.name ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.topic_id.name}</Text> : null}
+                  {posts.view_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.view_count}次浏览</Text> : null}
+                  {posts.like_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.like_count}个赞</Text> : null}
+                  {posts.follow_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts.follow_count}人关注</Text> : null}
+                  <Text style={[S['m-r-5'], S['f-s-12'], S['black-40'] ]}>{posts._create_at}</Text>
                 </View>
               </View>
+            </View>
+
+            <View style={styles.posts}>
               <View style={styles.itemMain}>
-                <Text>{posts.title}</Text>
+                <View style={styles.titleView}><Text style={styles.titleText}>{posts.title}</Text></View>
                 <HTMLView html={posts.content_html} imgOffset={30} />
               </View>
             </View>
+
             <View>
               <CommentList
                 {...this.props}
@@ -292,16 +295,20 @@ const styles = StyleSheet.create({
     borderColor: '#efefef'
   },
   itemHead: {
-    flexDirection: 'row'
+    padding:15,
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: '#efefef'
   },
   avatar: {
-    width:40,
-    height:40,
-    borderRadius: 20,
-    marginRight:10
+    width:35,
+    height:35,
+    borderRadius: 35/2,
+    marginRight:10,
+    marginTop: -1
   },
   itemMain: {
-    marginTop:10
+    // marginTop:10
   },
   bottomBar: {
     height: 50,
@@ -327,6 +334,17 @@ const styles = StyleSheet.create({
     height: 50,
     lineHeight: 50,
     textAlign: 'center'
+  },
+
+  titleView: {
+    // borderBottomWidth: 1,
+    // borderColor: '#efefef',
+  },
+
+  titleText: {
+    fontSize:20,
+    fontWeight: 'bold',
+    marginBottom: 10,
   }
 });
 

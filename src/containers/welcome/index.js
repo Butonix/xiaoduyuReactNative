@@ -44,9 +44,9 @@ class Welcome extends Component {
 
   componentWillMount() {
     const self = this
-
+    
     // self.state.notification = {
-    //   routeName: 'CommentDetail', params: { title:'测试', id:'5a1cc3c13e2be9372c51180b' }
+    //   routeName: 'PostsDetail', params: { title:'测试', id:'58b2850ed8831fe9027a5f92' }
     // }
 
     JPushModule.addOpenNotificationLaunchAppListener((result) => {

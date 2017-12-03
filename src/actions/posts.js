@@ -73,12 +73,9 @@ export function loadPostsList({ name, filters = {}, callback=()=>{}, restart = f
 
     if (restart) postsList = { data: postsList.data || [] }
     if (typeof(postsList.more) != 'undefined' && !postsList.more || postsList.loading) {
-      console.log('正在加载中');
       callback()
       return
     }
-
-    console.log('加载列表');
 
     if (!postsList.data) postsList.data = []
 
@@ -105,8 +102,6 @@ export function loadPostsList({ name, filters = {}, callback=()=>{}, restart = f
       data: filters,
       headers,
       callback: (res) => {
-
-        console.log(res);
 
         if (!res || !res.success) return callback(res)
 

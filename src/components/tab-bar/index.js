@@ -34,8 +34,8 @@ var styles = StyleSheet.create({
     paddingTop:20,
     height:70,
     flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: '#eaeaeb'
+    borderBottomWidth: 0.5,
+    borderColor: '#dedede'
   },
   item: {
     flex: 1,
