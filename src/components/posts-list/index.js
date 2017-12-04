@@ -139,7 +139,7 @@ class PostsList extends Component {
 
                     {!hideUserInfo ?
                       <View>
-                        <TouchableOpacity onPress={()=>{this.toPeople(topic.user_id)}}>
+                        <TouchableOpacity onPress={()=>{this.toPeople(topic.user_id)}} activeOpacity={0.8}>
                           <Image source={{uri:'https:'+topic.user_id.avatar_url}} style={styles.avatar}  />
                         </TouchableOpacity>
                       </View>
@@ -153,6 +153,7 @@ class PostsList extends Component {
                         <Text style={styles.itemHeadOtherItem}>{topic.topic_id.name}</Text>
                         {topic.view_count ? <Text style={styles.itemHeadOtherItem}>{topic.view_count+'次浏览'}</Text> : null}
                         {topic.like_count ? <Text style={styles.itemHeadOtherItem}>{topic.like_count+'个赞'}</Text> : null}
+                        {topic.comment_count ? <Text style={styles.itemHeadOtherItem}>{topic.comment_count+'个评论'}</Text> : null}
                         {topic.follow_count ? <Text style={styles.itemHeadOtherItem}>{topic.follow_count+'人关注'}</Text> : null}
                       </View>
                     </View>

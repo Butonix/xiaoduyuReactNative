@@ -15,6 +15,8 @@ import { signin } from '../../actions/sign'
 import { weiboGetUserInfo, QQGetUserInfo } from '../../actions/oauth'
 import { getClientInstalled } from '../../reducers/client-installed'
 
+import { ifIphoneX } from 'react-native-iphone-x-helper'
+
 // import * as WeiboAPI from 'react-native-weibo'
 
 import gStyles from '../../styles'
@@ -300,10 +302,17 @@ const styles = StyleSheet.create({
     height:90
   },
   protocol:{
-    flexDirection: 'row',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center'
+    ...ifIphoneX({
+      flexDirection: 'row',
+      height: 80,
+      justifyContent: 'center',
+      alignItems: 'center'
+    }, {
+      flexDirection: 'row',
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center'
+    })
   },
   protocolText: {
     fontSize:12,

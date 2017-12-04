@@ -14,7 +14,8 @@ import {
   Navigator,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Button
+  Button,
+  PixelRatio
 } from 'react-native'
 
 import { connect } from 'react-redux'
@@ -126,7 +127,7 @@ class TopicList extends Component {
           renderRow={(topic) => (<TouchableOpacity onPress={()=>{this.toTopic(topic)}} activeOpacity={0.8}>
             <View style={styles.item}>
               <View style={styles.itemLeft}><Image source={{uri:'https:'+topic.avatar}} style={styles.avatar} /></View>
-              <View style={styles.itemCenter}><Text>{topic.name}</Text><Text style={styles.brief}>{topic.brief}</Text></View>
+              <View style={styles.itemCenter}><Text style={styles.topicNameText}>{topic.name}</Text><Text style={styles.brief}>{topic.brief}</Text></View>
               <View style={styles.itemRight}>
                 <FollowButton topic_id={topic._id} follow={topic.follow} />
               </View>
@@ -183,8 +184,8 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: '#fff',
     padding:15,
-    borderBottomWidth: 1,
-    borderColor: '#efefef',
+    borderBottomWidth: 1/PixelRatio.get(),
+    borderColor: '#d4d4d4',
     flexDirection: 'row'
   },
   itemLeft: {
@@ -212,13 +213,18 @@ const styles = StyleSheet.create({
     marginTop:10,
     marginRight:10
   },
+
+  topicNameText: {
+    fontWeight:'bold'
+  },
+
   flexContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap'
   },
   brief: {
     marginTop:3,
-    color: '#8a8a8a',
+    color: '#6f6f6f',
     lineHeight: 20
   },
   button: {

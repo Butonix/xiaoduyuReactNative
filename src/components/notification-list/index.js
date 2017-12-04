@@ -143,7 +143,7 @@ class NotificationList extends Component {
 
   renderNotice(notice) {
 
-    const avatar = <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}}><Image source={{ uri: 'https:'+notice.sender_id.avatar_url }} style={styles.avatar} /></TouchableOpacity>
+    const avatar = <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}} activeOpacity={0.8}><Image source={{ uri: 'https:'+notice.sender_id.avatar_url }} style={styles.avatar} /></TouchableOpacity>
 
     let content = null
 
@@ -167,7 +167,7 @@ class NotificationList extends Component {
               <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
               <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
             </View>
-            <Text>
+            <Text style={styles.title}>
               <Text style={styles.gray}>关注了你的</Text>
               <Text onPress={()=>{this.toPosts(notice.posts_id)}}>{notice.posts_id.title}</Text>
               <Text style={styles.gray}>帖子</Text>
@@ -182,7 +182,7 @@ class NotificationList extends Component {
               <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
               <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
             </View>
-            <Text>
+            <Text style={styles.title}>
               <Text style={styles.gray}>赞了你的</Text>
               <Text onPress={()=>{this.toPosts(notice.posts_id)}}>{notice.posts_id.title}</Text>
               <Text style={styles.gray}>帖子</Text>
@@ -197,16 +197,16 @@ class NotificationList extends Component {
             <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
             <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
           </View>
-          <Text>
+          <Text style={styles.title}>
             <Text style={styles.gray}>回复了你的</Text>
             <Text onPress={()=>{this.toComment(notice.comment_id.parent_id)}}>
               {notice.comment_id.reply_id ? notice.comment_id.reply_id.content_trim : notice.comment_id.parent_id.content_trim}
             </Text>
             <Text style={styles.gray}>回复</Text>
           </Text>
-          <TouchableOpacity onPress={()=>{this.toReply(notice.comment_id)}}>
+          <TouchableOpacity onPress={()=>{this.toReply(notice.comment_id)}} activeOpacity={0.8}>
           <View style={styles.commentContent}>
-            <Text>{notice.comment_id.content_trim}</Text>
+            <Text style={styles.commentContentText}>{notice.comment_id.content_trim}</Text>
           </View>
           </TouchableOpacity>
         </View>)
@@ -222,15 +222,15 @@ class NotificationList extends Component {
             <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
           </View>
 
-            <Text>
+            <Text style={styles.title}>
               <Text style={styles.gray}>评论了你的</Text>
               <Text onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>{notice.comment_id.posts_id.title}</Text>
               <Text style={styles.gray}>帖子</Text>
             </Text>
 
-          <TouchableOpacity onPress={()=>{this.toReply(notice.comment_id)}}>
+          <TouchableOpacity onPress={()=>{this.toReply(notice.comment_id)}} activeOpacity={0.8}>
             <View style={styles.commentContent}>
-              <Text>{notice.comment_id.content_trim}</Text>
+              <Text style={styles.commentContentText}>{notice.comment_id.content_trim}</Text>
             </View>
           </TouchableOpacity>
         </View>)
@@ -244,7 +244,7 @@ class NotificationList extends Component {
             <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
             <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
           </View>
-          <Text>
+          <Text style={styles.title}>
             <Text style={styles.gray}>赞了你的</Text>
             <Text onPress={()=>{this.toComment(notice.comment_id)}}>{notice.comment_id.content_trim}</Text>
             <Text style={styles.gray}>回复</Text>
@@ -260,7 +260,7 @@ class NotificationList extends Component {
             <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
             <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
           </View>
-          <Text>
+          <Text style={styles.title}>
             <Text style={styles.gray}>赞了你的</Text>
             <Text onPress={()=>{this.toComment(notice.comment_id)}}>{notice.comment_id.content_trim}</Text>
             <Text style={styles.gray}>评论</Text>
@@ -277,7 +277,7 @@ class NotificationList extends Component {
             <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
             <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
           </View>
-          <Text>
+          <Text style={styles.title}>
             <Text style={styles.gray}>评论了</Text>
             <Text onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>{notice.comment_id.posts_id.title}</Text>
             <Text style={styles.gray}>帖子</Text>
@@ -395,7 +395,7 @@ class NotificationList extends Component {
 const styles = StyleSheet.create({
   item: {
     backgroundColor: '#fff',
-    padding:10,
+    padding:15,
     marginTop: 10,
   },
   space: {
@@ -440,8 +440,14 @@ const styles = StyleSheet.create({
   commentContent:{
     padding: 10,
     marginTop: 10,
-    backgroundColor: '#efefef'
+    backgroundColor: '#efefef',
+    borderRadius:5
   },
+
+  commentContentText: {
+    lineHeight: 20
+  },
+
   nickname: {
     fontWeight: 'bold',
     marginRight: 10
@@ -462,7 +468,12 @@ const styles = StyleSheet.create({
   },
   gray: {
     color:'#909090'
+  },
+
+  title: {
+    lineHeight: 20
   }
+
 });
 
 

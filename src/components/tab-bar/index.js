@@ -1,26 +1,26 @@
 
 import React, { Component } from 'react'
-import { View, ScrollView, StyleSheet, Text, Image, AsyncStorage, TouchableOpacity, Animated, Easing } from 'react-native'
+import { View, ScrollView, StyleSheet, Text, Image, AsyncStorage, TouchableOpacity, PixelRatio } from 'react-native'
 import WriteIcon from '../ui/icon/write'
+
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 class Tabbar extends Component {
   render() {
 
     const { tabs, activeTab, goToPage, navigation } = this.props
-
+    
     return(<View style={styles.tabbar}>
         <View style={styles.itemFixed}></View>
         <View style={styles.item}>
           {tabs.map((item, index)=>{
-            return (<TouchableOpacity key={index} onPress={()=>{ goToPage(index) }} style={activeTab == index ? styles.tabActive : styles.tab}>
-                  <Text style={{ color: activeTab == index ? '#08f' : '#333', fontSize:16 }}>{item}</Text>
+            return (<TouchableOpacity key={index} onPress={()=>{ goToPage(index) }} style={activeTab == index ? styles.tabActive : styles.tab} activeOpacity={0.8}>
+                  <Text style={{ color: activeTab == index ? '#08f' : '#333', fontSize:16, fontWeight: 'bold' }}>{item}</Text>
               </TouchableOpacity>)
           })}
         </View>
         <View style={styles.itemFixed}>
-          <View></View>
-          {/* <TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic', { typeId: 1, goBackKey: navigation.state.key }) }}> */}
-          <TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic') }}>
+          <TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic') }} activeOpacity={0.8}>
             <WriteIcon />
           </TouchableOpacity>
         </View>
@@ -30,12 +30,22 @@ class Tabbar extends Component {
 
 var styles = StyleSheet.create({
   tabbar: {
-    backgroundColor: '#fff',
-    paddingTop:20,
-    height:70,
-    flexDirection: 'row',
-    borderBottomWidth: 0.5,
-    borderColor: '#dedede'
+
+    ...ifIphoneX({
+      backgroundColor: '#fff',
+      paddingTop:30,
+      height:75,
+      flexDirection: 'row',
+      borderBottomWidth: 1/PixelRatio.get(),
+      borderColor: '#d4d4d4'
+    }, {
+      backgroundColor: '#fff',
+      paddingTop:20,
+      height:65,
+      flexDirection: 'row',
+      borderBottomWidth: 1/PixelRatio.get(),
+      borderColor: '#d4d4d4'
+    })
   },
   item: {
     flex: 1,
@@ -45,8 +55,6 @@ var styles = StyleSheet.create({
   tab: {
     borderBottomWidth: 3,
     borderColor: '#fff',
-    marginLeft: 10,
-    marginRight: 10,
     width:80,
     justifyContent: 'center',
     alignItems: 'center'
@@ -54,17 +62,22 @@ var styles = StyleSheet.create({
   tabActive: {
     borderBottomWidth: 3,
     borderColor: '#08f',
-    marginLeft: 10,
-    marginRight: 10,
     width:80,
     alignItems: 'center',
     justifyContent: 'center'
   },
   itemFixed: {
-    height: 50,
-    width: 80,
-    justifyContent: 'center',
-    alignItems: 'center'
+    ...ifIphoneX({
+      height: 45,
+      width: 80,
+      justifyContent: 'center',
+      alignItems: 'center'
+    }, {
+      height: 45,
+      width: 80,
+      justifyContent: 'center',
+      alignItems: 'center'
+    })
   }
 })
 

@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Image, Button, ScrollView, WebView, TouchableOpacity, AsyncStorage, Alert } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Image, Button, ScrollView, WebView, TouchableOpacity, AsyncStorage, Alert, PixelRatio } from 'react-native'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -297,8 +297,8 @@ const styles = StyleSheet.create({
   itemHead: {
     padding:15,
     flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: '#efefef'
+    borderBottomWidth: 1/PixelRatio.get(),
+    borderColor: '#d4d4d4',
   },
   avatar: {
     width:35,

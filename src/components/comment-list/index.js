@@ -87,7 +87,6 @@ class CommentList extends Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let array = ds.cloneWithRows(list.data || [])
 
-
     let renderRow = (item) => (<View>
         <CommentItem {...this.props} displayLike={displayLike} displayReply={displayReply} displayCreateAt={displayCreateAt} canClick={canClick} comment={item} />
 
@@ -119,8 +118,6 @@ class CommentList extends Component {
         </View>)
 
     }
-
-
 
     return (
       <View>

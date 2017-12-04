@@ -1,7 +1,8 @@
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, Alert, TouchableOpacity } from 'react-native'
-import PropTypes from 'prop-types'
+import { StyleSheet, Text, View, Image, Alert, TouchableOpacity, PixelRatio } from 'react-native'
+// import PropTypes from 'prop-types'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -174,11 +175,21 @@ console.log({
 
 const styles = StyleSheet.create({
   bottomBar: {
-    height: 50,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderColor: '#efefef',
-    flexDirection: 'row'
+    ...ifIphoneX({
+      height: 65,
+      backgroundColor: '#fff',
+      borderTopWidth: 1/PixelRatio.get(),
+      borderColor: '#d4d4d4',
+      flexDirection: 'row',
+      paddingBottom: 15
+    }, {
+      height: 50,
+      backgroundColor: '#fff',
+      borderTopWidth: 1/PixelRatio.get(),
+      borderColor: '#d4d4d4',
+      flexDirection: 'row'
+    })
+
   },
   comment: {
     // width: 50,

@@ -42,7 +42,7 @@ class Notifications extends React.Component {
       tabBarOnPress: (scene, jumpToIndex)=>{
 
         const { params = {} } = navigation.state
-
+        
         if (params.loadNewNotifications) {
           params.loadNewNotifications({ name:'notification', filters: {} })
         }
@@ -86,20 +86,17 @@ class Notifications extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  icon: {
-    width: 24,
-    height: 24,
-  },
+  icon: { width: 26, height: 26, marginTop:-5 },
   subscript: {
     position:'absolute',
     zIndex:99,
-    marginLeft:0,
-    marginTop:-12,
+    marginLeft:3,
+    marginTop:-17,
     backgroundColor: 'red',
     borderRadius: 15,
-    paddingLeft:4,
-    paddingRight:4,
-    minWidth:10,
+    paddingLeft:5,
+    paddingRight:5,
+    // minWidth:15,
     height:15,
     justifyContent: 'center',
     alignItems: 'center'

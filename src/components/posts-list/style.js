@@ -33,7 +33,7 @@ export default StyleSheet.create({
     height:35,
     borderRadius: 35/2,
     marginRight:10,
-    marginTop: -1
+    marginTop: -2
   },
   nickname: {
     fontWeight: 'bold',
@@ -59,7 +59,7 @@ export default StyleSheet.create({
     height: 200,
     // marginTop:10,
     // marginRight:10,
-    marginBottom:20,
+    marginBottom:10,
     backgroundColor:'#efefef'
   },
   flexContainer: {

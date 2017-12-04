@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, Alert, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, Alert, TouchableOpacity, PixelRatio } from 'react-native'
 import HtmlView from '../html-view'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -39,7 +39,7 @@ class CommentItem extends React.Component {
   }
 
   editComment(comment) {
-    
+
     const { navigate } = this.props.navigation;
     const { loadCommentById } = this.props
 
@@ -108,86 +108,46 @@ class CommentItem extends React.Component {
     if (displayEdit && me && me._id == comment.user_id._id) options.push('编辑')
     options.push('举报')
 
-    // console.log(comment);
-
     let main = (<View style={[styles.item, subitem ? styles.subitem : null]}>
 
-      <TouchableOpacity onPress={()=>{ this.toPeople(comment.user_id) }}>
-        <Image source={{uri:'https:'+comment.user_id.avatar_url}} style={styles.avatar} />
-      </TouchableOpacity>
+      <View style={styles.head}>
+
+        <View>
+          <TouchableOpacity onPress={()=>{ this.toPeople(comment.user_id) }} activeOpacity={1} style={styles.head}>
+            <Image source={{uri:'https:'+comment.user_id.avatar_url}} style={styles.avatar} />
+          </TouchableOpacity>
+        </View>
+
+        <View>
+          <View style={styles.nicknameView}>
+            <Text style={styles.nickname} onPress={()=>{this.toPeople(comment.user_id)}}>{comment.user_id.nickname}</Text>
+            {comment.reply_id ?
+              <View style={[S['m-r-5'], S['m-l-5'], {marginTop:4}]}>
+                <Image source={require('./images/arrow.png')} style={[{width:8,height:8}]} resizeMode="cover" />
+              </View>
+              : null}
+            {comment.reply_id ? <Text style={styles.nickname} onPress={()=>{this.toPeople(comment.reply_id.user_id)}}>{comment.reply_id.user_id.nickname}</Text> : null}
+          </View>
+          
+          <View style={[S['f-d-r'], S['m-t-5']]}>
+            {displayCreateAt ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-30']]}>{comment._create_at}</Text> : null}
+            {comment.reply_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-30']]}>{comment.reply_count + '个回复'}</Text> : null}
+            {comment.like_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-30']]}>{comment.like_count + '个赞'}</Text> : null}
+          </View>
+
+        </View>
+      </View>
 
       <View style={styles.main}>
-
-        <View style={styles.head}>
-          <View style={styles.headLeft}>
-            <Text style={styles.nickname} onPress={()=>{this.toPeople(comment.user_id)}}>
-              {comment.user_id.nickname}
-            </Text>
-
-            {comment.reply_id ? <Text style={[S['m-l-5'], S['f-s-12'], S['black-20']]}> 回复了 </Text> : null}
-            {comment.reply_id ? <Text style={S['bold']}>{comment.reply_id.user_id.nickname}</Text> : null}
-
-            {displayCreateAt ? <Text style={[S['m-l-10'], S['f-s-12'], S['black-20']]}>{comment._create_at}</Text> : null}
-            {comment.reply_count ? <Text style={[S['m-l-10'], S['f-s-12'], S['black-20']]}>{comment.reply_count + '个回复'}</Text> : null}
-            {comment.like_count ? <Text style={[S['m-l-10'], S['f-s-12'], S['black-20']]}>{comment.like_count + '个赞'}</Text> : null}
-
-            {/*
-            <Text style={styles.other}>
-              {comment.reply_count ? comment.reply_count + '个回复' : null} {comment.like_count ? comment.like_count+'个赞' : null} {displayCreateAt ? comment._create_at : null}
-            </Text>
-            */}
-          </View>
-          {/*
-          <View style={styles.headRight}>
-            {displayLike ? <Text style={styles.like}>赞</Text> : null}
-            {displayReply ? <TouchableOpacity onPress={()=>{this.reply(comment)}} style={styles.like}><Text>回复</Text></TouchableOpacity> : null}
-            {displayEdit && me && me._id == comment.user_id._id ? <TouchableOpacity onPress={()=>{self.editComment(comment)}}><Text>编辑</Text></TouchableOpacity> : null}
-          </View>
-          */}
-        </View>
-
-        <View style={styles.content}>
-          {comment.content_summary ?
-            <Text style={styles.contentText}>{comment.content_summary}</Text> :
-            <HtmlView html={comment.content_html} imgOffset={80} />}
-        </View>
-
-        {/*
-        <View style={{'justifyContent': 'space-between', 'flexDirection': 'row'}}>
-
-          <View style={[S['f-d-r'], S['m-t-10']]}>
-            {displayCreateAt ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40']]}>{comment._create_at}</Text> : null}
-            {comment.reply_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40']]}>{comment.reply_count + '个回复'}</Text> : null}
-            {comment.like_count ? <Text style={[S['m-r-5'], S['f-s-12'], S['black-40']]}>{comment.like_count + '个赞'}</Text> : null}
-          </View>
-
-
-          <View style={[S['f-d-r'], S['m-t-10']]}>
-
-            {displayLike ? <Image source={comment.like ? require('./images/like-red.png') : require('./images/like.png')} style={[{width:16,height:16}, S['m-l-15']]} resizeMode="cover" /> : null}
-            {displayReply ?
-              <TouchableOpacity onPress={()=>{this.reply(comment)}}>
-                <Image source={require('./images/reply.png')} style={[{width:16,height:16}, S['m-l-15']]} resizeMode="cover" />
-              </TouchableOpacity>
-              : null}
-            {displayEdit && me && me._id == comment.user_id._id ?
-              <TouchableOpacity onPress={()=>{self.editComment(comment)}}>
-                <Image source={require('./images/edit.png')} style={[{width:16,height:16}, S['m-l-15']]} resizeMode="cover" />
-              </TouchableOpacity>
-              : null}
-          </View>
-
-
-        </View>
-        */}
-
-
+        {comment.content_summary ?
+          <Text style={styles.contentText}>{comment.content_summary}</Text> :
+          <HtmlView html={comment.content_html} imgOffset={subitem ? 75 : 30} />}
       </View>
 
     </View>)
 
     if (canClick) {
-      main = <TouchableOpacity onPress={()=>{ this.ActionSheet.show() }}>
+      main = <TouchableOpacity onPress={()=>{ this.ActionSheet.show() }} activeOpacity={0.7}>
         {main}
       </TouchableOpacity>
     }
@@ -208,35 +168,38 @@ class CommentItem extends React.Component {
   }
 }
 
-// export default CommentItem
-
 const styles = StyleSheet.create({
   item: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderColor: '#efefef',
+    borderColor: '#d4d4d4',
+    borderTopWidth: 1/PixelRatio.get(),
     padding: 15
   },
   avatar:{
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight:10
+    width: 35,
+    height: 35,
+    borderRadius: 17.5,
+    marginRight:10,
+    marginTop:-2
   },
   main: {
-    flex: 1
+    // marginTop: 5
   },
   head:{
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     marginBottom:5
+  },
+  nicknameView: {
+    flexDirection: 'row'
   },
   headLeft: {
     flexDirection: 'row'
   },
   nickname: {
+    fontSize:13,
     fontWeight: 'bold'
     // marginRight: 10
   },

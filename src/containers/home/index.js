@@ -183,7 +183,7 @@ class Home extends Component {
 }
 
 const stylesIcon = StyleSheet.create({
-  icon: { width: 24, height: 24 },
+  icon: { width: 26, height: 26, marginTop:-5 },
   tabBarLabel: {
     marginTop:20,
     flex:1,

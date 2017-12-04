@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, PixelRatio } from 'react-native'
 
 class ListItem extends Component {
 
@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     backgroundColor: '#fff',
-    borderColor: '#efefef',
-    borderBottomWidth: 1,
+    borderColor: '#d4d4d4',
+    borderBottomWidth: 1/PixelRatio.get(),
     flexDirection: 'row',
     minHeight: 45
   },

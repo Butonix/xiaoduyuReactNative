@@ -99,7 +99,7 @@ export function updateComment({ id, contentJSON, contentHTML, callback }) {
             item.comment.map((comment, index)=>{
               if (comment._id == id) {
                 item.comment[index].content_html = contentHTML
-                
+
                 let text = contentHTML.replace(/<img[^>]+>/g,"[图片]")
                 text = text.replace(/<[^>]+>/g,"")
 
@@ -221,16 +221,16 @@ const processCommentList = (list) => {
     item._create_at = DateDiff(item.create_at)
 
     item.content_html = item.content_html.replace(/\/\/img/g, 'https://img')
-    item.content_html = item.content_html.replace(/\<p\>/g, '<span>')
-    item.content_html = item.content_html.replace(/\<\/p\>/g, '</span>')
+    // item.content_html = item.content_html.replace(/\<p\>/g, '<span>')
+    // item.content_html = item.content_html.replace(/\<\/p\>/g, '</span>')
 
     if (item.reply) {
       item.reply.map(item=>{
         item._create_at = DateDiff(item.create_at)
 
         item.content_html = item.content_html.replace(/\/\/img/g, 'https://img')
-        item.content_html = item.content_html.replace(/\<p\>/g, '<span>')
-        item.content_html = item.content_html.replace(/\<\/p\>/g, '</span>')
+        // item.content_html = item.content_html.replace(/\<p\>/g, '<span>')
+        // item.content_html = item.content_html.replace(/\<\/p\>/g, '</span>')
 
       })
     }

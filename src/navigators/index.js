@@ -1,5 +1,5 @@
 import Platform from 'Platform'
-
+import { PixelRatio } from 'react-native'
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 
@@ -48,19 +48,26 @@ let tabBarOptions = {
     ...ifIphoneX({
         height: 75,
         backgroundColor:'#fff',
-        // borderBottomWidth:1,
-        // borderColor: '#e3e3e3'
+        paddingBottom: 25,
+        // borderTopWidth:1
+        // borderColor: 'red'
     }, {
         // height: 65,
         backgroundColor:'#fff',
-        // borderTopWidth:3,
+        // borderWidth:0,
         // borderColor: 'red'
     })
   },
+
+  // tabStyle:{
+  //   borderTopWidth:1,
+  //   borderColor: '#e3e3e3'
+  // },
+
   // activeBackgroundColor:'#fff',
   activeTintColor:'#08f',
   // inactiveBackgroundColor:'#fff',
-  inactiveTintColor:'#484848',
+  inactiveTintColor:'#757575',
   // allowFontScaling: false,
 
   // indicatorStyle:{ top:0 },
@@ -94,14 +101,14 @@ if (Platform.OS === 'android') {
     activeBackgroundColor:'#fff',
     activeTintColor:'#08f',
     inactiveBackgroundColor:'#fff',
-    inactiveTintColor:'#484848',
+    inactiveTintColor:'#757575',
     allowFontScaling: false,
     labelStyle: {
       marginTop:15
     },
     tabStyle:{
-      // borderBottomWidth:1,
-      // borderColor: '#e3e3e3'
+      borderColor: '#d4d4d4',
+      borderBottomWidth: 1/PixelRatio.get(),
     },
 
     // android
@@ -169,24 +176,24 @@ const App = StackNavigator({
     headerStyle: {
       backgroundColor: '#fff',
       ...ifIphoneX({
-          paddingTop:30,
-          height: 75,
-          borderBottomWidth:1,
-          borderColor: '#efefef'
+        paddingTop:30,
+        height: 75
+        // borderBottomWidth:1
+        // borderColor: '#e3e3e3'
       }, {
-          height: 65
+        height: 65
       })
     },
-    headerTintColor: '#484848',
+    headerTintColor: '#23232b',
     headerTitleStyle: {
-      fontSize: 15,
-      color:'#484848'
+      fontSize: 17,
+      color:'#23232b'
     },
     headerBackTitleStyle: {
       backgroundColor: '#333'
     },
     headerBackTitleStyle: {
-      fontSize:15
+      fontSize:17
     }
   },
   headerMode: 'screen'

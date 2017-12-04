@@ -55,7 +55,7 @@ class Me extends React.Component {
 
             <View>
 
-              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: me._id, filters: { user_id: me._id }, title: me.nickname + '的帖子', hideUserInfo: true }) }}>
+              <TouchableOpacity onPress={()=>{ navigate('List', { componentName: 'PostsList', id: me._id, filters: { user_id: me._id, sort_by: 'create_at', sort: -1 }, title: me.nickname + '的帖子', hideUserInfo: true }) }}>
                 <ListItem name={"我创建的帖子"} rightText={me.posts_count} />
               </TouchableOpacity>
 
@@ -112,10 +112,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     marginBottom:10
   },
-  icon: {
-    width: 24,
-    height: 24,
-  },
+  icon: { width: 26, height: 26, marginTop:-5 },
   itme: {
     height: 45,
     // alignItems:'center',
@@ -132,7 +129,7 @@ const styles = StyleSheet.create({
 });
 
 const stylesIcon = StyleSheet.create({
-  icon: { width: 24, height: 24 },
+  icon: { width: 26, height: 26, marginTop:-5 },
   tabBarLabel: {
     marginTop:20,
     flex:1,

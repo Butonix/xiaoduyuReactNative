@@ -168,10 +168,15 @@ class HtmlView extends Component {
       		/>)
 
     */
+
+    let html = this.props.html
+
+    html = html.replace(/^(\<p\>\<\/p\>)|(\<p\>\<\/p\>)$/g,"")
+
     return (
       <HTMLView
         stylesheet={htmlStyles}
-        value={this.props.html}
+        value={html}
         onLinkPress={(url) => Linking.openURL(url)}
         renderNode={this.renderNode}
         addLineBreaks={false}
@@ -244,7 +249,7 @@ const styles = StyleSheet.create({
   notSupportVideoText: {
     color: 'rgb(167, 167, 167)'
   },
-  
+
   blockquote: {
     padding:10,
     backgroundColor: '#f4f4f4',
@@ -274,7 +279,7 @@ const htmlStyles = StyleSheet.create({
   //   flex: 1
   // },
   p: {
-    fontSize: 15,
+    fontSize: 14,
     // backgroundColor:'#333'
     // padding:1,
     // margin:1,
