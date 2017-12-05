@@ -1,36 +1,133 @@
 
 import React, { Component } from 'react'
-import { View, ScrollView, StyleSheet, Text, Image, AsyncStorage, TouchableOpacity, PixelRatio } from 'react-native'
+import { View, ScrollView, StyleSheet, Text, Image, AsyncStorage, TouchableOpacity, PixelRatio, Animated, Dimensions } from 'react-native'
 import WriteIcon from '../ui/icon/write'
+
+const { height, width } = Dimensions.get('window');
 
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 class Tabbar extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      fadeAnim: new Animated.Value(0),
+      tabWidth: 80,
+      contentOffset: { x: 0, y: 0 }
+    }
+    this.updateAnimation = this.updateAnimation.bind(this)
+  }
+
+  componentDidMount() {
+    const self = this
+    this.props.onScroll((index)=>{
+      self.updateAnimation(index)
+    })
+  }
+
+  updateAnimation(index) {
+
+    const { tabs } = this.props
+    let { tabWidth, contentOffset } = this.state
+
+    let params = { fadeAnim: tabWidth * index }
+
+    let postion = { x: 0, y: 0 }
+
+    // 平均显示个数
+    let per = Math.floor(width/tabWidth)
+    // 超出部分的平均数
+    let offset = (width - (tabWidth*per)) / 2
+
+    let min = width/2,
+        max = tabs.length * tabWidth - width
+
+    // 大于屏幕个数时候，才对其计算
+    if (tabs.length > per) {
+
+      if (index * tabWidth > max) {
+        postion.x = index * tabWidth - max
+        if (postion.x > max) postion.x = max
+      } else if (index * tabWidth > min) {
+        postion.x = index * tabWidth - (per * tabWidth) / 2
+      }
+
+      params.contentOffset = postion
+    }
+
+    this.setState(params)
+  }
+
   render() {
 
-    const { tabs, activeTab, goToPage, navigation } = this.props
-    
+    const self = this
+    const { tabs, activeTab, goToPage, rightContent } = this.props
+    const { tabWidth, contentOffset } = this.state
+
+    let centerContent = (<View style={styles.tabbarCenter}>
+                <View style={[styles.tabView, { width: tabWidth * tabs.length }]}>
+                  {tabs.map((item, index)=>{
+                    return (<TouchableOpacity key={index} onPress={()=>{ goToPage(index) }} style={activeTab == index ? styles.tabActive : styles.tab} activeOpacity={0.8}>
+                          <Text style={{ color: activeTab == index ? '#08f' : '#23232b', fontSize:16, fontWeight: 'bold' }}>{item}</Text>
+                      </TouchableOpacity>)
+                  })}
+                </View>
+                <View style={{ width: tabWidth * tabs.length }}>
+                  <Animated.View style={[styles.underline, { marginLeft: this.state.fadeAnim }]}></Animated.View>
+                </View>
+              </View>)
+
+    if (tabs.length > Math.floor(width/tabWidth)) {
+      centerContent = (<ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        contentOffset={contentOffset}
+        style={{
+        }}
+      >
+        {centerContent}
+      </ScrollView>)
+    }
+
+
     return(<View style={styles.tabbar}>
-        <View style={styles.itemFixed}></View>
-        <View style={styles.item}>
-          {tabs.map((item, index)=>{
-            return (<TouchableOpacity key={index} onPress={()=>{ goToPage(index) }} style={activeTab == index ? styles.tabActive : styles.tab} activeOpacity={0.8}>
-                  <Text style={{ color: activeTab == index ? '#08f' : '#333', fontSize:16, fontWeight: 'bold' }}>{item}</Text>
-              </TouchableOpacity>)
-          })}
-        </View>
-        <View style={styles.itemFixed}>
+
+        <View style={styles.tabbarLeft}></View>
+
+        {/*
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          contentOffset={contentOffset}
+          style={{
+          }}
+        >
+        */}
+
+
+        {/*
+        </ScrollView>*/}
+
+        {centerContent}
+
+        <View style={styles.tabbarRight}>
+          {rightContent}
+          {/*
           <TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic') }} activeOpacity={0.8}>
             <WriteIcon />
           </TouchableOpacity>
+          */}
         </View>
+
       </View>)
   }
 }
 
 var styles = StyleSheet.create({
   tabbar: {
-
     ...ifIphoneX({
       backgroundColor: '#fff',
       paddingTop:30,
@@ -40,31 +137,63 @@ var styles = StyleSheet.create({
       borderColor: '#d4d4d4'
     }, {
       backgroundColor: '#fff',
-      paddingTop:20,
-      height:65,
+      paddingTop:23,
+      height:62,
       flexDirection: 'row',
       borderBottomWidth: 1/PixelRatio.get(),
       borderColor: '#d4d4d4'
     })
   },
+
+  tabbarLeft: { flex:1 },
+  tabbarRight: { flex:1, justifyContent: 'center', alignItems: 'center' },
+  tabbarCenter: {
+    // flex:1,
+    // backgroundColor:'#333'
+    // flex:1,
+    // justifyContent: 'center',
+    // alignItems: 'center'
+  },
+
+  scrollView: {
+    // flex:1,
+    // backgroundColor:'#efefef'
+  },
+
   item: {
+    flex: 1
+    // flexDirection: 'row',
+    // justifyContent: 'center'
+  },
+  tabView: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center'
+    // justifyContent: 'center'
   },
   tab: {
-    borderBottomWidth: 3,
-    borderColor: '#fff',
-    width:80,
+    flex:1,
+    // borderBottomWidth: 3,
+    // borderColor: '#fff',
+    // width:80,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    // backgroundColor: '#efefef'
   },
   tabActive: {
-    borderBottomWidth: 3,
-    borderColor: '#08f',
-    width:80,
+    flex:1,
+    // borderBottomWidth: 3,
+    // borderColor: '#08f',
+    // width:80,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    // backgroundColor: '#efefef'
+  },
+  // 下划线
+  underline: {
+    // flex:1,
+    height:3,
+    width:80,
+    backgroundColor: '#08f'
   },
   itemFixed: {
     ...ifIphoneX({

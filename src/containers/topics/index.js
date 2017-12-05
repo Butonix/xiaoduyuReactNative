@@ -1,25 +1,22 @@
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  ListView,
-  Image,
-  NavigatorIOS,
-  ScrollView,
-  refreshControl,
-  RefreshControl,
-  Navigator,
-  Button
-} from 'react-native';
+import React, { Component } from 'react'
+import { StyleSheet, Text, View, ListView, Image } from 'react-native'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import ScrollableTabView from 'react-native-scrollable-tab-view'
+
+import { loadTopicList, followTopic, unfollowTopic } from '../../actions/topic'
+import { getTopicListByName } from '../../reducers/topic'
+
 import TopicList from '../../components/topic-list'
-import PostsList from '../../components/posts-list'
+import Loading from '../../components/ui/loading'
+// import PostsList from '../../components/posts-list'
+
+import TabBar from '../../components/tab-bar'
 
 class Topic extends React.Component {
 
   static navigationOptions = {
-    // header: null,
+    header: null,
     title: '话题',
     // tabBarLabel: (props) => {
     //   return (<View style={stylesIcon.tabBarLabel}>
@@ -32,23 +29,65 @@ class Topic extends React.Component {
     )
   }
 
-  render() {
+  componentDidMount() {
 
+    const self = this
+    const { list } = this.props
+
+    if (!list.data) {
+      this.props.loadTopicList({
+        name: 'index',
+        filters: {
+          child:-1, per_page:100
+        },
+        callback: (res) => {
+          console.log(res);
+        }
+      })
+    }
+
+  }
+  render() {
+    const self = this
+    const { list } = this.props
     const { navigation } = this.props
 
-    // return <PostsList
-    //           {...this.props}
-    //           tabLabel='话题'
-    //           navigation={navigation}
-    //           name="follow"
-    //           filters={{
-    //             weaken: 1,
-    //             method: 'user_custom',
-    //             include_comments: 1,
-    //             comments_sort: 'create_at:-1',
-    //             device: 'ios'
-    //           }}
-    //           />
+    if (!list || !list.data || list.data.length == 0) {
+      return (<Loading />)
+    }
+
+    return (<ScrollableTabView
+      renderTabBar={() => <TabBar navigation={navigation} onScroll={(e)=>{ self.updateAnimation = e }} />}
+      onScroll={(e)=>self.updateAnimation(e)}
+      // style={{
+      //   paddingTop: 15,
+      //   backgroundColor: '#fff'
+      // }}
+      // tabBarBackgroundColor={"#fff"}
+      // tabBarTextStyle={{
+      //   fontSize:16,
+      //   marginTop:15
+      // }}
+      // tabBarUnderlineStyle={{
+      //   backgroundColor:'#08f',
+      //   height:3
+      // }}
+      // tabBarActiveTextColor="#08f"
+      >
+
+      <TopicList tabLabel={'全部'} name="all" filters={{ child:1, per_page:20 }} {...this.props} />
+
+      {list.data.map(item=>{
+        return (<TopicList
+          key={item._id}
+          tabLabel={item.name}
+          name={item._id}
+          filters={{ child:1, per_page:20, parent_id:item._id  }}
+          {...this.props}
+          />)
+      })}
+    </ScrollableTabView>)
+
 
     return <TopicList name="topic" filters={{ child:1, per_page:10 }} {...this.props} />
   }
@@ -77,4 +116,12 @@ const stylesIcon = StyleSheet.create({
   }
 })
 
-export default Topic
+export default connect((state, props) => ({
+    list: getTopicListByName(state, 'index')
+  }),
+  (dispatch) => ({
+    loadTopicList: bindActionCreators(loadTopicList, dispatch)
+  })
+)(Topic)
+
+// export default Topic

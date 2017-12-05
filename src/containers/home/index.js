@@ -15,6 +15,8 @@ import TabBar from '../../components/tab-bar'
 
 import TabBarLabel from '../../components/ui/tab-bar-label'
 
+import WriteIcon from '../../components/ui/icon/write'
+
 import JPushModule from 'jpush-react-native'
 import Platform from 'Platform'
 
@@ -138,47 +140,38 @@ class Home extends Component {
 
   render() {
 
+    const self = this
     const { navigation } = this.props
 
-    return (<ScrollableTabView renderTabBar={() => <TabBar navigation={navigation} />}>
+    const rightContent = (<TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic') }} activeOpacity={0.8}>
+                <WriteIcon />
+              </TouchableOpacity>)
+
+    return (<ScrollableTabView
+      renderTabBar={() => <TabBar navigation={navigation} onScroll={(e)=>{ self.updateAnimation = e }} rightContent={rightContent} />}
+      onScroll={(e)=>self.updateAnimation(e)}
+      >
       <PostsList
-                {...this.props}
-                tabLabel='发现'
-                navigation={navigation}
-                name="discover"
-                filters={{
-                  weaken: 1
-                  // include_comments: 1,
-                  // comments_sort: 'like_count:-1,reply_count:-1'
-                }}
-              />
-
-              <PostsList
-                {...this.props}
-                tabLabel='关注'
-                navigation={navigation}
-                name="follow"
-                filters={{
-                  weaken: 1,
-                  method: 'user_custom',
-                  // include_comments: 1,
-                  // comments_sort: 'like_count:-1,reply_count:-1',
-                  device: 'ios'
-                }}
-                      />
+        {...this.props}
+        tabLabel='发现'
+        navigation={navigation}
+        name="discover"
+        filters={{
+          weaken: 1
+        }}
+        />
+      <PostsList
+        {...this.props}
+        tabLabel='关注'
+        navigation={navigation}
+        name="follow"
+        filters={{
+          weaken: 1,
+          method: 'user_custom',
+          device: 'ios'
+        }}
+        />
     </ScrollableTabView>)
-
-    return (<PostsList
-              {...this.props}
-              tabLabel='发现'
-              navigation={navigation}
-              name="discover"
-              filters={{
-                weaken: 1
-                // include_comments: 1,
-                // comments_sort: 'like_count:-1,reply_count:-1'
-              }}
-            />)
   }
 }
 
