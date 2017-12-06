@@ -13,7 +13,7 @@ class ListFooter extends PureComponent {
     return (
       <View style={styles.view}>
         {loading ? <Loading /> : null}
-        {!more ? <Text style={styles.text}>没有更多</Text> : null}
+        {!more ? <Text style={styles.text}>没有更多了</Text> : null}
       </View>
     )
   }
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   text: {
+    fontSize: 12,
     color: 'rgb(140, 140, 140)'
   }
 })

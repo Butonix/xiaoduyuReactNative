@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, ScrollView, Button, TextInput, Alert } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Button, TextInput, Alert, TouchableOpacity } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
 
@@ -14,14 +14,17 @@ import Wait from '../../components/ui/wait'
 class WritePosts extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
-
     const { params = {} } = navigation.state
-
+    const { topic, submit, allowPost = false } = params
     return {
-      title: params.topic.name,
-      headerRight: (<View><Button onPress={()=>params.submit()} title={"发布"} /></View>)
+      title: topic.name,
+      headerLeft: <TouchableOpacity style={styles.button} onPress={()=>{ navigation.goBack() }}>
+                    <Text style={styles.buttonText}>取消</Text>
+                   </TouchableOpacity>,
+      headerRight: <TouchableOpacity style={styles.button} onPress={allowPost ? ()=>submit() : ()=>{}}>
+                    <Text style={allowPost ? styles.buttonText : styles.inactiveButtonText}>发布</Text>
+                   </TouchableOpacity>
     }
-
   }
 
   constructor (props) {
@@ -30,7 +33,6 @@ class WritePosts extends React.Component {
       contentJSON: '',
       contentHTML: ''
     }
-
     this.submit = this.submit.bind(this)
   }
 
@@ -121,7 +123,12 @@ class WritePosts extends React.Component {
       <View>
         <TextInput
           style={styles.title}
-          onChangeText={(title) => this.setState({title})}
+          onChangeText={(title) => {
+            self.setState({title})
+            self.props.navigation.setParams({
+              allowPost: title ? true : false
+            })
+          }}
           placeholder='请输入标题'
           defaultValue={posts ? posts.title : ''}
           autoFocus={true}
@@ -153,8 +160,25 @@ const styles = StyleSheet.create({
     padding: 15,
     fontSize:18,
     backgroundColor: '#fff'
+  },
+  button: {
+    height: 45,
+    paddingLeft:20,
+    paddingRight:20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#08f'
+  },
+  inactiveButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#c9c9c9'
   }
-});
+})
 
 export default connect(state => ({
     me: getUserInfo(state)

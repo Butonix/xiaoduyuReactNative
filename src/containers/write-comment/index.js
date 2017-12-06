@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native'
+import { StyleSheet, Text, View, Button, TextInput, Alert, TouchableOpacity } from 'react-native'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -12,10 +12,14 @@ class WriteComment extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
+    const { replyId, submit, allowPost = false } = params
     return {
       // headerLeft: (<View><Button onPress={()=>params.cancel()} title={"取消"} /></View>),
-      title: params.replyId ? '编写回复' : '编写评论',
-      headerRight: (<View><Button onPress={()=>params.submit()} title={"提交"} /></View>),
+      title: replyId ? '编写回复' : '编写评论',
+      // headerRight: (<View><Button onPress={()=>params.submit()} title={"提交"} /></View>),
+      headerRight: <TouchableOpacity style={styles.button} onPress={allowPost ? ()=>submit() : ()=>{}}>
+                    <Text style={allowPost ? styles.buttonText : styles.inactiveButtonText}>提交</Text>
+                   </TouchableOpacity>
     }
   }
 
@@ -84,7 +88,7 @@ class WriteComment extends React.Component {
         callback: (res) => {
 
           self.setState({ visible: false })
-          
+
           if (res.success) {
             navigation.goBack()
           } else {
@@ -101,8 +105,8 @@ class WriteComment extends React.Component {
   }
 
   render() {
-    const self = this
 
+    const self = this
     const { comment } = self.props.navigation.state.params
 
     return (<View style={{flex:1}}>
@@ -110,6 +114,9 @@ class WriteComment extends React.Component {
         transportContent={(data)=>{
           self.state.contentJSON = data.json
           self.state.contentHTML = data.html
+          self.props.navigation.setParams({
+            allowPost: data.json ? true : false
+          })
         }}
         initialContentJSON={comment ? comment.content : null}
       />
@@ -118,6 +125,25 @@ class WriteComment extends React.Component {
   }
 }
 
+const styles = StyleSheet.create({
+  button: {
+    height: 45,
+    paddingLeft:20,
+    paddingRight:20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#08f'
+  },
+  inactiveButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#c9c9c9'
+  }
+})
 
 export default connect(state => ({
   }),

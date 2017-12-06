@@ -103,16 +103,18 @@ class PostsList extends Component {
     const {
       list,
       // 是否显示用户信息
-      hideUserInfo = false
+      hideUserInfo = false,
+      // 自定义header
+      renderHeader
     } = this.props
 
     if (list.loading && list.data.length == 0 || !list.data) {
       return (<Loading />)
     }
 
-    if (!list.loading && !list.more && list.data.length == 0) {
-      return (<Nothing content="没有帖子" />)
-    }
+    // if (!list.loading && !list.more && list.data.length == 0) {
+      // return (<Nothing content="没有帖子" />)
+    // }
 
     // console.log(list.data);
 
@@ -194,7 +196,7 @@ class PostsList extends Component {
 
           </TouchableOpacity>)
           }}
-          renderHeader={this.renderHeader}
+          renderHeader={renderHeader || this.renderHeader}
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
           removeClippedSubviews={false}
           onScroll={this.onScroll}

@@ -1,8 +1,8 @@
-
-
 import React, { Component } from 'react'
 import { View, Text, ScrollView, Image, StyleSheet, Alert, TouchableOpacity, AsyncStorage } from 'react-native'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
+import JPushModule from 'jpush-react-native'
+import Platform from 'Platform'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -11,36 +11,35 @@ import { cleanAllComment } from '../../actions/comment'
 
 import PostsList from '../../components/posts-list'
 import TabBar from '../../components/tab-bar'
-// import MenuIcon from '../../components/ui/icon/menu'
-
-import TabBarLabel from '../../components/ui/tab-bar-label'
 
 import WriteIcon from '../../components/ui/icon/write'
 
-import JPushModule from 'jpush-react-native'
-import Platform from 'Platform'
 
 class Home extends Component {
 
   static navigationOptions = {
     header: null,
-    title: '发现',
-    // tabBarLabel: (props) => {
-    //   return (<View style={stylesIcon.tabBarLabel}>
-    //     <View style={stylesIcon.tabBarLabelView}><Text>发现</Text></View>
-    //     <View style={[stylesIcon.tabBarLabelLine, props.focused ? stylesIcon.focused : null ]}></View>
-    //     </View>)
-    // }
-    //
-    tabBarIcon: ({ tintColor }) => (<Image source={require('./images/home.png')} style={[stylesIcon.icon, {tintColor: tintColor}]} />)
+    title: '首页',
+    tabBarIcon: ({ tintColor }) => (<Image
+      source={require('./images/home.png')}
+      style={[styles.icon, {tintColor: tintColor}]}
+    />)
   }
 
   constructor (props) {
     super(props)
-
     this.state = {
-      listener: null
+      listener: null,
+      tab: 0,
+      ready: false
     }
+  }
+
+  componentWillMount() {
+    const self = this
+    AsyncStorage.getItem('tab', (errs, result)=>{
+      self.setState({ tab: result || 0, ready: true })
+    })
   }
 
   componentDidMount() {
@@ -142,60 +141,47 @@ class Home extends Component {
 
     const self = this
     const { navigation } = this.props
+    const { tab, ready } = this.state
 
-    const rightContent = (<TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic') }} activeOpacity={0.8}>
-                <WriteIcon />
-              </TouchableOpacity>)
+    if (!ready) return (<View></View>)
+
+    const rightContent = (<View style={styles.tabbatRight}><TouchableOpacity
+                            style={styles.write}
+                            onPress={()=>{ navigation.navigate('ChooseTopic') }}
+                            activeOpacity={0.8}>
+                            <WriteIcon />
+                          </TouchableOpacity></View>)
 
     return (<ScrollableTabView
-      renderTabBar={() => <TabBar navigation={navigation} onScroll={(e)=>{ self.updateAnimation = e }} rightContent={rightContent} />}
+      renderTabBar={() => <TabBar
+        navigation={navigation}
+        onScroll={(e)=>{ self.updateAnimation = e }}
+        rightContent={rightContent}
+        initialPage={parseInt(tab)}
+      />}
       onScroll={(e)=>self.updateAnimation(e)}
+      onChangeTab={tab=>AsyncStorage.setItem('tab', tab.i + '')}
+      initialPage={parseInt(tab)}
       >
-      <PostsList
-        {...this.props}
+
+      <PostsList {...this.props} navigation={navigation}
         tabLabel='发现'
-        navigation={navigation}
         name="discover"
-        filters={{
-          weaken: 1
-        }}
-        />
-      <PostsList
-        {...this.props}
+        filters={{ weaken: 1 }} />
+
+      <PostsList {...this.props} navigation={navigation}
         tabLabel='关注'
-        navigation={navigation}
         name="follow"
-        filters={{
-          weaken: 1,
-          method: 'user_custom',
-          device: 'ios'
-        }}
-        />
+        filters={{ weaken: 1, method: 'user_custom', device: 'ios' }} />
+
     </ScrollableTabView>)
   }
 }
 
-const stylesIcon = StyleSheet.create({
+const styles = StyleSheet.create({
   icon: { width: 26, height: 26, marginTop:-5 },
-  tabBarLabel: {
-    marginTop:20,
-    flex:1,
-    width:'100%',
-    // height:45,
-    // flexDirection: 'row'
-  },
-  tabBarLabelView: {
-    flex:1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  tabBarLabelLine: {
-    height:3,
-    backgroundColor:'#fff'
-  },
-  focused: {
-    backgroundColor:'#08f'
-  }
+  tabbatRight: { flex:1, flexDirection:'row-reverse' },
+  write: { width: 50, justifyContent: 'center', alignItems: 'center' }
 })
 
 export default connect(state => ({

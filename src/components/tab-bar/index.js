@@ -19,6 +19,11 @@ class Tabbar extends Component {
     this.updateAnimation = this.updateAnimation.bind(this)
   }
 
+  componentWillMount() {
+    const { initialPage } = this.props
+    this.updateAnimation(initialPage)
+  }
+
   componentDidMount() {
     const self = this
     this.props.onScroll((index)=>{
@@ -138,7 +143,7 @@ var styles = StyleSheet.create({
     }, {
       backgroundColor: '#fff',
       paddingTop:23,
-      height:62,
+      height:65,
       flexDirection: 'row',
       borderBottomWidth: 1/PixelRatio.get(),
       borderColor: '#d4d4d4'
@@ -146,7 +151,7 @@ var styles = StyleSheet.create({
   },
 
   tabbarLeft: { flex:1 },
-  tabbarRight: { flex:1, justifyContent: 'center', alignItems: 'center' },
+  tabbarRight: { flex:1 },
   tabbarCenter: {
     // flex:1,
     // backgroundColor:'#333'

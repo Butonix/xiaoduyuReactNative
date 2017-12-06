@@ -26,7 +26,7 @@ class List extends Component {
     const { id, filters, componentName, canClick = true, hideUserInfo = false } = this.props.navigation.state.params
 
     let component = null
-    
+
     switch(componentName) {
       case 'PostsList':
         component = <PostsList {...this.props} name={id} filters={filters} hideUserInfo={hideUserInfo} />

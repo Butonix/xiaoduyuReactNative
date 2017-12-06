@@ -11,8 +11,7 @@ class WriteIcon extends PureComponent {
 const styles = StyleSheet.create({
   icon: {
     width: 24,
-    height: 24,
-    margin: 13
+    height: 24
   }
 })
 

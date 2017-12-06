@@ -1,22 +1,6 @@
 
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  ListView,
-  Image,
-  NavigatorIOS,
-  ScrollView,
-  refreshControl,
-  RefreshControl,
-  Navigator,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-  Button,
-  PixelRatio
-} from 'react-native'
+import { StyleSheet, Text, View, ListView, Image, TouchableOpacity, PixelRatio } from 'react-native'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -57,17 +41,13 @@ class TopicList extends Component {
     const { list } = this.props
 
     if (!list.data) {
-      this.loadPostsList(()=>{
-        // self.setState({})
-      })
+      this.loadPostsList(()=>{})
     }
 
   }
 
   loadPostsList(callback, restart) {
-
     const { name, filters } = this.props
-
     this.props.loadTopicList({
       name:name,
       filters,
@@ -78,28 +58,16 @@ class TopicList extends Component {
 
   renderHeader() {
     return (
-      <View>
-        <Text>我是列表头部</Text>
-      </View>
+      <View style={styles.head}></View>
     )
   }
 
   renderFooter() {
-
     const { list } = this.props
-
     if (list.loading) {
-      return (
-        <View>
-          <Text>加载中</Text>
-        </View>
-      )
+      return (<View><Text>加载中</Text></View>)
     }
-    return (
-      <View>
-        <Text>没有更多了</Text>
-      </View>
-    )
+    return (<View><Text>没有更多了</Text></View>)
   }
 
   render() {
@@ -117,10 +85,7 @@ class TopicList extends Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let topics = ds.cloneWithRows(list.data || [])
 
-    // console.log(list);
-
     return (
-      <View style={styles.container}>
         <ListView
           enableEmptySections={true}
           dataSource={topics}
@@ -136,9 +101,9 @@ class TopicList extends Component {
           scrollEventThrottle={50}
           removeClippedSubviews={false}
           onScroll={this.onScroll.bind(this)}
+          renderHeader={this.renderHeader}
           renderFooter={()=><ListFooter loading={list.loading} more={list.more} />}
         />
-      </View>
     )
   }
 
@@ -176,10 +141,8 @@ class TopicList extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // backgroundColor: '#F5FCFF',
+  head: {
+    marginTop: 10
   },
   item: {
     backgroundColor: '#fff',
@@ -203,47 +166,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginRight:10
   },
-  itemMain: {
-    marginTop:10
-  },
-  images:{
-    // flex: 1,
-    width: 100,
-    height: 100,
-    marginTop:10,
-    marginRight:10
-  },
-
   topicNameText: {
     fontWeight:'bold'
-  },
-
-  flexContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap'
   },
   brief: {
     marginTop:3,
     color: '#6f6f6f',
     lineHeight: 20
-  },
-  button: {
-    backgroundColor: '#333'
-  },
-  followButton: {
-    padding: 7,
-    borderColor: 'rgb(6, 181, 228)',
-    borderWidth: 1,
-    borderRadius: 5
-  },
-  gary: {
-    borderColor: 'rgb(194, 194, 194)'
-  },
-  garyText: {
-    color: 'rgb(194, 194, 194)'
-  },
-  followButtonText: {
-    color: 'rgb(6, 181, 228)'
   }
 })
 

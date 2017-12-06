@@ -13,8 +13,8 @@ class TopicDetail extends Component {
     const { params = {} } = navigation.state
 
     return {
-      title: params.title,
-      headerRight: (<TouchableOpacity onPress={()=>params.createPosts()}><WriteIcon /></TouchableOpacity>)
+      title: params.title
+      // headerRight: (<TouchableOpacity onPress={()=>params.createPosts()}><WriteIcon /></TouchableOpacity>)
     }
 
   }
@@ -26,12 +26,6 @@ class TopicDetail extends Component {
     }
 
     this.createPosts = this.createPosts.bind(this)
-  }
-
-  componentDidMount() {
-    this.props.navigation.setParams({
-      createPosts: this.createPosts
-    })
   }
 
   createPosts() {
@@ -54,6 +48,11 @@ class TopicDetail extends Component {
               topic_id: topic._id
             }}
             name={topic._id}
+            renderHeader={()=>{
+              return (<TouchableOpacity style={styles.write} onPress={this.createPosts}>
+                <Text style={styles.writeButton}>创建新主题</Text>
+              </TouchableOpacity>)
+            }}
             />
           </View>)
   }
@@ -62,6 +61,17 @@ class TopicDetail extends Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  write: {
+    marginTop:10,
+    flex:1,
+    height: 40,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  writeButton: {
+    fontSize: 16
   }
 })
 
