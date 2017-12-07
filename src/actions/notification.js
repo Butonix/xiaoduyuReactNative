@@ -1,6 +1,84 @@
 import Ajax from '../common/ajax'
 import merge from 'lodash/merge'
 
+
+// 修剪数据
+const trimData = (notifucations) => {
+  notifucations.map(item=>{
+
+    if (item.comment_id) {
+      var text = item.comment_id.content_html
+      text = text.replace(/<[^>]+>/g,"");
+      if (text.length > 100) {
+        text = text.substring(0,100) + '...'
+        item.comment_id.more = true
+      }
+      item.comment_id.content_trim = text
+    }
+
+    if (item.comment_id && item.comment_id.parent_id) {
+
+      var text = item.comment_id.parent_id.content_html
+
+      text = text.replace(/<[^>]+>/g,"");
+
+      if (text.length > 100) {
+        text = text.substring(0,100) + '...'
+        item.comment_id.parent_id.more = true
+      }
+
+      item.comment_id.parent_id.content_trim = text
+    }
+
+    if (item.comment_id && item.comment_id.reply_id) {
+
+      var text = item.comment_id.reply_id.content_html
+
+      text = text.replace(/<[^>]+>/g,"");
+
+      if (text.length > 100) {
+        text = text.substring(0,100) + '...'
+        item.comment_id.reply_id.more = true
+      }
+
+      item.comment_id.reply_id.content_trim = text
+    }
+
+    /*
+    if (item.answer_id) {
+
+      var text = item.answer_id.content_html
+
+      text = text.replace(/<[^>]+>/g,"");
+
+      if (text.length > 100) {
+        text = text.substring(0,100) + '...'
+        item.comment_id.reply_id
+      }
+
+      _notices[key].answer_id.content_trim = text
+    }
+
+
+    if (item.comment_id && item.comment_id.answer_id) {
+
+      var text = item.comment_id.answer_id.content_html
+
+      text = text.replace(/<[^>]+>/g,"");
+
+      if (text.length > 100) {
+        text = text.substring(0,100) + '...'
+      }
+
+      _notices[key].comment_id.answer_id.content_html = text
+    }
+    */
+
+  })
+
+  return notifucations
+}
+
 export function loadNotifications({ name, filters = {}, callback = ()=>{}, restart = false }) {
   return (dispatch, getState) => {
 
@@ -41,15 +119,15 @@ export function loadNotifications({ name, filters = {}, callback = ()=>{}, resta
       data: merge({}, filters, { access_token: accessToken }),
       callback: (res)=>{
 
-        console.log(res);
-
         if (restart) list.data = []
 
         list.loading = false
         list.more = res.data.length < list.filters.per_page ? false : true
-        list.data = list.data.concat(res.data)
+        list.data = list.data.concat(trimData(res.data))
         list.filters = filters
         list.count = 0
+
+        // console.log(list.data);
 
         comment = updateCommentState(comment, res.data)
         posts = updatePosts(posts, res.data)

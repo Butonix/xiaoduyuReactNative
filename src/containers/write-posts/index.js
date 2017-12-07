@@ -115,7 +115,7 @@ class WritePosts extends React.Component {
   }
 
   render() {
-    
+
     const self = this
     const { topic, posts } = this.props.navigation.state.params
 

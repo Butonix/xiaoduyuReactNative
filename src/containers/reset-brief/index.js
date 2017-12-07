@@ -8,13 +8,17 @@ import { bindActionCreators } from 'redux'
 import { getUserInfo } from '../../reducers/user'
 import { resetBrief } from '../../actions/user'
 
+import HeadButton from '../../components/ui/head-button'
+
 class ResetBrief extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
     return {
       title: '个性签名',
-      headerRight: (<View><Button onPress={()=>params.submit()} title={"提交"} /></View>),
+      headerRight: (<TouchableOpacity onPress={()=>params.submit()}>
+        <HeadButton name="提交" />
+      </TouchableOpacity>)
     }
   }
 

@@ -24,13 +24,15 @@ const screenWidth = Dimensions.get('window').width
 
 import Platform from 'Platform'
 
+import HeadButton from '../../components/ui/head-button'
+
 class SignIn extends Component {
 
   static navigationOptions = ({navigation}) => {
     const { params = {} } = navigation.state
     return {
       headerTitle: '登录',
-      headerRight: (<TouchableOpacity onPress={()=>params.signup()}><Text style={{fontSize:17, padding:10}}>注册</Text></TouchableOpacity>)
+      headerRight: (<TouchableOpacity onPress={()=>params.signup()}><HeadButton name="注册" /></TouchableOpacity>)
     }
   }
 

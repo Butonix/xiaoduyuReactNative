@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, ListView, Image, refreshControl, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native'
+import { StyleSheet, Text, View, ListView, Image, refreshControl, TouchableOpacity, ActivityIndicator, RefreshControl, PixelRatio } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -26,25 +26,12 @@ class NotificationList extends Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
-      topics: ds.cloneWithRows([]),
-      sourcePostsList: [],
-      loadMore: false,
-      more: true,
       isRefreshing: false,
-      loading: false,
-      filters: {
-        lt_date: new Date().getTime(),
-        per_page: 20
-      },
-      list: {
-        loading: false,
-        more: true
-      }
+      // 打开阅读全部的id
+      readAllId: []
     }
-    this.goTo = this.goTo.bind(this)
-    this.goToComment = this.goToComment.bind(this)
+
     this.loadList = this.loadList.bind(this)
-    // this.renderHeader = this.renderHeader.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
     this.renderNotice = this.renderNotice.bind(this)
     this.toPeople = this.toPeople.bind(this)
@@ -52,14 +39,20 @@ class NotificationList extends Component {
     this.toComment = this.toComment.bind(this)
     this.toReply = this.toReply.bind(this)
     this.onScroll = this.onScroll.bind(this)
+    this.addReadAll = this.addReadAll.bind(this)
   }
 
   componentWillMount() {
-
     const { list } = this.props
+    if (!list.data) this.loadList()
+  }
 
-    if (!list.data) {
-      this.loadList()
+  addReadAll(id) {
+    let { readAllId } = this.state
+
+    if (readAllId.indexOf(id) == -1) {
+      readAllId.push(id)
+      this.setState({ readAllId })
     }
 
   }
@@ -81,7 +74,6 @@ class NotificationList extends Component {
 
   toReply(comment) {
     const { navigate } = this.props.navigation;
-    // console.log(comment);
     navigate('WriteComment', {
       postsId: comment.posts_id._id,
       parentId: comment.parent_id ? comment.parent_id._id : null,
@@ -90,15 +82,8 @@ class NotificationList extends Component {
   }
 
   loadList(callback, restart) {
-
     const { name, filters } = this.props
-
-    this.props.loadNotifications({
-      name,
-      filters,
-      callback,
-      restart
-    })
+    this.props.loadNotifications({ name, filters, callback, restart })
   }
 
   renderHeader() {
@@ -123,15 +108,19 @@ class NotificationList extends Component {
 
   }
 
+  onRefresh() {
+    const self = this
+    this.setState({ isRefreshing: true })
+    self.loadList(()=>{
+      self.setState({ isRefreshing: false })
+    }, true)
+  }
+
   renderFooter() {
     const { list } = this.props
 
     if (list.loading) {
-      return (
-        <View style={styles.loading}>
-          <ActivityIndicator animating={true} color={'#484848'} size={'small'} />
-        </View>
-      )
+      return (<Loading />)
     } else if (!list.more) {
       return (
         <View>
@@ -143,6 +132,8 @@ class NotificationList extends Component {
 
   renderNotice(notice) {
 
+    const { readAllId } = this.state
+
     const avatar = <TouchableOpacity onPress={()=>{this.toPeople(notice.sender_id)}} activeOpacity={0.8}><Image source={{ uri: 'https:'+notice.sender_id.avatar_url }} style={styles.avatar} /></TouchableOpacity>
 
     let content = null
@@ -150,7 +141,7 @@ class NotificationList extends Component {
     switch (notice.type) {
 
       case 'follow-you':
-        content = (<View>
+        content = (<View style={styles.itemContent}>
             <View style={styles.head}>
               {avatar}
               <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
@@ -161,7 +152,7 @@ class NotificationList extends Component {
         break
 
       case 'follow-posts':
-        content = (<View>
+        content = (<View style={styles.itemContent}>
             <View style={styles.head}>
               {avatar}
               <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
@@ -176,7 +167,7 @@ class NotificationList extends Component {
         break
 
       case 'like-posts':
-        content = (<View>
+        content = (<View style={styles.itemContent}>
             <View style={styles.head}>
               {avatar}
               <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
@@ -192,35 +183,50 @@ class NotificationList extends Component {
 
       case 'reply':
         content = (<View>
-          <View style={styles.head}>
-            {avatar}
-            <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
-            <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
-          </View>
-          <Text style={styles.title}>
-            <Text style={styles.gray}>回复了你的</Text>
-            <Text onPress={()=>{this.toComment(notice.comment_id.parent_id)}}>
-              {notice.comment_id.reply_id ? notice.comment_id.reply_id.content_trim : notice.comment_id.parent_id.content_trim}
+          <View style={styles.itemContent}>
+            <View style={styles.head}>
+              {avatar}
+              <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
+              <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
+            </View>
+            <Text style={styles.title}>
+              <Text style={styles.gray}>回复了你的</Text>
+              <Text onPress={()=>{this.toComment(notice.comment_id.parent_id)}}>
+                {notice.comment_id.reply_id ? notice.comment_id.reply_id.content_trim : notice.comment_id.parent_id.content_trim}
+              </Text>
+              <Text style={styles.gray}>回复</Text>
             </Text>
-            <Text style={styles.gray}>回复</Text>
-          </Text>
-          <TouchableOpacity onPress={()=>{this.toReply(notice.comment_id)}} activeOpacity={0.8}>
-          <View style={styles.commentContent}>
-            <Text style={styles.commentContentText}>{notice.comment_id.content_trim}</Text>
+            <TouchableOpacity onPress={()=>{this.addReadAll(notice._id)}} activeOpacity={0.8}>
+              <View style={styles.commentContent}>
+
+                {readAllId.indexOf(notice._id) != -1 ?
+                  <HTMLView html={notice.comment_id.content_html} imgOffset={30} />:
+                  <Text style={styles.commentContentText}>
+                    {notice.comment_id.content_trim}
+                    {notice.comment_id.more ? <Text style={styles.readAll}>阅读全文</Text> : null}
+                  </Text>}
+
+              </View>
+            </TouchableOpacity>
           </View>
+
+          <TouchableOpacity style={styles.replyView} onPress={()=>{this.toReply(notice.comment_id)}} activeOpacity={0.8}>
+            <Text>回复</Text>
           </TouchableOpacity>
+
         </View>)
         break
 
       case 'comment':
+        content = (<View>
 
-        content = (
-          <View>
-          <View style={styles.head}>
-            {avatar}
-            <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
-            <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
-          </View>
+          <View style={styles.itemContent}>
+
+            <View style={styles.head}>
+              {avatar}
+              <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
+              <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
+            </View>
 
             <Text style={styles.title}>
               <Text style={styles.gray}>评论了你的</Text>
@@ -228,17 +234,58 @@ class NotificationList extends Component {
               <Text style={styles.gray}>帖子</Text>
             </Text>
 
-          <TouchableOpacity onPress={()=>{this.toReply(notice.comment_id)}} activeOpacity={0.8}>
-            <View style={styles.commentContent}>
-              <Text style={styles.commentContentText}>{notice.comment_id.content_trim}</Text>
-            </View>
+            <TouchableOpacity onPress={()=>{this.addReadAll(notice._id)}} activeOpacity={0.8}>
+              <View style={styles.commentContent}>
+
+                {readAllId.indexOf(notice._id) != -1 ?
+                  <HTMLView html={notice.comment_id.content_html} imgOffset={30} />:
+                  <Text style={styles.commentContentText}>
+                    {notice.comment_id.content_trim}
+                    {notice.comment_id.more ? <Text style={styles.readAll}>阅读全文</Text> : null}
+                  </Text>}
+
+              </View>
+            </TouchableOpacity>
+
+          </View>
+
+          <TouchableOpacity style={styles.replyView} onPress={()=>{this.toReply(notice.comment_id)}} activeOpacity={0.8}>
+            <Text>回复</Text>
+          </TouchableOpacity>
+
+        </View>)
+        break
+
+      // 新的回答通知
+      case 'new-comment':
+        content = (
+          <View style={styles.itemContent}>
+          <View style={styles.head}>
+            {avatar}
+            <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
+            <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
+          </View>
+          <Text style={styles.title}>
+            <Text style={styles.gray}>评论了</Text>
+            <Text onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>{notice.comment_id.posts_id.title}</Text>
+            <Text style={styles.gray}>帖子</Text>
+          </Text>
+          <TouchableOpacity onPress={()=>{this.addReadAll(notice._id)}} activeOpacity={0.8}>
+
+            {readAllId.indexOf(notice._id) != -1 ?
+              <HTMLView html={notice.comment_id.content_html} imgOffset={30} />:
+              <Text>
+                {notice.comment_id.content_trim}
+                {notice.comment_id.more ? <Text style={styles.readAll}>阅读全文</Text> : null}
+              </Text>}
+
           </TouchableOpacity>
         </View>)
         break
 
       case 'like-reply':
         content = (
-          <View>
+          <View style={styles.itemContent}>
           <View style={styles.head}>
             {avatar}
             <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
@@ -254,7 +301,7 @@ class NotificationList extends Component {
 
       case 'like-comment':
         content = (
-        <View>
+        <View style={styles.itemContent}>
           <View style={styles.head}>
             {avatar}
             <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
@@ -265,26 +312,6 @@ class NotificationList extends Component {
             <Text onPress={()=>{this.toComment(notice.comment_id)}}>{notice.comment_id.content_trim}</Text>
             <Text style={styles.gray}>评论</Text>
           </Text>
-        </View>)
-        break
-
-      // 新的回答通知
-      case 'new-comment':
-        content = (
-          <View>
-          <View style={styles.head}>
-            {avatar}
-            <Text style={styles.nickname} onPress={()=>{this.toPeople(notice.sender_id)}}>{notice.sender_id.nickname}</Text>
-            <Text style={styles.gray}>{DateDiff(notice.create_at)}</Text>
-          </View>
-          <Text style={styles.title}>
-            <Text style={styles.gray}>评论了</Text>
-            <Text onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>{notice.comment_id.posts_id.title}</Text>
-            <Text style={styles.gray}>帖子</Text>
-          </Text>
-          <View>
-            <Text>{notice.comment_id.content_trim}</Text>
-          </View>
         </View>)
         break
     }
@@ -328,7 +355,7 @@ class NotificationList extends Component {
           refreshControl={
             <RefreshControl
               refreshing={this.state.isRefreshing}
-              onRefresh={this._onRefresh.bind(this)}
+              onRefresh={this.onRefresh.bind(this)}
               tintColor="#484848"
               title="加载中..."
               titleColor="#484848"
@@ -344,137 +371,28 @@ class NotificationList extends Component {
     )
   }
 
-  goTo(posts){
-
-    const { navigate } = this.props.navigation;
-
-    navigate('PostsDetail', { title: posts.title, id: posts._id })
-
-    /*
-    this.props.navigator.push({
-      component: PostsDetail,
-      title: '详情',
-      id: id
-      // rightButtonTitle: '收藏',
-      // onRightButtonPress: function(){
-      //   alert('点击了收藏按钮。');
-      // }
-    });
-    */
-  }
-
-  goToComment(comment) {
-    const { navigate } = this.props.navigation;
-    navigate('CommentDetail', { title: comment.content_summary, id: comment._id })
-  }
-
-  _onScroll(event) {
-    const self = this
-    if (this.state.loadMore) return
-    let y = event.nativeEvent.contentOffset.y;
-    let height = event.nativeEvent.layoutMeasurement.height;
-    let contentHeight = event.nativeEvent.contentSize.height;
-    // console.log('offsetY-->' + y);
-    // console.log('height-->' + height);
-    // console.log('contentHeight-->' + contentHeight);
-    if (y+height>=contentHeight-20) {
-      self.loadList()
-    }
-  }
-
-  _onRefresh() {
-    const self = this
-    this.setState({ isRefreshing: true })
-    self.loadList(()=>{
-      self.setState({ isRefreshing: false })
-    }, true)
-  }
-
 }
 
 const styles = StyleSheet.create({
-  item: {
-    backgroundColor: '#fff',
-    padding:15,
-    marginTop: 10,
-  },
-  space: {
-    width:50,
-    height:20,
-    backgroundColor:'#333'
-  },
-  notice: {
-    flexDirection:'row',
-    flexWrap: 'wrap'
-  },
-  topicItem: {
-    backgroundColor: '#fff',
-    padding:20,
-    borderBottomWidth: 1,
-    borderColor: '#efefef'
-  },
-  itemHead: {
-    flexDirection: 'row'
-  },
-  itemMain: {
-    marginTop:10
-  },
-  images:{
-    // flex: 1,
-    width: 100,
-    height: 100,
-    marginTop:10,
-    marginRight:10
-  },
-  flexContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap'
-  },
-  title: {
-    fontWeight: 'bold'
-  },
-  loading: {
-    height: 60
-  },
-
-  commentContent:{
-    padding: 10,
-    marginTop: 10,
-    backgroundColor: '#efefef',
-    borderRadius:5
-  },
-
-  commentContentText: {
-    lineHeight: 20
-  },
-
-  nickname: {
-    fontWeight: 'bold',
-    marginRight: 10
-  },
-
-  head: {
-    flexDirection:'row',
-    flexWrap: 'wrap',
+  item: { marginTop: 10 },
+  itemContent: { padding: 15, backgroundColor: '#fff' },
+  commentContent:{ padding: 10, marginTop: 10, backgroundColor: '#efefef', borderRadius:5 },
+  commentContentText: { lineHeight: 20 },
+  nickname: { fontWeight: 'bold', marginRight: 10 },
+  head: { flexDirection:'row', flexWrap: 'wrap', alignItems: 'center', marginBottom: 5 },
+  avatar: { width: 20, height: 20, borderRadius: 10, marginRight: 5, backgroundColor:'#efefef' },
+  gray: { color:'#909090' },
+  title: { lineHeight: 20 },
+  replyView: {
+    height: 30,
+    borderTopWidth: 1/PixelRatio.get(),
+    borderColor: '#d4d4d4',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 5
+    backgroundColor: '#fff'
   },
-  avatar: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    marginRight: 5,
-    backgroundColor:'#efefef'
-  },
-  gray: {
-    color:'#909090'
-  },
-
-  title: {
-    lineHeight: 20
-  }
-
-});
+  readAll: { color:'#08f' }
+})
 
 
 export default connect((state, props) => ({

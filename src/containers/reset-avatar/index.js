@@ -16,6 +16,7 @@ import ImagePicker from 'react-native-image-crop-picker'
 
 // import Loading from 'react-native-loading-w'
 import Wait from '../../components/ui/wait'
+import HeadButton from '../../components/ui/head-button'
 
 import { uploadFile } from '../../common/upload-qiniu'
 
@@ -34,7 +35,9 @@ class ResetAvatar extends React.Component {
     let option = { title: '头像' }
 
     if (params.showActionSheet) {
-      option.headerRight = (<View><Button onPress={()=>params.showActionSheet()} title={"修改"} /></View>)
+      option.headerRight = (<TouchableOpacity onPress={()=>params.showActionSheet()}>
+                    <HeadButton name="修改" />
+                  </TouchableOpacity>)
     }
 
     return option
@@ -231,7 +234,7 @@ class ResetAvatar extends React.Component {
                 destructiveButtonIndex={DESTRUCTIVE_INDEX}
                 onPress={this.handlePress}
               />
-              
+
               {this.state.visible ? <Wait text="头像上传中..." /> : null}
 
               {/*<Loading ref={'loading'} text={'Loading...'} />*/}

@@ -94,7 +94,7 @@ class Settings extends React.Component {
     }
 
     return (<ScrollView>
-          <View>
+          <View style={styles.main}>
 
             <TouchableOpacity onPress={()=>{ navigate('ResetAvatar', {}) }}>
               <ListItem
@@ -173,6 +173,9 @@ class Settings extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  main: {
+    marginTop: 10
+  },
   avatarItem: {
     alignItems:'center',
     paddingTop: 20,

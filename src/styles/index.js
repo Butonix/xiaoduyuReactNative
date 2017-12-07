@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native'
-
+import { StyleSheet, PixelRatio } from 'react-native'
 
 let style = {
   button:{
@@ -69,8 +68,8 @@ let style = {
   // 圆角input
   radiusInput: {
     height: 45,
-    borderColor: '#e2e2e2',
-    borderWidth: 1,
+    borderColor: '#bfbfbf',
+    borderWidth: 1/PixelRatio.get(),
     paddingLeft: 10,
     borderRadius: 5,
     justifyContent: 'center',
@@ -78,8 +77,8 @@ let style = {
   },
   radiusInputTop: {
     height: 45,
-    borderColor: '#e2e2e2',
-    borderWidth: 1,
+    borderColor: '#bfbfbf',
+    borderWidth: 1/PixelRatio.get(),
     paddingLeft: 10,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
@@ -88,8 +87,8 @@ let style = {
   },
   radiusInputCenter: {
     height: 45,
-    borderColor: '#e2e2e2',
-    borderWidth: 1,
+    borderColor: '#bfbfbf',
+    borderWidth: 1/PixelRatio.get(),
     paddingLeft: 10,
     marginTop:-1,
     justifyContent: 'center',
@@ -97,8 +96,8 @@ let style = {
   },
   radiusInputBottom: {
     height: 45,
-    borderColor: '#e2e2e2',
-    borderWidth: 1,
+    borderColor: '#bfbfbf',
+    borderWidth: 1/PixelRatio.get(),
     paddingLeft: 10,
     marginTop:-1,
     borderBottomLeftRadius: 5,
@@ -109,8 +108,8 @@ let style = {
 
   radiusInputLeft: {
     height: 45,
-    borderColor: '#e2e2e2',
-    borderWidth: 1,
+    borderColor: '#bfbfbf',
+    borderWidth: 1/PixelRatio.get(),
     paddingLeft: 10,
     marginTop:-1,
     borderBottomLeftRadius: 5,

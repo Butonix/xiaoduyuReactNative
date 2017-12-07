@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux'
 import { getUserInfo } from '../../reducers/user'
 import { resetNickname } from '../../actions/user'
 import { ListItem } from '../../components/ui'
+import HeadButton from '../../components/ui/head-button'
 
 import gStyles from '../../styles'
 
@@ -17,7 +18,9 @@ class ResetNickname extends React.Component {
     const { params = {} } = navigation.state
     return {
       title: '名字',
-      headerRight: (<View><Button onPress={()=>params.submit()} title={"提交"} /></View>),
+      headerRight: (<TouchableOpacity onPress={()=>params.submit()}>
+        <HeadButton name="提交" />
+      </TouchableOpacity>)
     }
   }
 
@@ -58,7 +61,7 @@ class ResetNickname extends React.Component {
   }
 
   render() {
-    
+
     const { me } = this.props
 
     return (<View style={styles.container}>
