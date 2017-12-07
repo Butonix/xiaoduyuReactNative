@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../reducers/user'
 import { cleanAllComment } from '../../actions/comment'
+import { loadPostsList } from '../../actions/posts'
 
 import PostsList from '../../components/posts-list'
 import TabBar from '../../components/tab-bar'
@@ -31,15 +32,34 @@ class Home extends Component {
     this.state = {
       listener: null,
       tab: 0,
-      ready: false
+      ready: false,
+      hasNew: false
     }
   }
 
   componentWillMount() {
     const self = this
+    const { me, loadPostsList } = this.props
+
     AsyncStorage.getItem('tab', (errs, result)=>{
       self.setState({ tab: result || 0, ready: true })
+
+      if (result == 1) return
+
+      loadPostsList({
+        name: 'find_one_recent_posts',
+        filters: { weaken: 1, method: 'user_custom', device: 'ios', per_page:1 },
+        callback: (res) => {
+          if (res && res.success && res.data && res.data[0]) {
+            if (new Date(res.data[0].sort_by_date).getTime() > new Date(me.last_find_posts_at || 0).getTime()) {
+              self.setState({ hasNew: true })
+            }
+          }
+        }
+      })
+
     })
+
   }
 
   componentDidMount() {
@@ -129,7 +149,6 @@ class Home extends Component {
   }
 
   componentWillUnmount() {
-
     if (this.state.listener) {
       // 移除监听事件
       // JPushModule.removeReceiveOpenNotificationListener(this.state.listener)
@@ -141,7 +160,7 @@ class Home extends Component {
 
     const self = this
     const { navigation } = this.props
-    const { tab, ready } = this.state
+    const { tab, ready, hasNew } = this.state
 
     if (!ready) return (<View></View>)
 
@@ -154,13 +173,16 @@ class Home extends Component {
 
     return (<ScrollableTabView
       renderTabBar={() => <TabBar
-        navigation={navigation}
         onScroll={(e)=>{ self.updateAnimation = e }}
         rightContent={rightContent}
+        redPointTab={hasNew ? 1 : -1}
         initialPage={parseInt(tab)}
       />}
       onScroll={(e)=>self.updateAnimation(e)}
-      onChangeTab={tab=>AsyncStorage.setItem('tab', tab.i + '')}
+      onChangeTab={tab=>{
+        AsyncStorage.setItem('tab', tab.i + '')
+        if (tab.i == 1) self.setState({ hasNew: false })
+      }}
       initialPage={parseInt(tab)}
       >
 
@@ -188,6 +210,7 @@ export default connect(state => ({
     me: getUserInfo(state)
   }),
   (dispatch) => ({
-    cleanAllComment: bindActionCreators(cleanAllComment, dispatch)
+    cleanAllComment: bindActionCreators(cleanAllComment, dispatch),
+    loadPostsList: bindActionCreators(loadPostsList, dispatch)
   })
 )(Home)

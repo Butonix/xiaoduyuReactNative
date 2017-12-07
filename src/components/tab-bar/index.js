@@ -67,15 +67,17 @@ class Tabbar extends Component {
   render() {
 
     const self = this
-    const { tabs, activeTab, goToPage, rightContent } = this.props
+    const { tabs, activeTab, goToPage, rightContent, redPointTab = -1 } = this.props
     const { tabWidth, contentOffset } = this.state
 
     let centerContent = (<View style={styles.tabbarCenter}>
                 <View style={[styles.tabView, { width: tabWidth * tabs.length }]}>
                   {tabs.map((item, index)=>{
-                    return (<TouchableOpacity key={index} onPress={()=>{ goToPage(index) }} style={activeTab == index ? styles.tabActive : styles.tab} activeOpacity={0.8}>
+                    return (<View key={index} style={{flex:1}}><TouchableOpacity onPress={()=>{ goToPage(index) }} activeOpacity={0.8} style={activeTab == index ? styles.tabActive : styles.tab}>
                           <Text style={{ color: activeTab == index ? '#08f' : '#23232b', fontSize:16, fontWeight: 'bold' }}>{item}</Text>
-                      </TouchableOpacity>)
+                      </TouchableOpacity>
+                      {redPointTab == index ? <View style={styles.redPoint}></View> : null}
+                    </View>)
                   })}
                 </View>
                 <View style={{ width: tabWidth * tabs.length }}>
@@ -212,6 +214,16 @@ var styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center'
     })
+  },
+
+  redPoint: {
+    position:'absolute',
+    marginTop:10,
+    marginLeft:53,
+    width:8,
+    height:8,
+    backgroundColor: 'red',
+    borderRadius: 4
   }
 })
 
