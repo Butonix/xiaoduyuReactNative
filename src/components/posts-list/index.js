@@ -40,6 +40,29 @@ class PostsList extends Component {
     if (!list.data) this.loadPostsList()
   }
 
+  componentDidMount() {
+
+    const self = this
+    // 将 scroll view 传递给父组件
+    const { getRef = ()=>{}, onRefresh = ()=>{} } = this.props
+
+    getRef(this.refs['scroll-view'])
+    onRefresh(()=>{
+      self._onRefresh()
+    })
+
+    // setTimeout(()=>{
+    //   let scrollView = this.refs['scroll-view']
+    //   console.log(scrollView.scrollTo({
+    //     x: 0,
+    //     y: 200,
+    //     animated: true
+    //   }))
+    // }, 1000)
+
+
+  }
+
   toPeople(people) {
     const { navigate } = this.props.navigation;
     navigate('PeopleDetail', { title: people.nickname, id: people._id })
@@ -108,9 +131,9 @@ class PostsList extends Component {
       renderHeader
     } = this.props
 
-    if (list.loading && list.data.length == 0 || !list.data) {
-      return (<Loading />)
-    }
+    // if (list.loading && list.data.length == 0 || !list.data) {
+    //   return (<Loading />)
+    // }
 
     // if (!list.loading && !list.more && list.data.length == 0) {
       // return (<Nothing content="没有帖子" />)
@@ -201,6 +224,7 @@ class PostsList extends Component {
           removeClippedSubviews={false}
           onScroll={this.onScroll}
           scrollEventThrottle={50}
+          ref='scroll-view'
           refreshControl={
             <RefreshControl
               refreshing={this.state.isRefreshing}

@@ -21,7 +21,7 @@ const converterErrorInfo = (res) => {
       }
     }
   }
-  
+
   // 替换字符串中的参数
   if (res.error_data) {
     if (typeof res.error == 'array') {
@@ -79,6 +79,7 @@ const AJAX = ({ url = '', type = 'get', data = {}, headers = {}, callback = ()=>
   if (config.debug && console.log) console.log('请求: ', option)
 
   return axios(option).then(resp => {
+
     // 请求成功
     // delete wait[id]
     if (config.debug && console.log) console.log('成功返回: ', resp)
@@ -89,12 +90,17 @@ const AJAX = ({ url = '', type = 'get', data = {}, headers = {}, callback = ()=>
     }
   })
   .catch(function (error, res) {
-    // 请求失败
-    // delete wait[id]
-    if (config.debug && console.log) console.log('失败返回: ', error.response.data)
+
+    if (config.debug && console.log) {
+      if (error.response) {
+        console.log('失败返回: ', error.response.data)
+      }
+    }
+
     if (error && error.response && error.response.data) {
       callback(converterErrorInfo(error.response.data))
     } else {
+      // 没有网络
       callback(null)
     }
   })

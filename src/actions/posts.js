@@ -235,3 +235,74 @@ export function addViewById({ id, callback = ()=>{ } }) {
     })
   }
 }
+
+
+
+// 首页拉取新的帖子的时间
+let lastFetchAt = null
+
+// 获取新的主题
+export function loadNewPosts(timestamp) {
+  return (dispatch, getState) => {
+
+    let accessToken = getState().user.accessToken
+    let postsList = getState().posts['discover'] || null
+    let newPostsList = getState().posts['new'] || null
+    let me = getState().user.profile || null
+
+    if (!postsList) return
+    if (!lastFetchAt) lastFetchAt = timestamp
+
+    let filters = {
+      gt_create_at: lastFetchAt,
+      per_page: 100,
+      postsSort: 'create_at:-1'
+    }
+
+    if (accessToken) {
+      filters.method = 'user_custom'
+    }
+
+    return loadPostsList({
+      name: 'new',
+      filters: filters,
+      callback: (res) =>{
+        console.log(res);
+      }
+    })(dispatch, getState)
+  }
+
+}
+
+
+// 显示新的帖子
+export function showNewPosts() {
+  return (dispatch, getState) => {
+
+      dispatch({ type: 'ADD_POSTS_LIST', name:'new', data: { data: [] } })
+
+      /*
+      return
+
+      let homeList = getState().posts['discover']
+      let newList = getState().posts['new']
+
+
+      let i = newList.data.length
+      while (i--) {
+        homeList.data.unshift(newList.data[i])
+      }
+
+      lastFetchAt = newList.data[0].create_at
+
+      dispatch({ type: 'ADD_POSTS_LIST', name:'discover', data: homeList })
+
+
+
+      setTimeout(()=>{
+        dispatch({ type: 'ADD_POSTS_LIST', name:'new', data: { data: [] } })
+        console.log('123123123');
+      })
+      */
+    }
+}

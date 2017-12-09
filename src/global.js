@@ -26,15 +26,15 @@ export default ({ dispatch, getState }) => {
       if (res && res.success) {
         // 正常登陆
         addAccessToken({ accessToken })(dispatch, getState)
-        callback(res.data)
+        callback('has sign in')
       } else if (res && !res.success) {
         // token失效
         AsyncStorage.removeItem('token',(res)=>{
-          callback(false)
+          callback('sign in')
         })
       } else {
         // api
-        callback(false)
+        callback('network error')
       }
 
     }})(dispatch, getState)
@@ -69,7 +69,7 @@ export default ({ dispatch, getState }) => {
     // 如果存在token，那么检测token，是否有效
     AsyncStorage.getItem('token', (errs, accessToken)=>{
 
-      if (!accessToken) return callback(false)
+      if (!accessToken) return callback('sign in')
 
       AsyncStorage.getItem('token_expires', (errs, expires)=>{
 
@@ -88,8 +88,10 @@ export default ({ dispatch, getState }) => {
                     load(accessToken, callback)
                   })
                 })
+              } else if (res && !res.success) {
+                callback('sign in')
               } else {
-                callback(false)
+                callback('network error')
               }
 
             }

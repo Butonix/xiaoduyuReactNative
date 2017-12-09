@@ -1,25 +1,21 @@
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, Image, View, AppState,
-  TouchableOpacity,
-  NetInfo
-} from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
 import SplashScreen from 'react-native-splash-screen'
 import JPushModule from 'jpush-react-native'
 
-
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../reducers/user'
 import { loadUnreadCount, loadNewNotifications, cancelNotiaction } from '../../actions/notification'
+import { loadNewPosts } from '../../actions/posts'
 import { api_url } from '../../../config'
 
 import Loading from '../../components/ui/loading'
 
 import websocket from '../../common/websocket'
-// import jpush from '../../common/jpush'
 
 import Platform from 'Platform'
 
@@ -37,14 +33,13 @@ class Welcome extends Component {
       notification: null
     }
     this.handleMessage = this.handleMessage.bind(this)
-    this.testNetwork = this.testNetwork.bind(this)
     this.enterApp = this.enterApp.bind(this)
     this.componentDidMount = this.componentDidMount.bind(this)
   }
 
   componentWillMount() {
     const self = this
-    
+
     // self.state.notification = {
     //   routeName: 'PostsDetail', params: { title:'测试', id:'58b2850ed8831fe9027a5f92' }
     // }
@@ -62,42 +57,30 @@ class Welcome extends Component {
 
     const self = this
 
-
     global.initReduxDate((result)=>{
-
-      // console.log(result);
 
       SplashScreen.hide()
 
-      global.signIn = result ? true : false
-      self.state.loading = false
+      if (result == 'network error') {
+        self.setState({ network: false, loading: false })
+        return
+      }
+
+      global.signIn = result == 'has sign in' ? true : false
+
+      self.setState({ loading: false })
       self.enterApp()
     })
 
-    /*
-    self.testNetwork((result)=>{
-
-      self.setState({ network: result, loading: result })
-
-      if (!result) return
-
-      global.initReduxDate((result)=>{
-
-        SplashScreen.hide()
-
-        global.signIn = result ? true : false
-        self.state.loading = false
-        self.enterApp()
-      })
-
-    })
-    */
   }
 
   // websocket 执行的消息
   handleMessage(name, data) {
 
-    const { me, loadUnreadCount, loadNewNotifications, cancelNotiaction, navigation } = this.props
+    const {
+      me, loadUnreadCount, loadNewNotifications,
+      cancelNotiaction, loadNewPosts, navigation
+    } = this.props
 
     switch (name) {
       case 'notiaction':
@@ -132,6 +115,9 @@ class Welcome extends Component {
       case 'online-user-count':
         // console.log(data);
         break
+      case 'new-posts':
+        loadNewPosts(data)
+        break
     }
   }
 
@@ -153,8 +139,6 @@ class Welcome extends Component {
 
       // 已登陆
       actions.push(NavigationActions.navigate({ routeName: 'Main' }))
-
-
 
       // 获取通知消息
       self.handleMessage('notiaction', [me._id])
@@ -183,37 +167,25 @@ class Welcome extends Component {
       }, 1000)
     }
 
-
-
-  }
-
-  // 测试是否有网
-  testNetwork(callback) {
-
-    callback(true)
-
-    return
-
-    this.setState({ loading: true })
-    function handleFirstConnectivityChange(state) {
-      // console.log('网络状态:' + state);
-      callback(state)
-      NetInfo.isConnected.removeEventListener('change', handleFirstConnectivityChange)
-    }
-    NetInfo.isConnected.addEventListener('change', handleFirstConnectivityChange)
   }
 
   render() {
 
+    const self = this
     const { loading, network } = this.state
 
     if (loading) {
       return (<View style={styles.container}><Loading /></View>)
     } else if (!network) {
       return (<View style={styles.container}>
-        <Text>连接网络失败</Text>
-        <TouchableOpacity onPress={this.componentDidMount}>
-          <Text>重新连接</Text>
+        <View style={styles.title}><Text style={styles.titleText}>没有网络或连接服务器异常</Text></View>
+        <TouchableOpacity onPress={()=>{
+          self.setState({ loading: true })
+          setTimeout(()=>{
+            self.componentDidMount()
+          }, 1000)
+        }}>
+          <Text style={styles.reloadText}>重新连接</Text>
         </TouchableOpacity>
       </View>)
     }
@@ -229,6 +201,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  title: {
+    padding: 15
+  },
+  titleText: {
+    fontSize: 18
+  },
+  reloadText: {
+    fontSize: 16,
+    color:'rgb(20, 146, 250)'
   }
 })
 
@@ -241,6 +223,7 @@ export default connect(
   (dispatch, props) => ({
     loadUnreadCount: bindActionCreators(loadUnreadCount, dispatch),
     loadNewNotifications: bindActionCreators(loadNewNotifications, dispatch),
-    cancelNotiaction: bindActionCreators(cancelNotiaction, dispatch)
+    cancelNotiaction: bindActionCreators(cancelNotiaction, dispatch),
+    loadNewPosts: bindActionCreators(loadNewPosts, dispatch)
   })
 )(Welcome)

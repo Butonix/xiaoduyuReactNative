@@ -8,7 +8,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../../reducers/user'
 import { cleanAllComment } from '../../actions/comment'
-import { loadPostsList } from '../../actions/posts'
+import { loadPostsList, showNewPosts } from '../../actions/posts'
+import { getPostListByName } from '../../reducers/posts'
 
 import PostsList from '../../components/posts-list'
 import TabBar from '../../components/tab-bar'
@@ -33,13 +34,14 @@ class Home extends Component {
       listener: null,
       tab: 0,
       ready: false,
-      hasNew: false
+      redPointTab: []
     }
   }
 
   componentWillMount() {
     const self = this
     const { me, loadPostsList } = this.props
+    const { redPointTab } = this.state
 
     AsyncStorage.getItem('tab', (errs, result)=>{
       self.setState({ tab: result || 0, ready: true })
@@ -52,7 +54,9 @@ class Home extends Component {
         callback: (res) => {
           if (res && res.success && res.data && res.data[0]) {
             if (new Date(res.data[0].sort_by_date).getTime() > new Date(me.last_find_posts_at || 0).getTime()) {
-              self.setState({ hasNew: true })
+              if (redPointTab.indexOf(1) == -1) {
+                redPointTab.push(1)
+              }
             }
           }
         }
@@ -159,8 +163,17 @@ class Home extends Component {
   render() {
 
     const self = this
-    const { navigation } = this.props
-    const { tab, ready, hasNew } = this.state
+    const { navigation, newPostsList, showNewPosts } = this.props
+    const { tab, ready, redPointTab } = this.state
+
+    // let index = redPointTab.indexOf(0)
+    // if (newPostsList.data && newPostsList.data.length > 0 && index == 1) {
+    //   redPointTab.push(0)
+    //   // this.setState({ redPointTab })
+    // }
+
+    console.log(newPostsList);
+    // console.log(redPointTab);
 
     if (!ready) return (<View></View>)
 
@@ -175,13 +188,27 @@ class Home extends Component {
       renderTabBar={() => <TabBar
         onScroll={(e)=>{ self.updateAnimation = e }}
         rightContent={rightContent}
-        redPointTab={hasNew ? 1 : -1}
+        redPointTab={newPostsList.data && newPostsList.data.length ? redPointTab.concat([0]) : redPointTab}
         initialPage={parseInt(tab)}
       />}
       onScroll={(e)=>self.updateAnimation(e)}
       onChangeTab={tab=>{
         AsyncStorage.setItem('tab', tab.i + '')
-        if (tab.i == 1) self.setState({ hasNew: false })
+
+        //  && redPointTab.indexOf(0) != -1
+        if (tab.i == 0) {
+          showNewPosts()
+          // console.log(self.discoverScrollView);
+          self.discoverScrollView.scrollTo({ x: 0, y: 0, animated: false })
+          self.onRefresh()
+        } else if (tab.i == 1) {
+          let index = redPointTab.indexOf(1)
+          if (index != -1) {
+            redPointTab.splice(index)
+            self.setState({ redPointTab })
+          }
+        }
+
       }}
       initialPage={parseInt(tab)}
       >
@@ -189,6 +216,13 @@ class Home extends Component {
       <PostsList {...this.props} navigation={navigation}
         tabLabel='发现'
         name="discover"
+        getRef={(obj)=>{
+          self.discoverScrollView = obj
+          // console.log(obj);
+        }}
+        onRefresh={(onRefresh)=>{
+          self.onRefresh = onRefresh
+        }}
         filters={{ weaken: 1 }} />
 
       <PostsList {...this.props} navigation={navigation}
@@ -207,10 +241,12 @@ const styles = StyleSheet.create({
 })
 
 export default connect(state => ({
-    me: getUserInfo(state)
+    me: getUserInfo(state),
+    newPostsList: getPostListByName(state, 'new')
   }),
   (dispatch) => ({
     cleanAllComment: bindActionCreators(cleanAllComment, dispatch),
-    loadPostsList: bindActionCreators(loadPostsList, dispatch)
+    loadPostsList: bindActionCreators(loadPostsList, dispatch),
+    showNewPosts: bindActionCreators(showNewPosts, dispatch)
   })
 )(Home)
