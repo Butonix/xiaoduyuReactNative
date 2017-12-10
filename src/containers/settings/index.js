@@ -15,6 +15,8 @@ import { ListItem } from '../../components/ui'
 
 import Platform from 'Platform'
 
+import websocket from '../../common/websocket'
+
 class Settings extends React.Component {
 
   static navigationOptions = {
@@ -59,6 +61,8 @@ class Settings extends React.Component {
             // JPushModule.initPush();
             // JPushModule.stopPush()
           // }
+
+          websocket.stop()
 
           global.cleanRedux()
 

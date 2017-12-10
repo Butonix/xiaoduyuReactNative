@@ -1,14 +1,16 @@
 
 
-import { api_url } from '../../config'
+import { official_website } from '../../config'
 
 let ws = null
 
 const start = ({ onmessage = ()=>{} }) => {
 
-  // if (ws) return
-
-  ws = new WebSocket(api_url+'/socket.io/?transport=websocket')
+  if (ws) {
+    stop()
+  }
+  
+  ws = new WebSocket(official_website+'/socket.io/?transport=websocket')
   ws.onopen = () => {}
   ws.onmessage = (e) => {
     // 接收到了一个消息
@@ -30,13 +32,17 @@ const start = ({ onmessage = ()=>{} }) => {
   }
 }
 
-// export const stop () => {
-//   if (ws) ws.close()
-// }
-
+const stop = () => {
+  if (ws) {
+    ws.onclose = () => {}
+    ws.close()
+    ws = null
+  }
+}
 
 export default {
-  start
+  start,
+  stop
 }
 
 

@@ -93,14 +93,17 @@ class SignIn extends Component {
       // 储存token有效时间
       AsyncStorage.setItem('token_expires', (new Date().getTime() + 1000 * 60 * 60 * 24 * 30) + '', function(errs, result){
 
-        const resetAction = NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'Main'})
-          ]
-        })
+        global.initReduxDate((result)=>{
 
-        global.initReduxDate(()=>{
+          // console.log(result);
+
+          const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'Welcome' })
+            ]
+          })
+
           self.props.navigation.dispatch(resetAction)
         })
 
@@ -134,23 +137,27 @@ class SignIn extends Component {
     if (captcha) data.captcha = captcha
     if (captchaId) data.captcha_id = captchaId
 
-    signin({
-      data,
-      callback: (res)=>{
+    setTimeout(()=>{
 
-        let params = { visible: false }
+      signin({
+        data,
+        callback: (res)=>{
+          if (!res.success) {
+            self.loadCaptcha()
+            self.setState({
+              visible: false,
+              error: res.error
+            })
+          } else {
+            self.setState({ visible: false })
+            self.handleSignIn(res.data.access_token)
+          }
 
-        if (!res.success) {
-          params.error = res.error
-          self.loadCaptcha()
-        } else {
-          self.handleSignIn(res.data.access_token)
         }
+      })
 
-        self.setState(params)
+    }, 1000)
 
-      }
-    })
 
   }
 

@@ -165,16 +165,7 @@ class Home extends Component {
     const self = this
     const { navigation, newPostsList, showNewPosts } = this.props
     const { tab, ready, redPointTab } = this.state
-
-    // let index = redPointTab.indexOf(0)
-    // if (newPostsList.data && newPostsList.data.length > 0 && index == 1) {
-    //   redPointTab.push(0)
-    //   // this.setState({ redPointTab })
-    // }
-
-    console.log(newPostsList);
-    // console.log(redPointTab);
-
+    
     if (!ready) return (<View></View>)
 
     const rightContent = (<View style={styles.tabbatRight}><TouchableOpacity
@@ -196,10 +187,10 @@ class Home extends Component {
         AsyncStorage.setItem('tab', tab.i + '')
 
         //  && redPointTab.indexOf(0) != -1
-        if (tab.i == 0) {
+        if (tab.i == 0 && redPointTab.indexOf(0) != -1) {
           showNewPosts()
           // console.log(self.discoverScrollView);
-          self.discoverScrollView.scrollTo({ x: 0, y: 0, animated: false })
+          self.discoverScrollView.scrollTo({ x: 0, y: 0, animated: true })
           self.onRefresh()
         } else if (tab.i == 1) {
           let index = redPointTab.indexOf(1)

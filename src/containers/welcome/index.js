@@ -29,7 +29,7 @@ class Welcome extends Component {
     super(props)
     this.state = {
       loading: true,
-      network: false,
+      network: true,
       notification: null
     }
     this.handleMessage = this.handleMessage.bind(this)
@@ -43,6 +43,8 @@ class Welcome extends Component {
     // self.state.notification = {
     //   routeName: 'PostsDetail', params: { title:'测试', id:'58b2850ed8831fe9027a5f92' }
     // }
+
+    self.setState({ loading: true })
 
     JPushModule.addOpenNotificationLaunchAppListener((result) => {
       self.state.notification = result
@@ -168,7 +170,7 @@ class Welcome extends Component {
     }
 
   }
-
+  
   render() {
 
     const self = this
