@@ -93,32 +93,25 @@ let tabBarOptions = {
 }
 
 if (Platform.OS === 'android') {
+
   tabBarOptions = {
     style: {
-      height: 60,
+      height: 50,
       backgroundColor:'#fff'
     },
-    activeBackgroundColor:'#fff',
-    activeTintColor:'#08f',
-    inactiveBackgroundColor:'#fff',
-    inactiveTintColor:'#757575',
-    allowFontScaling: false,
-    labelStyle: {
-      marginTop:15
-    },
     tabStyle:{
-      borderColor: '#d4d4d4',
-      borderBottomWidth: 1/PixelRatio.get(),
+      borderWidth: 0,
     },
+    activeTintColor:'#08f',
+    inactiveTintColor:'#757575',
 
-    // android
-    showIcon: false,
-    // showLabel: false,
-    // iconStyle: { width:24, height:24 },
-    // labelStyle:{ fontSize: 8, marginTop:0 },
-    indicatorStyle: { backgroundColor: '#08f' }
-    // showLabel:false,
+    showIcon: true,
+    showLabel: true,
+    iconStyle: { width:28, height:28 },
+    labelStyle:{ fontSize: 9, marginTop:0 },
+    indicatorStyle: { backgroundColor: '#fff' }
   }
+
 }
 
 const MainScreenNavigator = TabNavigator({
@@ -181,7 +174,7 @@ const App = StackNavigator({
         // borderBottomWidth:1
         // borderColor: '#e3e3e3'
       }, {
-        height: 65
+        height: Platform.OS === 'android' ? 50 : 65
       })
     },
     headerTintColor: '#23232b',

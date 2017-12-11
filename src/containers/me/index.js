@@ -47,8 +47,8 @@ class Me extends React.Component {
             <TouchableOpacity onPress={()=>{ this.props.navigation.navigate('Settings') }}>
 
               <View style={styles.avatarItem}>
-                <View><Image source={{uri:'https:'+me.avatar_url}} style={styles.avatar} /></View>
-                <View><Text>{me.nickname}</Text></View>
+                <View><Image source={{uri:'https:'+me.avatar_url.split('?')[0]+'?imageMogr2/thumbnail/!200/quality/90'}} style={styles.avatar} /></View>
+                <View><Text style={styles.black}>{me.nickname}</Text></View>
               </View>
 
             </TouchableOpacity>
@@ -148,6 +148,9 @@ const stylesIcon = StyleSheet.create({
   },
   focused: {
     backgroundColor:'#08f'
+  },
+  black: {
+    color: '#23232b'
   }
 })
 

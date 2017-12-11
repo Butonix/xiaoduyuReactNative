@@ -21,7 +21,7 @@ class ChooseTopic extends React.Component {
       // }
     }
   }
-  
+
   constructor (props) {
     super(props)
     this.cancel = this.cancel.bind(this)
@@ -82,17 +82,17 @@ class ChooseTopic extends React.Component {
     }
 
     return (<ScrollView style={styles.container}>
-      <View style={styles.slogan}><Text style={styles.sloganText}>选择一个话题与大家讨论吧</Text></View>
+      <View style={styles.slogan}><Text style={[styles.sloganText, styles.black]}>选择一个话题与大家讨论吧</Text></View>
       {parentTopicList.map(item=>{
         return (<View key={item._id} style={styles.group}>
-                  <View><Text style={styles.title}>{item.name}</Text></View>
+                  <View><Text style={[styles.title, styles.black]}>{item.name}</Text></View>
                   <View style={styles.itemContainer}>
                     {childTopicList[item._id] && childTopicList[item._id].map(item=>{
                       return (<TouchableOpacity
                         style={styles.item}
                         key={item._id}
                         onPress={()=>{this.choose(item)}}>
-                          <Text>{item.name}</Text>
+                          <Text style={styles.black}>{item.name}</Text>
                         </TouchableOpacity>)
                     })}
                   </View>
@@ -128,6 +128,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color:'#rgb(120, 120, 120)'
+  },
+  black: {
+    color: '#23232b'
   }
 });
 

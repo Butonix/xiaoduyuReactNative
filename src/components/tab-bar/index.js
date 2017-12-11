@@ -1,6 +1,8 @@
 
 import React, { Component } from 'react'
 import { View, ScrollView, StyleSheet, Text, Image, AsyncStorage, TouchableOpacity, PixelRatio, Animated, Dimensions } from 'react-native'
+import Platform from 'Platform'
+
 import WriteIcon from '../ui/icon/write'
 
 const { height, width } = Dimensions.get('window');
@@ -42,6 +44,7 @@ class Tabbar extends Component {
 
     // 平均显示个数
     let per = Math.floor(width/tabWidth)
+
     // 超出部分的平均数
     let offset = (width - (tabWidth*per)) / 2
 
@@ -58,10 +61,20 @@ class Tabbar extends Component {
         postion.x = index * tabWidth - (per * tabWidth) / 2
       }
 
-      params.contentOffset = postion
+
+
+      if (Platform.OS === 'android') {
+        if (this.refs['scroll-view']) {
+          this.refs['scroll-view'].scrollTo(postion)
+        }
+      } else {
+        params.contentOffset = postion
+      }
+
     }
 
     this.setState(params)
+
   }
 
   render() {
@@ -69,6 +82,8 @@ class Tabbar extends Component {
     const self = this
     const { tabs, activeTab, goToPage, rightContent, redPointTab = [] } = this.props
     const { tabWidth, contentOffset } = this.state
+
+    // console.log(this.state.fadeAnim);
 
     let centerContent = (<View style={styles.tabbarCenter}>
                 <View style={[styles.tabView, { width: tabWidth * tabs.length }]}>
@@ -87,11 +102,13 @@ class Tabbar extends Component {
 
     if (tabs.length > Math.floor(width/tabWidth)) {
       centerContent = (<ScrollView
+        ref="scroll-view"
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         contentOffset={contentOffset}
         style={{
+
         }}
       >
         {centerContent}
@@ -144,8 +161,8 @@ var styles = StyleSheet.create({
       borderColor: '#d4d4d4'
     }, {
       backgroundColor: '#fff',
-      paddingTop:23,
-      height:65,
+      paddingTop: Platform.OS === 'android' ? 0 : 23,
+      height: Platform.OS === 'android' ? 50 : 65,
       flexDirection: 'row',
       borderBottomWidth: 1/PixelRatio.get(),
       borderColor: '#d4d4d4'

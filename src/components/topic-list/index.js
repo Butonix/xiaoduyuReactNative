@@ -167,7 +167,8 @@ const styles = StyleSheet.create({
     marginRight:10
   },
   topicNameText: {
-    fontWeight:'bold'
+    fontWeight:'bold',
+    color: '#23232b'
   },
   brief: {
     marginTop:3,

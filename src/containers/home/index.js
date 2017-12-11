@@ -165,7 +165,7 @@ class Home extends Component {
     const self = this
     const { navigation, newPostsList, showNewPosts } = this.props
     const { tab, ready, redPointTab } = this.state
-    
+
     if (!ready) return (<View></View>)
 
     const rightContent = (<View style={styles.tabbatRight}><TouchableOpacity

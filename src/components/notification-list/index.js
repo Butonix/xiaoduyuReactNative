@@ -160,7 +160,7 @@ class NotificationList extends Component {
             </View>
             <Text style={styles.title}>
               <Text style={styles.gray}>关注了你的</Text>
-              <Text onPress={()=>{this.toPosts(notice.posts_id)}}>{notice.posts_id.title}</Text>
+              <Text style={styles.black} onPress={()=>{this.toPosts(notice.posts_id)}}>{notice.posts_id.title}</Text>
               <Text style={styles.gray}>帖子</Text>
             </Text>
           </View>)
@@ -175,7 +175,7 @@ class NotificationList extends Component {
             </View>
             <Text style={styles.title}>
               <Text style={styles.gray}>赞了你的</Text>
-              <Text onPress={()=>{this.toPosts(notice.posts_id)}}>{notice.posts_id.title}</Text>
+              <Text style={styles.black} onPress={()=>{this.toPosts(notice.posts_id)}}>{notice.posts_id.title}</Text>
               <Text style={styles.gray}>帖子</Text>
             </Text>
           </View>)
@@ -191,7 +191,7 @@ class NotificationList extends Component {
             </View>
             <Text style={styles.title}>
               <Text style={styles.gray}>回复了你的</Text>
-              <Text onPress={()=>{this.toComment(notice.comment_id.parent_id)}}>
+              <Text style={styles.black} onPress={()=>{this.toComment(notice.comment_id.parent_id)}}>
                 {notice.comment_id.reply_id ? notice.comment_id.reply_id.content_trim : notice.comment_id.parent_id.content_trim}
               </Text>
               <Text style={styles.gray}>回复</Text>
@@ -230,7 +230,7 @@ class NotificationList extends Component {
 
             <Text style={styles.title}>
               <Text style={styles.gray}>评论了你的</Text>
-              <Text onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>{notice.comment_id.posts_id.title}</Text>
+              <Text style={styles.black} onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>{notice.comment_id.posts_id.title}</Text>
               <Text style={styles.gray}>帖子</Text>
             </Text>
 
@@ -267,14 +267,14 @@ class NotificationList extends Component {
           </View>
           <Text style={styles.title}>
             <Text style={styles.gray}>评论了</Text>
-            <Text onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>{notice.comment_id.posts_id.title}</Text>
+            <Text style={styles.black} onPress={()=>{this.toPosts(notice.comment_id.posts_id)}}>{notice.comment_id.posts_id.title}</Text>
             <Text style={styles.gray}>帖子</Text>
           </Text>
           <TouchableOpacity onPress={()=>{this.addReadAll(notice._id)}} activeOpacity={0.8}>
 
             {readAllId.indexOf(notice._id) != -1 ?
               <HTMLView html={notice.comment_id.content_html} imgOffset={30} />:
-              <Text>
+              <Text style={styles.commentContentText}>
                 {notice.comment_id.content_trim}
                 {notice.comment_id.more ? <Text style={styles.readAll}>阅读全文</Text> : null}
               </Text>}
@@ -293,7 +293,7 @@ class NotificationList extends Component {
           </View>
           <Text style={styles.title}>
             <Text style={styles.gray}>赞了你的</Text>
-            <Text onPress={()=>{this.toComment(notice.comment_id)}}>{notice.comment_id.content_trim}</Text>
+            <Text style={styles.black} onPress={()=>{this.toComment(notice.comment_id)}}>{notice.comment_id.content_trim}</Text>
             <Text style={styles.gray}>回复</Text>
           </Text>
         </View>)
@@ -309,7 +309,7 @@ class NotificationList extends Component {
           </View>
           <Text style={styles.title}>
             <Text style={styles.gray}>赞了你的</Text>
-            <Text onPress={()=>{this.toComment(notice.comment_id)}}>{notice.comment_id.content_trim}</Text>
+            <Text style={styles.black} onPress={()=>{this.toComment(notice.comment_id)}}>{notice.comment_id.content_trim}</Text>
             <Text style={styles.gray}>评论</Text>
           </Text>
         </View>)
@@ -377,11 +377,12 @@ const styles = StyleSheet.create({
   item: { marginTop: 10 },
   itemContent: { padding: 15, backgroundColor: '#fff' },
   commentContent:{ padding: 10, marginTop: 10, backgroundColor: '#efefef', borderRadius:5 },
-  commentContentText: { lineHeight: 20 },
-  nickname: { fontWeight: 'bold', marginRight: 10 },
+  commentContentText: { lineHeight: 20, color:'#23232b' },
+  nickname: { fontWeight: 'bold', marginRight: 10, color:'#23232b' },
   head: { flexDirection:'row', flexWrap: 'wrap', alignItems: 'center', marginBottom: 5 },
   avatar: { width: 20, height: 20, borderRadius: 10, marginRight: 5, backgroundColor:'#efefef' },
   gray: { color:'#909090' },
+  black: { color:'#23232b' },
   title: { lineHeight: 20 },
   replyView: {
     height: 30,

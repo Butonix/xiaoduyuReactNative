@@ -15,13 +15,13 @@ class ListItem extends Component {
 
     if (type == 'center') {
       return (<View style={[styles.item, styles.center]}>
-        <Text>{name}</Text>
+        <Text style={styles.black}>{name}</Text>
       </View>)
     }
 
     if (type == 'hook') {
       return (<View style={styles.item}>
-        <View style={styles.minItem}><Text>{name}</Text></View>
+        <View style={styles.minItem}><Text style={styles.black}>{name}</Text></View>
         <View style={styles.minItem}></View>
         <View style={styles.itemRight}>
           <Image source={require('./images/green-hook.png')} style={styles.arrowRight} />
@@ -31,13 +31,13 @@ class ListItem extends Component {
 
     if (type == 'none') {
       return (<View style={styles.item}>
-        <View style={styles.minItem}><Text>{name}</Text></View>
+        <View style={styles.minItem}><Text style={styles.black}>{name}</Text></View>
         <View style={styles.minItem}></View>
       </View>)
     }
 
     return (<View style={[styles.item, (type == 'center' ? styles.center : null)]}>
-      <View style={styles.minItem}><Text>{name}</Text></View>
+      <View style={styles.minItem}><Text style={styles.black}>{name}</Text></View>
       <View style={styles.minItem}></View>
       <View style={styles.itemRight}>
         {rightElement}
@@ -80,6 +80,9 @@ const styles = StyleSheet.create({
   center: {
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  black: {
+    color: '#23232b'
   }
 })
 
