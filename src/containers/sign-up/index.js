@@ -1,13 +1,10 @@
 
 
 import React, { Component } from 'react'
-import { StyleSheet, Text, Image, View, Button, ScrollView,
-  TextInput, Alert, TouchableOpacity, AsyncStorage,
-  Picker, Modal
-} from 'react-native'
+import { StyleSheet, Text, Image, View, ScrollView, TextInput, Alert, TouchableOpacity, AsyncStorage, ImageBackground } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
-// import RadioForm from 'react-native-simple-radio-button'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -27,7 +24,22 @@ import Platform from 'Platform'
 class SignUp extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: '注册'
+    // headerTitle: '注册',
+    headerStyle: {
+      ...ifIphoneX({
+        height: 75,
+        paddingTop:30,
+        backgroundColor: '#076dac',
+        borderBottomWidth: 0
+      }, {
+        backgroundColor: '#076dac',
+        borderBottomWidth: 0
+      })
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      color: '#fff'
+    }
   })
 
   constructor (props) {
@@ -146,109 +158,113 @@ class SignUp extends Component {
     const self = this
     const { captchaId } = this.state
     const { nickname, phone, password, captcha, gender } = this.state.error
+    const { navigate } = this.props.navigation
 
-    // var radio_props = [
-    //   {label: '男     ', value: 'male' },
-    //   {label: '女     ', value: 'female' }
-    // ]
+    return (
+      <ImageBackground source={require('../../images/bg.png')}  style={{ flex:1 }} resizeMode="cover">
+      <ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
 
-    return (<ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
-      <View style={gStyles.m20}>
+      <View style={styles.title}><Text style={styles.titleText}>创建账号</Text></View>
+
+      <View>
 
         <TextInput
-          style={gStyles.radiusInputTop}
+          style={styles.textInput}
           onChangeText={(nickname) => this.setState({nickname})}
           placeholder='名字'
           ref="nickname"
           maxLength={40}
-          autoFocus={true}
           underlineColorAndroid='transparent'
+          placeholderTextColor='#96d7ff'
+          selectionColor="#fff"
           />
 
-        {nickname ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{nickname}</Text></View> : null}
+        {nickname ? <View style={styles.tip}><Text style={styles.tipText}>{nickname}</Text></View> : null}
 
-        <View style={{ flexDirection: 'row', borderWidth: 1, marginTop:-1, borderColor: '#e2e2e2', paddingLeft:10 }}>
+        <View style={{ flexDirection: 'row' }}>
           <View>
-            <SelectCountry
-              onChoose={(res)=>{
-                self.setState({ areaCode: res.code })
-              }}
-              />
+            <View style={styles.selectCountry}>
+              <SelectCountry
+                onChoose={(res)=>{
+                  self.setState({ areaCode: res.code })
+                }}
+                />
+            </View>
           </View>
           <View style={{flex:1}}>
           <TextInput
-            style={{ height:45, borderLeftWidth: 1, borderColor: '#e2e2e2', paddingLeft:10 }}
+            // style={{ height:45, borderLeftWidth: 1, borderColor: '#e2e2e2', paddingLeft:10 }}
+            style={[styles.textInput, { borderTopLeftRadius:0, borderBottomLeftRadius: 0 } ]}
             autoCapitalize="none"
             onChangeText={(account) => this.setState({account})}
             placeholder='手机号'
             ref="phone"
             maxLength={60}
             underlineColorAndroid='transparent'
+            placeholderTextColor='#96d7ff'
+            selectionColor="#fff"
             />
           </View>
         </View>
 
-        {phone ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{phone}</Text></View> : null}
+        {phone ? <View style={styles.tip}><Text style={styles.tipText}>{phone}</Text></View> : null}
 
         <View>
           <TextInput
-            style={gStyles.radiusInputCenter}
+            style={styles.textInput}
             onChangeText={(captcha) => this.setState({captcha})}
             placeholder='验证码'
             ref="captcha"
             maxLength={6}
             keyboardType={'numeric'}
             underlineColorAndroid='transparent'
+            placeholderTextColor='#96d7ff'
+            selectionColor="#fff"
             />
           <View style={{
             position: 'absolute',
             marginTop: 0,
-            height:45,
+            // backgroundColor:'#fff',
+            height:50,
             justifyContent: 'center',
-            marginLeft: screenWidth - 150
+            marginLeft: screenWidth - 140
           }}>
             <CaptchaButton sendCaptcha={this.sendCaptcha} />
           </View>
         </View>
 
-        {captcha ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{captcha}</Text></View> : null}
+        {captcha ? <View style={styles.tip}><Text style={styles.tipText}>{captcha}</Text></View> : null}
 
         <TextInput
-          style={gStyles.radiusInputBottom}
+          style={styles.textInput}
           onChangeText={(password) => this.setState({password})}
           secureTextEntry={true}
           placeholder='密码'
           maxLength={30}
           ref="password"
           underlineColorAndroid='transparent'
+          placeholderTextColor='#96d7ff'
+          selectionColor="#fff"
           />
 
-        {password ? <View style={gStyles.radiusInputCenter}><Text style={gStyles.darkGray}>{password}</Text></View> : null}
+        {password ? <View style={styles.tip}><Text style={styles.tipText}>{password}</Text></View> : null}
 
-        {/*
-        <View style={gender ? gStyles.radiusInputCenter : gStyles.radiusInputBottom}>
-          <RadioForm
-            radio_props={radio_props}
-            initial={3}
-            formHorizontal={true}
-            onPress={(gender) => this.setState({gender})}
-          />
-        </View>
-        */}
-
-        {/*gender ? <View style={gStyles.radiusInputBottom}><Text style={gStyles.darkGray}>{gender}</Text></View> : null*/}
-
-        <TouchableOpacity onPress={this.submit} style={[gStyles.fullButton, gStyles.mt20]}>
-          <Text style={gStyles.white}>注册</Text>
+        <TouchableOpacity onPress={this.submit} style={styles.button}>
+          <Text style={styles.buttonText}>注册</Text>
         </TouchableOpacity>
 
+    </View>
+
+    <View style={styles.protocol}>
+      <Text style={styles.protocolText} onPress={()=>{ navigate('Agreement') }}>轻点“注册”，即表示您同意小度鱼 用户协议</Text>
     </View>
 
     {this.state.visible ? <Wait /> : null}
 
     {Platform.OS === 'android' ? null : <KeyboardSpacer />}
 
-    </ScrollView>)
+    </ScrollView>
+    </ImageBackground>)
   }
 }
 
@@ -256,7 +272,63 @@ class SignUp extends Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: '#ffff'
+    // backgroundColor: '#139aef',
+    padding:20,
+    paddingTop:20,
+    backgroundColor: 'transparent'
+  },
+
+  title: { marginBottom: 30 },
+  titleText: { color:'#fff', fontSize:30, fontWeight:'bold' },
+
+  buttonText: { color:'#139aef' },
+  textInput: {
+    color: '#fff',
+    marginBottom:10,
+    padding:15,
+    borderRadius: 6,
+    backgroundColor: '#1681c4'
+  },
+
+  selectCountry: {
+    height:50,
+    alignItems:'center',
+    justifyContent: 'center',
+    backgroundColor: '#1681c4',
+    borderTopLeftRadius: 6,
+    borderBottomLeftRadius: 6,
+    paddingLeft:10
+    // paddingRight:10
+  },
+
+  button: {
+    height:50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor:'#fff',
+    borderRadius: 6
+  },
+  buttonText: {
+    color:'#0262a6',
+    fontSize:16
+  },
+
+  protocol:{
+    marginTop:10,
+    flexDirection: 'row'
+  },
+  protocolText: {
+    fontSize:12,
+    color:'#fff',
+    // marginRight:10,
+    marginTop:10
+  },
+
+  tip:{
+    marginBottom:15
+  },
+  tipText: {
+    color:'#fff'
   }
 })
 

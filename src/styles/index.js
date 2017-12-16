@@ -2,7 +2,7 @@ import { StyleSheet, PixelRatio } from 'react-native'
 
 let style = {
   button:{
-    backgroundColor:'#277eff',
+    backgroundColor:'#139aef',
     height:50,
     borderRadius:4,
     justifyContent: 'center',
@@ -10,7 +10,7 @@ let style = {
   },
   fullButton: {
     // flex:1,
-    backgroundColor:'#277eff',
+    backgroundColor:'#139aef',
     height:45,
     borderRadius:4,
     justifyContent: 'center',
@@ -19,6 +19,15 @@ let style = {
     // marginLeft: 20,
     // marginRight: 20
   },
+
+  lightBlueButton: {
+    backgroundColor:'#55bdff',
+    height:45,
+    borderRadius:4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
   borderButton: {
     backgroundColor:'#fff',
     height:45,

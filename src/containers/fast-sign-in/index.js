@@ -1,25 +1,20 @@
-
-
 import React, { Component } from 'react'
-import { StyleSheet, Text, Image, ImageBackground, View, Button, ScrollView, WebView, TextInput, Alert, TouchableOpacity, AsyncStorage, DeviceEventEmitter } from 'react-native'
-
+import { StyleSheet, Text, Image, ImageBackground, View, TextInput, TouchableOpacity, AsyncStorage } from 'react-native'
+import Platform from 'Platform'
 import { NavigationActions } from 'react-navigation'
 
-import openShare from 'react-native-open-share'
+// import openShare from 'react-native-open-share'
 import * as QQAPI from 'react-native-qq'
+import * as WeiboAPI from 'react-native-weibo'
+
 import KeyboardSpacer from 'react-native-keyboard-spacer'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { signin } from '../../actions/sign'
 import { weiboGetUserInfo, QQGetUserInfo } from '../../actions/oauth'
 import { getClientInstalled } from '../../reducers/client-installed'
-
-import { ifIphoneX } from 'react-native-iphone-x-helper'
-
-// import * as WeiboAPI from 'react-native-weibo'
-
-import gStyles from '../../styles'
 
 import Dimensions from 'Dimensions'
 const screenWidth = Dimensions.get('window').width
@@ -28,25 +23,16 @@ const screenHeight = Dimensions.get('window').height
 class FastSignIn extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    header: null,
-    headerTitle: '欢迎页'
+    header: null
   })
 
   constructor (props) {
     super(props)
-    this.state = {
-      email: '',
-      password: ''
-    }
-    this._weiboLogin = this._weiboLogin.bind(this)
-    this._qqLogin = this._qqLogin.bind(this)
+    this.state = {}
     this.handleSignIn = this.handleSignIn.bind(this)
-  }
-
-  componentDidMount() {
-
-    // console.log(QQAPI);
-    // console.log('test');
+    this.githubSignIn = this.githubSignIn.bind(this)
+    this.qqSignIn = this.qqSignIn.bind(this)
+    this.weiboSignIn = this.weiboSignIn.bind(this)
   }
 
   handleSignIn(access_token) {
@@ -70,84 +56,66 @@ class FastSignIn extends Component {
 
   }
 
-  _weiboLogin () {
+  qqSignIn() {
 
-    var _this = this
-    const { weiboGetUserInfo } = this.props
-    /*
-    WeiboAPI.login({
-      scope: 'all',
-      redirectURI: 'https://api.xiaoduyu.com'
-    }).then((response)=>{
+    const self = this
+    const { clientInstalled, QQGetUserInfo } = this.props
+    const { navigate } = this.props.navigation
 
-      weiboGetUserInfo({
-        data: {
-          weibo_access_token: response.accessToken,
-          refresh_token: response.refreshToken,
-          user_id: response.userID,
-          expiration_date: response.expirationDate
-        },
-        callback: (res)=>{
-          if (res.success) {
-            _this.handleSignIn(res.data.access_token)
-          }
+    if (clientInstalled.qq && Platform.OS === 'ios') {
+
+      QQAPI.login().then((res)=>{
+        if (res &&
+            res.expires_in &&
+            res.openid &&
+            res.access_token
+        ) {
+
+          QQGetUserInfo({
+            data: {
+              qq_access_token: res.access_token,
+              refresh_token: '',
+              openid: res.openid,
+              expires_in: res.expires_in
+            },
+            callback: (res)=>{
+              if (res.success) {
+                self.handleSignIn(res.data.access_token)
+              }
+            }
+          })
+
         }
       })
 
-      // console.log(res);
-    })
-    */
+    } else {
+      navigate('OtherSignIn', {
+        successCallback: token => this.handleSignIn(token),
+        name: 'qq'
+      })
+    }
 
-    /*
-      var _this = this;
-      openShare.weiboLogin();
-
-      const { weiboGetUserInfo } = this.props
-
-      if (!_this.weiboLogin) {
-          _this.weiboLogin = DeviceEventEmitter.addListener(
-              'managerCallback', (response) => {
-
-                  weiboGetUserInfo({
-                    data: {
-                      weibo_access_token: response.res.accessToken,
-                      refresh_token: response.res.refreshToken,
-                      user_id: response.res.userID,
-                      expiration_date: response.res.expirationDate
-                    },
-                    callback: (res)=>{
-                      if (res.success) {
-                        _this.handleSignIn(res.data.access_token)
-                      }
-                    }
-                  })
-
-                  _this.weiboLogin.remove();
-                  delete _this.weiboLogin;
-              }
-          );
-      }
-    */
   }
 
-  _qqLogin () {
+  weiboSignIn() {
 
     const self = this
-    const { QQGetUserInfo } = this.props
+    const { navigate } = this.props.navigation
+    const { clientInstalled, weiboGetUserInfo } = this.props
 
-    QQAPI.login().then((res)=>{
-      if (res &&
-          res.expires_in &&
-          res.openid &&
-          res.access_token
-      ) {
+    /*
+    if (clientInstalled.weibo && Platform.OS === 'ios') {
+      WeiboAPI.login({
+        scope: 'all',
+        redirectURI: 'https://api.xiaoduyu.com'
+      }).then((response)=>{
 
-        QQGetUserInfo({
+        weiboGetUserInfo({
           data: {
-            qq_access_token: res.access_token,
-            refresh_token: '',
-            openid: res.openid,
-            expires_in: res.expires_in
+            weibo_access_token: response.accessToken,
+            refresh_token: response.refreshToken,
+            user_id: response.userID,
+            expiration_date: response.expirationDate
           },
           callback: (res)=>{
             if (res.success) {
@@ -156,172 +124,135 @@ class FastSignIn extends Component {
           }
         })
 
-      }
+        // console.log(res);
+      })
+    } else {
+    */
+      navigate('OtherSignIn', {
+        successCallback: token => this.handleSignIn(token),
+        name: 'weibo'
+      })
+    // }
+
+  }
+
+  githubSignIn() {
+    const { navigate } = this.props.navigation
+    navigate('OtherSignIn', {
+      successCallback: token => this.handleSignIn(token),
+      name: 'github'
     })
-
-      /*
-      var _this = this;
-      openShare.qqLogin()
-
-      const { QQGetUserInfo } = this.props
-
-      if (!_this.qqLogin) {
-          _this.qqLogin = DeviceEventEmitter.addListener(
-              'managerCallback', (response) => {
-
-                  QQGetUserInfo({
-                    data: {
-                      qq_access_token: response.res.access_token,
-                      refresh_token: '',
-                      openid: response.res.openid,
-                      expires_in: response.res.expires_in
-                    },
-                    callback: (res)=>{
-                      if (res.success) {
-                        _this.handleSignIn(res.data.access_token)
-                      }
-                    }
-                  })
-
-                  _this.qqLogin.remove();
-                  delete _this.qqLogin;
-              }
-          );
-      }
-      */
   }
 
   render() {
 
     const self = this
-
     const { navigate } = this.props.navigation
-    const { clientInstalled } = this.props
 
-    return (<View style={styles.container} keyboardShouldPersistTaps={'always'}>
+    return (<ImageBackground source={require('../../images/bg.png')}  style={{ flex:1 }} resizeMode="cover">
+      <View style={styles.container}>
 
-        <View style={styles.logoMain}>
+        <View style={styles.welcome}>
           <Image source={require('./images/logo.png')} style={styles.logo} resizeMode="cover" />
+          <View style={{backgroundColor:null}}><Text style={styles.welcomeText}>欢迎来到小度鱼。</Text></View>
         </View>
 
-        {/*clientInstalled.qq ?
-          <TouchableOpacity onPress={this._qqLogin} style={styles.fullButton}>
-            <Text style={styles.buttonText}>使用QQ账号登录</Text>
+        <View style={styles.main}>
+          <TouchableOpacity onPress={()=>navigate('SignIn')} style={styles.signInButton}>
+            <Text style={styles.signInButtonText}>登陆</Text>
           </TouchableOpacity>
-          : <TouchableOpacity
-              onPress={()=>{
-                navigate('OtherSignIn', {
-                  successCallback: token => self.handleSignIn(token),
-                  name: 'qq'
-                })
-              }}
-              style={styles.fullButton}>
-              <Text style={styles.buttonText}>使用QQ账号登录</Text>
-            </TouchableOpacity>*/}
-
-        <TouchableOpacity
-            onPress={()=>{
-              navigate('OtherSignIn', {
-                successCallback: token => self.handleSignIn(token),
-                name: 'qq'
-              })
-            }}
-            style={styles.fullButton}>
-            <Text style={styles.buttonText}>使用QQ账号登录</Text>
+          <TouchableOpacity onPress={()=>navigate('SignUp')} style={styles.signUpButton}>
+            <Text style={styles.signUpButtonText}>创建账号</Text>
           </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={()=>{
-            navigate('OtherSignIn', {
-              successCallback: token => self.handleSignIn(token),
-              name: 'github'
-            })
-          }}
-          style={styles.fullButton}>
-          <Text style={styles.buttonText}>使用Github账号登录</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={()=>{
-            navigate('OtherSignIn', {
-              successCallback: token => self.handleSignIn(token),
-              name: 'weibo'
-            })
-          }}
-          style={styles.fullButton}>
-          <Text style={styles.buttonText}>使用微博账号登录</Text>
-        </TouchableOpacity>
-
-        {/*clientInstalled.weibo ?
-          <TouchableOpacity onPress={this._weiboLogin} style={styles.fullButton}>
-            <Text style={styles.buttonText}>使用微博账号登录</Text>
-          </TouchableOpacity>
-          : null*/}
-
-        <TouchableOpacity onPress={()=>navigate('SignIn')} style={styles.fullButton}>
-          <Text style={styles.buttonText}>手机号登陆或注册</Text>
-        </TouchableOpacity>
+        </View>
 
         <View style={{flex:1}}></View>
 
-        <View style={styles.protocol}>
-          <Text style={styles.protocolText}>登陆即表示您同意</Text>
-          <Text style={[styles.protocolText, styles.green]} onPress={()=>{ navigate('Agreement') }}>用户协议</Text>
+        <View style={styles.otherSignInContainer}>
+          <View><Text style={styles.textWhite}>其他方式登陆</Text></View>
+          <View style={styles.otherSignIn}>
+            <TouchableOpacity onPress={this.qqSignIn} style={styles.otherSigninItem}>
+              <View style={styles.iconView}><Image source={require('./images/qq.png')} style={styles.icon} resizeMode="cover" /></View>
+              <View><Text style={styles.textWhite}>QQ</Text></View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.weiboSignIn} style={styles.otherSigninItem}>
+              <View style={styles.iconView}><Image source={require('./images/weibo.png')} style={styles.icon} resizeMode="cover" /></View>
+              <View><Text style={styles.textWhite}>微博</Text></View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.githubSignIn} style={styles.otherSigninItem}>
+              <View style={styles.iconView}><Image source={require('./images/github.png')} style={styles.icon} resizeMode="cover" /></View>
+              <View><Text style={styles.textWhite}>Github</Text></View>
+            </TouchableOpacity>
+          </View>
         </View>
 
-      </View>)
+      </View>
+      </ImageBackground>)
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: '#fff'
+    width:null,
+    height:null,
+    backgroundColor:'transparent'
   },
 
-  fullButton: {
-    marginTop: 15,
-    height:40,
+  // logo
+  welcome: {
+    paddingTop:20,
+    height:screenHeight*0.4,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
-  buttonText: {
-    fontSize: 16,
-    color: '#277eff'
-  },
-  logoMain: {
-    height:screenHeight*0.35,
-    paddingTop: 20,
-    marginBottom:20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:'#277eff'
+  welcomeText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight:'bold'
   },
   logo: {
-    width:90,
-    height:90
+    width:screenHeight*0.12,
+    height:screenHeight*0.12,
   },
-  protocol:{
-    ...ifIphoneX({
-      flexDirection: 'row',
-      height: 80,
-      justifyContent: 'center',
-      alignItems: 'center'
-    }, {
-      flexDirection: 'row',
-      height: 50,
-      justifyContent: 'center',
-      alignItems: 'center'
-    })
+  
+  main: { padding:20 },
+
+  // sign
+  signInButton: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 6,
+    marginBottom: 10,
+    backgroundColor:'#1e93db'
   },
-  protocolText: {
-    fontSize:12,
-    color:'rgb(145, 145, 145)'
+  signInButtonText: {
+    color: '#fff',
+    fontSize: 16
   },
-  green: {
-    color:'rgb(80, 145, 255)',
-    marginLeft:10
-  }
+
+  // sign up
+  signUpButton: {
+    backgroundColor: '#fff',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 6,
+    marginBottom: 10
+  },
+  signUpButtonText: {
+    color: '#0262a6',
+    fontSize: 16
+  },
+
+  // other sign in
+  otherSignInContainer: { padding:30, alignItems: 'center' },
+  otherSignIn: { flexDirection: 'row', paddingTop:20 },
+  otherSigninItem: { marginLeft:30, marginRight:30, alignItems: 'center' },
+  iconView: { marginBottom:5 },
+  icon: { width: 30, height: 30 },
+  textWhite: { color:'#fff' }
 })
 
 export default connect(

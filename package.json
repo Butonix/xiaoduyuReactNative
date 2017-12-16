@@ -6,6 +6,7 @@
     "configureJPush": "node node_modules/jpush-react-native/JPushConfiguration.js",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
+    "ios": "react-native run-ios",
     "bundle-ios": "react-native bundle --entry-file index.ios.js --platform ios --dev false --bundle-output release_ios/main.jsbundle --assets-dest release_ios/",
     "android": "cd android && sudo ./gradlew clean && cd .. && sudo react-native run-android --deviceId 1ceb601b",
     "bundle-android": "cd android && sudo ./gradlew assembleRelease && cd .."

@@ -10,9 +10,9 @@ class HeadButton extends PureComponent {
   }
 
   render() {
-    const { name = '按钮' } = this.props
+    const { name = '按钮', color = "#139aef" } = this.props
     return (<View style={styles.button}>
-      <Text style={styles.buttonText}>{name}</Text>
+      <Text style={[styles.buttonText, { color: color }]}>{name}</Text>
     </View>)
   }
 }
@@ -27,8 +27,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#08f'
+    fontWeight: 'bold'
   }
 })
 

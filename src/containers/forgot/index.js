@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, Image, View, Button, ScrollView, TextInput, Alert, TouchableOpacity, AsyncStorage } from 'react-native'
+import { StyleSheet, Text, Image, View, Button, ScrollView, TextInput, Alert, TouchableOpacity, AsyncStorage, ImageBackground } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
+
 import Wait from '../../components/ui/wait'
 
 import { bindActionCreators } from 'redux'
@@ -19,7 +21,22 @@ const screenWidth = Dimensions.get('window').width
 class Forgot extends Component {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: '通过手机号/邮箱重置密码'
+    // headerTitle: '通过手机号/邮箱重置密码',
+    headerStyle: {
+      ...ifIphoneX({
+        height: 75,
+        paddingTop:30,
+        backgroundColor: '#076dac',
+        borderBottomWidth: 0
+      }, {
+        backgroundColor: '#076dac',
+        borderBottomWidth: 0
+      })
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      color: '#fff'
+    }
   })
 
   constructor (props) {
@@ -85,12 +102,12 @@ class Forgot extends Component {
     const { account, captcha, password, confirmPassword } = this.state
     const { resetPasswordByCaptcha, signin, navigation } = this.props
 
-    if (!account) return Alert.alert('', '请输入注册手机号或邮箱')
-    if (!captcha) return Alert.alert('', '验证码')
-    if (!password) return Alert.alert('', '请输入新密码')
-    if (!confirmPassword) return Alert.alert('', '请再次输入新密码')
+    if (!account) return this.refs.account.focus()
+    if (!captcha) return this.refs.captcha.focus()
+    if (!password) return this.refs.password.focus()
+    if (!confirmPassword) return this.refs.confirmPassword.focus()
     if (password != confirmPassword) return Alert.alert('', '两次密码输入不一致')
-
+    
     self.setState({ visible: true })
 
     let option = {
@@ -147,25 +164,34 @@ class Forgot extends Component {
 
   render() {
 
-    return (<ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
+    return (<ImageBackground source={require('../../images/bg.png')}  style={{ flex:1 }} resizeMode="cover">
+      <ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
+
+        <View style={styles.title}><Text style={styles.titleText}>重置密码</Text></View>
 
         <TextInput
-          style={gStyles.radiusInputTop}
+          ref="account"
+          style={styles.textInput}
           autoCapitalize="none"
           onChangeText={(account) => this.setState({account})}
-          placeholder='请输入你的注册的手机号或邮箱'
+          placeholder='请输入账户的手机号或邮箱'
           autoFocus={true}
           underlineColorAndroid='transparent'
+          placeholderTextColor='#96d7ff'
+          selectionColor="#fff"
           />
 
         <View>
           <TextInput
-              style={gStyles.radiusInputCenter}
+              ref="captcha"
+              style={styles.textInput}
               onChangeText={(captcha) => this.setState({captcha})}
               placeholder='请输入验证码'
               maxLength={6}
               keyboardType={'numeric'}
               underlineColorAndroid='transparent'
+              placeholderTextColor='#96d7ff'
+              selectionColor="#fff"
             />
             <View style={{
               position: 'absolute',
@@ -179,37 +205,49 @@ class Forgot extends Component {
         </View>
 
         <TextInput
-          style={gStyles.radiusInputCenter}
+          ref="password"
+          style={styles.textInput}
           onChangeText={(password) => this.setState({password})}
           secureTextEntry={true}
           placeholder='请输入新密码'
           underlineColorAndroid='transparent'
+          placeholderTextColor='#96d7ff'
+          selectionColor="#fff"
           />
 
         <TextInput
-          style={gStyles.radiusInputBottom}
+          ref="confirmPassword"
+          style={styles.textInput}
           onChangeText={(confirmPassword) => this.setState({confirmPassword})}
           secureTextEntry={true}
           placeholder='请再次输入新密码'
           underlineColorAndroid='transparent'
+          placeholderTextColor='#96d7ff'
+          selectionColor="#fff"
           />
 
-        <TouchableOpacity onPress={this.submit} style={[gStyles.fullButton, gStyles.mt20]}>
-          <Text style={gStyles.white}>提交</Text>
+        <TouchableOpacity onPress={this.submit} style={styles.button}>
+          <Text style={styles.buttonText}>提交</Text>
         </TouchableOpacity>
 
         {this.state.visible ? <Wait /> : null}
 
-    </ScrollView>)
+    </ScrollView>
+    </ImageBackground>)
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     flex: 1,
-    padding: 20
+    padding: 20,
+    backgroundColor: 'transparent'
   },
+
+  title: { marginBottom: 30, backgroundColor: 'transparent' },
+  titleText: { color:'#fff', fontSize:32, fontWeight:'bold' },
+
   input: {
     height: 40,
     borderColor: '#efefef',
@@ -243,7 +281,35 @@ const styles = StyleSheet.create({
   },
   itemLeft: {
     flex: 1
-  }
+  },
+
+
+  textInput: {
+    // marginTop:15,
+    color: '#fff',
+    marginBottom:10,
+    // borderBottomWidth:1,
+    // borderColor: '#96d7ff',
+    // paddingTop:15,
+    // paddingBottom:15
+    padding:15,
+    borderRadius: 6,
+    backgroundColor: '#1681c4'
+  },
+
+  button: {
+    // marginTop:20,
+    height:50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor:'#fff',
+    borderRadius: 6
+  },
+  buttonText: {
+    color:'#0262a6',
+    fontSize:16
+  },
+
 })
 
 export default connect(

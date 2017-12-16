@@ -1,11 +1,9 @@
 
-
 import React, { Component } from 'react'
-import { StyleSheet, Text, Image, View, Button, ScrollView, WebView, TextInput, Alert, TouchableOpacity, AsyncStorage, DeviceEventEmitter,
-  ActivityIndicator
-} from 'react-native'
+import { StyleSheet, Text, Image, View, ScrollView, TextInput, Alert, TouchableOpacity, AsyncStorage, ImageBackground } from 'react-native'
 
 import { NavigationActions } from 'react-navigation'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 import Wait from '../../components/ui/wait'
@@ -14,8 +12,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { signin } from '../../actions/sign'
 import { getCaptchaId } from '../../actions/captcha'
-
-import gStyles from '../../styles'
 
 import { api_url, api_verstion } from '../../../config'
 
@@ -31,8 +27,24 @@ class SignIn extends Component {
   static navigationOptions = ({navigation}) => {
     const { params = {} } = navigation.state
     return {
-      headerTitle: '登录',
-      headerRight: (<TouchableOpacity onPress={()=>params.signup()}><HeadButton name="注册" /></TouchableOpacity>)
+      // header: null,
+      // headerTitle: '登录',
+      headerRight: (<TouchableOpacity onPress={()=>params.signup()}><HeadButton name="忘记密码" color="#fff" /></TouchableOpacity>),
+      headerStyle: {
+        ...ifIphoneX({
+          height: 75,
+          paddingTop:30,
+          backgroundColor: '#076dac',
+          borderBottomWidth: 0
+        }, {
+          backgroundColor: '#076dac',
+          borderBottomWidth: 0
+        })
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        color: '#fff'
+      }
     }
   }
 
@@ -66,7 +78,7 @@ class SignIn extends Component {
 
   signup() {
     const { navigate } = this.props.navigation
-    navigate('SignUp')
+    navigate('Forgot')
   }
 
   loadCaptcha() {
@@ -123,10 +135,12 @@ class SignIn extends Component {
 
     let routeName = ''
 
-    if (!account) return Alert.alert('', '请输入手机号或邮箱')
-    if (!password) return Alert.alert('', '请输入密码')
 
-    self.setState({ visible: true })
+    if (!account) return self.refs.email.focus()
+    if (!password) return self.refs.password.focus()
+    if (self.refs.captcha && !captcha) return self.refs.captcha.focus()
+
+    self.setState({ visible: true, error: '' })
 
     let data = {
       email: account.indexOf('@') != -1 ? account : '',
@@ -142,6 +156,10 @@ class SignIn extends Component {
       signin({
         data,
         callback: (res)=>{
+
+          self.refs.password.clear()
+          if (self.refs.captcha) self.refs.captcha.clear()
+
           if (!res.success) {
             self.loadCaptcha()
             self.setState({
@@ -167,72 +185,73 @@ class SignIn extends Component {
     const { captchaId, visible, error } = this.state
     const { navigate } = this.props.navigation
 
-    return (<ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
+    return (<ImageBackground source={require('../../images/bg.png')}  style={{ flex:1 }} resizeMode="cover">
+      <ScrollView style={styles.container} keyboardShouldPersistTaps={'always'}>
 
-      {error ? <View style={[gStyles.bgDange, gStyles.mb20]}><Text>账号或密码错误</Text></View> : null}
+      <View style={styles.title}><Text style={styles.titleText}>登陆</Text></View>
+
+      {error ? <View style={styles.error}><Text style={styles.errorText}>账号或密码错误</Text></View> : null}
 
       <TextInput
           ref="email"
-          style={gStyles.radiusInputTop}
+          style={styles.textInput}
           autoCapitalize={'none'}
           onChangeText={(account) => this.setState({account})}
           placeholder='请输入手机号或邮箱'
           autoFocus={true}
           maxLength={60}
           underlineColorAndroid='transparent'
+          placeholderTextColor='#96d7ff'
+          selectionColor="#fff"
         />
 
       <TextInput
           ref="password"
-          style={captchaId ? gStyles.radiusInputCenter : gStyles.radiusInputBottom}
+          style={styles.textInput}
           onChangeText={(password) => this.setState({password})}
           secureTextEntry={true}
           placeholder='请输入密码'
           maxLength={60}
           underlineColorAndroid='transparent'
+          placeholderTextColor='#96d7ff'
+          selectionColor="#fff"
         />
 
         {captchaId ?
             <View>
               <TextInput
-                  style={gStyles.radiusInputBottom}
+                  ref="captcha"
+                  style={styles.textInput}
                   onChangeText={(captcha) => this.setState({captcha})}
                   placeholder='请输入验证码'
                   maxLength={6}
                   keyboardType={'numeric'}
                   underlineColorAndroid='transparent'
+                  placeholderTextColor='#96d7ff'
+                  selectionColor="#fff"
                 />
             <TouchableOpacity onPress={this.loadCaptcha}
               style={{
                 position: 'absolute',
-                marginTop: 10,
+                marginTop: 12,
                 marginLeft: screenWidth - 130
               }}
               >
-              <View style={{
-                // position: 'absolute',
-                // marginTop:-15,
-                // marginLeft: screenWidth - 130
-              }}>
-                <Image source={{ uri:api_url + '/' + api_verstion + '/captcha-image/' + captchaId }} style={{ width:80, height:30 }}  />
-              </View>
+              <Image source={{ uri:api_url + '/' + api_verstion + '/captcha-image/' + captchaId }} style={{ width:80, height:30 }}  />
             </TouchableOpacity>
           </View>
           : null}
 
-      <TouchableOpacity onPress={this.submit} style={[gStyles.fullButton, gStyles.mt20]}>
+      <TouchableOpacity onPress={this.submit} style={styles.button}>
         <Text style={styles.buttonText}>登录</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={()=>{ navigate('Forgot') }} style={gStyles.whiteButton}>
-        <Text>无法登录?</Text>
       </TouchableOpacity>
 
       {visible ? <Wait /> : null}
 
       {Platform.OS === 'android' ? null : <KeyboardSpacer />}
 
-    </ScrollView>)
+    </ScrollView>
+    </ImageBackground>)
   }
 }
 
@@ -240,12 +259,51 @@ class SignIn extends Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: '#fff',
-    padding:20
+    // backgroundColor: '#139aef',
+    padding:20,
+    paddingTop:20,
+    backgroundColor: 'transparent'
+  },
+
+  title: { marginBottom: 30, backgroundColor: 'transparent' },
+  titleText: { color:'#fff', fontSize:32, fontWeight:'bold' },
+
+  textInput: {
+    // marginTop:15,
+    color: '#fff',
+    marginBottom:10,
+    // borderBottomWidth:1,
+    // borderColor: '#96d7ff',
+    // paddingTop:15,
+    // paddingBottom:15
+    padding:15,
+    borderRadius: 6,
+    backgroundColor: '#1681c4'
+  },
+
+  button: {
+    // marginTop:20,
+    height:50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor:'#fff',
+    borderRadius: 6
   },
   buttonText: {
-    color:'#fff'
+    color:'#0262a6',
+    fontSize:16
+  },
+
+  error: {
+    paddingLeft:0,
+    marginBottom:15
+  },
+
+  errorText: {
+    fontSize: 16,
+    color: '#fff'
   }
+
 })
 
 export default connect(

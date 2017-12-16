@@ -51,7 +51,7 @@ class SelectCountry extends Component {
         label: item.name + '' + item.code
       })
     })
-    
+
     return (<View>
 
       <ModalPicker
@@ -63,8 +63,8 @@ class SelectCountry extends Component {
           }}>
 
           <View style={styles.select}>
-          {item ? <Text>{item.name + item.code}</Text> : null}
-          {item ? <Image source={require('./images/select.png')} style={styles.selectIcon} /> : null}
+          {item ? <Text style={styles.selectText}>{item.name + item.code}</Text> : null}
+          {/*item ? <Image source={require('./images/select.png')} style={styles.selectIcon} /> : null*/}
           </View>
 
       </ModalPicker>
@@ -96,13 +96,19 @@ class SelectCountry extends Component {
 const styles = StyleSheet.create({
   select: {
     flexDirection: 'row',
-    height: 45,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor:'#fff',
+    padding:5,
+    borderRadius:5
   },
   selectIcon: {
     width: 20,
     height: 20
+  },
+  selectText: {
+    fontWeight: 'bold',
+    color: '#0262a6'
   }
 })
 
