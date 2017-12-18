@@ -102,12 +102,6 @@ class Home extends Component {
 
     if (Platform.OS === 'android') {
       JPushModule.initPush(this)
-      // JPushModule.crashLogOFF()
-      // JPushModule.notifyJSDidLoad((resultCode)=>{
-      //   console.log(resultCode);
-      // });
-
-      // JPushModule.resumePush()
     }
 
     JPushModule.addReceiveOpenNotificationListener(this.state.listener)

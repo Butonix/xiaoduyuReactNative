@@ -59,6 +59,8 @@
 		AC57AD1B43A30BAB9DF42985 /* libPods-xiaoduyuReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9354F8FE4A695886965FBCF9 /* libPods-xiaoduyuReactNative.a */; };
 		B1C4520FEB7E4651954A2ABF /* libRCTJPushModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1D7DE63A4249DD8367521C /* libRCTJPushModule.a */; };
 		BD03F7ED9DE749B3A6CEECEA /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62DF7B37B166422ABA59A091 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C20871571FE7F92F009477A6 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = C208712D1FE7F92F009477A6 /* assets */; };
+		C20871581FE7F92F009477A6 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = C20871561FE7F92F009477A6 /* main.jsbundle */; };
 		C20F42CE1FCA580D00F569CD /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C20F42CD1FCA580C00F569CD /* WeiboSDK.bundle */; };
 		C20F42D01FCA58D300F569CD /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C20F42CF1FCA58C500F569CD /* ImageIO.framework */; };
 		C20F42D21FCA592200F569CD /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C20F42D11FCA590600F569CD /* CoreText.framework */; };
@@ -441,6 +443,8 @@
 		B726ADD3CB524BCD9FAD6B83 /* RCTJCoreModule.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTJCoreModule.xcodeproj; path = "../node_modules/jcore-react-native/ios/RCTJCoreModule.xcodeproj"; sourceTree = "<group>"; };
 		BC52B4FBC9FA418FA0247B65 /* libcxxreact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libcxxreact.a; sourceTree = "<group>"; };
 		BC640C0E653C4591B3C9D075 /* libyoga.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libyoga.a; sourceTree = "<group>"; };
+		C208712D1FE7F92F009477A6 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../release_ios/assets; sourceTree = "<group>"; };
+		C20871561FE7F92F009477A6 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../release_ios/main.jsbundle; sourceTree = "<group>"; };
 		C20F42CD1FCA580C00F569CD /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = WeiboSDK.bundle; path = "../node_modules/react-native-weibo/ios/libWeiboSDK/WeiboSDK.bundle"; sourceTree = "<group>"; };
 		C20F42CF1FCA58C500F569CD /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		C20F42D11FCA590600F569CD /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -627,6 +631,8 @@
 		13B07FAE1A68108700A75B9A /* xiaoduyuReactNative */ = {
 			isa = PBXGroup;
 			children = (
+				C208712D1FE7F92F009477A6 /* assets */,
+				C20871561FE7F92F009477A6 /* main.jsbundle */,
 				C20F42CD1FCA580C00F569CD /* WeiboSDK.bundle */,
 				C233120F1F71252F00BABF67 /* xiaoduyuReactNative.entitlements */,
 				43BF5F7D1F5C0333002E0271 /* OpenShare */,
@@ -1403,6 +1409,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				C20871571FE7F92F009477A6 /* assets in Resources */,
+				C20871581FE7F92F009477A6 /* main.jsbundle in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				C20F42CE1FCA580D00F569CD /* WeiboSDK.bundle in Resources */,
 			);

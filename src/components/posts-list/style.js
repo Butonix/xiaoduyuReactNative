@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native'
 
+import Platform from 'Platform'
+
 export default StyleSheet.create({
   item: {
     marginTop: 10
@@ -15,7 +17,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-
+  
   topicItem: {
     backgroundColor: '#fff',
     // padding:15
@@ -33,7 +35,7 @@ export default StyleSheet.create({
     height:35,
     borderRadius: 35/2,
     marginRight:10,
-    marginTop: -2
+    marginTop: Platform.OS === 'android' ? 0 : -2
   },
   nickname: {
     fontWeight: 'bold',
