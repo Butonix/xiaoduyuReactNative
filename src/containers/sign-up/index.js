@@ -291,7 +291,9 @@ const styles = StyleSheet.create({
   },
 
   selectCountry: {
-    height:50,
+    flex:1,
+    marginBottom:10,
+    // height:50,
     alignItems:'center',
     justifyContent: 'center',
     backgroundColor: '#1681c4',

@@ -82,12 +82,17 @@ class SignIn extends Component {
   }
 
   loadCaptcha() {
-
+    
     const self = this
     const { getCaptchaId } = this.props
 
     getCaptchaId({
       callback: function (res) {
+
+        if (!self._reactInternalInstance) {
+          return
+        }
+
         if (res && res.success && res.data) {
           self.setState({ captchaId: res.data })
         }
@@ -105,9 +110,7 @@ class SignIn extends Component {
       // 储存token有效时间
       AsyncStorage.setItem('token_expires', (new Date().getTime() + 1000 * 60 * 60 * 24 * 30) + '', function(errs, result){
 
-        global.initReduxDate((result)=>{
-
-          // console.log(result);
+        // setTimeout(()=>{
 
           const resetAction = NavigationActions.reset({
             index: 0,
@@ -117,7 +120,8 @@ class SignIn extends Component {
           })
 
           self.props.navigation.dispatch(resetAction)
-        })
+
+        // }, 1000)
 
       })
 
@@ -135,7 +139,6 @@ class SignIn extends Component {
 
     let routeName = ''
 
-
     if (!account) return self.refs.email.focus()
     if (!password) return self.refs.password.focus()
     if (self.refs.captcha && !captcha) return self.refs.captcha.focus()
@@ -151,30 +154,29 @@ class SignIn extends Component {
     if (captcha) data.captcha = captcha
     if (captchaId) data.captcha_id = captchaId
 
-    setTimeout(()=>{
+    signin({
+      data,
+      callback: (res)=>{
 
-      signin({
-        data,
-        callback: (res)=>{
+        if (!res.success) {
 
           self.refs.password.clear()
           if (self.refs.captcha) self.refs.captcha.clear()
 
-          if (!res.success) {
-            self.loadCaptcha()
-            self.setState({
-              visible: false,
-              error: res.error
-            })
-          } else {
-            self.setState({ visible: false })
+          self.loadCaptcha()
+          self.setState({
+            visible: false,
+            error: res.error
+          })
+        } else {
+          self.setState({ visible: false })
+          setTimeout(()=>{
             self.handleSignIn(res.data.access_token)
-          }
-
+          }, 1000)
         }
-      })
 
-    }, 1000)
+      }
+    })
 
 
   }

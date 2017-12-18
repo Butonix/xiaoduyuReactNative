@@ -13,6 +13,7 @@ const converterErrorInfo = (res) => {
 
   // 获取错误提示
   if (res.error) {
+    res._error = res.error
     if (typeof res.error == 'string' || typeof res.error == 'number') {
       res.error = errors[res.error] || '错误代码: '+res.error
     } else if (typeof res.error == 'object') {

@@ -83,22 +83,24 @@ class WriteComment extends React.Component {
       })
     } else {
 
-      addComment({
-        data,
-        callback: (res) => {
+      setTimeout(()=>{
+        addComment({
+          data,
+          callback: (res) => {
 
-          self.setState({ visible: false })
+            self.setState({ visible: false })
 
-          if (res.success) {
-            navigation.goBack()
-          } else {
-            setTimeout(()=>{
-              Alert.alert('', res.error || '提交失败')
-            }, 2000)
+            if (res.success) {
+              navigation.goBack()
+            } else {
+              setTimeout(()=>{
+                Alert.alert('', res.error || '提交失败')
+              }, 2000)
+            }
+
           }
-
-        }
-      })
+        })
+      }, 1000)
     }
 
 

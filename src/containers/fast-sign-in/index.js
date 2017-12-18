@@ -5,7 +5,7 @@ import { NavigationActions } from 'react-navigation'
 
 // import openShare from 'react-native-open-share'
 import * as QQAPI from 'react-native-qq'
-import * as WeiboAPI from 'react-native-weibo'
+// import * as WeiboAPI from 'react-native-weibo'
 
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
@@ -41,15 +41,20 @@ class FastSignIn extends Component {
 
     AsyncStorage.setItem('token', access_token, function(errs, result){
 
-      const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'Welcome'})
-        ]
-      })
+      // 储存token有效时间
+      AsyncStorage.setItem('token_expires', (new Date().getTime() + 1000 * 60 * 60 * 24 * 30) + '', function(errs, result){
 
-      global.initReduxDate(()=>{
-        self.props.navigation.dispatch(resetAction)
+        const resetAction = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'Welcome'})
+          ]
+        })
+
+        global.initReduxDate(()=>{
+          self.props.navigation.dispatch(resetAction)
+        })
+
       })
 
     })
@@ -215,7 +220,7 @@ const styles = StyleSheet.create({
     width:screenHeight*0.12,
     height:screenHeight*0.12,
   },
-  
+
   main: { padding:20 },
 
   // sign

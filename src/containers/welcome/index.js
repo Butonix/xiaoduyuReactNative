@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 import { getUserInfo } from '../../reducers/user'
 import { loadUnreadCount, loadNewNotifications, cancelNotiaction } from '../../actions/notification'
 import { loadNewPosts } from '../../actions/posts'
-import { api_url } from '../../../config'
+import { api_url, feedback_email } from '../../../config'
 
 import Loading from '../../components/ui/loading'
 
@@ -30,7 +30,8 @@ class Welcome extends Component {
     this.state = {
       loading: true,
       network: true,
-      notification: null
+      notification: null,
+      blockAccount: false
     }
     this.handleMessage = this.handleMessage.bind(this)
     this.enterApp = this.enterApp.bind(this)
@@ -63,11 +64,16 @@ class Welcome extends Component {
 
       SplashScreen.hide()
 
+      if (result == 'block account') {
+        self.setState({ blockAccount: true, loading: false })
+        return
+      }
+
       if (result == 'network error') {
         self.setState({ network: false, loading: false })
         return
       }
-
+      
       global.signIn = result == 'has sign in' ? true : false
 
       self.setState({ loading: false })
@@ -170,11 +176,11 @@ class Welcome extends Component {
     }
 
   }
-  
+
   render() {
 
     const self = this
-    const { loading, network } = this.state
+    const { loading, network, blockAccount } = this.state
 
     if (loading) {
       return (<View style={styles.container}><Loading /></View>)
@@ -182,12 +188,37 @@ class Welcome extends Component {
       return (<View style={styles.container}>
         <View style={styles.title}><Text style={styles.titleText}>没有网络或连接服务器异常</Text></View>
         <TouchableOpacity onPress={()=>{
-          self.setState({ loading: true })
+          self.setState({
+            loading: true,
+            network: true,
+            notification: null,
+            blockAccount: false
+          })
           setTimeout(()=>{
             self.componentDidMount()
           }, 1000)
         }}>
           <Text style={styles.reloadText}>重新连接</Text>
+        </TouchableOpacity>
+      </View>)
+    } else if (blockAccount) {
+      return (<View style={styles.container}>
+        <View style={styles.title}>
+          <Text style={styles.titleText}>您的账户被封，如有疑问请联系</Text>
+          <Text>{feedback_email}</Text>
+        </View>
+        <TouchableOpacity onPress={()=>{
+          self.setState({
+            loading: true,
+            network: true,
+            notification: null,
+            blockAccount: false
+          })
+          setTimeout(()=>{
+            self.componentDidMount()
+          }, 1000)
+        }}>
+          <Text style={styles.reloadText}>返回</Text>
         </TouchableOpacity>
       </View>)
     }

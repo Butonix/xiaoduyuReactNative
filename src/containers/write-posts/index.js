@@ -69,7 +69,9 @@ class WritePosts extends React.Component {
           if (res && res.success) {
             navigation.goBack()
           } else {
-            Alert.alert('', res && res.error ? res.error : '更新失败')
+            setTimeout(()=>{
+              Alert.alert('', res && res.error ? res.error : '更新失败')
+            }, 2000)
           }
         }
       })
@@ -107,7 +109,9 @@ class WritePosts extends React.Component {
             navigation.goBack(goBackKey)
             navigate('PostsDetail', { title: posts.title, id: posts._id })
           } else {
-            Alert.alert('', res && res.error ? res.error : '发布失败')
+            setTimeout(()=>{
+              Alert.alert('', res && res.error ? res.error : '发布失败')
+            }, 2000)
           }
         }
       })

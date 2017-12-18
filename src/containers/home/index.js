@@ -39,30 +39,41 @@ class Home extends Component {
   }
 
   componentWillMount() {
+
     const self = this
     const { me, loadPostsList } = this.props
     const { redPointTab } = this.state
 
-    AsyncStorage.getItem('tab', (errs, result)=>{
-      self.setState({ tab: result || 0, ready: true })
+    const initTab = ()=>{
 
-      if (result == 1) return
+      AsyncStorage.getItem('tab', (errs, result)=>{
+        self.setState({ tab: result || 0, ready: true })
 
-      loadPostsList({
-        name: 'find_one_recent_posts',
-        filters: { weaken: 1, method: 'user_custom', device: 'ios', per_page:1 },
-        callback: (res) => {
-          if (res && res.success && res.data && res.data[0]) {
-            if (new Date(res.data[0].sort_by_date).getTime() > new Date(me.last_find_posts_at || 0).getTime()) {
-              if (redPointTab.indexOf(1) == -1) {
-                redPointTab.push(1)
+        if (result == 1) return
+
+        loadPostsList({
+          name: 'find_one_recent_posts',
+          filters: { weaken: 1, method: 'user_custom', device: 'ios', per_page:1 },
+          callback: (res) => {
+            if (res && res.success && res.data && res.data[0]) {
+              if (new Date(res.data[0].sort_by_date).getTime() > new Date(me.last_find_posts_at || 0).getTime()) {
+                if (redPointTab.indexOf(1) == -1) {
+                  redPointTab.push(1)
+                }
               }
             }
           }
-        }
+        })
+
       })
 
-    })
+    }
+
+    if (Platform.OS === 'android') {
+      setTimeout(initTab, 1000)
+    } else {
+      initTab()
+    }
 
   }
 
@@ -90,8 +101,8 @@ class Home extends Component {
     }
 
     if (Platform.OS === 'android') {
-      JPushModule.initPush()
-
+      JPushModule.initPush(this)
+      // JPushModule.crashLogOFF()
       // JPushModule.notifyJSDidLoad((resultCode)=>{
       //   console.log(resultCode);
       // });

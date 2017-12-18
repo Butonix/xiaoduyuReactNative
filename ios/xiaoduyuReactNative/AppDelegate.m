@@ -51,7 +51,7 @@
   // [OpenShare connectWeixinWithAppId:@"wxd930ea5d5a258f4f"];
   // [OpenShare connectRenrenWithAppId:@"228525" AndAppKey:@"1dd8cba4215d4d4ab96a49d3058c1d7f"];
   NSURL *jsCodeLocation;
-  
+
   // jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 

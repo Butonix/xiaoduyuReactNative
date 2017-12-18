@@ -29,8 +29,13 @@ export default ({ dispatch, getState }) => {
         callback('has sign in')
       } else if (res && !res.success) {
         // token失效
-        AsyncStorage.removeItem('token',(res)=>{
-          callback('sign in')
+        AsyncStorage.removeItem('token',()=>{
+          // 判断账户是否是被封
+          if (res._error && res._error == 10007) {
+            callback('block account')
+          } else {
+            callback('sign in')
+          }
         })
       } else {
         // api
@@ -89,7 +94,14 @@ export default ({ dispatch, getState }) => {
                   })
                 })
               } else if (res && !res.success) {
-                callback('sign in')
+
+                // 判断账户是否是被封
+                if (res._error && res._error == 10007) {
+                  callback('block account')
+                } else {
+                  callback('sign in')
+                }
+
               } else {
                 callback('network error')
               }

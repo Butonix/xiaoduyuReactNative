@@ -61,9 +61,7 @@ class Tabbar extends Component {
         postion.x = index * tabWidth - (per * tabWidth) / 2
       }
 
-
-
-      if (Platform.OS === 'android') {
+      if (Platform.OS == 'android') {
         if (this.refs['scroll-view']) {
           this.refs['scroll-view'].scrollTo(postion)
         }
@@ -107,9 +105,6 @@ class Tabbar extends Component {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         contentOffset={contentOffset}
-        style={{
-
-        }}
       >
         {centerContent}
       </ScrollView>)
@@ -120,30 +115,10 @@ class Tabbar extends Component {
 
         <View style={styles.tabbarLeft}></View>
 
-        {/*
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          contentOffset={contentOffset}
-          style={{
-          }}
-        >
-        */}
-
-
-        {/*
-        </ScrollView>*/}
-
         {centerContent}
 
         <View style={styles.tabbarRight}>
           {rightContent}
-          {/*
-          <TouchableOpacity onPress={()=>{ navigation.navigate('ChooseTopic') }} activeOpacity={0.8}>
-            <WriteIcon />
-          </TouchableOpacity>
-          */}
         </View>
 
       </View>)
